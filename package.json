@@ -14,6 +14,8 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo-google-fonts/lexend": "^0.4.1",
+    "@expo-google-fonts/plus-jakarta-sans": "^0.4.2",
     "@expo/vector-icons": "~14.0.4",
     "@lottiefiles/dotlottie-react": "^0.6.5",
     "@react-native-async-storage/async-storage": "1.23.1",
@@ -40,7 +42,7 @@
     "expo-router": "~4.0.22",
     "expo-secure-store": "~14.0.1",
     "expo-speech": "~13.0.1",
-    "expo-splash-screen": "~0.29.22",
+    "expo-splash-screen": "~0.29.24",
     "expo-sqlite": "~15.1.4",
     "expo-status-bar": "~2.0.1",
     "expo-symbols": "~0.2.2",

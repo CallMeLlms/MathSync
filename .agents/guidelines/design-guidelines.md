@@ -6,8 +6,8 @@ This document defines the core visual and naming standards for the MathSync proj
 
 ## 🎨 1. Color System
 
-### Grade Themes
-Each grade level utilizes a unique 3-color gradient and a primary accent color. These should be defined in a central configuration (e.g., `src/store/gradeThemes.js`).
+### Grade Themes === NOTE: DO NOT USE THESE GRADE THEMES YET. THEY ARE ONLY INCLUDED AS A REFERENCE FOR THE FUTURE. IF YOU ARE AN AI, DO NOT APPLY THESE THEMES UNTIL FORMALLY DECIDED. ===
+Each grade level utilizes a unique 3-color gradient and a primary accent color. These should be defined in a central configuration (e.g., `src/store-config/gradeThemes.js`).
 
 | Grade | Gradient (light → dark) | Accent |
 |---|---|---|
@@ -65,7 +65,21 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 ---
 
-## 🗂 3. Naming Conventions
+## 🚫 3. Core Principle: No Shadows
+
+**The use of shadows is strictly prohibited throughout the entire application.** MathSync follows a flat, modern design language where depth is achieved through color shifts, gradients, and layering rather than drop shadows.
+
+**Strictly Prohibited Properties:**
+- `shadowColor`, `shadowOffset`, `shadowOpacity`, `shadowRadius`
+- `elevation` (Android)
+
+**Approved Alternative for Depth:**
+- Use slightly different background shades (e.g., `surface` vs `surface-container`)
+- Use the **Tonal Layering** principle: Stack surfaces of different tonal weights to create visual hierarchy.
+
+---
+
+## 🗂 4. Naming Conventions
 
 Maintain strict structural integrity across the repository.
 
@@ -79,15 +93,49 @@ Maintain strict structural integrity across the repository.
 
 ---
 
-## 📜 4. JavaScript Standard (JS-only)
+## 🆎 5. Typography
+
+MathSync uses **Lexend** and **Plus Jakarta Sans** for a premium, editorial feel that prioritizes readability for young learners.
+
+| Font Family | Usage |
+|---|---|
+| **Lexend** | Primary Headlines, Display titles, and high-impact headings. |
+| **Plus Jakarta Sans** | Body text, titles, labels, and secondary instructional text. |
+
+### Available Font Weights
+Always reference the loaded font keys in your `StyleSheet`:
+
+**Lexend:**
+- `Lexend-Thin` (100)
+- `Lexend-ExtraLight` (200)
+- `Lexend-Light` (300)
+- `Lexend-Regular` (400)
+- `Lexend-Medium` (500)
+- `Lexend-SemiBold` (600)
+- `Lexend-Bold` (700)
+- `Lexend-ExtraBold` (800)
+- `Lexend-Black` (900)
+
+**Plus Jakarta Sans:**
+- `PlusJakartaSans-ExtraLight` (200)
+- `PlusJakartaSans-Light` (300)
+- `PlusJakartaSans-Regular` (400)
+- `PlusJakartaSans-Medium` (500)
+- `PlusJakartaSans-SemiBold` (600)
+- `PlusJakartaSans-Bold` (700)
+- `PlusJakartaSans-ExtraBold` (800)
+
+---
+
+## 📜 6. JavaScript Standard (JS-only)
 
 The project is strictly JavaScript-only. 
 
 **Rules:**
 - **No TypeScript**: Do not use interfaces, types, or generics in code examples.
-- **StyleSheet Exclusive**: Always use `StyleSheet.create()` from `react-native`. No in-line styles or Tailwind-like dependencies unless requested.
-- **Extensions**: Use `.js` for logic-heavy files and `.jsx` for files containing UI/JSX content.
+- **StyleSheet Exclusive**: Always use `StyleSheet.create()` from `react-native`.
+- **Extensions**: Use `.js` for logic and `.jsx` for UI.
 
 ---
 
-_Last Updated: April 2026 for MathSync._
+_Last Updated: April 2026 for MathSync — **Shadow-Free & Typography Integrated**._

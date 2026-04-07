@@ -1,4 +1,5 @@
-import { Text, View, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function Home() {
   return (
@@ -11,12 +12,13 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff8f3', // Warm paper base
     alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'Lexend-Black',
+    fontSize: 48,
+    color: '#9f4200', // Action Orange
   },
 });
