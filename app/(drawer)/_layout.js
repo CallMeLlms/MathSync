@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { AntDesign, Feather } from '@expo/vector-icons';
-import CustomDrawerContent from '../../src/Components/Navigation/CustomDrawerContent';
-import Colors from '../../src/constants/Colors';
+import CustomDrawerContent from '@/Components/Navigation/CustomDrawerContent';
+import Colors from '@constants/Colors';
 
 const DrawerLayout = () => {
   return (

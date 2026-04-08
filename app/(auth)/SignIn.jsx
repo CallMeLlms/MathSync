@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 
 // Design System
-import Colors from '../../src/constants/Colors';
+import Colors from '@constants/Colors';
 
 /**
  * SignIn Screen

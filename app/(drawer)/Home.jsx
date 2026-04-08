@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import Colors from '../../src/constants/Colors';
+import Colors from '@constants/Colors';
 
 export default function Home() {
   return (
