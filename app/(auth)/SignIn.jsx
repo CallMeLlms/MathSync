@@ -26,7 +26,7 @@ export default function SignIn() {
     setLoading(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 1500));
-      router.replace('/(tabs)/Home');
+      router.replace('/(drawer)/Home');
     } catch (error) {
       console.log(error);
     } finally {
@@ -148,7 +148,7 @@ export default function SignIn() {
                   {/* Guest Button - 7% height mimic */}
                   <TouchableOpacity
                     style={[styles.guestButton, { height: SCREEN_HEIGHT * 0.07 }]}
-                    onPress={() => router.replace('/(tabs)/Home')}
+                    onPress={() => router.replace('/(drawer)/Home')}
                   >
                     <Text style={styles.guestButtonText}>Guest</Text>
                   </TouchableOpacity>

@@ -25,13 +25,12 @@ app/
 │   ├── SignIn.jsx              # Sign In Screen
 │   ├── SignUp.jsx              # Sign Up Screen
 │   └── _layout.js              # Auth Stack Layout
-├── (tabs)/                     # Main Tab Navigation (Drawer/Tabs)
+├── (drawer)/                   # Main Navigation (Drawer)
 │   ├── Home.jsx                # Dashboard / Landing
-│   ├── GameHub.jsx             # Game Selection
 │   ├── Profile.jsx             # User Statistics
-│   ├── ScoresRewards.jsx       # Achievement Tracking
 │   ├── Settings.jsx            # User Preferences
-│   └── _layout.js              # Tab Navigation Layout
+│   ├── Calendar.jsx            # Schedule/Event Tracking
+│   └── _layout.js              # Drawer Navigation Layout
 ├── Index.jsx                    # Entry Point / Splash Redirect
 └── _layout.js                  # Root Application Layout
 ```
