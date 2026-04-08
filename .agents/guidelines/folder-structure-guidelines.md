@@ -22,8 +22,8 @@ Following the Expo Router convention, the `app/` directory maps to the applicati
 ```
 app/
 ├── (auth)/                     # Authentication Route Group
-│   ├── sign-in.js              # Sign In Screen
-│   ├── sign-up.js              # Sign Up Screen
+│   ├── SignIn.jsx              # Sign In Screen
+│   ├── SignUp.jsx              # Sign Up Screen
 │   └── _layout.js              # Auth Stack Layout
 ├── (tabs)/                     # Main Tab Navigation (Drawer/Tabs)
 │   ├── Home.jsx                # Dashboard / Landing
@@ -32,7 +32,7 @@ app/
 │   ├── ScoresRewards.jsx       # Achievement Tracking
 │   ├── Settings.jsx            # User Preferences
 │   └── _layout.js              # Tab Navigation Layout
-├── index.js                    # Entry Point / Splash Redirect
+├── Index.jsx                    # Entry Point / Splash Redirect
 └── _layout.js                  # Root Application Layout
 ```
 

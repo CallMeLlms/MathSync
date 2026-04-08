@@ -127,7 +127,16 @@ Always reference the loaded font keys in your `StyleSheet`:
 
 ---
 
-## 📜 6. JavaScript Standard (JS-only)
+## 📏 6. The Golden Rule for Responsive Design
+
+To ensure the application looks perfect across all screen sizes (phones, tablets), follow this hierarchy for layout decisions:
+
+1.  **Flexbox First (Natively Responsive)**: Always prioritize layouts using `flex`, `alignItems`, `justifyContent`, and percentage-based strings (e.g., `width: '50%'`). This is highly performant and handles different aspect ratios natively without extra logic.
+2.  **Hooks Second (Calculated Layouts)**: Only use `useWindowDimensions` or `useSafeAreaInsets` if Flexbox is insufficient—for example, when you need to calculate a specific aspect ratio or absolute position that depends on the exact screen pixel values.
+
+---
+
+## 📜 7. JavaScript Standard (JS-only)
 
 The project is strictly JavaScript-only. 
 

@@ -27,7 +27,7 @@ export default function Home() {
           <TouchableOpacity 
             style={styles.buttonContainer}
             activeOpacity={0.8}
-            onPress={() => router.push('/(auth)/signIn')}
+            onPress={() => router.push('/(auth)/SignIn')}
           >
             <LinearGradient
               colors={[Colors.primary, '#803400']}

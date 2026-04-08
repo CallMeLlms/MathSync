@@ -3,6 +3,7 @@
     "name": "MathSync",
     "slug": "MathSync",
     "version": "1.0.0",
+    "scheme": "mathsync",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
