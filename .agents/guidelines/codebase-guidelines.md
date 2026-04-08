@@ -40,3 +40,9 @@ Consistency in naming is critical for codebase navigability. Follow these patter
 
 - Prefer descriptive names over generic ones (e.g., `useLessonProgress` instead of `useProgress`).
 - Keep component files focused; if a component grows too large, split it into sub-components following the `PascalCase` directory rule.
+
+## Timline 
+
+- Inside the directory ./agents/guidelines/logs, there are md files that logs the timeline of the project. 
+- Every time you make a significant change to the codebase, update the timeline log file. 
+- The timeline log file is updated in a format of `YYYY-MM-DD-HH-MM-SS-TOPIC.md`.
