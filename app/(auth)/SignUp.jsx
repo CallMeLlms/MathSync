@@ -7,7 +7,7 @@ import { Feather, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import authService from '../../src/services/authService';
 
 // Design System
-import Colors from '@constants/colors';
+import Colors from '@/constants/colors';
 
 export default function SignUp() {
   const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = useWindowDimensions();
