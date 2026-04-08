@@ -43,6 +43,6 @@ Consistency in naming is critical for codebase navigability. Follow these patter
 
 ## Timline 
 
-- Inside the directory ./agents/guidelines/logs, there are md files that logs the timeline of the project. 
+- Inside the directory .agents/logs, there are md files that logs the timeline of the project. 
 - Every time you make a significant change to the codebase, update the timeline log file. 
-- The timeline log file is updated in a format of `YYYY-MM-DD-HH-MM-SS-TOPIC.md`.
+- The timeline log file is updated in a format of `YYYY-MM-DD_HH-MM-SS_TOPIC.md`.
