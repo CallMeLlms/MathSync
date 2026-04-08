@@ -1,45 +1,58 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView, KeyboardAvoidingView, Platform, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView, KeyboardAvoidingView, Platform, useWindowDimensions, Modal, Alert } from 'react-native';
 import { useRouter, Stack } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Feather, AntDesign } from '@expo/vector-icons';
+import { Feather, AntDesign, MaterialIcons } from '@expo/vector-icons';
+
+import authService from '../../src/services/auth.service';
 
 // Design System
 import Colors from '@constants/Colors';
 
-/**
- * SignUp Screen
- * Mimics the user's provided design structure and ratios exactly.
- * Adheres to the "Golden Rule": Flexbox for core layout, Dimensions for specific ratios.
- */
 export default function SignUp() {
   const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = useWindowDimensions();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [gradeLevel, setGradeLevel] = useState('');
+  
   const [loading, setLoading] = useState(false);
   const [viewPassword, setViewPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(null); 
+  const [showGradePicker, setShowGradePicker] = useState(false);
 
   const router = useRouter();
 
   const handleSignUp = async () => {
-    if (!name || !email || !password || !confirmPassword) {
-      console.log('Validation: Fill all fields');
+    if (!name || !email || !password || !confirmPassword || !gradeLevel) {
+      Alert.alert('Validation Error', 'Please fill all fields and select a grade level.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Validation Error', 'Passwords do not match.');
       return;
     }
     
     setLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      router.replace('/(auth)/SignIn');
+      // mapped name to username as per backend schema
+      await authService.signUp({ 
+        username: name, 
+        email, 
+        password, 
+        gradeLevel 
+      });
+      router.replace('/(auth)/Confirmation');
     } catch (error) {
-      console.log(error);
+      Alert.alert('Sign Up Failed', error.message || 'An error occurred during registration.');
     } finally {
       setLoading(false);
     }
   };
+
+  const gradeOptions = ['1', '2', '3', '4', '5', '6'];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,7 +67,7 @@ export default function SignUp() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {/* Header Section - 35% height mimic */}
+          {/* Header Section */}
           <View style={[styles.header, { height: SCREEN_HEIGHT * 0.35 }]}>
             <View style={[styles.headerTitleContainer, { paddingTop: SCREEN_HEIGHT * 0.06 }]}>
               <Text style={styles.headerTitleText}>MathSync</Text>
@@ -62,7 +75,7 @@ export default function SignUp() {
             </View>
           </View>
 
-          {/* Main Container - Overlay logic */}
+          {/* Main Container */}
           <View style={[
             styles.mainContainer, 
             { 
@@ -77,7 +90,7 @@ export default function SignUp() {
               </View>
 
               <View style={styles.formContainer}>
-                {/* Full Name Input - 8% height mimic */}
+                {/* Full Name Input */}
                 <View style={[
                   styles.inputWrapper,
                   { height: SCREEN_HEIGHT * 0.08 },
@@ -96,7 +109,7 @@ export default function SignUp() {
                   />
                 </View>
 
-                {/* Email Input - 8% height mimic */}
+                {/* Email Input */}
                 <View style={[
                   styles.inputWrapper,
                   { height: SCREEN_HEIGHT * 0.08 },
@@ -116,7 +129,7 @@ export default function SignUp() {
                   />
                 </View>
               
-                {/* Password Input - 8% height mimic */}
+                {/* Password Input */}
                 <View style={[
                   styles.inputWrapper,
                   { height: SCREEN_HEIGHT * 0.08 },
@@ -142,7 +155,7 @@ export default function SignUp() {
                   </TouchableOpacity>
                 </View>
 
-                {/* Confirm Password Input - 8% height mimic */}
+                {/* Confirm Password Input */}
                 <View style={[
                   styles.inputWrapper,
                   { height: SCREEN_HEIGHT * 0.08 },
@@ -161,12 +174,29 @@ export default function SignUp() {
                   />
                 </View>
 
-                {/* Sign Up Button - 7% height mimic */}
+                {/* Grade Level Picker Trigger */}
+                <TouchableOpacity 
+                   style={[styles.inputWrapper, { height: SCREEN_HEIGHT * 0.08 }]} 
+                   onPress={() => setShowGradePicker(true)}
+                   activeOpacity={0.8}
+                >
+                  <MaterialIcons name="school" size={24} color={Colors.onSurfaceVariant} />
+                  <Text style={[
+                      styles.input, 
+                      { color: gradeLevel ? '#000000' : Colors.onSurfaceVariant }
+                  ]}>
+                    {gradeLevel ? `Grade ${gradeLevel}` : 'Select Grade Level'}
+                  </Text>
+                  <Feather name="chevron-down" size={20} color={Colors.onSurfaceVariant} />
+                </TouchableOpacity>
+
+                {/* Sign Up Button */}
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity 
                     style={[styles.signupButton, { height: SCREEN_HEIGHT * 0.07 }]} 
                     onPress={handleSignUp}
                     activeOpacity={0.8}
+                    disabled={loading}
                   >
                     {loading ? (
                       <ActivityIndicator color="#FFFFFF" />
@@ -187,6 +217,41 @@ export default function SignUp() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      {/* Custom Picker Modal for Grade Level */}
+      <Modal
+         visible={showGradePicker}
+         transparent={true}
+         animationType="fade"
+         onRequestClose={() => setShowGradePicker(false)}
+      >
+        <TouchableOpacity 
+           style={styles.modalOverlay} 
+           activeOpacity={1} 
+           onPressOut={() => setShowGradePicker(false)}
+        >
+           <View style={[styles.modalContent, { width: SCREEN_WIDTH * 0.8 }]}>
+             <Text style={styles.modalTitle}>Select Grade Level</Text>
+             {gradeOptions.map((grade) => (
+               <TouchableOpacity 
+                  key={grade}
+                  style={styles.modalOption}
+                  onPress={() => {
+                    setGradeLevel(grade);
+                    setShowGradePicker(false);
+                  }}
+               >
+                 <Text style={[
+                   styles.modalOptionText,
+                   gradeLevel === grade && { color: Colors.primary, fontFamily: 'PlusJakartaSans-Bold' }
+                 ]}>
+                   Grade {grade}
+                 </Text>
+               </TouchableOpacity>
+             ))}
+           </View>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -299,4 +364,34 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.primary,
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontFamily: 'Lexend-Bold',
+    color: Colors.onSurface,
+    marginBottom: 15,
+  },
+  modalOption: {
+    width: '100%',
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+    alignItems: 'center',
+  },
+  modalOptionText: {
+    fontSize: 18,
+    fontFamily: 'PlusJakartaSans-Medium',
+    color: Colors.onSurfaceVariant,
+  }
 });
