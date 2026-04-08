@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView, KeyboardAvoidingView, Platform, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView, KeyboardAvoidingView, Platform, useWindowDimensions, Alert } from 'react-native';
 import { useRouter, Stack } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 
+import authService from '../../src/services/auth.service';
+
 // Design System
 import Colors from '@constants/Colors';
 
-/**
- * SignIn Screen
- * Mimics the user's provided design structure and ratios exactly.
- * Adheres to the "Golden Rule": Flexbox for core layout, Dimensions for specific ratios.
- */
 export default function SignIn() {
   const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = useWindowDimensions();
-  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [viewPassword, setViewPassword] = useState(false);
@@ -23,12 +20,17 @@ export default function SignIn() {
   const router = useRouter();
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Validation Error', 'Please enter both email and password.');
+      return;
+    }
+
     setLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await authService.signIn(email, password);
       router.replace('/(drawer)/Home');
     } catch (error) {
-      console.log(error);
+       Alert.alert('Login Failed', error.message || 'Invalid email or password.');
     } finally {
       setLoading(false);
     }
@@ -47,7 +49,7 @@ export default function SignIn() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {/* Header Section - 40% height mimic */}
+          {/* Header Section */}
           <View style={[styles.header, { height: SCREEN_HEIGHT * 0.4 }]}>
             <LinearGradient
               colors={[Colors.primary, '#803400']}
@@ -59,7 +61,7 @@ export default function SignIn() {
             </View>
           </View>
 
-          {/* Main Container - Overlay logic */}
+          {/* Main Container */}
           <View style={[
             styles.mainContainer,
             {
@@ -74,25 +76,27 @@ export default function SignIn() {
               </View>
 
               <View style={styles.formContainer}>
-                {/* Nickname Input - 8% height mimic */}
+                {/* Email Input */}
                 <View style={[
                   styles.inputWrapper,
                   { height: SCREEN_HEIGHT * 0.08 },
-                  isFocused === 'nickname' && styles.inputWrapperFocused
+                  isFocused === 'email' && styles.inputWrapperFocused
                 ]}>
-                  <Feather name="user" size={24} color={Colors.onSurfaceVariant} />
+                  <Feather name="mail" size={24} color={Colors.onSurfaceVariant} />
                   <TextInput
                     style={styles.input}
-                    placeholder="Nickname"
-                    value={nickname}
+                    placeholder="Email Address"
+                    value={email}
                     placeholderTextColor={Colors.onSurfaceVariant}
-                    onChangeText={setNickname}
-                    onFocus={() => setIsFocused('nickname')}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    onFocus={() => setIsFocused('email')}
                     onBlur={() => setIsFocused(null)}
                   />
                 </View>
 
-                {/* Password Input - 8% height mimic */}
+                {/* Password Input */}
                 <View style={[
                   styles.inputWrapper,
                   { height: SCREEN_HEIGHT * 0.08 },
@@ -118,12 +122,13 @@ export default function SignIn() {
                   </TouchableOpacity>
                 </View>
 
-                {/* Login Button - 7% height mimic */}
+                {/* Login Button */}
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity
                     style={[styles.loginButton, { height: SCREEN_HEIGHT * 0.07 }]}
                     onPress={handleLogin}
                     activeOpacity={0.8}
+                    disabled={loading}
                   >
                     <LinearGradient
                       colors={[Colors.primary, '#803400']}
@@ -145,7 +150,7 @@ export default function SignIn() {
                     </TouchableOpacity>
                   </View>
 
-                  {/* Guest Button - 7% height mimic */}
+                  {/* Guest Button (Left mainly for rapid testing but can be removed based on requirement) */}
                   <TouchableOpacity
                     style={[styles.guestButton, { height: SCREEN_HEIGHT * 0.07 }]}
                     onPress={() => router.replace('/(drawer)/Home')}
