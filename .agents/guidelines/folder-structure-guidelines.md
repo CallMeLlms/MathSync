@@ -31,6 +31,8 @@ app/
 │   ├── Settings.jsx            # User Preferences
 │   ├── Calendar.jsx            # Schedule/Event Tracking
 │   └── _layout.js              # Drawer Navigation Layout
+├── classroom/                   # Classroom Management
+│   └── [id].jsx                # Specific Classroom View
 ├── Index.jsx                    # Entry Point / Splash Redirect
 └── _layout.js                  # Root Application Layout
 ```
@@ -48,6 +50,8 @@ src/
 │   ├── HomeComponents/         # Dashboard Widgets
 │   ├── LessonComponents/       # Educational Content Display
 │   └── Shared/                 # Common UI (Buttons, Cards)
+├── constants/                  # Configuration & Static Values
+│   └── colors.js               # Global Color Palette
 ├── context/                    # React Context Providers
 │   └── badge-system/           # Badge & Reward Logic
 ├── data-stores/                # Zustand State Management
@@ -55,17 +59,19 @@ src/
 ├── hooks/                      # Custom React Hooks
 │   ├── useLessonProgress.js    # Progress Tracking Logic
 │   └── usePlayerAudio.js       # Sound Effect Management
+├── screens/                    # Specialized Screen Logics
 ├── services/                   # External API & Device Services
-│   └── api-manager.js          # Axios & Interceptor Logic
+│   └── apiManager.js           # Axios & Interceptor Logic
+├── theme/                      # Global Theme & Design Tokens
 └── utils/                      # Utility Functions & Generators
     └── problem-generators/     # Math Problem Logic
 ```
 
 **Naming Rules for `/src`**:
-- **Components & Component Folders**: Must use `PascalCase` (e.g., `GameComponents/`).
-- **Non-Component Folders**: Must use `lowercase` or `kebab-case` (e.g., `data-stores/`).
-- **Non-Component Files**: Must use `camelCase` (e.g., `useLessonProgress.js`).
-- **Strict JS**: All files use `.js` or `.jsx`.
+- **Components & Component Folders**: Must use **`PascalCase`** (e.g., `GameComponents/`, `WelcomeCard.jsx`).
+- **Non-Component Folders**: Must use **`lowercase`** or **`kebab-case`** (e.g., `data-stores/`, `utils/`).
+- **Non-Component Files**: Must use **`camelCase`** (e.g., `useLessonProgress.js`, `apiManager.js`).
+- **Strict JS**: All files use `.js` or `.jsx`. Components use `.jsx`, others use `.js`.
 
 ---
 

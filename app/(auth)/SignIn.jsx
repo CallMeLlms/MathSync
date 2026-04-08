@@ -4,10 +4,10 @@ import { useRouter, Stack } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 
-import authService from '../../src/services/auth.service';
+import authService from '../../src/services/authService';
 
 // Design System
-import Colors from '@constants/Colors';
+import Colors from '@constants/colors';
 
 export default function SignIn() {
   const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = useWindowDimensions();

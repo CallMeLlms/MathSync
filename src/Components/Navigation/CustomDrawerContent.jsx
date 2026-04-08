@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ScrollView } fr
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { useRouter } from 'expo-router';
 import { AntDesign, Feather } from '@expo/vector-icons';
-import Colors from '@constants/Colors';
+import Colors from '@constants/colors';
 
 /**
  * CustomDrawerContent — The Tactile Discovery Garden Aesthetic

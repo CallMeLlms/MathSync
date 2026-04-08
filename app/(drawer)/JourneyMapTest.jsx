@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView, useWindowDimensions, 
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
-import Colors from '@constants/Colors';
+import Colors from '@constants/colors';
 
 /**
  * JourneyMapTest — High-Aesthetic Mockup

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, FlatList, ActivityIndicator, Alert, RefreshControl, ScrollView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import Colors from '@constants/Colors';
-import classroomService from '../../src/services/classroom.service';
+import Colors from '@constants/colors';
+import classroomService from '../../src/services/classroomService';
 
 export default function Home() {
   const router = useRouter();

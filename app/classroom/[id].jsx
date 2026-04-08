@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Feather, AntDesign } from '@expo/vector-icons';
-import Colors from '@constants/Colors';
-import classroomService from '../../src/services/classroom.service';
-import assignmentService from '../../src/services/assignment.service';
+import Colors from '@constants/colors';
+import classroomService from '../../src/services/classroomService';
+import assignmentService from '../../src/services/assignmentService';
 
 export default function ClassroomDetail() {
   const router = useRouter();

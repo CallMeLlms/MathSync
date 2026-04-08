@@ -1,4 +1,4 @@
-import apiClient from './api-manager';
+import apiClient from './apiManager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class AuthService {

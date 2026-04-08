@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Act
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
-import Colors from '@constants/Colors';
+import Colors from '@constants/colors';
 
-import assignmentService from '../../../src/services/assignment.service';
-import submissionService from '../../../src/services/submission.service';
+import assignmentService from '../../../src/services/assignmentService';
+import submissionService from '../../../src/services/submissionService';
 
 export default function AssignmentDetail() {
   const router = useRouter();
