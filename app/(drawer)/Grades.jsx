@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
   },
   scrollContent: {
-    paddingTop: 88, // Space for fixed header
+    paddingTop: 16,
     paddingHorizontal: 24,
     paddingBottom: 60,
   },

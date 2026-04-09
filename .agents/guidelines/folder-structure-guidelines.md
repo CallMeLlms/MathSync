@@ -9,6 +9,7 @@ This document defines the official directory structure and naming conventions fo
 MathSync/
 ├── app/                        # Expo Router (File-based Routing)
 ├── src/                        # Core Application Source
+├── content/                    # Structured Data & Curricula (JSON)
 ├── assets/                     # Static Assets (Images, Fonts, Lottie)
 ├── .agents/                    # AI Behavior & Guidelines
 │   ├── document/               # Architectural Plans & Feature Blueprints
@@ -30,12 +31,15 @@ app/
 │   └── _layout.js              # Auth Stack Layout
 ├── (drawer)/                   # Main Navigation (Drawer)
 │   ├── Home.jsx                # Dashboard / Landing
+│   ├── Grades.jsx              # Grade Selection Portal
 │   ├── Profile.jsx             # User Statistics
 │   ├── Settings.jsx            # User Preferences
 │   ├── Calendar.jsx            # Schedule/Event Tracking
 │   └── _layout.js              # Drawer Navigation Layout
 ├── classroom/                   # Classroom Management
 │   └── [id].jsx                # Specific Classroom View
+├── journey/                    # Grade Journeys
+│   └── [grade].jsx             # Dynamic Journey Entry (data-driven)
 ├── Index.jsx                    # Entry Point / Splash Redirect
 └── _layout.js                  # Root Application Layout
 ```
@@ -49,7 +53,7 @@ The `src/` directory contains all reusable logic, state, and UI components.
 src/
 ├── Components/                 # UI Components (PascalCase)
 │   ├── GameComponents/         # Reusable Game UI
-│   ├── GameFlowComponents/     # Navigation & Progress UI
+│   ├── GameFlowComponents/     # Navigation & Progress UI (e.g., JourneyMap.jsx)
 │   ├── HomeComponents/         # Dashboard Widgets
 │   ├── LessonComponents/       # Educational Content Display
 │   └── Shared/                 # Common UI (Buttons, Cards)
@@ -62,14 +66,10 @@ src/
 │   ├── game-stores/            # [Planned] Game configuration & Logic
 │   └── app-stores/             # [Planned] Navigation & Network states
 ├── hooks/                      # Custom React Hooks
-│   ├── useLessonProgress.js    # Progress Tracking Logic
-│   └── usePlayerAudio.js       # Sound Effect Management
 ├── screens/                    # Specialized Screen Logics
 ├── services/                   # External API & Device Services
-│   └── apiManager.js           # Axios & Interceptor Logic
 ├── theme/                      # Global Theme & Design Tokens
 └── utils/                      # Utility Functions & Generators
-    └── problem-generators/     # Math Problem Logic
 ```
 
 **Naming Rules for `/src`**:
@@ -82,7 +82,20 @@ src/
 
 ---
 
-## 🎮 3. Game Module Organization
+## 📖 3. /content — Structured Data
+The `content/` directory houses the "brains" of the application in JSON format.
+
+```
+content/
+├── lesson-map/                 # Grade Journey maps (MATATAG)
+│   ├── G1.json                 # Grade 1 map
+│   └── G2.json                 # Grade 2 map
+└── grades.json                 # [Planned] Global grade metadata
+```
+
+---
+
+## 🎮 4. Game Module Organization
 MathSync uses a modular approach for its curriculum-based games.
 
 ```
@@ -99,7 +112,7 @@ src/Games/                      # Game Logic & Question Banks
 
 ---
 
-## 🖼 4. /assets — Static Media
+## 🖼 5. /assets — Static Media
 ```
 assets/
 ├── anim/                       # Lottie JSON Animations
@@ -110,7 +123,7 @@ assets/
 
 ---
 
-## 📜 5. Timeline & Documentation Standards
+## 📜 6. Timeline & Documentation Standards
 All significant changes and planned architecture must be logged using the following naming conventions:
 - **Plans**: `.agents/document/YYYY-MM-DD_HH-MM-SS-(TOPIC)-Document.md`
 - **Logs**: `.agents/logs/YYYY-MM-DD_HH-MM-SS-(TOPIC)-UI.md`

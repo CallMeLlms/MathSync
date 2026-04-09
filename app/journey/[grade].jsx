@@ -64,7 +64,6 @@ export default function GradeJourney() {
       {/* Branded Header Integration */}
       <Stack.Screen options={{ headerShown: false }} />
 
-
       <View style={styles.content}>
         <JourneyMap 
           levels={curriculum.levels} 
