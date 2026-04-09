@@ -5,9 +5,10 @@ Implemented a scalable, data-driven Grade Selection system and the accompanying 
 
 ## Changes
 - **Grade Selection Portal (`app/(drawer)/Grades.jsx`)**:
-  - Implemented a tactile card-based grid for Grades 1–6.
-  - Features diverse tonal backgrounds (no shadows) using the project's core color palette.
-  - Integrated with the global user store to persist grade selection.
+  - **Bento Grid Implementation**: Overhauled the portal with a premium "Pick Your Adventure" grid layout.
+  - Features tactile cards for Grades 1–6 with custom descriptions and MaterialIcons.
+  - Implemented state-aware visuals: Active Grade (primary border/badge) and Locked Grades (greyscale/opacity).
+  - Integrated with the global user store to persist selection.
 - **Dynamic Journey Map (`app/journey/[grade].jsx`)**:
   - Created an "Official Journey" entry point using Expo Router's dynamic routing segments (`[grade]`).
   - Added smart data loading logic that pulls specific curriculum maps from the content layer.
@@ -18,6 +19,7 @@ Implemented a scalable, data-driven Grade Selection system and the accompanying 
   - Transformed the store blueprint into a functional Zustand implementation.
   - Integrated `@react-native-async-storage/async-storage` for persistence across app restarts.
 - **Curriculum Content Layer (`content/lesson-map/`)**:
+  - Renamed from `curricula` to **`lesson-map`** for better semantic alignment with the UI.
   - Established a standardized JSON schema for curriculum definition.
   - Created placeholder MATATAG maps for Grade 1 and Grade 2.
 

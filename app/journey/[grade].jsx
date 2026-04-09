@@ -61,22 +61,9 @@ export default function GradeJourney() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header Stack Integration */}
-      <Stack.Screen 
-        options={{
-          headerShown: true,
-          headerTitle: `${curriculum.grade} Journey`,
-          headerStyle: { backgroundColor: Colors.surface },
-          headerTitleStyle: { fontFamily: 'Lexend-Bold', fontSize: 20, color: Colors.onSurface },
-          headerTintColor: Colors.primary,
-          headerShadowVisible: false,
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 16 }}>
-              <Feather name="arrow-left" size={24} color={Colors.primary} />
-            </TouchableOpacity>
-          ),
-        }} 
-      />
+      {/* Branded Header Integration */}
+      <Stack.Screen options={{ headerShown: false }} />
+
 
       <View style={styles.content}>
         <JourneyMap 
@@ -95,7 +82,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    // Note: JourneyMap handles its own padding and layout
+    paddingTop: 72, // Space for DiscoveryHeader
   },
   welcomeTitle: {
     fontFamily: 'Lexend-Black',
