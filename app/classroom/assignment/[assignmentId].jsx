@@ -131,7 +131,7 @@ export default function AssignmentDetail() {
       <Stack.Screen 
         options={{ 
             title: 'Assignment',
-            headerStyle: { backgroundColor: Colors.surface, elevation: 0, shadowOpacity: 0 },
+            headerStyle: { backgroundColor: Colors.surface },
             headerTitleStyle: { fontFamily: 'Lexend-Bold', fontSize: 18, color: Colors.onSurface },
             headerTintColor: Colors.primary,
         }} 

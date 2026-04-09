@@ -37,7 +37,7 @@ export default function GradeJourney() {
         `Ready to explore "${node.title}"?`,
         [
           { text: 'Later', style: 'cancel' },
-          { text: 'Start', onPress: () => console.log('Starting lesson:', node.id) }
+          { text: 'Start', onPress: () => router.push(`/game/${node.id}`) }
         ]
       );
     }

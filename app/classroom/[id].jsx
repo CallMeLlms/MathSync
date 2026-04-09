@@ -170,7 +170,7 @@ export default function ClassroomDetail() {
       <Stack.Screen 
         options={{ 
           title: classDetails ? classDetails.name : 'Classroom',
-          headerStyle: { backgroundColor: Colors.surface, elevation: 0, shadowOpacity: 0 },
+          headerStyle: { backgroundColor: Colors.surface },
           headerTitleStyle: { fontFamily: 'Lexend-Bold', fontSize: 18, color: Colors.onSurface },
           headerTintColor: Colors.primary,
           headerBackTitleVisible: false

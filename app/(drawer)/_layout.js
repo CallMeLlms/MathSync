@@ -13,8 +13,6 @@ const DrawerLayout = () => {
         headerShown: true,
         headerStyle: {
           backgroundColor: Colors.surface,
-          elevation: 0,
-          shadowOpacity: 0,
           borderBottomWidth: 1,
           borderBottomColor: Colors.surfaceContainerLow,
         },

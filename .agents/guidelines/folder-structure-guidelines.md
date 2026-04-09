@@ -7,9 +7,9 @@ This document defines the official directory structure and naming conventions fo
 ## 🏗 Project Root
 ```
 MathSync/
-├── app/                        # Expo Router (File-based Routing)
-├── src/                        # Core Application Source
-├── content/                    # Structured Data & Curricula (JSON)
+├── app/                        # Expo Router (Routing & Hubs)
+├── src/                        # Core Application Source (Logic/UI)
+├── content/                    # Structured Data (JSON Curricula)
 ├── assets/                     # Static Assets (Images, Fonts, Lottie)
 ├── .agents/                    # AI Behavior & Guidelines
 │   ├── document/               # Architectural Plans & Feature Blueprints
@@ -40,6 +40,8 @@ app/
 │   └── [id].jsx                # Specific Classroom View
 ├── journey/                    # Grade Journeys
 │   └── [grade].jsx             # Dynamic Journey Entry (data-driven)
+├── game/                       # Universal Game Route
+│   └── [lessonId].jsx          # Active Game Session
 ├── Index.jsx                    # Entry Point / Splash Redirect
 └── _layout.js                  # Root Application Layout
 ```
@@ -52,24 +54,25 @@ The `src/` directory contains all reusable logic, state, and UI components.
 ```
 src/
 ├── Components/                 # UI Components (PascalCase)
-│   ├── GameComponents/         # Reusable Game UI
-│   ├── GameFlowComponents/     # Navigation & Progress UI (e.g., JourneyMap.jsx)
+│   ├── GameComponents/         # Reusable Game Mechanics
+│   │   └── Engines/            # Standardized Engines (Picker, Counter)
+│   │       └── Shared/         # Common logic (AssetDisplay, GameFeedback)
+│   ├── GameFlowComponents/     # Navigation & Progress UI (JourneyMap)
 │   ├── HomeComponents/         # Dashboard Widgets
-│   ├── LessonComponents/       # Educational Content Display
-│   └── Shared/                 # Common UI (Buttons, Cards)
-├── constants/                  # Configuration & Static Values
-│   └── colors.js               # Global Color Palette
+│   ├── Shared/                 # Common UI (Buttons, Cards)
+│   └── Navigation/             # Custom Navigation Components
+├── constants/                  # Configuration & Global Colors
 ├── context/                    # React Context Providers
-│   └── badge-system/           # Badge & Reward Logic
-├── stores/                     # Global State Management (Zustand)
-│   ├── user-stores/            # User Profile & Activity States
-│   ├── game-stores/            # [Planned] Game configuration & Logic
-│   └── app-stores/             # [Planned] Navigation & Network states
+├── Games/                      # Game Logic & Orchestration
+│   └── GradeGames/             # Grade-Specific Shells (e.g., Grade1/GameScreen.jsx)
+├── stores/                     # Global State (Zustand)
+│   ├── user-stores/            # User Profile & Activity
+│   └── game-stores/            # Active session & Engine logic
 ├── hooks/                      # Custom React Hooks
-├── screens/                    # Specialized Screen Logics
-├── services/                   # External API & Device Services
-├── theme/                      # Global Theme & Design Tokens
-└── utils/                      # Utility Functions & Generators
+├── screens/                    # Specialized Screen wrappers
+├── services/                   # External API & Auth Services
+├── theme/                      # Design Tokens
+└── utils/                      # Common Utility Helpers
 ```
 
 **Naming Rules for `/src`**:
@@ -90,7 +93,8 @@ content/
 ├── lesson-map/                 # Grade Journey maps (MATATAG)
 │   ├── G1.json                 # Grade 1 map
 │   └── G2.json                 # Grade 2 map
-└── grades.json                 # [Planned] Global grade metadata
+└── game-data/                  # Universal Question Banks
+    └── G1-Q1-Lessons.json      # Grade 1 Data injected into the Engines
 ```
 
 ---
@@ -118,7 +122,10 @@ assets/
 ├── anim/                       # Lottie JSON Animations
 ├── fonts/                      # Custom Typefaces (Lexend, Plus Jakarta Sans)
 ├── images/                     # UI Imagery & Graphics
-└── sounds/                     # Game Audio & Feedback
+│   └── games/                  # Centralized Game Assets (AssetMap mapped)
+├── sounds/                     # Game Audio & Feedback
+│   └── games/                  # Voiceovers and SFX
+└── audio/                      # Raw Audio Files
 ```
 
 ---
