@@ -9,13 +9,13 @@ import assignmentService from '@/services/assignmentService';
 export default function ClassroomDetail() {
   const router = useRouter();
   const { id, sectionId } = useLocalSearchParams(); // id = classId
-  
+
   const [activeTab, setActiveTab] = useState('lessons'); // 'lessons' or 'assignments'
-  
+
   const [classDetails, setClassDetails] = useState(null);
   const [lessonsData, setLessonsData] = useState([]); // This holds quarters
   const [assignments, setAssignments] = useState([]);
-  
+
   const [loading, setLoading] = useState(true);
   const [expandedQuarters, setExpandedQuarters] = useState({});
 
@@ -30,10 +30,10 @@ export default function ClassroomDetail() {
       if (id) {
         const cDetails = await classroomService.getClassroomDetails(id);
         if (cDetails.success) {
-           setClassDetails(cDetails.data);
+          setClassDetails(cDetails.data);
         }
       }
-      
+
       // Fetch Lessons & Assignments
       if (sectionId) {
         const [lessRes, assRes] = await Promise.all([
@@ -42,10 +42,10 @@ export default function ClassroomDetail() {
         ]);
 
         if (lessRes.success) {
-           setLessonsData(lessRes.quarters || []);
+          setLessonsData(lessRes.quarters || []);
         }
         if (assRes && Array.isArray(assRes)) {
-           setAssignments(assRes);
+          setAssignments(assRes);
         }
       }
     } catch (error) {
@@ -66,62 +66,67 @@ export default function ClassroomDetail() {
 
   const renderLessons = () => {
     if (lessonsData.length === 0) {
-       return (
-         <View style={styles.emptyContainer}>
-            <Feather name="book" size={48} color={Colors.onSurfaceVariant} />
-            <Text style={styles.emptyText}>No lessons available yet.</Text>
-         </View>
-       );
+      return (
+        <View style={styles.emptyContainer}>
+          <Feather name="book" size={48} color={Colors.onSurfaceVariant} />
+          <Text style={styles.emptyText}>No lessons available yet.</Text>
+        </View>
+      );
     }
 
     return (
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {lessonsData.map((quarterData, index) => {
-           const isExpanded = expandedQuarters[quarterData.quarter];
-           return (
-             <View key={index} style={styles.quarterCard}>
-                <TouchableOpacity 
-                  style={styles.quarterHeader} 
-                  activeOpacity={0.8}
-                  onPress={() => toggleQuarter(quarterData.quarter)}
-                >
-                  <Text style={styles.quarterTitle}>Quarter {quarterData.quarter}</Text>
-                  <Feather name={isExpanded ? "chevron-up" : "chevron-down"} size={24} color={Colors.onSurface} />
-                </TouchableOpacity>
-                
-                {isExpanded && (
-                  <View style={styles.quarterContent}>
-                     {/* Learning Outcomes */}
-                     {quarterData.learningOutcomes && quarterData.learningOutcomes.length > 0 && (
-                        <View style={styles.outcomesContainer}>
-                           <Text style={styles.sectionSubTitle}>Learning Outcomes:</Text>
-                           {quarterData.learningOutcomes.map((outcome, idx) => (
-                             <Text key={idx} style={styles.outcomeLine}>• {outcome}</Text>
-                           ))}
+          const isExpanded = expandedQuarters[quarterData.quarter];
+          return (
+            <View key={index} style={styles.quarterCard}>
+              <TouchableOpacity
+                style={styles.quarterHeader}
+                activeOpacity={0.8}
+                onPress={() => toggleQuarter(quarterData.quarter)}
+              >
+                <Text style={styles.quarterTitle}>Quarter {quarterData.quarter}</Text>
+                <Feather name={isExpanded ? "chevron-up" : "chevron-down"} size={24} color={Colors.onSurface} />
+              </TouchableOpacity>
+
+              {isExpanded && (
+                <View style={styles.quarterContent}>
+                  {/* Learning Outcomes */}
+                  {quarterData.learningOutcomes && quarterData.learningOutcomes.length > 0 && (
+                    <View style={styles.outcomesContainer}>
+                      <Text style={styles.sectionSubTitle}>Learning Outcomes:</Text>
+                      {quarterData.learningOutcomes.map((outcome, idx) => (
+                        <Text key={idx} style={styles.outcomeLine}>• {outcome}</Text>
+                      ))}
+                    </View>
+                  )}
+
+                  {/* Lesson Cards */}
+                  <Text style={[styles.sectionSubTitle, { marginTop: 16 }]}>Lessons:</Text>
+                  {(!quarterData.lessons || quarterData.lessons.length === 0) ? (
+                    <Text style={styles.noLessonsText}>No lessons assigned.</Text>
+                  ) : (
+                    quarterData.lessons.map((lesson) => (
+                      <TouchableOpacity
+                        key={lesson._id}
+                        style={styles.lessonCard}
+                        activeOpacity={0.8}
+                        onPress={() => router.push(`/classroom/lesson/${lesson._id}?sectionId=${sectionId}`)}
+                      >
+                        <View style={styles.lessonIconBox}>
+                          <MaterialIcons name="play-lesson" size={24} color={Colors.primary} />
                         </View>
-                     )}
-                     
-                     {/* Lesson Cards */}
-                     <Text style={[styles.sectionSubTitle, { marginTop: 16 }]}>Lessons:</Text>
-                     {(!quarterData.lessons || quarterData.lessons.length === 0) ? (
-                        <Text style={styles.noLessonsText}>No lessons assigned.</Text>
-                     ) : (
-                        quarterData.lessons.map((lesson) => (
-                          <View key={lesson._id} style={styles.lessonCard}>
-                             <View style={styles.lessonIconBox}>
-                                <AntDesign name="playcircleo" size={24} color={Colors.primary} />
-                             </View>
-                             <View style={styles.lessonInfo}>
-                                <Text style={styles.lessonTitle}>{lesson.title}</Text>
-                                <Text style={styles.lessonDesc} numberOfLines={2}>{lesson.description}</Text>
-                             </View>
-                          </View>
-                        ))
-                     )}
-                  </View>
-                )}
-             </View>
-           );
+                        <View style={styles.lessonInfo}>
+                          <Text style={styles.lessonTitle}>{lesson.title}</Text>
+                          <Text style={styles.lessonDesc} numberOfLines={2}>{lesson.description}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    ))
+                  )}
+                </View>
+              )}
+            </View>
+          );
         })}
       </ScrollView>
     );
@@ -129,82 +134,82 @@ export default function ClassroomDetail() {
 
   const renderAssignments = () => {
     if (assignments.length === 0) {
-       return (
-         <View style={styles.emptyContainer}>
-            <Feather name="file-text" size={48} color={Colors.onSurfaceVariant} />
-            <Text style={styles.emptyText}>No assignments posted.</Text>
-         </View>
-       );
+      return (
+        <View style={styles.emptyContainer}>
+          <Feather name="file-text" size={48} color={Colors.onSurfaceVariant} />
+          <Text style={styles.emptyText}>No assignments posted.</Text>
+        </View>
+      );
     }
 
     return (
-      <FlatList 
-         data={assignments}
-         keyExtractor={(item) => item._id}
-         contentContainerStyle={styles.scrollContent}
-         showsVerticalScrollIndicator={false}
-         renderItem={({ item }) => (
-           <TouchableOpacity 
-             style={styles.assignmentCard}
-             activeOpacity={0.8}
-             onPress={() => router.push(`/classroom/assignment/${item._id}?sectionId=${sectionId}`)}
-           >
-              <View style={styles.assignmentIconBox}>
-                 <Feather name="edit-3" size={24} color="#FFF" />
-              </View>
-              <View style={styles.assignmentInfo}>
-                 <Text style={styles.assignmentTitle}>{item.title}</Text>
-                 <Text style={styles.assignmentPoints}>{item.points} Points Available</Text>
-                 <Text style={styles.assignmentPoints}>
-                   Due: {item.dueDate ? new Date(item.dueDate).toLocaleDateString() : 'No Due Date'}
-                 </Text>
-              </View>
-           </TouchableOpacity>
-         )}
+      <FlatList
+        data={assignments}
+        keyExtractor={(item) => item._id}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.assignmentCard}
+            activeOpacity={0.8}
+            onPress={() => router.push(`/classroom/assignment/${item._id}?sectionId=${sectionId}`)}
+          >
+            <View style={styles.assignmentIconBox}>
+              <Feather name="edit-3" size={24} color="#FFF" />
+            </View>
+            <View style={styles.assignmentInfo}>
+              <Text style={styles.assignmentTitle}>{item.title}</Text>
+              <Text style={styles.assignmentPoints}>{item.points} Points Available</Text>
+              <Text style={styles.assignmentPoints}>
+                Due: {item.dueDate ? new Date(item.dueDate).toLocaleDateString() : 'No Due Date'}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
       />
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Stack.Screen 
-        options={{ 
+      <Stack.Screen
+        options={{
           title: classDetails ? classDetails.name : 'Classroom',
           headerStyle: { backgroundColor: Colors.surface },
           headerTitleStyle: { fontFamily: 'Lexend-Bold', fontSize: 18, color: Colors.onSurface },
           headerTintColor: Colors.primary,
           headerBackTitleVisible: false
-        }} 
+        }}
       />
 
       {/* Custom Minimalist Tab Switcher */}
       <View style={styles.tabContainer}>
-         <TouchableOpacity 
-            style={[styles.tabButton, activeTab === 'lessons' && styles.tabButtonActive]}
-            onPress={() => setActiveTab('lessons')}
-            activeOpacity={0.8}
-         >
-            <Text style={[styles.tabText, activeTab === 'lessons' && styles.tabTextActive]}>Lessons</Text>
-         </TouchableOpacity>
-         
-         <TouchableOpacity 
-            style={[styles.tabButton, activeTab === 'assignments' && styles.tabButtonActive]}
-            onPress={() => setActiveTab('assignments')}
-            activeOpacity={0.8}
-         >
-            <Text style={[styles.tabText, activeTab === 'assignments' && styles.tabTextActive]}>Assignments</Text>
-         </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, activeTab === 'lessons' && styles.tabButtonActive]}
+          onPress={() => setActiveTab('lessons')}
+          activeOpacity={0.8}
+        >
+          <Text style={[styles.tabText, activeTab === 'lessons' && styles.tabTextActive]}>Lessons</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.tabButton, activeTab === 'assignments' && styles.tabButtonActive]}
+          onPress={() => setActiveTab('assignments')}
+          activeOpacity={0.8}
+        >
+          <Text style={[styles.tabText, activeTab === 'assignments' && styles.tabTextActive]}>Assignments</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Content Area */}
       <View style={styles.contentArea}>
-         {loading ? (
-           <View style={styles.centered}>
-              <ActivityIndicator size="large" color={Colors.primary} />
-           </View>
-         ) : (
-           activeTab === 'lessons' ? renderLessons() : renderAssignments()
-         )}
+        {loading ? (
+          <View style={styles.centered}>
+            <ActivityIndicator size="large" color={Colors.primary} />
+          </View>
+        ) : (
+          activeTab === 'lessons' ? renderLessons() : renderAssignments()
+        )}
       </View>
     </SafeAreaView>
   );
@@ -266,7 +271,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 16,
   },
-  
+
   // Lessons Styles
   quarterCard: {
     backgroundColor: '#FFFFFF',
