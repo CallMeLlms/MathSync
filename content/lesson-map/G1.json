@@ -1,0 +1,66 @@
+{
+  "grade": "Grade 1",
+  "theme": "primary",
+  "levels": [
+    {
+      "id": 1,
+      "title": "Welcome to the Garden",
+      "subtitle": "Counting through Nature",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.5,
+      "y": 0.9,
+      "icon": "leaf"
+    },
+    {
+      "id": 2,
+      "title": "Pairing Petals",
+      "subtitle": "Simple Addition within 10",
+      "type": "lesson",
+      "status": "locked",
+      "x": 0.25,
+      "y": 0.75,
+      "icon": "plus"
+    },
+    {
+      "id": 3,
+      "title": "Falling Leaves",
+      "subtitle": "Subtraction Discovery",
+      "type": "quiz",
+      "status": "locked",
+      "x": 0.75,
+      "y": 0.6,
+      "icon": "minus"
+    },
+    {
+      "id": 4,
+      "title": "Geometric Blooms",
+      "subtitle": "Recognizing Shapes",
+      "type": "lesson",
+      "status": "locked",
+      "x": 0.4,
+      "y": 0.45,
+      "icon": "shape-outline"
+    },
+    {
+      "id": 5,
+      "title": "Gathering Seeds",
+      "subtitle": "Numbers up to 100",
+      "type": "lesson",
+      "status": "locked",
+      "x": 0.8,
+      "y": 0.3,
+      "icon": "grain"
+    },
+    {
+      "id": 6,
+      "title": "The Master Gardener",
+      "subtitle": "Final Grade 1 Review",
+      "type": "boss",
+      "status": "locked",
+      "x": 0.5,
+      "y": 0.1,
+      "icon": "trophy"
+    }
+  ]
+}

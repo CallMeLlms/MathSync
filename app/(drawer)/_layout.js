@@ -47,6 +47,16 @@ const DrawerLayout = () => {
       />
 
       <Drawer.Screen
+        name="Grades"
+        options={{
+          title: "Grades",
+          drawerIcon: ({ color, size }) => (
+            <Feather name="book-open" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
         name="Profile"
         options={{
           title: "Profile",
