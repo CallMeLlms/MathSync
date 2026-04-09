@@ -29,7 +29,6 @@ export default function AchievementSection() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Learning Achievement</Text>
-        <Text style={styles.link}>View All</Text>
       </View>
 
       <View style={styles.grid}>
@@ -55,7 +54,7 @@ export default function AchievementSection() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: Colors.surfaceContainer,
+    backgroundColor: Colors.surfaceContainerLow,
     borderRadius: 32,
     marginHorizontal: 20,
     marginTop: 20,
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    backgroundColor: Colors.surfaceContainerLowest,
+    backgroundColor: Colors.onPrimary,
     padding: 16,
     borderRadius: 24,
     borderWidth: 1,

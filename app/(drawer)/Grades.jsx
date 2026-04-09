@@ -142,7 +142,7 @@ export default function Grades() {
         <View style={styles.heroSection}>
           <Text style={styles.heroTitle}>Pick Your Adventure</Text>
           <Text style={styles.heroSubtitle}>
-            Welcome back, Explorer! Choose your level to start your learning journey in the garden.
+            Welcome back, Explorer! Choose your level to start your learning journey.
           </Text>
         </View>
 
