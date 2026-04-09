@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from 'expo-router';
-import Grade1GameScreen from '@/Games/GradeGames/Grade1/GameScreen';
+import Grade1GameScreen from '@/Components/Game/Orchestrators/Grade1/GameScreen';
 
 /**
  * Universal Game Route.

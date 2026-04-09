@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Alert } from 'r
 import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
-import JourneyMap from '@/Components/GameFlowComponents/JourneyMap';
+import JourneyMap from '@/Components/Game/Flow/JourneyMap';
 
 // Import curriculum data
 import G1Data from '@content/lesson-map/G1.json';

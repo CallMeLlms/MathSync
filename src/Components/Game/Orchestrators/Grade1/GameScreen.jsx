@@ -5,9 +5,9 @@ import Colors from '@/constants/colors';
 import useGameEngine from '@/stores/game-stores/useGameEngine';
 
 // Generic Engines 
-import PickerEngine from '@/Components/GameComponents/Engines/PickerEngine';
-import CounterEngine from '@/Components/GameComponents/Engines/CounterEngine';
-import DragDropEngine from '@/Components/GameComponents/Engines/DragDropEngine';
+import PickerEngine from '@/Components/Game/Engines/PickerEngine';
+import CounterEngine from '@/Components/Game/Engines/CounterEngine';
+import DragDropEngine from '@/Components/Game/Engines/DragDropEngine';
 
 // Data (In a real app, this might be fetched via API based on lessonId)
 import G1LessonData from '@content/game-data/G1-Q1-Lessons.json'; 

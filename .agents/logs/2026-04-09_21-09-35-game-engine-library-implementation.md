@@ -2,28 +2,26 @@
 
 **Date:** April 9, 2026
 **Topic:** Standalone Game Engine Architecture
-**Status:** Approved & Ready for Implementation
+**Status:** Implemented & Unified
 
 ## 🚨 Standalone Engine Strategy
 
 We have officially shifted focus from "Game Flow" orchestration to the **"Engine Mechanics"**.
-*   **Encapsulation**: Engines are self-contained units living in `src/Components/GameComponents/Engines/`.
-*   **Universal Interface**: Every engine adheres to a strict prop interface to ensure seamless swapping by any Parent Container or Hub.
+*   **Encapsulation**: Engines are standardized units living in `src/Components/Game/Engines/`.
+*   **Universal Interface**: Every engine adheres to a strict prop interface to ensure seamless swapping by any Orchestrator.
 
 ## 📂 Architecture Map
 
 ```
 src/
 ├── Components/
-│   └── GameComponents/
-│       └── Engines/              # THE CORE ENGINE LIBRARY
-│           ├── Shared/           # AssetDisplay, GameFeedback, AssetMap
-│           ├── PickerEngine.jsx  # (The Refactored 2x2 Grid)
-│           ├── CounterEngine.jsx # (The Refactored Tap-to-count)
-│           └── DragDropEngine.jsx# (The Refactored Genetic Engine)
+│   └── Game/                     # UNIFIED GAME DOMAIN
+│       ├── Engines/              # The Core Engine Library
+│       │   └── Shared/           # AssetDisplay, GameFeedback, AssetMap
+│       ├── Flow/                 # Journey Navigation (JourneyMap)
+│       └── Orchestrators/        # Session Management (Grade1/GameScreen)
 └── stores/
-    └── game-stores/              # State patterns for PARENT containers
-        └── useGameEngine.js      # Overarching game loop state (timer, total score)
+    └── game-stores/              # Global Game State (useGameEngine.js)
 
 content/
 └── game-data/                    # Universal Question Banks
@@ -54,6 +52,6 @@ Migrating legacy engines (e.g., Grade 1) must adhere to:
 *   **GameFeedback.jsx**: Standardized "Correct/Try Again" animations and sounds.
 
 ### 4. Data & Navigation Integration (Grade 1 PoC)
-*   Extract legacy Grade 1 question logic into `content/game-data/G1-Q1-Lessons.json`.
-*   Update `app/journey/[grade].jsx` to navigate to the Parent Container (`src/Games/GradeGames/Grade1/GameScreen.jsx`).
+*   Extract Grade 1 question logic into `content/game-data/G1-Q1-Lessons.json`.
+*   Update `app/journey/[grade].jsx` to navigate to the Orchestrator (`src/Components/Game/Orchestrators/Grade1/GameScreen.jsx`).
 *   The `GameScreen` fetches JSON data and dynamically renders the appropriate engine (e.g., `<PickerEngine />`) based on the `type` field.

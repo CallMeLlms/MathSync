@@ -54,17 +54,16 @@ The `src/` directory contains all reusable logic, state, and UI components.
 ```
 src/
 ├── Components/                 # UI Components (PascalCase)
-│   ├── GameComponents/         # Reusable Game Mechanics
-│   │   └── Engines/            # Standardized Engines (Picker, Counter)
-│   │       └── Shared/         # Common logic (AssetDisplay, GameFeedback)
-│   ├── GameFlowComponents/     # Navigation & Progress UI (JourneyMap)
+│   ├── Game/                   # Unified Game Domain
+│   │   ├── Engines/            # Standardized Engines (Picker, Counter)
+│   │   │   └── Shared/         # Core logic (AssetDisplay, GameFeedback)
+│   │   ├── Flow/               # Navigation UI (JourneyMap)
+│   │   └── Orchestrators/      # Session Management (Grade1/GameScreen)
 │   ├── HomeComponents/         # Dashboard Widgets
 │   ├── Shared/                 # Common UI (Buttons, Cards)
 │   └── Navigation/             # Custom Navigation Components
 ├── constants/                  # Configuration & Global Colors
 ├── context/                    # React Context Providers
-├── Games/                      # Game Logic & Orchestration
-│   └── GradeGames/             # Grade-Specific Shells (e.g., Grade1/GameScreen.jsx)
 ├── stores/                     # Global State (Zustand)
 │   ├── user-stores/            # User Profile & Activity
 │   └── game-stores/            # Active session & Engine logic
@@ -99,7 +98,7 @@ content/
 
 ---
 
-## 🎮 4. Game Module Organization
+## 🎮 4. Game Module Organization (THIS STRUCTURE, IS A GHOST LEGACY CODE, DO NOT FOLLOW THIS STRUCTURE ANYMORE)
 MathSync uses a modular approach for its curriculum-based games.
 
 ```
