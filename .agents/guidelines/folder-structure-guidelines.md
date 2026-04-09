@@ -11,6 +11,9 @@ MathSync/
 ├── src/                        # Core Application Source
 ├── assets/                     # Static Assets (Images, Fonts, Lottie)
 ├── .agents/                    # AI Behavior & Guidelines
+│   ├── document/               # Architectural Plans & Feature Blueprints
+│   ├── logs/                   # Implementation Timelines & Summaries
+│   └── guidelines/             # Core Project Standards
 └── package.json
 ```
 
@@ -54,8 +57,10 @@ src/
 │   └── colors.js               # Global Color Palette
 ├── context/                    # React Context Providers
 │   └── badge-system/           # Badge & Reward Logic
-├── data-stores/                # Zustand State Management
-│   └── useGameConfig.js        # Global Game Configuration
+├── stores/                     # Global State Management (Zustand)
+│   ├── user-stores/            # User Profile & Activity States
+│   ├── game-stores/            # [Planned] Game configuration & Logic
+│   └── app-stores/             # [Planned] Navigation & Network states
 ├── hooks/                      # Custom React Hooks
 │   ├── useLessonProgress.js    # Progress Tracking Logic
 │   └── usePlayerAudio.js       # Sound Effect Management
@@ -68,8 +73,10 @@ src/
 ```
 
 **Naming Rules for `/src`**:
-- **Components & Component Folders**: Must use **`PascalCase`** (e.g., `GameComponents/`, `WelcomeCard.jsx`).
-- **Non-Component Folders**: Must use **`lowercase`** or **`kebab-case`** (e.g., `data-stores/`, `utils/`).
+- **Path Aliases**: All internal `src` imports MUST use the `@/` alias.
+- **Assets & Content**: Use `@assets` for media and `@content` for data.
+- **Components & Folders**: Must use **`PascalCase`** (e.g., `Profile/`, `WelcomeCard.jsx`).
+- **Non-Component Folders**: Must use **`lowercase`** or **`kebab-case`** (e.g., `user-stores/`, `utils/`).
 - **Non-Component Files**: Must use **`camelCase`** (e.g., `useLessonProgress.js`, `apiManager.js`).
 - **Strict JS**: All files use `.js` or `.jsx`. Components use `.jsx`, others use `.js`.
 
@@ -96,10 +103,17 @@ src/Games/                      # Game Logic & Question Banks
 ```
 assets/
 ├── anim/                       # Lottie JSON Animations
-├── fonts/                      # Custom Typefaces (Satoshi)
+├── fonts/                      # Custom Typefaces (Lexend, Plus Jakarta Sans)
 ├── images/                     # UI Imagery & Graphics
 └── sounds/                     # Game Audio & Feedback
 ```
+
+---
+
+## 📜 5. Timeline & Documentation Standards
+All significant changes and planned architecture must be logged using the following naming conventions:
+- **Plans**: `.agents/document/YYYY-MM-DD_HH-MM-SS-(TOPIC)-Document.md`
+- **Logs**: `.agents/logs/YYYY-MM-DD_HH-MM-SS-(TOPIC)-UI.md`
 
 ---
 
