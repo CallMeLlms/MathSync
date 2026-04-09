@@ -1,38 +1,43 @@
-/**
- * MathSync Tonal Hierarchy & Color System
- * 
- * Extracted from the "Tactile Discovery Garden" Design Guidelines (README.md).
- * Follows the principle of tonal depth and soft shifts instead of rigid lines/shadows.
- */
-
 export const Colors = {
   // Core Tonal Hierarchy
-  primary: '#9f4200',          // Action Orange: Major interactions & achievements
-  secondary: '#0058ca',        // Curiosity Blue: Navigational & exploration tasks
-  tertiary: '#006e2a',         // Growth Green: Progress & reinforcement
+  primary: '#9f4200',          // Action Orange
+  secondary: '#0058ca',        // Curiosity Blue
+  tertiary: '#006e2a',         // Growth Green
   
-  // Surfaces & Backgrounds (Warm Paper approach)
-  surface: '#fff8f3',          // Warm Paper: Base background for lower eye strain
-  onSurface: '#231a0d',        // Darkest neutral for text and ambient shadows
+  // Surfaces & Backgrounds
+  surface: '#fff8f3',          // Warm Paper
+  onSurface: '#231a0d',
+  background: '#fff8f3',
   
-  // Semantic / Functional Variants
-  // Note: These are derived from the core palette to maintain tonal consistency
-  surfaceContainerLow: '#fff1e6',     // Subtle shift for background sectioning
-  surfaceContainerHigh: '#ffe4d1',    // More pronounced shift for secondary cards
-  surfaceContainerHighest: '#f7d7bd', // For highest contrast surfaces (e.g. inner cards)
+  // Container Variants (Discovery Garden Tonal System)
+  primaryContainer: '#ffdbcb',
+  onPrimaryContainer: '#7a3000',
+  secondaryContainer: '#d9e2ff',
+  onSecondaryContainer: '#00429b',
+  tertiaryContainer: '#69ff87',
+  onTertiaryContainer: '#00531e',
   
-  onPrimary: '#ffffff',        // Text on primary backgrounds
-  primaryContainer: '#ffdcc3',  // Lighter primary for gradients and CTAs
+  surfaceContainerLowest: '#ffffff',
+  surfaceContainerLow: '#fff2e2',
+  surfaceContainer: '#fdebd5',
+  surfaceContainerHigh: '#f7e6d0',
+  surfaceContainerHighest: '#f1e0ca',
   
-  onSurfaceVariant: '#524437', // Muted text for labels and secondary info
-  outlineVariant: 'rgba(35, 26, 13, 0.2)', // Ghost Border (20% opacity on-surface)
+  onSurfaceVariant: '#55442a',
+  outlineVariant: '#dbc3a1',
+  
+  onPrimary: '#ffffff',
+  onSecondary: '#ffffff',
+  onTertiary: '#ffffff',
   
   // Semantic Signaling
-  success: '#006e2a',          // Same as Tertiary (Growth Green)
-  error: '#ba1a1a',            // Standard clear error signaling
+  success: '#006e2a',
+  error: '#ba1a1a',
+  bloomProgress: '#006e2a',
   
-  // Custom Components
-  bloomProgress: '#006e2a',    // For "The Progress Bloom" circles
+  // Fixed Variant (for specific UI contrast)
+  onPrimaryFixedVariant: '#7a3000',
+  tertiaryFixed: '#69ff87',
 };
 
 export default Colors;

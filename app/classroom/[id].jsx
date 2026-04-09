@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Activ
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Feather, AntDesign } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
-import classroomService from '../../src/services/classroomService';
-import assignmentService from '../../src/services/assignmentService';
+import classroomService from '@/services/classroomService';
+import assignmentService from '@/services/assignmentService';
 
 export default function ClassroomDetail() {
   const router = useRouter();

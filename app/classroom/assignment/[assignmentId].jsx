@@ -5,8 +5,8 @@ import { Feather } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import Colors from '@/constants/colors';
 
-import assignmentService from '../../../src/services/assignmentService';
-import submissionService from '../../../src/services/submissionService';
+import assignmentService from '@/services/assignmentService';
+import submissionService from '@/services/submissionService';
 
 export default function AssignmentDetail() {
   const router = useRouter();

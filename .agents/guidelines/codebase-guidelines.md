@@ -22,6 +22,10 @@ To maintain consistency and performance across the React Native application, the
 
 Consistency in naming is critical for codebase navigability. Follow these patterns for all new directories and files:
 
+### Path Aliases
+- **Use Aliases**: Use the `@/` prefix for imports within the `src/` directory (e.g., `import Colors from '@/constants/colors'`).
+- **Avoid Long Relative Paths**: Do not use deeply nested relative paths (e.g., `../../../../src/...`) unless absolutely necessary. Standardize on the mapped aliases defined in `babel.config.js`.
+
 ### Components & UI
 - **Component Files**: Use `PascalCase` and the `.jsx` extension (e.g., `WelcomeCard.jsx`, `MathChoices.jsx`).
 - **Component Directories**: Use `PascalCase` for any directory that exclusively groups components or nested component structures (e.g., `GameComponents/`, `MathSyncUI/`).

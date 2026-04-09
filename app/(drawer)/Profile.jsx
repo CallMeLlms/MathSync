@@ -1,14 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
 import Colors from '@/constants/colors';
+
+import AchievementSection from '@/Components/Profile/AchievementSection';
+import ProfileBarGraph from '@/Components/Profile/ProfileBarGraph';
+import ActivityFeed from '@/Components/Profile/ActivityFeed';
 
 export default function Profile() {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Your Profile</Text>
-        <Text style={styles.subtitle}>Track your achievements and growth.</Text>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
+          <AchievementSection />
+          <ProfileBarGraph />
+          <ActivityFeed />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -19,22 +26,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
   },
   content: {
-    flex: 1,
-    padding: 32,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontFamily: 'Lexend-Bold',
-    fontSize: 28,
-    color: Colors.onSurface,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontFamily: 'PlusJakartaSans-Regular',
-    fontSize: 16,
-    color: Colors.onSurfaceVariant,
-    marginTop: 12,
-    textAlign: 'center',
+    paddingBottom: 20,
   },
 });
