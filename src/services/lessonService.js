@@ -1,5 +1,5 @@
-import apiClient from './api-manager';
-import lessonCacheService from './lesson-cache.service';
+import apiClient from './apiManager';
+import lessonCacheService from './lessonCacheService';
 import NetInfo from '@react-native-community/netinfo';
 
 class LessonService {

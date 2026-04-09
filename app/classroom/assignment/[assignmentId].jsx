@@ -5,8 +5,8 @@ import { Feather } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import Colors from '@/constants/colors';
 
-import assignmentService from '../../../src/services/assignment.service';
-import submissionService from '../../../src/services/submission.service';
+import assignmentService from '@/services/assignmentService';
+import submissionService from '@/services/submissionService';
 
 export default function AssignmentDetail() {
   const router = useRouter();
@@ -131,7 +131,7 @@ export default function AssignmentDetail() {
       <Stack.Screen 
         options={{ 
             title: 'Assignment',
-            headerStyle: { backgroundColor: Colors.surface, elevation: 0, shadowOpacity: 0 },
+            headerStyle: { backgroundColor: Colors.surface },
             headerTitleStyle: { fontFamily: 'Lexend-Bold', fontSize: 18, color: Colors.onSurface },
             headerTintColor: Colors.primary,
         }} 

@@ -4,7 +4,7 @@ import { useRouter, Stack } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 
-import authService from '../../src/services/auth.service';
+import authService from '@/services/authService';
 
 // Design System
 import Colors from '@/constants/colors';

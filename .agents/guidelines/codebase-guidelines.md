@@ -22,6 +22,11 @@ To maintain consistency and performance across the React Native application, the
 
 Consistency in naming is critical for codebase navigability. Follow these patterns for all new directories and files:
 
+### Path Aliases
+- **Use Aliases**: Use the `@/` prefix for imports within the `src/` directory (e.g., `import Colors from '@/constants/colors'`).
+- **Media & Content**: Use `@assets` for media files (images/sounds) and `@content` for curricula/JSON data structures.
+- **Avoid Long Relative Paths**: Do not use deeply nested relative paths (e.g., `../../../../src/...`) unless absolutely necessary. Standardize on the mapped aliases defined in `babel.config.js`.
+
 ### Components & UI
 - **Component Files**: Use `PascalCase` and the `.jsx` extension (e.g., `WelcomeCard.jsx`, `MathChoices.jsx`).
 - **Component Directories**: Use `PascalCase` for any directory that exclusively groups components or nested component structures (e.g., `GameComponents/`, `MathSyncUI/`).
@@ -32,7 +37,7 @@ Consistency in naming is critical for codebase navigability. Follow these patter
 
 ### Non-Component Files (Utilities, Services, Stores, etc.)
 - **Naming**: Use `camelCase` and the `.js` extension for any file that is not a UI component (e.g., `cacheManager.js`, `apiClient.js`).
-- **Directories**: These files live in `lowercase` or `kebab-case` folders such as `utils/`, `services/`, `data-stores/`, or `app-context/`.
+- **Directories**: These files live in `lowercase` or `kebab-case` folders such as `utils/`, `services/`, `stores/user-stores/`, or `app-context/`.
 
 ---
 
@@ -40,3 +45,9 @@ Consistency in naming is critical for codebase navigability. Follow these patter
 
 - Prefer descriptive names over generic ones (e.g., `useLessonProgress` instead of `useProgress`).
 - Keep component files focused; if a component grows too large, split it into sub-components following the `PascalCase` directory rule.
+
+## Timline 
+
+- Inside the directory .agents/logs, there are md files that logs the timeline of the project. 
+- Every time you make a significant change to the codebase, update the timeline log file. 
+- The timeline log file is updated in a format of `YYYY-MM-DD_HH-MM-SS_TOPIC.md`.

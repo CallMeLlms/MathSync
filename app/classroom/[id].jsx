@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { Feather, AntDesign } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
-import classroomService from '../../src/services/classroom.service';
-import assignmentService from '../../src/services/assignment.service';
+import classroomService from '@/services/classroomService';
+import assignmentService from '@/services/assignmentService';
 
 export default function ClassroomDetail() {
   const router = useRouter();
@@ -175,7 +175,7 @@ export default function ClassroomDetail() {
       <Stack.Screen
         options={{
           title: classDetails ? classDetails.name : 'Classroom',
-          headerStyle: { backgroundColor: Colors.surface, elevation: 0, shadowOpacity: 0 },
+          headerStyle: { backgroundColor: Colors.surface },
           headerTitleStyle: { fontFamily: 'Lexend-Bold', fontSize: 18, color: Colors.onSurface },
           headerTintColor: Colors.primary,
           headerBackTitleVisible: false

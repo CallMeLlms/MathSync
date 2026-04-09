@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView, ActivityIndicator } f
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
-import lessonService from '../../../src/services/lesson.service';
-import RichTextRenderer from '../../../src/Components/LessonComponents/RichTextRenderer';
-import OfflineVideoPlayer from '../../../src/Components/LessonComponents/OfflineVideoPlayer';
+import lessonService from '@services/lessonService';
+import RichTextRenderer from '@/Components/LessonComponents/RichTextRenderer';
+import OfflineVideoPlayer from '@/Components/LessonComponents/OfflineVideoPlayer';
 
 export default function LessonDetail() {
   const { lessonId } = useLocalSearchParams();

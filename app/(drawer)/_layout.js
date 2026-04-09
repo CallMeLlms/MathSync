@@ -13,8 +13,6 @@ const DrawerLayout = () => {
         headerShown: true,
         headerStyle: {
           backgroundColor: Colors.surface,
-          elevation: 0,
-          shadowOpacity: 0,
           borderBottomWidth: 1,
           borderBottomColor: Colors.surfaceContainerLow,
         },
@@ -42,6 +40,16 @@ const DrawerLayout = () => {
           title: "Home",
           drawerIcon: ({ color, size }) => (
             <AntDesign name="home" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name="Grades"
+        options={{
+          title: "Grades",
+          drawerIcon: ({ color, size }) => (
+            <Feather name="book-open" size={size} color={color} />
           ),
         }}
       />

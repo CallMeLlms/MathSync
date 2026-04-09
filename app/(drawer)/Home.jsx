@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Flat
 import { useRouter } from 'expo-router';
 import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
-import classroomService from '../../src/services/classroom.service';
+import classroomService from '@/services/classroomService';
 
 export default function Home() {
   const router = useRouter();
