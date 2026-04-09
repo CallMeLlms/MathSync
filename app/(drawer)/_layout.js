@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import CustomDrawerContent from '@/Components/Navigation/CustomDrawerContent';
-import Colors from '@constants/Colors';
+import Colors from '@/constants/colors';
 
 const DrawerLayout = () => {
   return (

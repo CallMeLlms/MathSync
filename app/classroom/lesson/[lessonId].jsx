@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
-import Colors from '@constants/Colors';
+import Colors from '@/constants/colors';
 import lessonService from '../../../src/services/lesson.service';
 import RichTextRenderer from '../../../src/Components/LessonComponents/RichTextRenderer';
 import OfflineVideoPlayer from '../../../src/Components/LessonComponents/OfflineVideoPlayer';

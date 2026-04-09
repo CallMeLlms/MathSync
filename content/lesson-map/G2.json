@@ -1,0 +1,46 @@
+{
+  "grade": "Grade 2",
+  "theme": "secondary",
+  "levels": [
+    {
+      "id": 1,
+      "title": "Garden Review",
+      "subtitle": "Numbers up to 100",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.5,
+      "y": 0.85,
+      "icon": "history"
+    },
+    {
+      "id": 2,
+      "title": "Double Blooms",
+      "subtitle": "Addition with Regrouping",
+      "type": "lesson",
+      "status": "locked",
+      "x": 0.7,
+      "y": 0.7,
+      "icon": "exposure-plus-2"
+    },
+    {
+      "id": 3,
+      "title": "Butterfly Groups",
+      "subtitle": "Introductions to Multiplication",
+      "type": "lesson",
+      "status": "locked",
+      "x": 0.3,
+      "y": 0.5,
+      "icon": "close"
+    },
+    {
+      "id": 4,
+      "title": "The Infinite Maze",
+      "subtitle": "Grade 2 Challenge",
+      "type": "boss",
+      "status": "locked",
+      "x": 0.5,
+      "y": 0.1,
+      "icon": "terrain"
+    }
+  ]
+}

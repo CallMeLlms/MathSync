@@ -4,7 +4,7 @@ import { useRouter, Stack } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 
-import Colors from '@constants/Colors';
+import Colors from '@/constants/colors';
 
 export default function Confirmation() {
   const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = useWindowDimensions();

@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
 // Design System
-import Colors from '../src/constants/Colors';
+import Colors from '../src/constants/colors';
 
 /**
  * Welcome Screen - Root Entry Point
