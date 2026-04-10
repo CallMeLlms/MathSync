@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-import { getAsset } from './AssetMap';
+import { getAsset } from '@/constants/assetMap';
 import Colors from '@/constants/colors';
 
 /**

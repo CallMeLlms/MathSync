@@ -14,8 +14,8 @@ import Animated, {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
-import GameFeedback from './Shared/GameFeedback';
-import AssetDisplay from './Shared/AssetDisplay';
+import GameFeedback from '../../Global/GameFeedback';
+import AssetDisplay from '../../Global/AssetDisplay';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const BUTTON_SIZE = (SCREEN_WIDTH - 64) / 2;
@@ -59,12 +59,6 @@ const ChoiceChip = ({ option, colorTheme, onPress, disabled, isWrong }) => {
 
 /**
  * PickerEngine (Universal Interface Component)
- * Refactored "Tap-to-Place" mechanic with Discovery Garden aesthetics.
- * 
- * @param {Object} data - Standardized JSON { question, correctChoiceId, choices: [{id, label, assetId}] }
- * @param {Function} onResult - Callback with bool (isCorrect)
- * @param {Function} onComplete - Callback when engine goal is met
- * @param {Function} onError - Callback if data is corrupted
  */
 export default function PickerEngine({ 
   data, 
@@ -78,7 +72,6 @@ export default function PickerEngine({
   const [showWrongState, setShowWrongState] = useState(false);
   const [sessionFinished, setSessionFinished] = useState(false);
 
-  // Dynamic Color Themes for Choices (Minimalist Palette from Colors.js)
   const OPTION_THEMES = useMemo(() => [
     { bg: Colors.primaryContainer, border: Colors.primary, text: Colors.onPrimaryContainer },
     { bg: Colors.secondaryContainer, border: Colors.secondary, text: Colors.onSecondaryContainer },
@@ -86,13 +79,11 @@ export default function PickerEngine({
     { bg: Colors.surfaceContainerHighest, border: Colors.outlineVariant, text: Colors.onSurfaceVariant },
   ], []);
 
-  // Shuffling logic for the grid (only compute once per question)
   const shuffledChoices = useMemo(() => {
     if (!data?.choices) return [];
     return [...data.choices].sort(() => Math.random() - 0.5);
   }, [data?.choices]);
 
-  // Guard Clause for Data Integrity
   if (!data || !data.question || !data.choices) {
     if (onError) onError('Invalid Data: PickerEngine requires question and choices.');
     return null;
@@ -128,7 +119,6 @@ export default function PickerEngine({
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       if (onResult) onResult(false);
 
-      // Auto-return wrong choice to grid after rejection delay
       setTimeout(() => {
         setPlacedAnswer(null);
         setShowWrongState(false);
@@ -150,7 +140,6 @@ export default function PickerEngine({
 
   return (
     <View style={styles.container}>
-      {/* Question Header */}
       <Animated.View entering={FadeInUp.duration(600)} style={styles.questionContainer}>
         {data.questionAssetId && (
           <View style={styles.questionAssetWrapper}>
@@ -160,7 +149,6 @@ export default function PickerEngine({
         <Text style={styles.questionText}>{data.question}</Text>
       </Animated.View>
 
-      {/* Drop Zone (Target Box) */}
       <View style={[
         styles.dropZone, 
         sessionFinished && styles.dropZoneCorrect,
@@ -182,10 +170,8 @@ export default function PickerEngine({
         )}
       </View>
 
-      {/* Choice Grid */}
       <View style={styles.grid}>
         {shuffledChoices.map((choice, i) => {
-          // Hide from grid if it's currently placed
           if (placedAnswer && choice.id === placedAnswer.id) return null;
           
           return (
@@ -200,7 +186,6 @@ export default function PickerEngine({
         })}
       </View>
 
-      {/* Check Answer Button */}
       <View style={styles.footer}>
         {placedAnswer && !sessionFinished && (
           <Animated.View entering={ZoomIn.springify()} exiting={ZoomOut}>

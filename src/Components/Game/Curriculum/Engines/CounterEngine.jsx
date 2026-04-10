@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Colors from '@/constants/colors';
-import GameFeedback from './Shared/GameFeedback';
+import GameFeedback from '../../Global/GameFeedback';
 
 /**
  * CounterEngine (Universal Interface Component)
- * A generic tap-to-count mechanic for basic numeracy.
- * @param {Object} data - Standardized JSON { question, targetCount }
- * @param {Function} onResult - Callback with bool (isCorrect)
- * @param {Function} onComplete - Callback when engine goal is met
- * @param {Function} onError - Callback if data is corrupted
  */
 export default function CounterEngine({ 
   data, 
@@ -21,7 +16,6 @@ export default function CounterEngine({
   const [feedbackVisible, setFeedbackVisible] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
-  // Guard Clause for Data Integrity
   if (!data || !data.question || typeof data.targetCount !== 'number') {
     if (onError) onError('Invalid Data: CounterEngine requires question and targetCount.');
     return null;
@@ -42,10 +36,7 @@ export default function CounterEngine({
   const handleFeedbackComplete = () => {
     setFeedbackVisible(false);
     if (isCorrect && onComplete) {
-      // Signal parent that we finished
       onComplete();
-    } else {
-      // Optional: Reset count on failure, or let them adjust it
     }
   };
 

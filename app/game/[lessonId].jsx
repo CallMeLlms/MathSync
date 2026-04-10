@@ -1,17 +1,18 @@
 import React from 'react';
 import { Stack } from 'expo-router';
-import Grade1GameScreen from '@/Components/Game/Orchestrators/Grade1/GameScreen';
+import CurriculumOrchestrator from '@/Components/Game/Curriculum/CurriculumOrchestrator';
 
 /**
  * Universal Game Route.
- * Depending on the lessonId/grade, this route component can map to 
- * different GameScreens. For this MVP, it directly mounts Grade1.
+ * Automatically maps to the generic CurriculumOrchestrator.
  */
 export default function GameRoute() {
+  const { lessonId } = useLocalSearchParams();
+
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <Grade1GameScreen />
+      <CurriculumOrchestrator lessonId={lessonId} gradeKey="G1" />
     </>
   );
 }

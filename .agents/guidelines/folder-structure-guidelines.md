@@ -55,14 +55,20 @@ The `src/` directory contains all reusable logic, state, and UI components.
 src/
 ├── Components/                 # UI Components (PascalCase)
 │   ├── Game/                   # Unified Game Domain
-│   │   ├── Engines/            # Standardized Engines (Picker, Counter)
-│   │   │   └── Shared/         # Core logic (AssetDisplay, GameFeedback)
-│   │   ├── Flow/               # Navigation UI (JourneyMap)
-│   │   └── Orchestrators/      # Session Management (Grade1/GameScreen)
+│   │   ├── Curriculum/         # Lesson-based games (MATATAG)
+│   │   │   ├── Orchestrators/  # Generic CurriculumOrchestrator
+│   │   │   └── Engines/        # Standard JSON-driven engines
+│   │   ├── Generative/         # Problem-generated games (Logic)
+│   │   │   ├── Orchestrators/  # Dynamic PracticeOrchestrator
+│   │   │   └── Engines/        # Logic-aware engines
+│   │   ├── Global/             # Cross-mode Shared UI (AssetDisplay, etc.)
+│   │   └── Flow/               # Navigation UI (JourneyMap)
 │   ├── HomeComponents/         # Dashboard Widgets
 │   ├── Shared/                 # Common UI (Buttons, Cards)
 │   └── Navigation/             # Custom Navigation Components
-├── constants/                  # Configuration & Global Colors
+├── constants/                  # Configuration & Registry
+│   ├── colors.js               # Design Tokens
+│   └── assetMap.js             # Global Image/Audio Registry
 ├── context/                    # React Context Providers
 ├── stores/                     # Global State (Zustand)
 │   ├── user-stores/            # User Profile & Activity
@@ -71,7 +77,12 @@ src/
 ├── screens/                    # Specialized Screen wrappers
 ├── services/                   # External API & Auth Services
 ├── theme/                      # Design Tokens
-└── utils/                      # Common Utility Helpers
+│   └── gameThemes.js           # Dynamic User Experience Themes
+├── utils/                      # Common Utility Helpers
+│   └── generators/             # Math Generation Library
+│       ├── core/               # Shared Math Primitives (Randomizers, Formatters)
+│       ├── grades/             # Grade-Specific Problem Brains (G1, G2, etc.)
+│       └── registry.js         # Central Topic-to-Brain Registry
 ```
 
 **Naming Rules for `/src`**:
@@ -92,26 +103,19 @@ content/
 ├── lesson-map/                 # Grade Journey maps (MATATAG)
 │   ├── G1.json                 # Grade 1 map
 │   └── G2.json                 # Grade 2 map
-└── game-data/                  # Universal Question Banks
-    └── G1-Q1-Lessons.json      # Grade 1 Data injected into the Engines
+├── game-data/                  # Static Question Banks (Lessons)
+│   └── G1-Q1-Lessons.json      # Grade 1 Data injected into the Engines
+└── generative-templates/       # Dynamic Generation Rules (Practice)
+    └── arithmetic-addition.json
 ```
 
 ---
 
-## 🎮 4. Game Module Organization (THIS STRUCTURE, IS A GHOST LEGACY CODE, DO NOT FOLLOW THIS STRUCTURE ANYMORE)
-MathSync uses a modular approach for its curriculum-based games.
+## 🎮 4. Dual-Stack Game Architecture (Standardized)
+MathSync utilizes a dual-stack approach to maintain strict logic isolation.
 
-```
-src/Games/                      # Game Logic & Question Banks
-└── GradeGames/                 # Grade-Specific Modules
-    └── Grade1/                 # Grade 1 MATATAG-aligned
-        ├── Data/               # Question Banks (JSON)
-        │   └── Quarter1/       # Seasonal Lessons
-        ├── Components/         # Game Engines (Picker, DragDrop)
-        ├── Assets/             # Game-specific Media (Audio/PNG)
-        ├── GameScreen.jsx      # Unified Game Template
-        └── index.jsx           # Journey Map Entry
-```
+- **Stack 1: Curriculum Games**: JSON-driven, grade-specific lessons aligned with MATATAG. Uses the generic `CurriculumOrchestrator`.
+- **Stack 2: Generative Games**: Logic-driven, infinite practice modes. Uses the `PracticeOrchestrator` (Logic Brains).
 
 ---
 

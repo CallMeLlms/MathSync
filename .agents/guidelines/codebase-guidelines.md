@@ -41,6 +41,28 @@ Consistency in naming is critical for codebase navigability. Follow these patter
 
 ---
 
+## 🎮 3. Game Architecture Standards (Dual-Stack)
+
+To maintain scalability across grades and themes, all game-related development must follow the **Dual-Stack Architectural Model**:
+
+### 🏁 Stack Separation
+- **Curriculum Stack (`src/Components/Game/Curriculum/`)**: Dedicated to lesson-based, structured content driven by static JSON files.
+    - **Orchestration**: All curriculum lessons must use the generic `CurriculumOrchestrator.jsx`.
+    - **Engines**: Engines must be pure UI implementations that accept a standardized `data` prop.
+- **Generative Stack (`src/Components/Game/Generative/`)**: Reserved for infinite practice modes driven by math logic (Generators).
+- **Global Stack (`src/Components/Game/Global/`)**: Houses cross-mode UI "Atoms" (e.g., `AssetDisplay.jsx`, `GameFeedback.jsx`). No business logic should exist here.
+
+### 🎨 Visual Identity & Theming
+- **Mandatory Registry**: **Never** hardcode background colors, loading text, or grade-specific fonts inside a component. 
+- **Registry Path**: Pull all visual DNA from `src/theme/gameThemes.js`.
+- **Dynamic Usage**: Components should consume the `theme` object passed down from the Orchestrator.
+
+### 📦 Asset Resolution
+- **Registry Path**: All dynamic game imagery/audio must be registered in `src/constants/assetMap.js`.
+- **Consumption**: Use the global `AssetDisplay` component to render media safely.
+
+---
+
 ## 📝 3. Best Practices (Naming)
 
 - Prefer descriptive names over generic ones (e.g., `useLessonProgress` instead of `useProgress`).

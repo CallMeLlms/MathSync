@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Colors from '@/constants/colors';
-import GameFeedback from './Shared/GameFeedback';
+import GameFeedback from '../../Global/GameFeedback';
 
 /**
  * DragDropEngine (Minimal MVP Version)
- * For a full version, use react-native-gesture-handler and react-native-reanimated.
- * This MVP simulates the drop action with a simple tap sequence.
  */
 export default function DragDropEngine({ 
   data, 
@@ -30,11 +28,10 @@ export default function DragDropEngine({
   const handleSelectDropZone = (zone) => {
     if (!selectedItem || feedbackVisible) return;
 
-    // MVP Logic: If the selected item's id matches the zone's expected id
     const correct = selectedItem.id === zone.expectedDraggableId;
     setIsCorrect(correct);
     setFeedbackVisible(true);
-    setSelectedItem(null); // Reset selection
+    setSelectedItem(null); 
     
     if (onResult) {
       onResult(correct);
@@ -52,7 +49,6 @@ export default function DragDropEngine({
     <View style={styles.container}>
       <Text style={styles.questionText}>{data.question}</Text>
 
-      {/* Drop Zones (Targets) */}
       <View style={styles.dropZoneContainer}>
         {data.dropZones.map(zone => (
           <TouchableOpacity 
@@ -65,7 +61,6 @@ export default function DragDropEngine({
         ))}
       </View>
 
-      {/* Draggables (Sources) */}
       <View style={styles.draggableContainer}>
         {data.draggables.map(item => (
           <TouchableOpacity 
