@@ -96,7 +96,7 @@ export default function ClassroomDetail() {
                     <View style={styles.outcomesContainer}>
                       <Text style={styles.sectionSubTitle}>Learning Outcomes:</Text>
                       {quarterData.learningOutcomes.map((outcome, idx) => (
-                        <Text key={idx} style={styles.outcomeLine}>• {outcome}</Text>
+                        <Text key={outcome._id || idx} style={styles.outcomeLine}>• {outcome.text}</Text>
                       ))}
                     </View>
                   )}
