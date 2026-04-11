@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * roundingGenerator.js (Grade 2)
@@ -88,7 +88,8 @@ export const generateProblem = (rules = {}) => {
       hint: PROMPTS.round.hint(number, roundTo),
       number,
       roundTo,
-      rules
+      rules,
+      explanation: `To round to the nearest ${roundTo}, look at the digits below that place. If the digit is 5 or more, round UP. If it is less than 5, round DOWN.`
     }
   };
 };

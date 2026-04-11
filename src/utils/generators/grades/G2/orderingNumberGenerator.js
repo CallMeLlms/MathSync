@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * orderingNumberGenerator.js (Grade 2)
@@ -74,12 +74,15 @@ export const generateProblem = (rules = {}) => {
 
   return {
     numbers: scrambled,
-    correctOrder,
-    direction,
+    answer: correctOrder.join(', '),
+    choices: scrambled.map(String),
     metadata: {
       displayQuestion: randomChoice(PROMPTS[direction]),
+      hint: `The ${direction === 'ascending' ? 'smallest' : 'largest'} number comes first!`,
+      explanation: `To order numbers, compare the digits starting from the highest place value. For ${direction} order, look for the ${direction === 'ascending' ? 'smallest' : 'largest'} number first.`,
       grade: 2,
       type: 'ordering-numbers',
+      correctOrder,
       rules
     }
   };

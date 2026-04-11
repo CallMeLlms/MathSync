@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * multiplicationGenerator.js (Grade 3)
@@ -67,7 +67,8 @@ export const generateProblem = (rules = {}) => {
       hint: PROMPTS.hint(),
       operand1: a,
       operand2: b,
-      rules
+      rules,
+      explanation: `Multiplication is the process of adding the same number multiple times. ${a} × ${b} means adding ${a} to itself ${b} times (or vice versa), which totals ${answer}.`
     }
   };
 };

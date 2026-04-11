@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * factorsMultiplesGenerator.js (Grade 5)
@@ -70,7 +70,8 @@ const generateFactorsProblem = (rules) => {
       hint: `Factors are numbers that divide evenly into ${targetNumber}.`,
       targetNumber,
       correctIndices,
-      type: 'factors'
+      type: 'factors',
+      explanation: `To find the factors of ${targetNumber}, divide it by each number from 1 up to ${targetNumber}. If there is no remainder, it is a factor.`
     }
   };
 };
@@ -102,6 +103,7 @@ const generateMultiplesProblem = (rules) => {
     metadata: {
       displayQuestion: `Identify the multiples of ${targetNumber}.`,
       hint: `Multiples of ${targetNumber} are numbers you reach when skip-counting by ${targetNumber}.`,
+      explanation: `To find the multiples of ${targetNumber}, multiply it by 1, 2, 3, and so on. Any number that ${targetNumber} divides into evenly is a multiple.`,
       targetNumber,
       correctIndices,
       type: 'multiples'
@@ -150,6 +152,9 @@ const generatePrimeCompositeProblem = (rules) => {
     metadata: {
       displayQuestion,
       hint,
+      explanation: mode === 'prime' 
+        ? 'A prime number has only two factors: 1 and itself (e.g., 2, 3, 5, 7, 11).'
+        : 'A composite number has more than two factors (e.g., 4, 6, 8, 9, 10).',
       mode,
       correctIndices,
       type: 'primeComposite'

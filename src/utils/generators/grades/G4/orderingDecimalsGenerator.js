@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * orderingDecimalsGenerator.js (Grade 4)
@@ -69,6 +69,7 @@ export const generateProblem = (rules = {}) => {
     metadata: {
       displayQuestion,
       hint: 'Think of 0.5 as 0.50 to make it easier to compare with 0.45!',
+      explanation: `To order decimals, compare the digits from left to right. Start with the whole number, then the tenths place, and then the hundredths place. If a place is empty, think of it as a zero (e.g., 0.5 becomes 0.50).`,
       direction,
       correctSequence: displaySequence,
       rawSequence: sortedDecimals,

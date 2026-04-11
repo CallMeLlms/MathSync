@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * integerOrderingGenerator.js (Grade 6)
@@ -74,12 +74,14 @@ export const generateProblem = (rules = {}) => {
 
   return {
     numbers: scrambled,
-    correctOrder,
-    direction,
+    answer: correctOrder.join(', '),
+    choices: scrambled.map(String),
     metadata: {
       displayQuestion: randomChoice(PROMPTS[direction]),
+      explanation: `To order integers, especially with negative numbers, remember that negative numbers with larger absolute values are actually smaller (e.g., -10 is smaller than -2). On a number line, smaller numbers are always to the left.`,
       grade: 6,
       type: 'integer-ordering',
+      correctOrder,
       rules
     }
   };

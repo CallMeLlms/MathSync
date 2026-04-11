@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * meanMedianGenerator.js (Grade 5)
@@ -74,7 +74,8 @@ const generateMeanProblem = (rules) => {
       numbers,
       sum,
       count,
-      type: 'mean'
+      type: 'mean',
+      explanation: `To find the mean, add all the numbers together (${sum}) and then divide by how many there are (${count}). ${sum} ÷ ${count} = ${answer}.`
     }
   };
 };
@@ -102,7 +103,8 @@ const generateMedianProblem = (rules) => {
       hint: `First, order the numbers from least to greatest. The median is the middle number!`,
       numbers,
       sortedSequence: sorted,
-      type: 'median'
+      type: 'median',
+      explanation: `To find the median, first put the numbers in order: ${sorted.join(', ')}. The median is the middle number in the sorted list, which is ${answer}.`
     }
   };
 };

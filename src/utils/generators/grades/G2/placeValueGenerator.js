@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * placeValueGenerator.js (Grade 2)
@@ -254,7 +254,8 @@ export const generateProblem = (rules = {}) => {
       type: selectedType,
       targetPlace,
       placeValues: getPlaceValues(number),
-      rules
+      rules,
+      explanation: `Place value tells us how much each digit in a number is worth. In Grade 2, we focus on Hundreds, Tens, and Ones. For example, in 345, the 3 is worth 300, the 4 is 40, and the 5 is 5.`
     }
   };
 };

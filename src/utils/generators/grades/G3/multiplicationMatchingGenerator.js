@@ -1,4 +1,4 @@
-import { randomInt, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * multiplicationMatchingGenerator.js (Grade 3)
@@ -70,8 +70,10 @@ export const generateProblem = (rules = {}) => {
       displayQuestion: PROMPTS.question,
       hint: PROMPTS.hint,
       pairs, // The raw matched pairs for the UI to split/shuffle
-      rules
-    }
+      rules,
+      explanation: 'In this matching game, find the total for each multiplication fact to make a pair.'
+    },
+    choices: [] // Matching games don't use standard choices
   };
 };
 

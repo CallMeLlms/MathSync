@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * timeAndMoneyGenerator.js (Grade 3)
@@ -102,9 +102,9 @@ export const generateProblem = (rules = {}) => {
     metadata: {
       displayQuestion: randomChoice(PROMPTS.questions),
       hint: PROMPTS.hint,
-      coins,
-      totalCents,
-      rules
+      coinBreakdown: coins,
+      rules,
+      explanation: `To find the total value, count the coins by their denominations. For example, 2 quarters are 50 cents, 1 dime is 10 cents, and 2 nickels are 10 cents. Total: 50 + 10 + 10 = 70 cents.`
     }
   };
 };

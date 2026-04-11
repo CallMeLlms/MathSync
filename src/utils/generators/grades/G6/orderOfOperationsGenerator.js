@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * orderOfOperationsGenerator.js (Grade 6)
@@ -150,7 +150,8 @@ export const generateProblem = (rules = {}) => {
       operators,
       correctSequence,
       reactiveHints,
-      type: 'orderOfOps'
+      type: 'orderOfOps',
+      explanation: 'Use PEMDAS: Parentheses, Exponents, Multiplication and Division (left to right), and Addition and Subtraction (left to right).'
     }
   };
 };

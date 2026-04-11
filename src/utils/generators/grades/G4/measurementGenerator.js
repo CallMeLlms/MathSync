@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * measurementGenerator.js (Grade 4)
@@ -118,7 +118,8 @@ const generateConvertProblem = (rules, category) => {
       hint: getHint(conv),
       category,
       categoryIcon: CATEGORY_ICONS[category],
-      conversion: conv
+      conversion: conv,
+      explanation: `To solve measurement problems, focus on the unit of measure. When converting, remember the scale (e.g., 100cm = 1m). When comparing, convert everything to the same unit first.`
     }
   };
 };
@@ -158,6 +159,7 @@ const generateCompareProblem = (rules, category) => {
     metadata: {
       displayQuestion,
       hint: `Convert both to ${conv.to} first: ${val1} ${conv.from} is ${val1InSmall} ${conv.to}.`,
+      explanation: `To solve measurement problems, focus on the unit of measure. When converting, remember the scale (e.g., 100cm = 1m). When comparing, convert everything to the same unit first.`,
       category,
       categoryIcon: CATEGORY_ICONS[category],
       comparison: { val1, unit1: conv.from, val2, unit2: conv.to }
@@ -200,6 +202,7 @@ const generateWordProblem = (rules, category) => {
       hint: getHint(conv),
       category,
       categoryIcon: CATEGORY_ICONS[category],
+      explanation: `To solve measurement problems, focus on the unit of measure. When converting, remember the scale (e.g., 100cm = 1m). When comparing, convert everything to the same unit first.`,
       isWordProblem: true
     }
   };

@@ -1,4 +1,4 @@
-import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers';
+import { randomInt, randomChoice, shuffleArray } from '../../core/mathHelpers.js';
 
 /**
  * percentagesGenerator.js (Grade 5)
@@ -82,7 +82,8 @@ const generateIdentifyProblem = (rules) => {
       displayQuestion: "What percentage is shaded?",
       hint: `Think of the grid as 100 equal parts. How many are colored?`,
       percentage,
-      type: 'identify'
+      type: 'identify',
+      explanation: `To find the percentage, count how many squares are shaded out of 100. ${percentage} squares shaded means it is ${percentage}%.`
     }
   };
 };
@@ -102,6 +103,8 @@ const generateCalculateProblem = (rules) => {
       hint: `Recall that ${percentage}% is the same as ${percentage}/100.`,
       percentage,
       baseNumber,
+      rules,
+      explanation: `To find a percentage of a number, divide the percentage by 100 to get a decimal, then multiply by the number. For example, ${percentage}% of ${baseNumber} is (${percentage} ÷ 100) × ${baseNumber} = ${answerValue}.`,
       result: answerValue,
       type: 'calculate'
     }
@@ -120,7 +123,8 @@ const generateConvertProblem = (rules) => {
       hint: `Try to find an equivalent fraction with 100 as the denominator!`,
       fraction: { numerator: selected.n, denominator: selected.d },
       percentage: selected.p,
-      type: 'convert'
+      type: 'convert',
+      explanation: `To convert ${selected.n}/${selected.d} to a percentage, find an equivalent fraction with 100 as the denominator: ${selected.n}/${selected.d} = ${selected.p}/100 = ${selected.p}%.`
     }
   };
 };
