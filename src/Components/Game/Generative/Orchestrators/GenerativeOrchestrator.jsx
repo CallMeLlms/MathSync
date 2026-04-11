@@ -12,18 +12,31 @@ import ExitModal from '@/Components/Game/Global/ExitModal';
 
 // Engines mapping
 import OrderingEngine from '@/Components/Game/Generative/Engines/OrderingEngine';
+import DecimalOrderingEngine from '@/Components/Game/Generative/Engines/DecimalOrderingEngine';
+import RoundingEngine from '@/Components/Game/Generative/Engines/RoundingEngine';
+import PlaceValueEngine from '@/Components/Game/Generative/Engines/PlaceValueEngine';
+import MatchingEngine from '@/Components/Game/Generative/Engines/MatchingEngine';
+import TimeMoneyEngine from '@/Components/Game/Generative/Engines/TimeMoneyEngine';
+import AdvancedFractionsEngine from '@/Components/Game/Generative/Engines/AdvancedFractionsEngine';
+import MeasurementEngine from '@/Components/Game/Generative/Engines/MeasurementEngine';
 
 const ENGINE_REGISTRY = {
   'ordering-numbers': OrderingEngine,
-  'ordering-decimals': OrderingEngine,
+  'ordering-decimals': DecimalOrderingEngine,
+  'rounding': RoundingEngine,
+  'place-value': PlaceValueEngine,
+  'multiplication-matching': MatchingEngine,
+  'time-money': TimeMoneyEngine,
+  'advanced-fractions': AdvancedFractionsEngine,
+  'measurement': MeasurementEngine,
 };
 
 /**
- * PracticeOrchestrator
+ * GenerativeOrchestrator
  * Standardized Orchestrator for Logic-driven (Stack 2) practice sessions.
- * Formerly GenerativeOrchestrator.
+ * Formerly PracticeOrchestrator.
  */
-export default function PracticeOrchestrator({ 
+export default function GenerativeOrchestrator({ 
   templateData, 
   gradeKey = 'G2' 
 }) {

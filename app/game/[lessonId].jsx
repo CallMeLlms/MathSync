@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import CurriculumOrchestrator from '@/Components/Game/Curriculum/CurriculumOrchestrator';
-import PracticeOrchestrator from '@/Components/Game/Generative/Orchestrators/PracticeOrchestrator';
+import GenerativeOrchestrator from '@/Components/Game/Generative/Orchestrators/GenerativeOrchestrator';
 
 /**
  * Universal Game Route.
@@ -17,7 +17,7 @@ export default function GameRoute() {
 
   // Treat '1' as a test alias for ordering-numbers
   const computedTopicId = lessonId === '1' ? 'ordering-numbers' : (topicId || lessonId);
-  const isGenerative = type === 'generative' || computedTopicId === 'ordering-numbers';
+  const isGenerative = type === 'generative' || computedTopicId === 'ordering-numbers' || computedTopicId === 'rounding' || computedTopicId === 'place-value' || computedTopicId === 'multiplication-matching' || computedTopicId === 'time-money' || computedTopicId === 'advanced-fractions' || computedTopicId === 'measurement' || computedTopicId === 'ordering-decimals';
   
   const templateData = isGenerative ? {
     templateId: lessonId,
@@ -28,7 +28,7 @@ export default function GameRoute() {
     <>
       <Stack.Screen options={{ headerShown: false }} />
       {isGenerative ? (
-        <PracticeOrchestrator 
+        <GenerativeOrchestrator 
           templateData={templateData} 
           gradeKey={grade} 
         />
