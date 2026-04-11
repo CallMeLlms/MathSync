@@ -1,0 +1,68 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Addition",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
+        "engines": {
+            "NUMPAD": "Type the answer using the colorful number pad"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_1.11_add_001",
+            "competency": "NA.1.11",
+            "topic": "Addition",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "audioInstruction": "na_1.11_add_concrete_001.mp3",
+            "assetType": "NONE",
+            "question": "What is 2 + 1?",
+            "equation": {
+                "left": "2 + 1",
+                "operator": "=",
+                "blank": "right"
+            },
+            "answer": 3,
+            "maxDigits": 1
+        },
+        {
+            "id": "na_1.11_add_002",
+            "competency": "NA.1.11",
+            "topic": "Addition",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "audioInstruction": "na_1.11_add_pictorial_001.mp3",
+            "assetType": "NONE",
+            "question": "What is 7 + 5?",
+            "equation": {
+                "left": "7 + 5",
+                "operator": "=",
+                "blank": "right"
+            },
+            "answer": 12,
+            "maxDigits": 2
+        },
+        {
+            "id": "na_1.11_add_003",
+            "competency": "NA.1.11",
+            "topic": "Addition",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "audioInstruction": "na_1.11_add_abstract_001.mp3",
+            "assetType": "NONE",
+            "question": "What is 9 + 8?",
+            "equation": {
+                "left": "9 + 8",
+                "operator": "=",
+                "blank": "right"
+            },
+            "answer": 17,
+            "maxDigits": 2
+        }
+    ]
+}

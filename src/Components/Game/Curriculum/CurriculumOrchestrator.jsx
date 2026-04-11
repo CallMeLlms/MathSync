@@ -10,6 +10,10 @@ import { getBundledLesson } from './lessonResolver';
 import PickerEngine from './Engines/PickerEngine';
 import CounterEngine from './Engines/CounterEngine';
 import DragDropEngine from './Engines/DragDropEngine';
+import ComposeEngine from './Engines/ComposeEngine';
+import NumpadEngine from './Engines/NumpadEngine';
+import ExitModal from '@/Components/Game/Global/ExitModal';
+import ResultModal from '@/Components/Game/Global/ResultModal';
 
 /**
  * CurriculumOrchestrator
@@ -32,6 +36,10 @@ export default function CurriculumOrchestrator({
     currentQuestionIndex,
     totalScore 
   } = useGameEngine();
+
+  const [showExitModal, setShowExitModal] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false);
+  const [lastResultData, setLastResultData] = useState({ isCorrect: false, userAnswerItems: [], currentQuestion: null });
 
   // Load Content Data
   useEffect(() => {
@@ -60,8 +68,21 @@ export default function CurriculumOrchestrator({
   const currentQuestion = lessonContent.questions[currentQuestionIndex];
   const isFinished = currentQuestionIndex >= lessonContent.questions.length;
 
-  const handleResult = (isCorrect) => {
+  const handleResult = (isCorrect, userAnswerItems = []) => {
     recordAnswer(isCorrect);
+    setLastResultData({
+      isCorrect,
+      userAnswerItems,
+      currentQuestion
+    });
+    setShowResultModal(true);
+  };
+
+  const handleContinue = () => {
+    setShowResultModal(false);
+    setTimeout(() => {
+      handleComplete();
+    }, 300);
   };
 
   const handleComplete = () => {
@@ -84,6 +105,8 @@ export default function CurriculumOrchestrator({
       case 'picker': return <PickerEngine {...props} />;
       case 'counter': return <CounterEngine {...props} />;
       case 'dragdrop': return <DragDropEngine {...props} />;
+      case 'compose': return <ComposeEngine {...props} />;
+      case 'numpad': return <NumpadEngine {...props} />;
       default: return <Text style={styles.errorText}>Engine "{lessonContent.type}" not found.</Text>;
     }
   };
@@ -92,7 +115,7 @@ export default function CurriculumOrchestrator({
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
       {/* HUD */}
       <View style={styles.hud}>
-        <TouchableOpacity style={styles.exitButton} onPress={() => router.back()}>
+        <TouchableOpacity style={styles.exitButton} onPress={() => setShowExitModal(true)}>
           <Text style={[styles.exitText, { fontFamily: theme.fontFamily.accent }]}>{theme.exitText}</Text>
         </TouchableOpacity>
         <Text style={[styles.scoreText, { color: theme.primaryColor, fontFamily: theme.fontFamily.accent }]}>
@@ -123,6 +146,24 @@ export default function CurriculumOrchestrator({
           renderEngine()
         )}
       </View>
+
+      <ExitModal 
+        isVisible={showExitModal}
+        onCancel={() => setShowExitModal(false)}
+        onConfirm={() => {
+          setShowExitModal(false);
+          router.back();
+        }}
+        theme={theme}
+      />
+      <ResultModal
+        isVisible={showResultModal}
+        isCorrect={lastResultData.isCorrect}
+        problem={lastResultData.currentQuestion}
+        userAnswer={lastResultData.userAnswerItems ? lastResultData.userAnswerItems.join(', ') : ''}
+        onContinue={handleContinue}
+        theme={theme}
+      />
     </SafeAreaView>
   );
 }

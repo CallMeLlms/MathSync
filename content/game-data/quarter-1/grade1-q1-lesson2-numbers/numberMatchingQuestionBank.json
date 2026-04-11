@@ -1,0 +1,101 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Number Matching",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
+        "engines": {
+            "MATCHER": "Tap left item, then tap its matching pair on the right"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_1.5_match_001",
+            "competency": "NA.1.5",
+            "topic": "Number Matching",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "audioInstruction": "na_1.5_match_concrete_001.mp3",
+            "assetType": "NONE",
+            "question": "Match each number to its name.",
+            "pairs": [
+                {
+                    "left": "1",
+                    "right": "one"
+                },
+                {
+                    "left": "2",
+                    "right": "two"
+                },
+                {
+                    "left": "3",
+                    "right": "three"
+                }
+            ]
+        },
+        {
+            "id": "na_1.5_match_002",
+            "competency": "NA.1.5",
+            "topic": "Number Matching",
+            "level": "pictorial",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "audioInstruction": "na_1.5_match_pictorial_001.mp3",
+            "assetType": "NONE",
+            "question": "Match each number to its name.",
+            "pairs": [
+                {
+                    "left": "5",
+                    "right": "five"
+                },
+                {
+                    "left": "8",
+                    "right": "eight"
+                },
+                {
+                    "left": "4",
+                    "right": "four"
+                },
+                {
+                    "left": "7",
+                    "right": "seven"
+                }
+            ]
+        },
+        {
+            "id": "na_1.5_match_003",
+            "competency": "NA.1.5",
+            "topic": "Number Matching",
+            "level": "abstract",
+            "type": "MATCHER",
+            "difficulty": "Hard",
+            "audioInstruction": "na_1.5_match_abstract_001.mp3",
+            "assetType": "NONE",
+            "question": "Match each number to its name.",
+            "pairs": [
+                {
+                    "left": "11",
+                    "right": "eleven"
+                },
+                {
+                    "left": "15",
+                    "right": "fifteen"
+                },
+                {
+                    "left": "13",
+                    "right": "thirteen"
+                },
+                {
+                    "left": "19",
+                    "right": "nineteen"
+                },
+                {
+                    "left": "20",
+                    "right": "twenty"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,208 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Compose and Decompose Numbers up to 10",
+        "competency": "NA.1.10",
+        "performanceStandard": "Count, recognize, and represent whole numbers up to 100.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "COMPOSER": "Tap number chips to fill two slots that add up to the target"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_1_cd_001",
+            "competency": "NA.1.10",
+            "topic": "Compose and Decompose",
+            "level": "concrete",
+            "type": "COMPOSER",
+            "mode": "decompose",
+            "difficulty": "Easy",
+            "question": "Break 5 into two parts!",
+            "target": 5,
+            "chips": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                0
+            ],
+            "assetType": "NONE",
+            "emoji": "🍎"
+        },
+        {
+            "id": "na_1_cd_002",
+            "competency": "NA.1.10",
+            "topic": "Compose and Decompose",
+            "level": "concrete",
+            "type": "COMPOSER",
+            "mode": "decompose",
+            "difficulty": "Easy",
+            "question": "Break 4 into two parts!",
+            "target": 4,
+            "chips": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "assetType": "NONE",
+            "emoji": "🌸"
+        },
+        {
+            "id": "na_1_cd_003",
+            "competency": "NA.1.10",
+            "topic": "Compose and Decompose",
+            "level": "concrete",
+            "type": "COMPOSER",
+            "mode": "compose",
+            "difficulty": "Easy",
+            "question": "Pick two numbers that make 6!",
+            "target": 6,
+            "chips": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ],
+            "assetType": "NONE",
+            "emoji": "⭐"
+        },
+        {
+            "id": "na_1_cd_004",
+            "competency": "NA.1.10",
+            "topic": "Compose and Decompose",
+            "level": "pictorial",
+            "type": "COMPOSER",
+            "mode": "decompose",
+            "difficulty": "Medium",
+            "question": "Break 7 into two groups!",
+            "target": 7,
+            "chips": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ],
+            "assetType": "NONE",
+            "emoji": "🐟"
+        },
+        {
+            "id": "na_1_cd_005",
+            "competency": "NA.1.10",
+            "topic": "Compose and Decompose",
+            "level": "pictorial",
+            "type": "COMPOSER",
+            "mode": "compose",
+            "difficulty": "Medium",
+            "question": "Pick two numbers that make 8!",
+            "target": 8,
+            "chips": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+            ],
+            "assetType": "NONE",
+            "emoji": "🌺"
+        },
+        {
+            "id": "na_1_cd_006",
+            "competency": "NA.1.10",
+            "topic": "Compose and Decompose",
+            "level": "pictorial",
+            "type": "COMPOSER",
+            "mode": "decompose",
+            "difficulty": "Medium",
+            "question": "Break 9 into two parts!",
+            "target": 9,
+            "chips": [
+                1,
+                3,
+                4,
+                5,
+                6,
+                8
+            ],
+            "assetType": "NONE",
+            "emoji": "🥭"
+        },
+        {
+            "id": "na_1_cd_007",
+            "competency": "NA.1.10",
+            "topic": "Compose and Decompose",
+            "level": "abstract",
+            "type": "COMPOSER",
+            "mode": "decompose",
+            "difficulty": "Hard",
+            "question": "Break 10 into two parts!",
+            "target": 10,
+            "chips": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "assetType": "NONE",
+            "emoji": "🔢"
+        },
+        {
+            "id": "na_1_cd_008",
+            "competency": "NA.1.10",
+            "topic": "Compose and Decompose",
+            "level": "abstract",
+            "type": "COMPOSER",
+            "mode": "compose",
+            "difficulty": "Hard",
+            "question": "Pick two numbers that make 9!",
+            "target": 9,
+            "chips": [
+                0,
+                2,
+                3,
+                5,
+                7,
+                9
+            ],
+            "assetType": "NONE",
+            "emoji": "🔢"
+        },
+        {
+            "id": "na_1_cd_009",
+            "competency": "NA.1.10",
+            "topic": "Compose and Decompose",
+            "level": "abstract",
+            "type": "COMPOSER",
+            "mode": "decompose",
+            "difficulty": "Hard",
+            "question": "Break 8 into two parts!",
+            "target": 8,
+            "chips": [
+                0,
+                1,
+                3,
+                5,
+                6,
+                8
+            ],
+            "assetType": "NONE",
+            "emoji": "🔢"
+        }
+    ]
+}

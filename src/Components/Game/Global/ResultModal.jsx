@@ -68,6 +68,14 @@ export default function ResultModal({
     );
   };
 
+  const getCorrectAnswerArray = () => {
+    if (metadata.correctOrder) return metadata.correctOrder;
+    if (problem?.answer !== undefined) return [problem.answer];
+    if (problem?.target !== undefined) return [problem.target];
+    if (problem?.pairs) return ['Match the pairs'];
+    return ['']; // Safest fallback
+  };
+
   return (
     <View style={[StyleSheet.absoluteFillObject, styles.overlay]}>
         <Animated.View style={[styles.card, animatedStyle, { borderColor: statusColor }]}>
@@ -82,7 +90,7 @@ export default function ResultModal({
           <View style={styles.contentContainer}>
             <View style={styles.reviewContainer}>
               {/* Correct Answer Display */}
-              {renderVisualizer(metadata.correctOrder || [problem.answer], isCorrect ? "Result" : "Correct Answer", true)}
+              {renderVisualizer(getCorrectAnswerArray(), isCorrect ? "Result" : "Correct Answer", true)}
               
               {/* User Answer Display (if wrong) */}
               {!isCorrect && userAnswer && (
