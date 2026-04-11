@@ -15,6 +15,7 @@ MathSync/
 │   ├── document/               # Architectural Plans & Feature Blueprints
 │   ├── logs/                   # Implementation Timelines & Summaries
 │   └── guidelines/             # Core Project Standards
+├── scratch/                    # Temporary & Experimental Scripts
 └── package.json
 ```
 
@@ -37,7 +38,11 @@ app/
 │   ├── Calendar.jsx            # Schedule/Event Tracking
 │   └── _layout.js              # Drawer Navigation Layout
 ├── classroom/                   # Classroom Management
-│   └── [id].jsx                # Specific Classroom View
+│   ├── [id].jsx                # Specific Classroom View
+│   ├── assignment/             # Assignment Routes
+│   │   └── [assignmentId].jsx
+│   └── lesson/                 # Lesson Routes
+│       └── [lessonId].jsx
 ├── journey/                    # Grade Journeys
 │   └── [grade].jsx             # Dynamic Journey Entry (data-driven)
 ├── game/                       # Universal Game Route
@@ -74,14 +79,14 @@ src/
 │   ├── user-stores/            # User Profile & Activity
 │   └── game-stores/            # Active session & Engine logic
 ├── hooks/                      # Custom React Hooks
-├── screens/                    # Specialized Screen wrappers
 ├── services/                   # External API & Auth Services
 ├── theme/                      # Design Tokens
-│   └── gameThemes.js           # Dynamic User Experience Themes
 ├── utils/                      # Common Utility Helpers
 │   └── generators/             # Math Generation Library
-│       ├── core/               # Shared Math Primitives (Randomizers, Formatters)
-│       ├── grades/             # Grade-Specific Problem Brains (G1, G2, etc.)
+│       ├── common/             # Reusable Generator Logic
+│       ├── core/               # Math Primitives
+│       ├── grades/             # Grade-Specific Problem Brains
+│       │   ├── G1/ ... G6/     # Subfolders for each grade
 │       └── registry.js         # Central Topic-to-Brain Registry
 ```
 

@@ -1,18 +1,43 @@
 import React from 'react';
-import { Stack } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import CurriculumOrchestrator from '@/Components/Game/Curriculum/CurriculumOrchestrator';
+import PracticeOrchestrator from '@/Components/Game/Generative/Orchestrators/PracticeOrchestrator';
 
 /**
  * Universal Game Route.
- * Automatically maps to the generic CurriculumOrchestrator.
+ * Detects 'type' to switch between static Curriculum and dynamic Practice engines.
+ * 
+ * Usage: /game/123?type=generative&topicId=ordering-numbers&grade=G2
  */
 export default function GameRoute() {
-  const { lessonId } = useLocalSearchParams();
+  const params = useLocalSearchParams();
+  const { lessonId, type, topicId, grade = 'G2' } = params;
+
+  console.log('[Router] Path Params:', { lessonId, type, topicId, grade });
+
+  // Treat '1' as a test alias for ordering-numbers
+  const computedTopicId = lessonId === '1' ? 'ordering-numbers' : (topicId || lessonId);
+  const isGenerative = type === 'generative' || computedTopicId === 'ordering-numbers';
+  
+  const templateData = isGenerative ? {
+    templateId: lessonId,
+    topicId: computedTopicId,
+  } : null;
 
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <CurriculumOrchestrator lessonId={lessonId} gradeKey="G1" />
+      {isGenerative ? (
+        <PracticeOrchestrator 
+          templateData={templateData} 
+          gradeKey={grade} 
+        />
+      ) : (
+        <CurriculumOrchestrator 
+          lessonId={lessonId} 
+          gradeKey={grade} 
+        />
+      )}
     </>
   );
 }

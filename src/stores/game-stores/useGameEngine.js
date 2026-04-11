@@ -23,6 +23,11 @@ const useGameEngine = create((set, get) => ({
     totalScore: isCorrect ? state.totalScore + 10 : state.totalScore,
   })),
 
+  // Flexible point updating (used by Generative Engines)
+  updateScore: (points) => set((state) => ({
+    totalScore: Math.max(0, state.totalScore + points),
+  })),
+
   // Move to next question
   nextQuestion: () => set((state) => ({
     currentQuestionIndex: state.currentQuestionIndex + 1,

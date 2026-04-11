@@ -26,8 +26,17 @@ export const GameThemes = {
     id: 'grade2_sky',
     backgroundColor: '#F0F9FF',
     primaryColor: '#0284C7',
+    secondaryColor: '#38BDF8',
     loadingText: 'Soaring High...',
-    exitText: 'Back to Earth'
+    exitText: 'Back to Earth',
+    scoreLabel: 'Activity Score',
+    finishTitle: 'Great Flying!',
+    finishButtonText: 'Back to Map',
+    fontFamily: {
+      title: 'Lexend-Black',
+      body: 'PlusJakartaSans-Medium',
+      accent: 'Lexend-Bold'
+    }
   }
 };
 
