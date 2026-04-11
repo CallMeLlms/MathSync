@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ActivityIndicator, BackHandler } from 'react-native';
 import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
+import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import Colors from '@/constants/colors';
 import { getGameTheme } from '@/theme/gameThemes';
 import useGameEngine from '@/stores/game-stores/useGameEngine';
@@ -74,13 +76,20 @@ export default function PracticeOrchestrator({
     return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
   }, [showExitModal, showFeedback]);
 
-  // 2. Generate new problem when needed
-  useEffect(() => {
-    if (generator && !showFeedback) {
-      const newProblem = generator(templateData?.rules || {});
+  // 2. Generate new problem (Internal Helper)
+  const generateNextProblem = useCallback((currentRules) => {
+    if (generator) {
+      const newProblem = generator(currentRules || {});
       setCurrentProblem(newProblem);
     }
-  }, [generator, currentIndex]);
+  }, [generator]);
+
+  // Initial generation
+  useEffect(() => {
+    if (generator && !currentProblem) {
+      generateNextProblem(templateData?.rules);
+    }
+  }, [generator]);
 
   // 3. Handle Engine Answer
   const handleAnswer = useCallback((isCorrect, userAnswerStr) => {
@@ -99,9 +108,11 @@ export default function PracticeOrchestrator({
   const handleFeedbackComplete = useCallback(() => {
     setShowFeedback(false);
     if (isLastAnswerCorrect) {
+      // Synchronously prepare next state to prevent frame lag
+      generateNextProblem(templateData?.rules);
       setCurrentIndex(prev => prev + 1);
     }
-  }, [isLastAnswerCorrect]);
+  }, [isLastAnswerCorrect, generateNextProblem, templateData]);
 
   if (!currentProblem || !topicId) {
     return (
@@ -117,7 +128,10 @@ export default function PracticeOrchestrator({
   const EngineComponent = ENGINE_REGISTRY[topicId];
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
+    <LinearGradient 
+      colors={[Colors.surface, theme.backgroundColor]}
+      style={styles.container}
+    >
       <SafeAreaView style={styles.safeArea}>
         {/* Universal Header */}
         <View style={styles.hud}>
@@ -133,15 +147,19 @@ export default function PracticeOrchestrator({
           </Text>
         </View>
 
-        {/* Dynamic Engine */}
+        {/* Dynamic Engine (Transitionless for performance) */}
         <View style={styles.engineContainer}>
           {EngineComponent ? (
-            <EngineComponent 
+            <View 
               key={`engine-${currentIndex}`}
-              problem={currentProblem}
-              theme={theme}
-              onAnswer={handleAnswer}
-            />
+              style={styles.engineWrapper}
+            >
+              <EngineComponent 
+                problem={currentProblem}
+                theme={theme}
+                onAnswer={handleAnswer}
+              />
+            </View>
           ) : (
             <Text style={styles.placeholderText}>Engine for {topicId} not found.</Text>
           )}
@@ -164,7 +182,7 @@ export default function PracticeOrchestrator({
         onConfirm={() => router.back()}
         theme={theme}
       />
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -189,6 +207,7 @@ const styles = StyleSheet.create({
   exitButton: { padding: 8 },
   exitText: { color: Colors.error, fontSize: 14 },
   scoreText: { fontSize: 20 },
-  engineContainer: { flex: 1 },
+  engineContainer: { flex: 1, overflow: 'hidden' },
+  engineWrapper: { flex: 1 },
   placeholderText: { fontFamily: 'Lexend-Bold', fontSize: 18, color: Colors.onSurfaceVariant, textAlign: 'center', marginTop: 100 }
 });

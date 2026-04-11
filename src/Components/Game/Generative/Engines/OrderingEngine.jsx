@@ -1,10 +1,104 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import Animated, { useAnimatedStyle, withTiming, useSharedValue, Easing } from 'react-native-reanimated';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Animated, { useAnimatedStyle, withSpring, useSharedValue, LinearTransition, FadeIn, runOnJS } from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 
-const { width } = Dimensions.get('window');
+function AnimatedTile({ number, isSelected, onSelect, theme }) {
+  const scale = useSharedValue(1);
+
+  const tap = Gesture.Tap()
+    .onBegin(() => {
+      scale.value = withSpring(0.92, { damping: 15, stiffness: 200 });
+    })
+    .onEnd(() => {
+      if (onSelect) {
+        runOnJS(onSelect)(number);
+      }
+    })
+    .onFinalize(() => {
+      scale.value = withSpring(1, { damping: 15, stiffness: 200 });
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  return (
+    <GestureDetector gesture={tap}>
+      <Animated.View
+        layout={LinearTransition.springify()}
+        entering={FadeIn.duration(300)}
+        style={[
+          styles.choiceTile,
+          animatedStyle,
+          { 
+            backgroundColor: isSelected ? theme.primaryColor : Colors.surface,
+            borderColor: isSelected ? theme.primaryColor : Colors.outlineVariant,
+          }
+        ]}
+      >
+        <Text style={[
+          styles.choiceText, 
+          { 
+            fontFamily: theme.fontFamily.accent, 
+            color: isSelected ? Colors.surface : Colors.onSurface 
+          }
+        ]}>
+          {number}
+        </Text>
+      </Animated.View>
+    </GestureDetector>
+  );
+}
+
+function AnimatedSlot({ isFilled, number, isSelectedTarget, onSelect, theme }) {
+  const scale = useSharedValue(1);
+
+  const tap = Gesture.Tap()
+    .onBegin(() => {
+      scale.value = withSpring(0.92, { damping: 15, stiffness: 200 });
+    })
+    .onEnd(() => {
+      if (onSelect) {
+        runOnJS(onSelect)();
+      }
+    })
+    .onFinalize(() => {
+      scale.value = withSpring(1, { damping: 15, stiffness: 200 });
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  return (
+    <GestureDetector gesture={tap}>
+      <Animated.View
+        style={[
+          styles.slot,
+          animatedStyle,
+          isFilled ? styles.slotFilled : styles.slotEmpty,
+          isSelectedTarget && styles.slotActiveTarget,
+          { 
+            borderColor: isSelectedTarget ? theme.secondaryColor : Colors.outlineVariant,
+          }
+        ]}
+      >
+        {isFilled && (
+          <Animated.Text 
+            entering={FadeIn.duration(300)}
+            style={[styles.slotText, { fontFamily: theme.fontFamily.accent, color: theme.primaryColor }]}
+          >
+            {number}
+          </Animated.Text>
+        )}
+      </Animated.View>
+    </GestureDetector>
+  );
+}
+
 
 /**
  * OrderingEngine
@@ -108,23 +202,14 @@ export default function OrderingEngine({ problem, onAnswer, theme }) {
           const isFilled = placedVal !== undefined;
 
           return (
-            <TouchableOpacity
+            <AnimatedSlot
               key={`slot-${index}`}
-              style={[
-                styles.slot,
-                isFilled ? styles.slotFilled : styles.slotEmpty,
-                selectedNumber && !isFilled && styles.slotActiveTarget,
-                { borderColor: selectedNumber && !isFilled ? theme.secondaryColor : Colors.outlineVariant }
-              ]}
-              onPress={() => isFilled ? handlePlacedNumberTap(placedVal, index) : handleSlotTap(index)}
-              activeOpacity={0.8}
-            >
-              {isFilled && (
-                <Text style={[styles.slotText, { fontFamily: theme.fontFamily.accent, color: theme.primaryColor }]}>
-                  {placedVal}
-                </Text>
-              )}
-            </TouchableOpacity>
+              isFilled={isFilled}
+              number={placedVal}
+              isSelectedTarget={selectedNumber !== null && !isFilled}
+              theme={theme}
+              onSelect={() => isFilled ? handlePlacedNumberTap(placedVal, index) : handleSlotTap(index)}
+            />
           );
         })}
       </View>
@@ -139,31 +224,14 @@ export default function OrderingEngine({ problem, onAnswer, theme }) {
         
         <View style={styles.choicesGrid}>
           {availableNumbers.map((num, index) => {
-            const isSelected = selectedNumber === num;
             return (
-              <TouchableOpacity
-                key={`avail-${index}-${num}`}
-                style={[
-                  styles.choiceTile,
-                  isSelected && styles.choiceTileSelected,
-                  { 
-                    backgroundColor: isSelected ? theme.primaryColor : Colors.surface,
-                    borderColor: isSelected ? theme.primaryColor : Colors.outlineVariant
-                  }
-                ]}
-                onPress={() => handleAvailableNumberTap(num)}
-                activeOpacity={0.8}
-              >
-                <Text style={[
-                  styles.choiceText, 
-                  { 
-                    fontFamily: theme.fontFamily.accent, 
-                    color: isSelected ? Colors.surface : Colors.onSurface 
-                  }
-                ]}>
-                  {num}
-                </Text>
-              </TouchableOpacity>
+              <AnimatedTile
+                key={`avail-${num}`}
+                number={num}
+                isSelected={selectedNumber === num}
+                theme={theme}
+                onSelect={(n) => handleAvailableNumberTap(n)}
+              />
             );
           })}
         </View>
@@ -224,16 +292,18 @@ const styles = StyleSheet.create({
     marginBottom: 48,
   },
   slot: {
-    width: width * 0.18,
-    height: width * 0.18,
+    width: '18%',
+    aspectRatio: 1,
+    minWidth: 60,
+    maxWidth: 80,
     borderRadius: 16,
-    borderWidth: 2,
+    borderWidth: 3,
     justifyContent: 'center',
     alignItems: 'center',
   },
   slotEmpty: {
     borderStyle: 'dashed',
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   slotFilled: {
     borderStyle: 'solid',
@@ -261,15 +331,12 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   choiceTile: {
-    width: width * 0.18,
-    height: width * 0.18,
+    width: 60,
+    height: 60,
     borderRadius: 16,
-    borderWidth: 2,
+    borderWidth: 3,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  choiceTileSelected: {
-    transform: [{ scale: 1.05 }],
   },
   choiceText: {
     fontSize: 20,
