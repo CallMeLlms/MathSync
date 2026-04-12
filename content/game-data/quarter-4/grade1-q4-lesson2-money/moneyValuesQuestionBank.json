@@ -22,7 +22,7 @@
             "question": "You have two ₱10 coins. What is the total value?",
             "answer": 20,
             "assetType": "manipulatives",
-            "assetId": "money_coin_10",
+            "assetId": "money_coin_1",
             "metadata": {}
         },
         {
@@ -35,7 +35,7 @@
             "question": "Look at the picture. There is one ₱50 bill and three ₱10 coins. Total set value is __?",
             "answer": 80,
             "assetType": "illustration",
-            "assetId": "money_bill_50",
+            "assetId": "money_coin_1",
             "metadata": {}
         },
         {

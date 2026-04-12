@@ -21,9 +21,13 @@
             "difficulty": "Easy",
             "question": "Look at the pattern: Small circle, Large circle, Small circle. What comes next?",
             "pairs": [
-                {"left": "pattern_next", "right": "large_circle"}
+                {
+                    "left": "pattern_next",
+                    "right": "large_circle"
+                }
             ],
-            "assetType": "manipulatives"
+            "assetType": "manipulatives",
+            "assetId": "shape_circle"
         },
         {
             "id": "na_3_comp_004",
@@ -34,7 +38,10 @@
             "difficulty": "Medium",
             "question": "In the picture: Happy face, Sad face, Happy face, Sad face. What comes next?",
             "pairs": [
-                {"left": "pattern_next", "right": "happy_face"}
+                {
+                    "left": "pattern_next",
+                    "right": "happy_face"
+                }
             ],
             "assetType": "illustration"
         },

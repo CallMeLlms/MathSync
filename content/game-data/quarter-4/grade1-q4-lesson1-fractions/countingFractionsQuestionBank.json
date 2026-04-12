@@ -22,7 +22,8 @@
             "question": "How many halves make one whole circle?",
             "answer": 2,
             "assetType": "manipulatives",
-            "metadata": {}
+            "metadata": {},
+            "assetId": "shape_circle"
         },
         {
             "id": "na_4_fraccount_004",

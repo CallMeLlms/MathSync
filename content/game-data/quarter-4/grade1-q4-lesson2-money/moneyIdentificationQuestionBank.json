@@ -21,7 +21,10 @@
             "difficulty": "Easy",
             "question": "Match the ₱1 coin to its symbol.",
             "pairs": [
-                {"left": "coin_1", "right": "₱1"}
+                {
+                    "left": "coin_1",
+                    "right": "₱1"
+                }
             ],
             "assetType": "manipulatives",
             "assetId": "money_coin_1"

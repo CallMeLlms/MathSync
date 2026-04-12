@@ -38,10 +38,10 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const ITEM_SIZE = (SCREEN_WIDTH - 80) / 2;
 
 const ITEM_COLORS = [
-  { bg: '#FF7043', border: '#E64A19', text: '#FFFFFF' },
-  { bg: '#42A5F5', border: '#1565C0', text: '#FFFFFF' },
-  { bg: '#66BB6A', border: '#2E7D32', text: '#FFFFFF' },
-  { bg: '#AB47BC', border: '#7B1FA2', text: '#FFFFFF' },
+  { bg: Colors.primary, border: Colors.onPrimaryContainer, text: Colors.onPrimary },
+  { bg: Colors.secondary, border: Colors.onSecondaryContainer, text: Colors.onSecondary },
+  { bg: Colors.tertiary, border: Colors.onTertiaryContainer, text: Colors.onTertiary },
+  { bg: Colors.onPrimaryContainer, border: Colors.primary, text: Colors.onPrimary },
 ];
 
 const hapticLight = () => {
@@ -405,12 +405,12 @@ const styles = StyleSheet.create({
   },
   dropZoneCorrect: {
     borderColor: Colors.success,
-    backgroundColor: 'rgba(0,110,42,0.08)',
+    backgroundColor: Colors.tertiaryContainer,
     borderStyle: 'solid',
   },
   dropZoneWrong: {
     borderColor: Colors.error,
-    backgroundColor: 'rgba(186,26,26,0.08)',
+    backgroundColor: Colors.secondaryContainer,
   },
   emptyDropZone: {
     alignItems: 'center',
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
   droppedText: {
     fontFamily: 'Lexend-Black',
     fontSize: SCREEN_HEIGHT * 0.032,
-    color: '#FFFFFF',
+    color: Colors.onPrimary,
   },
   grid: {
     flexDirection: 'row',
@@ -482,7 +482,7 @@ const styles = StyleSheet.create({
   },
   checkButtonText: {
     fontFamily: 'Lexend-Bold',
-    color: '#FFF',
+    color: Colors.onPrimary,
     fontSize: SCREEN_HEIGHT * 0.019,
   },
 });

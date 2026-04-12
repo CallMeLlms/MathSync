@@ -41,7 +41,7 @@
             "question": "Look at the picture. Which object is shaped like a rectangle?",
             "answer": "door",
             "assetType": "illustration",
-            "assetId": "g1_q1_object_door",
+            "assetId": "shape_rectangle",
             "metadata": {
                 "options": [
                     "door",

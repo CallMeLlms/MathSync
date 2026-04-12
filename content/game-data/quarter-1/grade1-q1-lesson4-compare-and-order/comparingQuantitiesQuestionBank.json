@@ -55,7 +55,11 @@
             "answer": "15 is greater than 10",
             "assetType": "text",
             "metadata": {
-                "options": ["15 is less than 10", "15 is greater than 10", "15 is equal to 10"]
+                "options": [
+                    "15 is less than 10",
+                    "15 is greater than 10",
+                    "15 is equal to 10"
+                ]
             }
         }
     ]

@@ -40,7 +40,11 @@
             "assetType": "illustration",
             "metadata": {
                 "scenario": "canteen_line",
-                "options": ["juan", "maria", "pedro"]
+                "options": [
+                    "juan",
+                    "maria",
+                    "pedro"
+                ]
             }
         },
         {
@@ -54,7 +58,11 @@
             "answer": "1st",
             "assetType": "text",
             "metadata": {
-                "options": ["1st", "2nd", "3rd"]
+                "options": [
+                    "1st",
+                    "2nd",
+                    "3rd"
+                ]
             }
         }
     ]

@@ -30,6 +30,7 @@ import G1_Counting from '@content/game-data/quarter-1/grade1-q1-lesson2-numbers/
 // ─── Quarter 1, Lesson 3: Ordinal Numbers (The Ranking Vines) ───────
 import G1_Ordinal from '@content/game-data/quarter-1/grade1-q1-lesson3-position/ordinalNumbersQuestionBank.json';
 import G1_Positional from '@content/game-data/quarter-1/grade1-q1-lesson3-position/positionalReasoningQuestionBank.json';
+import G1_OrdinalSequence from '@content/game-data/quarter-1/grade1-q1-lesson3-position/ordinalSequenceQuestionBank.json';
 
 // ─── Quarter 1, Lesson 4: Compare & Order (Sorting Seeds) ───────────
 import G1_CompareOrder from '@content/game-data/quarter-1/grade1-q1-lesson4-compare-and-order/compareOrderQuestionBank.json';
@@ -104,8 +105,9 @@ const BUNDLED_DATA = {
       },
 
       // --- Node 3: "The Ranking Vines" — Ordinal Numbers Super Lesson ---
-      // Banks: Ordinal (N/A), Positional Reasoning (N/A)
-      // NOTE: Both banks currently have type "N/A". Deferred until engines assigned.
+      // Banks: Ordinal (N/A), Positional Reasoning (N/A), OrdinalSequence (ORDINAL_SEQUENCE — test bank)
+      // NOTE: The first two banks are still "N/A" (deferred). OrdinalSequence is a
+      //       TEST bank wired here to validate the OrdinalSequenceEngine end-to-end.
       {
         id: '3',
         meta: {
@@ -114,7 +116,7 @@ const BUNDLED_DATA = {
           competency: 'NA.1.9',
           description: 'Ordinal Numbers — Describe position (1st–10th)',
         },
-        questions: getPlayableQuestions([G1_Ordinal, G1_Positional]),
+        questions: getPlayableQuestions([G1_Ordinal, G1_Positional, G1_OrdinalSequence]),
       },
 
       // --- Node 4: "Sorting Seeds" — Compare & Order Super Lesson ---

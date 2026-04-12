@@ -43,6 +43,7 @@ const CANVAS_HEIGHT = SCREEN_HEIGHT * 0.40;
 const TRACE_TOLERANCE = 35;
 const COVERAGE_THRESHOLD = 0.75;
 const SEGMENT_LENGTH = 15;
+const TRACE_THROTTLE_MS = 16; // ~1 frame — limits runOnJS bridge hops during pan
 
 // Normalized vertex coordinates (0-1) for each shape — closed loop
 const SHAPE_PATHS = {
@@ -142,6 +143,7 @@ const ShapeTracerEngine = ({ data, onResult }) => {
 
   const tracedSetRef = useRef(new Set());
   const userPathRef = useRef([]);
+  const lastTraceCallRef = useRef(0); // throttle gate for runOnJS in pan.onUpdate
 
   const guideConfig = GUIDE_CONFIGS[traceMode] || GUIDE_CONFIGS.guided;
 
@@ -149,6 +151,7 @@ const ShapeTracerEngine = ({ data, onResult }) => {
   useEffect(() => {
     tracedSetRef.current = new Set();
     userPathRef.current = [];
+    lastTraceCallRef.current = 0;
     setTracedSet(new Set());
     setUserPath([]);
     setAnswered(false);
@@ -233,6 +236,15 @@ const ShapeTracerEngine = ({ data, onResult }) => {
     setUserPath(userPathRef.current);
   }, []);
 
+  // Throttled bridge call — fires at most once per TRACE_THROTTLE_MS.
+  // Avoids a runOnJS bridge hop on every frame of the pan gesture (anti-pattern per guidelines).
+  const handleTraceUpdateThrottled = useCallback((x, y) => {
+    const now = Date.now();
+    if (now - lastTraceCallRef.current < TRACE_THROTTLE_MS) return;
+    lastTraceCallRef.current = now;
+    handleTraceUpdate(x, y);
+  }, [handleTraceUpdate]);
+
   // Gesture: tracks finger across canvas using local coordinates
   const pan = Gesture.Pan()
     .enabled(!answered)
@@ -242,7 +254,7 @@ const ShapeTracerEngine = ({ data, onResult }) => {
       runOnJS(hapticLight)();
     })
     .onUpdate((event) => {
-      runOnJS(handleTraceUpdate)(event.x, event.y);
+      runOnJS(handleTraceUpdateThrottled)(event.x, event.y);
     })
     .onEnd(() => {
       // Keep path visible after lifting finger
@@ -385,7 +397,7 @@ const ShapeTracerEngine = ({ data, onResult }) => {
                     textAnchor="middle"
                     fontSize={SCREEN_HEIGHT * 0.022}
                     fontWeight="bold"
-                    fill="rgba(0,0,0,0.12)"
+                    fill={Colors.outlineVariant}
                   >
                     {shapeLabel}
                   </SvgText>
@@ -465,7 +477,7 @@ const styles = StyleSheet.create({
   canvasCorrect: {
     borderColor: Colors.success,
     borderStyle: 'solid',
-    backgroundColor: 'rgba(0,110,42,0.06)',
+    backgroundColor: Colors.tertiaryContainer,
   },
   canvasInner: {
     flex: 1,
@@ -503,7 +515,7 @@ const styles = StyleSheet.create({
   },
   checkButtonText: {
     fontFamily: 'Lexend-Bold',
-    color: '#FFF',
+    color: Colors.onPrimary,
     fontSize: SCREEN_HEIGHT * 0.019,
   },
   resetButton: {

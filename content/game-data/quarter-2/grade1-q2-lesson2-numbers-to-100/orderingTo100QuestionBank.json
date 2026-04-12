@@ -23,7 +23,11 @@
             "answer": "12, 34, 45",
             "assetType": "manipulatives",
             "metadata": {
-                "items": [45, 12, 34]
+                "items": [
+                    45,
+                    12,
+                    34
+                ]
             }
         },
         {
@@ -37,8 +41,13 @@
             "answer": "₱20, ₱45, ₱65",
             "assetType": "illustration",
             "metadata": {
-                "items": [45, 20, 65]
-            }
+                "items": [
+                    45,
+                    20,
+                    65
+                ]
+            },
+            "assetId": "money_coin_20"
         },
         {
             "id": "na_2_order_007",

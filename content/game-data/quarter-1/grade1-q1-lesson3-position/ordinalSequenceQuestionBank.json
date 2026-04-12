@@ -1,0 +1,77 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Ordinal Numbers up to 10th (Sequence Mechanic)",
+        "competency": "NA.1.9",
+        "performanceStandard": "Describe the position of objects using ordinal numbers from 1st to 10th.",
+        "totalQuestions": 5,
+        "cpaSplit": "2 concrete, 2 pictorial, 1 abstract",
+        "engines": {
+            "ORDINAL_SEQUENCE": "Tap fruits left-to-right to stamp ordinal badges"
+        },
+        "note": "TEST BANK — engine validation only. Not yet merged into the Lesson 3 SuperLesson."
+    },
+    "questions": [
+        {
+            "id": "ordinal_seq_concrete_001",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "concrete",
+            "type": "ORDINAL_SEQUENCE",
+            "difficulty": "Easy",
+            "question": "Tap the fruits from 1st to last!",
+            "fruits": ["🥭", "🍌", "🌽"],
+            "count": 3,
+            "assetType": "NONE"
+        },
+        {
+            "id": "ordinal_seq_concrete_002",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "concrete",
+            "type": "ORDINAL_SEQUENCE",
+            "difficulty": "Easy",
+            "question": "Tap each fruit in order — 1st, 2nd, 3rd, 4th!",
+            "fruits": ["🍊", "🍓", "🍋", "🍇"],
+            "count": 4,
+            "assetType": "NONE"
+        },
+        {
+            "id": "ordinal_seq_pictorial_001",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "pictorial",
+            "type": "ORDINAL_SEQUENCE",
+            "difficulty": "Medium",
+            "question": "Label each fruit with its position in line.",
+            "fruits": ["🥭", "🍌", "🌽", "🍊", "🍓"],
+            "count": 5,
+            "assetType": "NONE"
+        },
+        {
+            "id": "ordinal_seq_pictorial_002",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "pictorial",
+            "type": "ORDINAL_SEQUENCE",
+            "difficulty": "Medium",
+            "question": "Tap the fruits from 1st to 6th, in order!",
+            "fruits": ["🍋", "🍇", "🍉", "🍑", "🥝", "🍒"],
+            "count": 6,
+            "assetType": "NONE"
+        },
+        {
+            "id": "ordinal_seq_abstract_001",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "abstract",
+            "type": "ORDINAL_SEQUENCE",
+            "difficulty": "Hard",
+            "question": "Tap every fruit from 1st to 10th!",
+            "fruits": ["🥭", "🍌", "🌽", "🍊", "🍓", "🍋", "🍇", "🍉", "🍑", "🥝"],
+            "count": 10,
+            "assetType": "NONE"
+        }
+    ]
+}

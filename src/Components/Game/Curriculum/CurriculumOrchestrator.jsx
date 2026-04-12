@@ -17,6 +17,7 @@ import MatcherEngine from './Engines/MatcherEngine';
 import DragDropEngine from './Engines/DragAndDropEngine';
 import ConnectDotsEngine from './Engines/ConnectTheDotsEngine';
 import ShapeTracerEngine from './Engines/ShapeTracerEngine';
+import OrdinalSequenceEngine from './Engines/OrdinalSequenceEngine';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
 
@@ -133,6 +134,7 @@ export default function CurriculumOrchestrator({
       case 'dragdrop': return <DragDropEngine key={currentQuestionIndex} {...props} />;
       case 'connectdots': return <ConnectDotsEngine key={currentQuestionIndex} {...props} />;
       case 'shapetracer': return <ShapeTracerEngine key={currentQuestionIndex} {...props} />;
+      case 'ordinal_sequence': return <OrdinalSequenceEngine key={currentQuestionIndex} {...props} />;
       // MatcherEngine uses a different prop contract (question/onAnswer) than the
       // standard Orchestrator API (data/onResult). Bridge inline to avoid touching the engine.
       case 'matcher': return (

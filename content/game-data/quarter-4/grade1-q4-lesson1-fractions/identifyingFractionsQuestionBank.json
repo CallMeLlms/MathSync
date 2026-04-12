@@ -22,7 +22,8 @@
             "question": "Use the paper circle. Fold it into two equal parts. What is one part called?",
             "answer": "one-half",
             "assetType": "manipulatives",
-            "metadata": {}
+            "metadata": {},
+            "assetId": "shape_circle"
         },
         {
             "id": "na_4_fracid_004",
@@ -36,7 +37,11 @@
             "assetType": "illustration",
             "assetId": "icon_bread",
             "metadata": {
-                "options": ["slice_a", "slice_b", "slice_c"]
+                "options": [
+                    "slice_a",
+                    "slice_b",
+                    "slice_c"
+                ]
             }
         },
         {

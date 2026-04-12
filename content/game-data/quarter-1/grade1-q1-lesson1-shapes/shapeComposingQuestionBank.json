@@ -23,9 +23,13 @@
             "answer": "success",
             "assetType": "manipulatives",
             "metadata": {
-                "pieces": ["triangle", "triangle"],
+                "pieces": [
+                    "triangle",
+                    "triangle"
+                ],
                 "target": "square"
-            }
+            },
+            "assetId": "shape_triangle"
         },
         {
             "id": "mg_1_comp_004",
@@ -38,7 +42,11 @@
             "answer": "triangles",
             "assetType": "illustration",
             "metadata": {
-                "options": ["squares", "triangles", "circles"]
+                "options": [
+                    "squares",
+                    "triangles",
+                    "circles"
+                ]
             }
         },
         {
@@ -52,7 +60,11 @@
             "answer": "rectangle",
             "assetType": "text",
             "metadata": {
-                "options": ["rectangle", "triangle", "big square"]
+                "options": [
+                    "rectangle",
+                    "triangle",
+                    "big square"
+                ]
             }
         }
     ]

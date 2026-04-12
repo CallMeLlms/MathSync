@@ -22,7 +22,8 @@
             "question": "Take two equal squares of paper. Fold one into 1/2 and one into 1/4. Which piece is bigger?",
             "answer": "1/2",
             "assetType": "manipulatives",
-            "metadata": {}
+            "metadata": {},
+            "assetId": "shape_square"
         },
         {
             "id": "na_4_fraccomp_004",
@@ -34,7 +35,8 @@
             "question": "Look at the circles. Which circle has the LARGER shaded area: the one showing 1/2 or the one showing 1/4?",
             "answer": "1/2 circle",
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": {},
+            "assetId": "shape_circle"
         },
         {
             "id": "na_4_fraccomp_007",
@@ -47,7 +49,10 @@
             "answer": "1/2",
             "assetType": "text",
             "metadata": {
-                "options": ["1/2", "1/4"]
+                "options": [
+                    "1/2",
+                    "1/4"
+                ]
             }
         }
     ]

@@ -41,7 +41,8 @@
             "metadata": {
                 "basket_a": 14,
                 "basket_b": 18
-            }
+            },
+            "assetId": "icon_mango"
         },
         {
             "id": "na_1_compare_005",
@@ -54,7 +55,10 @@
             "answer": 19,
             "assetType": "text",
             "metadata": {
-                "options": [14, 19]
+                "options": [
+                    14,
+                    19
+                ]
             }
         }
     ]

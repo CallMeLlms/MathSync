@@ -23,7 +23,10 @@
             "answer": "group_b",
             "assetType": "manipulatives",
             "metadata": {
-                "options": ["group_a", "group_b"]
+                "options": [
+                    "group_a",
+                    "group_b"
+                ]
             }
         },
         {
