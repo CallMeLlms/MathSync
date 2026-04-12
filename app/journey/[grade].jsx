@@ -106,7 +106,8 @@ export default function GradeJourney() {
       } else if (allPreviousCompleted) {
         status = 'active';
       } else {
-        status = 'locked';
+        // ======+ MAKE THIS ACTIVE FOR QUICK TESTING AND MAKE IT LOCKED AFTER TESTING +======
+        status = 'active';
       }
 
       return { ...level, status };
