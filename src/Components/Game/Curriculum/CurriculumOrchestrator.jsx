@@ -11,10 +11,12 @@ import speechManager from '@/utils/speechManager';
 // Engines
 // import PickerEngine from './Engines/PickerEngine';
 // import CounterEngine from './Engines/CounterEngine';
-// import DragDropEngine from './Engines/DragDropEngine';
 import ComposeEngine from './Engines/ComposeEngine';
 import NumpadEngine from './Engines/NumpadEngine';
 import MatcherEngine from './Engines/MatcherEngine';
+import DragDropEngine from './Engines/DragAndDropEngine';
+import ConnectDotsEngine from './Engines/ConnectTheDotsEngine';
+import ShapeTracerEngine from './Engines/ShapeTracerEngine';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
 
@@ -126,9 +128,11 @@ export default function CurriculumOrchestrator({
     switch (engineType) {
       // case 'picker': return <PickerEngine {...props} />;
       // case 'counter': return <CounterEngine {...props} />;
-      // case 'dragdrop': return <DragDropEngine {...props} />;
       case 'composer': return <ComposeEngine {...props} />;
       case 'numpad': return <NumpadEngine {...props} />;
+      case 'dragdrop': return <DragDropEngine key={currentQuestionIndex} {...props} />;
+      case 'connectdots': return <ConnectDotsEngine key={currentQuestionIndex} {...props} />;
+      case 'shapetracer': return <ShapeTracerEngine key={currentQuestionIndex} {...props} />;
       // MatcherEngine uses a different prop contract (question/onAnswer) than the
       // standard Orchestrator API (data/onResult). Bridge inline to avoid touching the engine.
       case 'matcher': return (

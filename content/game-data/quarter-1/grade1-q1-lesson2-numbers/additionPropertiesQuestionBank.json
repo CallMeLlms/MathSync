@@ -5,8 +5,8 @@
         "topic": "Properties of Addition",
         "competency": "NA.1.12",
         "performanceStandard": "Perform addition of numbers with sums up to 20.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "N/A": "Placeholder for future Picker or Numpad engine",
             "NUMPAD": "Used where numerical input is expected"
@@ -28,34 +28,6 @@
             }
         },
         {
-            "id": "na_1_addprop_002",
-            "competency": "NA.1.12",
-            "topic": "Addition Properties",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "A red bowl has 3 apples and a blue bowl has 2. If you swap them around, how many apples are there in total?",
-            "answer": 5,
-            "assetType": "manipulatives",
-            "metadata": {
-                "property": "commutative"
-            }
-        },
-        {
-            "id": "na_1_addprop_003",
-            "competency": "NA.1.12",
-            "topic": "Addition Properties",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "You have an empty bag. You add 8 marbles. How many marbles are in the bag?",
-            "answer": 8,
-            "assetType": "manipulatives",
-            "metadata": {
-                "property": "zero_identity"
-            }
-        },
-        {
             "id": "na_1_addprop_004",
             "competency": "NA.1.12",
             "topic": "Addition Properties",
@@ -71,36 +43,6 @@
             }
         },
         {
-            "id": "na_1_addprop_005",
-            "competency": "NA.1.12",
-            "topic": "Addition Properties",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Easy",
-            "question": "This picture shows 12 stars. If you add 0 stars, how many stars are there now?",
-            "answer": 12,
-            "assetType": "illustration",
-            "metadata": {
-                "property": "zero_identity",
-                "options": [0, 12, 13]
-            }
-        },
-        {
-            "id": "na_1_addprop_006",
-            "competency": "NA.1.12",
-            "topic": "Addition Properties",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "Which picture shows the same total as 6 + 2?",
-            "answer": "picture_2_plus_6",
-            "assetType": "illustration",
-            "metadata": {
-                "property": "commutative",
-                "options": ["picture_6_minus_2", "picture_2_plus_6", "picture_6_plus_3"]
-            }
-        },
-        {
             "id": "na_1_addprop_007",
             "competency": "NA.1.12",
             "topic": "Addition Properties",
@@ -112,36 +54,6 @@
             "assetType": "text",
             "metadata": {
                 "property": "zero_identity"
-            }
-        },
-        {
-            "id": "na_1_addprop_008",
-            "competency": "NA.1.12",
-            "topic": "Addition Properties",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "Fill in the blank: 8 + 5 is the same as __ + 8.",
-            "answer": 5,
-            "assetType": "text",
-            "metadata": {
-                "property": "commutative",
-                "options": [5, 8, 13]
-            }
-        },
-        {
-            "id": "na_1_addprop_009",
-            "competency": "NA.1.12",
-            "topic": "Addition Properties",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "If 7 + 9 = 16, what does 9 + 7 equal?",
-            "answer": 16,
-            "assetType": "text",
-            "metadata": {
-                "property": "commutative",
-                "options": [7, 9, 16]
             }
         }
     ]

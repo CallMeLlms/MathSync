@@ -5,8 +5,8 @@
         "topic": "Time Logic and Problems",
         "competency": "MG.4.12",
         "performanceStandard": "Solve problems involving time.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "NUMPAD": "Used where numerical input is expected"
         }
@@ -25,30 +25,6 @@
             "metadata": {}
         },
         {
-            "id": "mg_4_logic_002",
-            "competency": "MG.4.12",
-            "topic": "Time Logic",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "You started playing at 4:00 and stopped at 5:00. For how many hours did you play?",
-            "answer": 1,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
-            "id": "mg_4_logic_003",
-            "competency": "MG.4.12",
-            "topic": "Time Logic",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "If lunch starts at 12:00 and lasts for 30 minutes, what time does lunch end?",
-            "answer": "12:30",
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
             "id": "mg_4_logic_004",
             "competency": "MG.4.12",
             "topic": "Time Logic",
@@ -61,32 +37,6 @@
             "metadata": {}
         },
         {
-            "id": "mg_4_logic_005",
-            "competency": "MG.4.12",
-            "topic": "Time Logic",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "In the drawing, school starts at 8:00. It is now half-past 7. How many minutes until school starts?",
-            "answer": 30,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "mg_4_logic_006",
-            "competency": "MG.4.12",
-            "topic": "Time Logic",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "The sun is at the top of the sky in the picture. Is it most likely 12:00 PM or 12:00 AM?",
-            "answer": "12:00 PM",
-            "assetType": "illustration",
-            "metadata": {
-                "options": ["12:00 PM", "12:00 AM"]
-            }
-        },
-        {
             "id": "mg_4_logic_007",
             "competency": "MG.4.12",
             "topic": "Time Logic",
@@ -95,32 +45,6 @@
             "difficulty": "Hard",
             "question": "What is 2 hours BEFORE 10:00?",
             "answer": 8,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "mg_4_logic_008",
-            "competency": "MG.4.12",
-            "topic": "Time Logic",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "If you wake up at 6:30 and leave for school at 7:30, how much time do you have to get ready?",
-            "answer": 1,
-            "assetType": "text",
-            "metadata": {
-                "unit": "hour"
-            }
-        },
-        {
-            "id": "mg_4_logic_009",
-            "competency": "MG.4.12",
-            "topic": "Time Logic",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "What time is 15 minutes after 4:00?",
-            "answer": "4:15",
             "assetType": "text",
             "metadata": {}
         }

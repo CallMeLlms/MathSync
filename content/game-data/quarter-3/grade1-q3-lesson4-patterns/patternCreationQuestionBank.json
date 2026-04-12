@@ -5,8 +5,8 @@
         "topic": "Pattern Creation and Rules",
         "competency": "NA.3.12",
         "performanceStandard": "Determine and create repeating patterns.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "MATCHER": "Used for choosing items to build a pattern"
         }
@@ -26,32 +26,6 @@
             "assetType": "manipulatives"
         },
         {
-            "id": "na_3_rule_002",
-            "competency": "NA.3.12",
-            "topic": "Pattern Rules",
-            "level": "concrete",
-            "type": "MATCHER",
-            "difficulty": "Easy",
-            "question": "Create a pattern where you skip every other color.",
-            "pairs": [
-                {"left": "pattern_start", "right": "rule_skip"}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
-            "id": "na_3_rule_003",
-            "competency": "NA.3.12",
-            "topic": "Pattern Rules",
-            "level": "concrete",
-            "type": "MATCHER",
-            "difficulty": "Easy",
-            "question": "If the rule is 'Two Big, One Small', which set of toys follows this rule?",
-            "pairs": [
-                {"left": "set_a", "right": "big-big-small"}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
             "id": "na_3_rule_004",
             "competency": "NA.3.12",
             "topic": "Pattern Rules",
@@ -65,32 +39,6 @@
             "assetType": "illustration"
         },
         {
-            "id": "na_3_rule_005",
-            "competency": "NA.3.12",
-            "topic": "Pattern Rules",
-            "level": "pictorial",
-            "type": "MATCHER",
-            "difficulty": "Medium",
-            "question": "Drag the icons to make an 'ABC' pattern: Apple, Banana, Cherry.",
-            "pairs": [
-                {"left": "pattern_box", "right": "apple-banana-cherry"}
-            ],
-            "assetType": "illustration"
-        },
-        {
-            "id": "na_3_rule_006",
-            "competency": "NA.3.12",
-            "topic": "Pattern Rules",
-            "level": "pictorial",
-            "type": "MATCHER",
-            "difficulty": "Medium",
-            "question": "Which drawing shows a repeating 'AABB' pattern?",
-            "pairs": [
-                {"left": "option_a", "right": "circle-circle-square-square"}
-            ],
-            "assetType": "illustration"
-        },
-        {
             "id": "na_3_rule_007",
             "competency": "NA.3.12",
             "topic": "Pattern Rules",
@@ -99,30 +47,6 @@
             "difficulty": "Hard",
             "question": "If the pattern rule is +5, what number comes after 10, 15, 20?",
             "answer": 25,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_3_rule_008",
-            "competency": "NA.3.12",
-            "topic": "Pattern Rules",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "What is the rule for this sequence: 100, 90, 100, 90?",
-            "answer": "ABAB",
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_3_rule_009",
-            "competency": "NA.3.12",
-            "topic": "Pattern Rules",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Create an 'ABB' pattern using numbers 1 and 2.",
-            "answer": "1, 2, 2",
             "assetType": "text",
             "metadata": {}
         }

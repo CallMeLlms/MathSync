@@ -5,8 +5,8 @@
         "topic": "Addition Word Problems up to 20",
         "competency": "NA.1.13",
         "performanceStandard": "Perform addition of numbers with sums up to 20.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "NUMPAD": "Used where numerical input is expected"
         }
@@ -25,30 +25,6 @@
             "metadata": {}
         },
         {
-            "id": "na_1_addword_002",
-            "competency": "NA.1.13",
-            "topic": "Addition Word Problems",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "Use the counters to help: Maria picked 6 flowers. Later, she picked 5 more flowers. How many flowers did Maria pick in all?",
-            "answer": 11,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
-            "id": "na_1_addword_003",
-            "competency": "NA.1.13",
-            "topic": "Addition Word Problems",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Use the stick bundles: A baker made 10 cupcakes in the morning and 7 in the afternoon. How many cupcakes did the baker make today?",
-            "answer": 17,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
             "id": "na_1_addword_004",
             "competency": "NA.1.13",
             "topic": "Addition Word Problems",
@@ -61,30 +37,6 @@
             "metadata": {}
         },
         {
-            "id": "na_1_addword_005",
-            "competency": "NA.1.13",
-            "topic": "Addition Word Problems",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "The boy has 8 balloons in the picture. He buys 6 more balloons. How many balloons does the boy have?",
-            "answer": 14,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "na_1_addword_006",
-            "competency": "NA.1.13",
-            "topic": "Addition Word Problems",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "In the drawing, Lisa sees 12 stars. Then she spots 6 more stars. How many stars did Lisa see altogether?",
-            "answer": 18,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
             "id": "na_1_addword_007",
             "competency": "NA.1.13",
             "topic": "Addition Word Problems",
@@ -93,30 +45,6 @@
             "difficulty": "Easy",
             "question": "Ben has 6 pencils. He finds 4 more pencils. How many pencils does Ben have?",
             "answer": 10,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_1_addword_008",
-            "competency": "NA.1.13",
-            "topic": "Addition Word Problems",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "A box has 9 crayons. Another box has 7 crayons. What is the total number of crayons?",
-            "answer": 16,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_1_addword_009",
-            "competency": "NA.1.13",
-            "topic": "Addition Word Problems",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Anna read 13 pages of her book on Saturday and 5 pages on Sunday. How many pages did she read on the weekend?",
-            "answer": 18,
             "assetType": "text",
             "metadata": {}
         }

@@ -5,8 +5,8 @@
         "topic": "Skip Counting by 2s, 5s, and 10s",
         "competency": "NA.2.5",
         "performanceStandard": "Order and decompose (into tens and ones) numbers up to 100.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "NUMPAD": "Used where numerical input is expected"
         }
@@ -25,30 +25,6 @@
             "metadata": {}
         },
         {
-            "id": "na_2_skip_002",
-            "competency": "NA.2.5",
-            "topic": "Skip Counting",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "Count the fingers on 3 hands. If you count by 5s: 5, 10, __?",
-            "answer": 15,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_skip_003",
-            "competency": "NA.2.5",
-            "topic": "Skip Counting",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "Count these 10-block towers. If there are 4 towers, how many blocks in total: 10, 20, 30, __?",
-            "answer": 40,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
             "id": "na_2_skip_004",
             "competency": "NA.2.5",
             "topic": "Skip Counting",
@@ -61,30 +37,6 @@
             "metadata": {}
         },
         {
-            "id": "na_2_skip_005",
-            "competency": "NA.2.5",
-            "topic": "Skip Counting",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "In the picture, there are 5 nickel coins (5 cents each). Count them by 5s. What is the total value?",
-            "answer": 25,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_skip_006",
-            "competency": "NA.2.5",
-            "topic": "Skip Counting",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "Count the ₱10 bills. If there are 6 bills, how much money is there in total?",
-            "answer": 60,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
             "id": "na_2_skip_007",
             "competency": "NA.2.5",
             "topic": "Skip Counting",
@@ -93,30 +45,6 @@
             "difficulty": "Hard",
             "question": "Fill in the missing number in the skip counting sequence: 40, 50, 60, __, 80.",
             "answer": 70,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_skip_008",
-            "competency": "NA.2.5",
-            "topic": "Skip Counting",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "If you count by 5s, what number comes after 45?",
-            "answer": 50,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_skip_009",
-            "competency": "NA.2.5",
-            "topic": "Skip Counting",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Count by 2s starting from 20. What is the 4th number you say?",
-            "answer": 28,
             "assetType": "text",
             "metadata": {}
         }

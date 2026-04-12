@@ -5,7 +5,7 @@
     {
       "id": 1,
       "title": "Geometric Blooms",
-      "subtitle": "Circles, squares, triangles & more in 2D",
+      "subtitle": "2D Shapes — Circles, squares, triangles & more",
       "type": "lesson",
       "status": "locked",
       "x": 0.5,
@@ -15,7 +15,7 @@
     {
       "id": 2,
       "title": "Pairing Petals",
-      "subtitle": "Read, write & add numbers up to 20",
+      "subtitle": "Numbers — Read, write & add numbers up to 20",
       "type": "lesson",
       "status": "locked",
       "x": 0.25,
@@ -25,7 +25,7 @@
     {
       "id": 3,
       "title": "The Ranking Vines",
-      "subtitle": "Describe position using ordinal numbers",
+      "subtitle": "Ordinal Numbers — Describe position (1st–10th)",
       "type": "lesson",
       "status": "locked",
       "x": 0.75,
@@ -35,7 +35,7 @@
     {
       "id": 4,
       "title": "Sorting Seeds",
-      "subtitle": "Order numbers from smallest to largest",
+      "subtitle": "Compare & Order — Smallest to largest",
       "type": "lesson",
       "status": "locked",
       "x": 0.4,

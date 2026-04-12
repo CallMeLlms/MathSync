@@ -5,8 +5,8 @@
         "topic": "Total Money Value",
         "competency": "NA.4.5",
         "performanceStandard": "Recognize coins and bills up to 100 pesos.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "NUMPAD": "Used where numerical input is expected"
         }
@@ -22,30 +22,7 @@
             "question": "You have two ₱10 coins. What is the total value?",
             "answer": 20,
             "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_monval_002",
-            "competency": "NA.4.5",
-            "topic": "Money Value",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "If you have a ₱50 bill and a ₱20 bill, how much money do you have in all?",
-            "answer": 70,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_monval_003",
-            "competency": "NA.4.5",
-            "topic": "Money Value",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "Count these five ₱5 coins. What is the total value?",
-            "answer": 25,
-            "assetType": "manipulatives",
+            "assetId": "money_coin_10",
             "metadata": {}
         },
         {
@@ -58,30 +35,7 @@
             "question": "Look at the picture. There is one ₱50 bill and three ₱10 coins. Total set value is __?",
             "answer": 80,
             "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_monval_005",
-            "competency": "NA.4.5",
-            "topic": "Money Value",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "The drawing shows a ₱20 bill and a ₱5 coin. What is the total?",
-            "answer": 25,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_monval_006",
-            "competency": "NA.4.5",
-            "topic": "Money Value",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Count the ₱10 coins in the drawing. There are 9 coins. Total value in pesos?",
-            "answer": 90,
-            "assetType": "illustration",
+            "assetId": "money_bill_50",
             "metadata": {}
         },
         {
@@ -93,30 +47,6 @@
             "difficulty": "Hard",
             "question": "Add ₱35 and ₱15.",
             "answer": 50,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_monval_008",
-            "competency": "NA.4.5",
-            "topic": "Money Value",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "If you have ₱100 and you spend ₱40, how much is left?",
-            "answer": 60,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_monval_009",
-            "competency": "NA.4.5",
-            "topic": "Money Value",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Solve: ₱20 + ₱20 + ₱20 + ₱20 = ?",
-            "answer": 80,
             "assetType": "text",
             "metadata": {}
         }

@@ -15,9 +15,9 @@ export default function GameRoute() {
 
   console.log('[Router] Path Params:', { lessonId, type, topicId, grade });
 
-  // Treat '1' as a test alias for ordering-numbers
-  const computedTopicId = lessonId === '1' ? 'ordering-numbers' : (topicId || lessonId);
-  const isGenerative = type === 'generative' || computedTopicId === 'ordering-numbers' || computedTopicId === 'rounding' || computedTopicId === 'place-value' || computedTopicId === 'multiplication-matching' || computedTopicId === 'time-money' || computedTopicId === 'advanced-fractions' || computedTopicId === 'measurement' || computedTopicId === 'ordering-decimals';
+  const computedTopicId = topicId || lessonId;
+  const isGenerative = type === 'generative' || 
+    ['ordering-numbers', 'rounding', 'place-value', 'multiplication-matching', 'time-money', 'advanced-fractions', 'measurement', 'ordering-decimals'].includes(computedTopicId);
   
   const templateData = isGenerative ? {
     templateId: lessonId,

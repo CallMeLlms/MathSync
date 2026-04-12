@@ -5,8 +5,8 @@
         "topic": "Spatial Rotations and Turns",
         "competency": "MG.4.8",
         "performanceStandard": "Identify the position of objects moved in half turn or quarter turn.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "N/A": "Placeholder for Picker or DragDrop engine"
         }
@@ -27,32 +27,6 @@
             }
         },
         {
-            "id": "mg_4_rot_002",
-            "competency": "MG.4.8",
-            "topic": "Rotations",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Easy",
-            "question": "Hold your pencil pointing up. Turn it quarter-turn clockwise. Which way is it pointing?",
-            "answer": "right",
-            "assetType": "manipulatives",
-            "metadata": {
-                "spriteAction": "Initial: North, Turn: Quarter Clockwise"
-            }
-        },
-        {
-            "id": "mg_4_rot_003",
-            "competency": "MG.4.8",
-            "topic": "Rotations",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "Rotate your square block one-quarter turn counter-clockwise. Does its shape change?",
-            "answer": "No",
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
             "id": "mg_4_rot_004",
             "competency": "MG.4.8",
             "topic": "Rotations",
@@ -67,34 +41,6 @@
             }
         },
         {
-            "id": "mg_4_rot_005",
-            "competency": "MG.4.8",
-            "topic": "Rotations",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "In the drawing, the face is upside down. What turn does it need to be right-side up again?",
-            "answer": "half-turn",
-            "assetType": "illustration",
-            "metadata": {
-                "spriteAction": "Initial: South, Turn: Half"
-            }
-        },
-        {
-            "id": "mg_4_rot_006",
-            "competency": "MG.4.8",
-            "topic": "Rotations",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "The clock's hand just moved from 12 to 3. What kind of turn did it make?",
-            "answer": "quarter-turn",
-            "assetType": "illustration",
-            "metadata": {
-                "spriteAction": "Initial: 12, End: 3"
-            }
-        },
-        {
             "id": "mg_4_rot_007",
             "competency": "MG.4.8",
             "topic": "Rotations",
@@ -105,34 +51,6 @@
             "answer": 15,
             "assetType": "text",
             "metadata": {}
-        },
-        {
-            "id": "mg_4_rot_008",
-            "competency": "MG.4.8",
-            "topic": "Rotations",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "If you make two quarter-turns clockwise, what total turn did you make?",
-            "answer": "half-turn",
-            "assetType": "text",
-            "metadata": {
-                "options": ["quarter-turn", "half-turn", "full-turn"]
-            }
-        },
-        {
-            "id": "mg_4_rot_009",
-            "competency": "MG.4.8",
-            "topic": "Rotations",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "If a triangle is facing Left and makes a quarter-turn counter-clockwise, where will its top point?",
-            "answer": "Down",
-            "assetType": "text",
-            "metadata": {
-                "spriteAction": "Initial: West, Turn: Quarter Counter-Clockwise"
-            }
         }
     ]
 }

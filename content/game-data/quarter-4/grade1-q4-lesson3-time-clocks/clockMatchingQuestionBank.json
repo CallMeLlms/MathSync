@@ -5,8 +5,8 @@
         "topic": "Clock Matching",
         "competency": "MG.4.9",
         "performanceStandard": "Read and write time by the hour, half-hour, and quarter-hour.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "MATCHER": "Used for matching analog clock images to time text"
         }
@@ -26,33 +26,6 @@
             "assetType": "manipulatives"
         },
         {
-            "id": "mg_4_match_002",
-            "competency": "MG.4.9",
-            "topic": "Clock Matching",
-            "level": "concrete",
-            "type": "MATCHER",
-            "difficulty": "Easy",
-            "question": "Match the set time to its name.",
-            "pairs": [
-                {"left": "clock_6:00", "right": "6 o'clock"},
-                {"left": "clock_6:30", "right": "Half-past 6"}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
-            "id": "mg_4_match_003",
-            "competency": "MG.4.9",
-            "topic": "Clock Matching",
-            "level": "concrete",
-            "type": "MATCHER",
-            "difficulty": "Easy",
-            "question": "Pair the clocks that show the same time.",
-            "pairs": [
-                {"left": "analog_3:15", "right": "Quarter-past 3"}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
             "id": "mg_4_match_004",
             "competency": "MG.4.9",
             "topic": "Clock Matching",
@@ -64,33 +37,7 @@
                 {"left": "drawing_7:00", "right": "7:00"},
                 {"left": "drawing_7:30", "right": "7:30"}
             ],
-            "assetType": "illustration"
-        },
-        {
-            "id": "mg_4_match_005",
-            "competency": "MG.4.9",
-            "topic": "Clock Matching",
-            "level": "pictorial",
-            "type": "MATCHER",
-            "difficulty": "Medium",
-            "question": "Match the clocks to the activities.",
-            "pairs": [
-                {"left": "clock_12:00", "right": "Lunch Time"},
-                {"left": "clock_7:00", "right": "Breakfast Time"}
-            ],
-            "assetType": "illustration"
-        },
-        {
-            "id": "mg_4_match_006",
-            "competency": "MG.4.9",
-            "topic": "Clock Matching",
-            "level": "pictorial",
-            "type": "MATCHER",
-            "difficulty": "Medium",
-            "question": "Group the analog and digital times together.",
-            "pairs": [
-                {"left": "clock_face_8:15", "right": "8:15"}
-            ],
+            "assetId": "clock_face_7_30",
             "assetType": "illustration"
         },
         {
@@ -104,34 +51,6 @@
             "answer": "Yes",
             "assetType": "text",
             "metadata": {}
-        },
-        {
-            "id": "na_4_match_008",
-            "competency": "MG.4.9",
-            "topic": "Clock Matching",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Which digital time matches 'Half-past Ten'?",
-            "answer": "10:30",
-            "assetType": "text",
-            "metadata": {
-                "options": ["10:15", "10:30", "10:45"]
-            }
-        },
-        {
-            "id": "na_4_match_009",
-            "competency": "MG.4.9",
-            "topic": "Clock Matching",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Match '11:15' to its words.",
-            "answer": "Quarter-past 11",
-            "assetType": "text",
-            "metadata": {
-                "options": ["Half-past 11", "Quarter-past 11", "11 o'clock"]
-            }
         }
     ]
 }

@@ -5,8 +5,8 @@
         "topic": "Days of the Week and Months of the Year",
         "competency": "MG.4.10",
         "performanceStandard": "Determine the day and month using a calendar.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "MATCHER": "Used for matching names to order"
         }
@@ -27,33 +27,6 @@
             "assetType": "manipulatives"
         },
         {
-            "id": "mg_4_calseq_002",
-            "competency": "MG.4.10",
-            "topic": "Calendar Ordering",
-            "level": "concrete",
-            "type": "MATCHER",
-            "difficulty": "Easy",
-            "question": "Match the months to their order.",
-            "pairs": [
-                {"left": "January", "right": "1st Month"},
-                {"left": "February", "right": "2nd Month"}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
-            "id": "mg_4_calseq_003",
-            "competency": "MG.4.10",
-            "topic": "Calendar Ordering",
-            "level": "concrete",
-            "type": "MATCHER",
-            "difficulty": "Medium",
-            "question": "Which month comes after July? Match it.",
-            "pairs": [
-                {"left": "July", "right": "August"}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
             "id": "mg_4_calseq_004",
             "competency": "MG.4.10",
             "topic": "Calendar Ordering",
@@ -66,30 +39,6 @@
             "metadata": {}
         },
         {
-            "id": "mg_4_calseq_005",
-            "competency": "MG.4.10",
-            "topic": "Calendar Ordering",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "In the list of months, what is the 12th month?",
-            "answer": "December",
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "mg_4_calseq_006",
-            "competency": "MG.4.10",
-            "topic": "Calendar Ordering",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "If today is Saturday, what was yesterday in the picture?",
-            "answer": "Friday",
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
             "id": "mg_4_calseq_007",
             "competency": "MG.4.10",
             "topic": "Calendar Ordering",
@@ -98,30 +47,6 @@
             "difficulty": "Hard",
             "question": "Which month is the 5th month of the year?",
             "answer": "May",
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "mg_4_calseq_008",
-            "competency": "MG.4.10",
-            "topic": "Calendar Ordering",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "How many days are in one week?",
-            "answer": 7,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "mg_4_calseq_009",
-            "competency": "MG.4.10",
-            "topic": "Calendar Ordering",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "If tomorrow is Monday, what is today?",
-            "answer": "Sunday",
             "assetType": "text",
             "metadata": {}
         }

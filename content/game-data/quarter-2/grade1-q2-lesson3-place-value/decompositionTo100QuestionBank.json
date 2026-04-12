@@ -5,8 +5,8 @@
         "topic": "Decomposing 2-Digit Numbers",
         "competency": "NA.2.7",
         "performanceStandard": "Order and decompose (into tens and ones) numbers up to 100.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "COMPOSER": "Used for decomposing into tens and ones"
         }
@@ -29,38 +29,6 @@
             "assetType": "manipulatives"
         },
         {
-            "id": "na_2_decomp_002",
-            "competency": "NA.2.7",
-            "topic": "Decomposition",
-            "level": "concrete",
-            "type": "COMPOSER",
-            "difficulty": "Easy",
-            "question": "How do you make 42 using tens and ones?",
-            "mode": "decompose",
-            "target": 42,
-            "chips": [
-                {"value": 10, "count": 4},
-                {"value": 1, "count": 2}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
-            "id": "na_2_decomp_003",
-            "competency": "NA.2.7",
-            "topic": "Decomposition",
-            "level": "concrete",
-            "type": "COMPOSER",
-            "difficulty": "Easy",
-            "question": "Decompose 60 into tens and ones.",
-            "mode": "decompose",
-            "target": 60,
-            "chips": [
-                {"value": 10, "count": 6},
-                {"value": 1, "count": 0}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
             "id": "na_2_decomp_004",
             "competency": "NA.2.7",
             "topic": "Decomposition",
@@ -73,30 +41,6 @@
             "metadata": {}
         },
         {
-            "id": "na_2_decomp_005",
-            "competency": "NA.2.7",
-            "topic": "Decomposition",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "In the drawing, 85 is made of 80 and __.",
-            "answer": 5,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_decomp_006",
-            "competency": "NA.2.7",
-            "topic": "Decomposition",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "The box shows 53 mangos. That is 5 tens and how many ones?",
-            "answer": 3,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
             "id": "na_2_decomp_007",
             "competency": "NA.2.7",
             "topic": "Decomposition",
@@ -105,30 +49,6 @@
             "difficulty": "Hard",
             "question": "49 is equal to 40 plus what number?",
             "answer": 9,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_decomp_008",
-            "competency": "NA.2.7",
-            "topic": "Decomposition",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Fill in the blank: 92 = __ + 2.",
-            "answer": 90,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_decomp_009",
-            "competency": "NA.2.7",
-            "topic": "Decomposition",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "How many tens are in the number 76?",
-            "answer": 7,
             "assetType": "text",
             "metadata": {}
         }

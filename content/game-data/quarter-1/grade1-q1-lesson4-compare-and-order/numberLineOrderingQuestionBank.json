@@ -5,8 +5,8 @@
         "topic": "Ordering on a Timeline or Sequence",
         "competency": "NA.1.8",
         "performanceStandard": "Compare and order numbers up to 20.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "N/A": "Placeholder for DragDrop engine"
         }
@@ -27,34 +27,6 @@
             }
         },
         {
-            "id": "na_1_seq_002",
-            "competency": "NA.1.8",
-            "topic": "Ordering Numbers",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "Arrange these number tiles from largest to smallest: 7, 9, 5.",
-            "answer": "9, 7, 5",
-            "assetType": "manipulatives",
-            "metadata": {
-                "items": [7, 9, 5]
-            }
-        },
-        {
-            "id": "na_1_seq_003",
-            "competency": "NA.1.8",
-            "topic": "Ordering Numbers",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "Put these numbered boxes in order from smallest to biggest.",
-            "answer": "8, 10, 15",
-            "assetType": "manipulatives",
-            "metadata": {
-                "items": [15, 8, 10]
-            }
-        },
-        {
             "id": "na_1_seq_004",
             "competency": "NA.1.8",
             "topic": "Ordering Numbers",
@@ -69,34 +41,6 @@
             }
         },
         {
-            "id": "na_1_seq_005",
-            "competency": "NA.1.8",
-            "topic": "Ordering Numbers",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "Which sequence of numbers on the shirts is in the correct order from smallest to largest?",
-            "answer": "13, 14, 15",
-            "assetType": "illustration",
-            "metadata": {
-                "options": ["15, 13, 14", "13, 15, 14", "13, 14, 15"]
-            }
-        },
-        {
-            "id": "na_1_seq_006",
-            "competency": "NA.1.8",
-            "topic": "Ordering Numbers",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "Look at the stairs. What order do the numbers go as you walk up?",
-            "answer": "Smallest to Largest",
-            "assetType": "illustration",
-            "metadata": {
-                "options": ["Largest to Smallest", "Smallest to Largest"]
-            }
-        },
-        {
             "id": "na_1_seq_007",
             "competency": "NA.1.8",
             "topic": "Ordering Numbers",
@@ -108,34 +52,6 @@
             "assetType": "text",
             "metadata": {
                 "options": ["12, 18, 16", "18, 16, 12", "12, 16, 18"]
-            }
-        },
-        {
-            "id": "na_1_seq_008",
-            "competency": "NA.1.8",
-            "topic": "Ordering Numbers",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "What is the correct order from greatest to least: 11, 14, 9?",
-            "answer": "14, 11, 9",
-            "assetType": "text",
-            "metadata": {
-                "options": ["9, 11, 14", "14, 9, 11", "14, 11, 9"]
-            }
-        },
-        {
-            "id": "na_1_seq_009",
-            "competency": "NA.1.8",
-            "topic": "Ordering Numbers",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "Which group of numbers is in order?",
-            "answer": "15, 17, 19",
-            "assetType": "text",
-            "metadata": {
-                "options": ["19, 15, 17", "15, 19, 17", "15, 17, 19"]
             }
         }
     ]

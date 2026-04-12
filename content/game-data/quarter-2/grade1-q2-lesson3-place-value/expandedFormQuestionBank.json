@@ -5,8 +5,8 @@
         "topic": "Expanding and Adding Numbers",
         "competency": "NA.2.8",
         "performanceStandard": "Order and decompose (into tens and ones) numbers up to 100.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "NUMPAD": "Used where numerical input is expected"
         }
@@ -25,30 +25,6 @@
             "metadata": {}
         },
         {
-            "id": "na_2_exp_002",
-            "competency": "NA.2.8",
-            "topic": "Expanded Form",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "Use the bundles. (30 + 4) + 10. What is 34 + 10?",
-            "answer": 44,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_exp_003",
-            "competency": "NA.2.8",
-            "topic": "Expanded Form",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "Combine the tens and ones: (40 + 6) + (20 + 2). What is 46 + 22?",
-            "answer": 68,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
             "id": "na_2_exp_004",
             "competency": "NA.2.8",
             "topic": "Expanded Form",
@@ -61,30 +37,6 @@
             "metadata": {}
         },
         {
-            "id": "na_2_exp_005",
-            "competency": "NA.2.8",
-            "topic": "Expanded Form",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "In the drawing: 50 + 3 + 20 + 1. Total is __?",
-            "answer": 74,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_exp_006",
-            "competency": "NA.2.8",
-            "topic": "Expanded Form",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "The picture shows 80 + 2. If you add 7 more ones, what is the new sum?",
-            "answer": 89,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
             "id": "na_2_exp_007",
             "competency": "NA.2.8",
             "topic": "Expanded Form",
@@ -93,30 +45,6 @@
             "difficulty": "Hard",
             "question": "What is the result of 60 + 5 + 20 + 3?",
             "answer": 88,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_exp_008",
-            "competency": "NA.2.8",
-            "topic": "Expanded Form",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Write the sum for 30 + 9 + 40.",
-            "answer": 79,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_exp_009",
-            "competency": "NA.2.8",
-            "topic": "Expanded Form",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Add these expanded numbers: 70 + 4 + 10 + 5.",
-            "answer": 89,
             "assetType": "text",
             "metadata": {}
         }

@@ -5,8 +5,8 @@
         "topic": "Complex Repeating Patterns",
         "competency": "NA.3.11",
         "performanceStandard": "Determine and create repeating patterns.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "MATCHER": "Used for complex pattern identification"
         }
@@ -26,32 +26,6 @@
             "assetType": "manipulatives"
         },
         {
-            "id": "na_3_comp_002",
-            "competency": "NA.3.11",
-            "topic": "Mixed Patterns",
-            "level": "concrete",
-            "type": "MATCHER",
-            "difficulty": "Easy",
-            "question": "This pattern has color and shape: Red Triangle, Blue Square, Red Triangle. What's next?",
-            "pairs": [
-                {"left": "pattern_next", "right": "blue_square"}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
-            "id": "na_3_comp_003",
-            "competency": "NA.3.11",
-            "topic": "Mixed Patterns",
-            "level": "concrete",
-            "type": "MATCHER",
-            "difficulty": "Medium",
-            "question": "A pattern goes: Jump, Clap, Clap, Jump, Clap. What is next?",
-            "pairs": [
-                {"left": "pattern_next", "right": "clap_action"}
-            ],
-            "assetType": "manipulatives"
-        },
-        {
             "id": "na_3_comp_004",
             "competency": "NA.3.11",
             "topic": "Mixed Patterns",
@@ -65,32 +39,6 @@
             "assetType": "illustration"
         },
         {
-            "id": "na_3_comp_005",
-            "competency": "NA.3.11",
-            "topic": "Mixed Patterns",
-            "level": "pictorial",
-            "type": "MATCHER",
-            "difficulty": "Medium",
-            "question": "Complete the fruit pattern: Mango, Mango, Orange, Mango, Mango, ...?",
-            "pairs": [
-                {"left": "pattern_next", "right": "orange_icon"}
-            ],
-            "assetType": "illustration"
-        },
-        {
-            "id": "na_3_comp_006",
-            "competency": "NA.3.11",
-            "topic": "Mixed Patterns",
-            "level": "pictorial",
-            "type": "MATCHER",
-            "difficulty": "Hard",
-            "question": "Identify the next part: 1, A, 2, B, 3, C, ...?",
-            "pairs": [
-                {"left": "pattern_next", "right": "4"}
-            ],
-            "assetType": "illustration"
-        },
-        {
             "id": "na_3_comp_007",
             "competency": "NA.3.11",
             "topic": "Mixed Patterns",
@@ -99,30 +47,6 @@
             "difficulty": "Hard",
             "question": "What are the next three letters: X, Y, Z, X, Y, Z, __, __, __?",
             "answer": "X, Y, Z",
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_3_comp_008",
-            "competency": "NA.3.11",
-            "topic": "Mixed Patterns",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Continue the pattern: 5, 10, 15, 20, __, __.",
-            "answer": "25, 30",
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_3_comp_009",
-            "competency": "NA.3.11",
-            "topic": "Mixed Patterns",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Identify the next two numbers: 1, 1, 2, 1, 1, __, __.",
-            "answer": "2, 1",
             "assetType": "text",
             "metadata": {}
         }

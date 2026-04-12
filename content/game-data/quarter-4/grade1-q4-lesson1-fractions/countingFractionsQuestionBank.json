@@ -5,8 +5,8 @@
         "topic": "Counting Halves and Quarters",
         "competency": "NA.4.3",
         "performanceStandard": "Identify 1/2 and 1/4 of a whole and of a set.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "NUMPAD": "Used where numerical input is expected"
         }
@@ -25,30 +25,6 @@
             "metadata": {}
         },
         {
-            "id": "na_4_fraccount_002",
-            "competency": "NA.4.3",
-            "topic": "Fraction Counting",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "If you have 4 pieces of a square and each is 1/4, how many squares do you have in total?",
-            "answer": 1,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_fraccount_003",
-            "competency": "NA.4.3",
-            "topic": "Fraction Counting",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "You have 2 whole oranges. If you cut each orange in half, how many halves will you have?",
-            "answer": 4,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
             "id": "na_4_fraccount_004",
             "competency": "NA.4.3",
             "topic": "Fraction Counting",
@@ -61,30 +37,6 @@
             "metadata": {}
         },
         {
-            "id": "na_4_fraccount_005",
-            "competency": "NA.4.3",
-            "topic": "Fraction Counting",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "In the drawing, count the halves of the apples. If there are 6 halves, how many whole apples were there?",
-            "answer": 3,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_fraccount_006",
-            "competency": "NA.4.3",
-            "topic": "Fraction Counting",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "How many quarters (1/4) do you see in the picture of the two pizzas?",
-            "answer": 8,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
             "id": "na_4_fraccount_007",
             "competency": "NA.4.3",
             "topic": "Fraction Counting",
@@ -93,30 +45,6 @@
             "difficulty": "Hard",
             "question": "How many halves are in 4 wholes?",
             "answer": 8,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_fraccount_008",
-            "competency": "NA.4.3",
-            "topic": "Fraction Counting",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "If you have 12 fourths (1/4), how many wholes is that?",
-            "answer": 3,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_4_fraccount_009",
-            "competency": "NA.4.3",
-            "topic": "Fraction Counting",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "True or False: 2 halves make the same as 4 quarters.",
-            "answer": "True",
             "assetType": "text",
             "metadata": {}
         }

@@ -5,8 +5,8 @@
         "topic": "2D Shapes",
         "competency": "MG.1.1-1.3",
         "performanceStandard": "Identify and distinguish simple 2-dimensional shapes.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "N/A": "Placeholder for future Picker or DragDrop engine"
         }
@@ -22,36 +22,13 @@
             "question": "Tap the block that is a triangle.",
             "answer": "triangle",
             "assetType": "shape",
+            "assetId": "shape_triangle",
             "metadata": {
-                "options": ["triangle", "square", "rectangle"]
-            }
-        },
-        {
-            "id": "mg_1_shapes_002",
-            "competency": "MG.1.1",
-            "topic": "2D Shapes",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Easy",
-            "question": "Find the square block.",
-            "answer": "square",
-            "assetType": "shape",
-            "metadata": {
-                "options": ["square", "rectangle", "triangle"]
-            }
-        },
-        {
-            "id": "mg_1_shapes_003",
-            "competency": "MG.1.2",
-            "topic": "2D Shapes",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Easy",
-            "question": "Which shape has 3 corners?",
-            "answer": "triangle",
-            "assetType": "shape",
-            "metadata": {
-                "options": ["square", "triangle", "rectangle"]
+                "options": [
+                    "shape_triangle",
+                    "shape_square",
+                    "shape_rectangle"
+                ]
             }
         },
         {
@@ -64,36 +41,13 @@
             "question": "Look at the picture. Which object is shaped like a rectangle?",
             "answer": "door",
             "assetType": "illustration",
+            "assetId": "g1_q1_object_door",
             "metadata": {
-                "options": ["door", "ball", "pizza slice"]
-            }
-        },
-        {
-            "id": "mg_1_shapes_005",
-            "competency": "MG.1.1",
-            "topic": "2D Shapes",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "Which of these drawn shapes is a triangle?",
-            "answer": "triangle",
-            "assetType": "illustration",
-            "metadata": {
-                "options": ["circle", "triangle", "square"]
-            }
-        },
-        {
-            "id": "mg_1_shapes_006",
-            "competency": "MG.1.2",
-            "topic": "2D Shapes",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "Select the shape that has 4 equal sides.",
-            "answer": "square",
-            "assetType": "illustration",
-            "metadata": {
-                "options": ["square", "rectangle", "triangle"]
+                "options": [
+                    "door",
+                    "ball",
+                    "pizza slice"
+                ]
             }
         },
         {
@@ -107,35 +61,11 @@
             "answer": "rectangle",
             "assetType": "text",
             "metadata": {
-                "options": ["rectangle", "triangle", "big square"]
-            }
-        },
-        {
-            "id": "mg_1_shapes_008",
-            "competency": "MG.1.2",
-            "topic": "2D Shapes",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "I have 4 sides, but they are not all the same length. What am I?",
-            "answer": "rectangle",
-            "assetType": "text",
-            "metadata": {
-                "options": ["rectangle", "square", "triangle"]
-            }
-        },
-        {
-            "id": "mg_1_shapes_009",
-            "competency": "MG.1.3",
-            "topic": "2D Shapes",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "Imagine dividing a square into two equal parts by drawing a line from one corner to the opposite corner. What two shapes did you make?",
-            "answer": "triangles",
-            "assetType": "text",
-            "metadata": {
-                "options": ["triangles", "rectangles", "smaller squares"]
+                "options": [
+                    "rectangle",
+                    "triangle",
+                    "big square"
+                ]
             }
         }
     ]

@@ -5,8 +5,8 @@
         "topic": "Positional Reasoning",
         "competency": "NA.1.9",
         "performanceStandard": "Use ordinal numbers up to 10th to describe position.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "N/A": "Placeholder for Picker engine"
         }
@@ -27,34 +27,6 @@
             }
         },
         {
-            "id": "na_1_pos_002",
-            "competency": "NA.1.9",
-            "topic": "Positional Reasoning",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "Tap the block that comes after the 4th block.",
-            "answer": "5th block",
-            "assetType": "manipulatives",
-            "metadata": {
-                "options": ["3rd block", "5th block", "6th block"]
-            }
-        },
-        {
-            "id": "na_1_pos_003",
-            "competency": "NA.1.9",
-            "topic": "Positional Reasoning",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "If there are 10 blocks in a line, which block is the very last one?",
-            "answer": "10th block",
-            "assetType": "manipulatives",
-            "metadata": {
-                "options": ["1st block", "9th block", "10th block"]
-            }
-        },
-        {
             "id": "na_1_pos_004",
             "competency": "NA.1.9",
             "topic": "Positional Reasoning",
@@ -69,34 +41,6 @@
             }
         },
         {
-            "id": "na_1_pos_005",
-            "competency": "NA.1.9",
-            "topic": "Positional Reasoning",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "In the picture of the race, Maria is in 5th place. Who is right behind her?",
-            "answer": "6th place",
-            "assetType": "illustration",
-            "metadata": {
-                "options": ["4th place", "6th place", "7th place"]
-            }
-        },
-        {
-            "id": "na_1_pos_006",
-            "competency": "NA.1.9",
-            "topic": "Positional Reasoning",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "Count from the left. Which toy is between the 7th and 9th toy?",
-            "answer": "8th toy",
-            "assetType": "illustration",
-            "metadata": {
-                "options": ["6th toy", "8th toy", "10th toy"]
-            }
-        },
-        {
             "id": "na_1_pos_007",
             "competency": "NA.1.9",
             "topic": "Positional Reasoning",
@@ -108,34 +52,6 @@
             "assetType": "text",
             "metadata": {
                 "options": ["1st", "3rd", "4th"]
-            }
-        },
-        {
-            "id": "na_1_pos_008",
-            "competency": "NA.1.9",
-            "topic": "Positional Reasoning",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "If Sunday is the 1st day of the week, what is the 3rd day?",
-            "answer": "Tuesday",
-            "assetType": "text",
-            "metadata": {
-                "options": ["Monday", "Tuesday", "Wednesday"]
-            }
-        },
-        {
-            "id": "na_1_pos_009",
-            "competency": "NA.1.9",
-            "topic": "Positional Reasoning",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "What ordinal word means the same as number 10 in a sequence?",
-            "answer": "tenth",
-            "assetType": "text",
-            "metadata": {
-                "options": ["first", "ninth", "tenth"]
             }
         }
     ]

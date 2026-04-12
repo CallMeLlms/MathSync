@@ -5,8 +5,8 @@
         "topic": "Pictorial Addition to 100",
         "competency": "NA.2.9",
         "performanceStandard": "Perform addition of numbers with sums up to 100.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "NUMPAD": "Used where numerical input is expected"
         }
@@ -22,30 +22,7 @@
             "question": "Look at the Base-10 blocks on your screen. 2 tens plus 3 tens is how many tens?",
             "answer": 5,
             "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_picadd_002",
-            "competency": "NA.2.9",
-            "topic": "Pictorial Addition",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "Add 4 tens blocks and 8 ones blocks. What number did you make?",
-            "answer": 48,
-            "assetType": "manipulatives",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_picadd_003",
-            "competency": "NA.2.9",
-            "topic": "Pictorial Addition",
-            "level": "concrete",
-            "type": "NUMPAD",
-            "difficulty": "Easy",
-            "question": "Use the bundles. If you have 6 bundles of 10 and add 2 more bundles, how many in total?",
-            "answer": 80,
-            "assetType": "manipulatives",
+            "assetId": "g1_q2_manipulative_tens_block",
             "metadata": {}
         },
         {
@@ -58,30 +35,7 @@
             "question": "Look at the Base-10 diagram. What is the total sum? (4 tens, 3 ones) + (2 tens, 5 ones).",
             "answer": 68,
             "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_picadd_005",
-            "competency": "NA.2.9",
-            "topic": "Pictorial Addition",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "In the picture, how many block bundles are shown in total? (7 bundles and 1 bundle).",
-            "answer": 80,
-            "assetType": "illustration",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_picadd_006",
-            "competency": "NA.2.9",
-            "topic": "Pictorial Addition",
-            "level": "pictorial",
-            "type": "NUMPAD",
-            "difficulty": "Medium",
-            "question": "What number is shown in the picture addition? (3 tens, 2 ones) + (5 tens, 4 ones).",
-            "answer": 86,
-            "assetType": "illustration",
+            "assetId": "g1_q2_diagram_base10_addition",
             "metadata": {}
         },
         {
@@ -93,30 +47,6 @@
             "difficulty": "Hard",
             "question": "5 tens and 4 ones plus 2 tens and 3 ones equals how many tens and ones?",
             "answer": 77,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_picadd_008",
-            "competency": "NA.2.9",
-            "topic": "Pictorial Addition",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "If you have 67 and you add 20, what is the new number?",
-            "answer": 87,
-            "assetType": "text",
-            "metadata": {}
-        },
-        {
-            "id": "na_2_picadd_009",
-            "competency": "NA.2.9",
-            "topic": "Pictorial Addition",
-            "level": "abstract",
-            "type": "NUMPAD",
-            "difficulty": "Hard",
-            "question": "Add 3 tens to the number 45. What is the sum?",
-            "answer": 75,
             "assetType": "text",
             "metadata": {}
         }

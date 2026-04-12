@@ -68,7 +68,7 @@ To maintain scalability across grades and themes, all game-related development m
 - Prefer descriptive names over generic ones (e.g., `useLessonProgress` instead of `useProgress`).
 - Keep component files focused; if a component grows too large, split it into sub-components following the `PascalCase` directory rule.
 
-## Timline 
+## Timeline 
 
 - Inside the directory .agents/logs, there are md files that logs the timeline of the project. 
 - Every time you make a significant change to the codebase, update the timeline log file. 

@@ -5,8 +5,8 @@
         "topic": "Composing Shapes",
         "competency": "MG.1.3",
         "performanceStandard": "Identify and distinguish simple 2-dimensional shapes.",
-        "totalQuestions": 9,
-        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "totalQuestions": 3,
+        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
             "N/A": "Placeholder for DragDrop engine"
         }
@@ -17,7 +17,7 @@
             "competency": "MG.1.3",
             "topic": "Composing Shapes",
             "level": "concrete",
-            "type": "N/A",
+            "type": "DRAGDROP",
             "difficulty": "Easy",
             "question": "Drag two triangles together to make a square.",
             "answer": "success",
@@ -25,36 +25,6 @@
             "metadata": {
                 "pieces": ["triangle", "triangle"],
                 "target": "square"
-            }
-        },
-        {
-            "id": "mg_1_comp_002",
-            "competency": "MG.1.3",
-            "topic": "Composing Shapes",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Easy",
-            "question": "Use the tiny squares to fill the big rectangle.",
-            "answer": "success",
-            "assetType": "manipulatives",
-            "metadata": {
-                "pieces": ["small_square", "small_square"],
-                "target": "rectangle"
-            }
-        },
-        {
-            "id": "mg_1_comp_003",
-            "competency": "MG.1.3",
-            "topic": "Composing Shapes",
-            "level": "concrete",
-            "type": "N/A",
-            "difficulty": "Easy",
-            "question": "Cut this rectangle in half. What shapes did you make?",
-            "answer": "squares",
-            "assetType": "manipulatives",
-            "metadata": {
-                "source": "rectangle",
-                "options": ["squares", "circles"]
             }
         },
         {
@@ -72,34 +42,6 @@
             }
         },
         {
-            "id": "mg_1_comp_005",
-            "competency": "MG.1.3",
-            "topic": "Composing Shapes",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "The drawing shows a sandwich cut diagonally. What shape are the pieces?",
-            "answer": "triangle",
-            "assetType": "illustration",
-            "metadata": {
-                "options": ["triangle", "square", "rectangle"]
-            }
-        },
-        {
-            "id": "mg_1_comp_006",
-            "competency": "MG.1.3",
-            "topic": "Composing Shapes",
-            "level": "pictorial",
-            "type": "N/A",
-            "difficulty": "Medium",
-            "question": "Which two shapes can you put together to make the rectangle shown?",
-            "answer": "two squares",
-            "assetType": "illustration",
-            "metadata": {
-                "options": ["two squares", "two circles", "three triangles"]
-            }
-        },
-        {
             "id": "mg_1_comp_007",
             "competency": "MG.1.3",
             "topic": "Composing Shapes",
@@ -111,34 +53,6 @@
             "assetType": "text",
             "metadata": {
                 "options": ["rectangle", "triangle", "big square"]
-            }
-        },
-        {
-            "id": "mg_1_comp_008",
-            "competency": "MG.1.3",
-            "topic": "Composing Shapes",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "Think of a square piece of paper. If you fold it in half corner-to-corner, what shape do you get?",
-            "answer": "triangle",
-            "assetType": "text",
-            "metadata": {
-                "options": ["rectangle", "square", "triangle"]
-            }
-        },
-        {
-            "id": "mg_1_comp_009",
-            "competency": "MG.1.3",
-            "topic": "Composing Shapes",
-            "level": "abstract",
-            "type": "N/A",
-            "difficulty": "Hard",
-            "question": "How many triangles do you need to trace inside a square if you draw a line from corner to corner?",
-            "answer": 2,
-            "assetType": "text",
-            "metadata": {
-                "options": [2, 3, 4]
             }
         }
     ]
