@@ -47,6 +47,94 @@ const getTextAlignStyle = (textAlign) => {
   }
 };
 
+// ── Table helpers ──────────────────────────────────────────
+/**
+ * Render a single table cell's inline content as a <Text> tree.
+ * Cells contain paragraph nodes → we flatten them to avoid nested <Text> issues.
+ */
+const renderCellContent = (cellNode, customStyles = {}) => {
+  if (!cellNode.content) return null;
+  return cellNode.content.map((para, i) => {
+    if (para.type === 'paragraph') {
+      const align = getTextAlignStyle(para.attrs?.textAlign);
+      return (
+        <Text key={i} style={[defaultStyles.cellText, align]}>
+          {para.content ? para.content.map((inline, j) => {
+            if (inline.text) {
+              let style = [defaultStyles.cellText];
+              if (inline.marks) {
+                inline.marks.forEach(mark => {
+                  if (mark.type === 'bold') style.push(defaultStyles.bold);
+                  if (mark.type === 'italic') style.push(defaultStyles.italic);
+                  if (mark.type === 'underline') style.push(defaultStyles.underline);
+                  if (mark.type === 'strike') style.push(defaultStyles.strikethrough);
+                });
+              }
+              return <Text key={j} style={style}>{inline.text}</Text>;
+            }
+            return null;
+          }) : null}
+        </Text>
+      );
+    }
+    return null;
+  });
+};
+
+/**
+ * Render a full table node.
+ * Wraps in a horizontal ScrollView so wide tables don't clip on small screens.
+ */
+const renderTable = (node, customStyles = {}) => {
+  if (!node.content) return null;
+
+  const rows = node.content; // tableRow nodes
+  const colCount = rows[0]?.content?.length || 1;
+  const minCellWidth = Math.max(90, (SCREEN_WIDTH - 40) / colCount);
+
+  return (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={defaultStyles.tableScrollView}
+      contentContainerStyle={{ paddingBottom: 4 }}
+    >
+      <View style={defaultStyles.table}>
+        {rows.map((row, rowIndex) => {
+          const isHeaderRow = row.content?.some(cell => cell.type === 'tableHeader');
+          return (
+            <View
+              key={rowIndex}
+              style={[
+                defaultStyles.tableRow,
+                !isHeaderRow && rowIndex % 2 === 0 && defaultStyles.tableRowEven,
+              ]}
+            >
+              {row.content?.map((cell, cellIndex) => {
+                const isHeader = cell.type === 'tableHeader';
+                return (
+                  <View
+                    key={cellIndex}
+                    style={[
+                      defaultStyles.tableCell,
+                      { width: minCellWidth },
+                      isHeader && defaultStyles.tableCellHeader,
+                      cellIndex === 0 && defaultStyles.tableCellFirst,
+                    ]}
+                  >
+                    {renderCellContent(cell, customStyles)}
+                  </View>
+                );
+              })}
+            </View>
+          );
+        })}
+      </View>
+    </ScrollView>
+  );
+};
+// ──────────────────────────────────────────────────────────
+
 const renderNode = (node, customStyles = {}, context = {}) => {
   const { type, content, attrs, marks, text } = node;
 
@@ -150,6 +238,33 @@ const renderNode = (node, customStyles = {}, context = {}) => {
 
     case 'video':
       return <OfflineVideoPlayer url={attrs.src} />;
+
+    // ── Table nodes ──────────────────────────────────────────
+    case 'table':
+      return renderTable(node, customStyles);
+
+    // Fallbacks if cells surface at the top level for any reason
+    case 'tableRow':
+      return (
+        <View style={defaultStyles.tableRow}>
+          {content && renderNodes(content, customStyles, context)}
+        </View>
+      );
+
+    case 'tableHeader':
+      return (
+        <View style={[defaultStyles.tableCell, defaultStyles.tableCellHeader]}>
+          {renderCellContent(node, customStyles)}
+        </View>
+      );
+
+    case 'tableCell':
+      return (
+        <View style={defaultStyles.tableCell}>
+          {renderCellContent(node, customStyles)}
+        </View>
+      );
+    // ─────────────────────────────────────────────────────────
 
     default:
       return content ? renderNodes(content, customStyles, context) : null;
@@ -312,6 +427,50 @@ const defaultStyles = StyleSheet.create({
     color: '#2196F3',
     textDecorationLine: 'underline',
   },
+
+  // ── Table styles ──────────────────────────────────────────
+  tableScrollView: {
+    marginBottom: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#CFD8DC',
+  },
+  table: {
+    flexDirection: 'column',
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF',
+  },
+  tableRowEven: {
+    backgroundColor: '#F5F7FA',
+  },
+  tableCell: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRightWidth: 1,
+    borderRightColor: '#CFD8DC',
+    borderBottomWidth: 1,
+    borderBottomColor: '#CFD8DC',
+    justifyContent: 'center',
+  },
+  tableCellFirst: {
+    borderLeftWidth: 0,
+  },
+  tableCellHeader: {
+    backgroundColor: '#E3F2FD',
+    paddingVertical: 12,
+  },
+  cellText: {
+    fontSize: 14,
+    color: '#37474F',
+    fontFamily: 'PlusJakartaSans-Regular',
+    lineHeight: 20,
+    flexShrink: 1,
+  },
+  // ─────────────────────────────────────────────────────────
 });
 
 export default RichTextRenderer;

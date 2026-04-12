@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { Feather, AntDesign } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import classroomService from '@/services/classroomService';
 import assignmentService from '@/services/assignmentService';
@@ -96,7 +96,7 @@ export default function ClassroomDetail() {
                     <View style={styles.outcomesContainer}>
                       <Text style={styles.sectionSubTitle}>Learning Outcomes:</Text>
                       {quarterData.learningOutcomes.map((outcome, idx) => (
-                        <Text key={idx} style={styles.outcomeLine}>• {outcome}</Text>
+                        <Text key={outcome._id || idx} style={styles.outcomeLine}>• {outcome.text}</Text>
                       ))}
                     </View>
                   )}

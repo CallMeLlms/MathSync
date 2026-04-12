@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Base API URL configuration
-export const API_BASE_URL = 'http://192.168.56.1:5500/api/v1';
+export const API_BASE_URL = 'http://192.168.1.101:5500/api/v1';
 
 // ===== FOR OTHER DEVELOPMENT URL ======
 // export const API_BASE_URL = 'http://192.168.56.1:5500/api/v1';
@@ -47,15 +47,15 @@ apiClient.interceptors.response.use(
                     const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
                         refreshToken
                     });
-                    
+
                     const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data.data;
-                    
+
                     await AsyncStorage.setItem('accessToken', newAccessToken);
                     await AsyncStorage.setItem('refreshToken', newRefreshToken);
-                    
+
                     apiClient.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
                     originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-                    
+
                     return apiClient(originalRequest);
                 }
             } catch (refreshError) {
