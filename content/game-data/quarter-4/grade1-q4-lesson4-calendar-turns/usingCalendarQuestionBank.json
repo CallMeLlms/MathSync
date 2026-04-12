@@ -1,0 +1,126 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Using a Calendar",
+        "competency": "MG.4.11",
+        "performanceStandard": "Determine the day and month using a calendar.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "mg_4_caluse_001",
+            "competency": "MG.4.11",
+            "topic": "Calendar Use",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Look at the real calendar. What is the date of the first Monday of this month?",
+            "answer": 3,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "mg_4_caluse_002",
+            "competency": "MG.4.11",
+            "topic": "Calendar Use",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Find today on the calendar. What day of the week is it?",
+            "answer": "Friday",
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "mg_4_caluse_003",
+            "competency": "MG.4.11",
+            "topic": "Calendar Use",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "How many Sundays are there in this month on your calendar?",
+            "answer": 4,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "mg_4_caluse_004",
+            "competency": "MG.4.11",
+            "topic": "Calendar Use",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Look at the picture of the December calendar. What day is Christmas (December 25)?",
+            "answer": "Thursday",
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "mg_4_caluse_005",
+            "competency": "MG.4.11",
+            "topic": "Calendar Use",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing, what was the date two days ago if today is the 10th?",
+            "answer": 8,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "mg_4_caluse_006",
+            "competency": "MG.4.11",
+            "topic": "Calendar Use",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Which month in the picture has 31 days?",
+            "answer": "October",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["September", "October", "November"]
+            }
+        },
+        {
+            "id": "mg_4_caluse_007",
+            "competency": "MG.4.11",
+            "topic": "Calendar Use",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "If February has 28 days, what is the date of the day after February 28?",
+            "answer": "March 1",
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "mg_4_caluse_008",
+            "competency": "MG.4.11",
+            "topic": "Calendar Use",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "How many months are in a full year?",
+            "answer": 12,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "mg_4_caluse_009",
+            "competency": "MG.4.11",
+            "topic": "Calendar Use",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "If your birthday is in 3 months and it is now June, what month is your birthday?",
+            "answer": "September",
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

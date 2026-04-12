@@ -1,0 +1,131 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Philippine Money Identification",
+        "competency": "NA.4.4",
+        "performanceStandard": "Recognize coins and bills up to 100 pesos.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "MATCHER": "Used for matching money images to values"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_4_monid_001",
+            "competency": "NA.4.4",
+            "topic": "Money ID",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Match the ₱1 coin to its symbol.",
+            "pairs": [
+                {"left": "coin_1", "right": "₱1"}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "na_4_monid_002",
+            "competency": "NA.4.4",
+            "topic": "Money ID",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Match the ₱20 bill to the number 20.",
+            "pairs": [
+                {"left": "bill_20", "right": "20"}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "na_4_monid_003",
+            "competency": "NA.4.4",
+            "topic": "Money ID",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Which bill is blue? Match it to ₱100.",
+            "pairs": [
+                {"left": "blue_bill", "right": "₱100"}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "na_4_monid_004",
+            "competency": "NA.4.4",
+            "topic": "Money ID",
+            "level": "pictorial",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "question": "Look at the picture. Match the set of coins to their names.",
+            "pairs": [
+                {"left": "coin_5_img", "right": "Five Pesos"},
+                {"left": "coin_10_img", "right": "Ten Pesos"}
+            ],
+            "assetType": "illustration"
+        },
+        {
+            "id": "na_4_monid_005",
+            "competency": "NA.4.4",
+            "topic": "Money ID",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing, what is the value of the orange bill?",
+            "answer": 20,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monid_006",
+            "competency": "NA.4.4",
+            "topic": "Money ID",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "How many ₱5 coins do you see in the piggy bank picture?",
+            "answer": 6,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monid_007",
+            "competency": "NA.4.4",
+            "topic": "Money ID",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Write the value of a 'Twenty Peso' bill in numbers.",
+            "answer": 20,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monid_008",
+            "competency": "NA.4.4",
+            "topic": "Money ID",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Which is higher in value: ₱50 or ₱20?",
+            "answer": 50,
+            "assetType": "text",
+            "metadata": {
+                "options": [50, 20]
+            }
+        },
+        {
+            "id": "na_4_monid_009",
+            "competency": "NA.4.4",
+            "topic": "Money ID",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "How many ₱1 coins make exactly ₱10?",
+            "answer": 10,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

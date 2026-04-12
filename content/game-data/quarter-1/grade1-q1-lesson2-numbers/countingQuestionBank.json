@@ -1,0 +1,134 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Counting and Recognizing Numbers 1 to 100",
+        "competency": "NA.1.4-1.6",
+        "performanceStandard": "Count, recognize, and represent whole numbers up to 100.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "N/A": "Placeholder for future Picker or Numpad engine adaptation"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_1_count_001",
+            "competency": "NA.1.4",
+            "topic": "Counting to 100",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Count the blocks. How many are there in total?",
+            "answer": 8,
+            "assetType": "blocks",
+            "metadata": {
+                "count": 8
+            }
+        },
+        {
+            "id": "na_1_count_002",
+            "competency": "NA.1.6",
+            "topic": "Counting to 100",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Which group of blocks shows the number 12?",
+            "answer": "group_12",
+            "assetType": "blocks",
+            "metadata": {
+                "options": ["group_10", "group_12", "group_14"]
+            }
+        },
+        {
+            "id": "na_1_count_003",
+            "competency": "NA.1.4",
+            "topic": "Counting to 100",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Start at 5. Count out 3 more blocks. How many blocks do you have now?",
+            "answer": 8,
+            "assetType": "blocks",
+            "metadata": {}
+        },
+        {
+            "id": "na_1_count_004",
+            "competency": "NA.1.4",
+            "topic": "Counting to 100",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the picture. How many mangoes are in the basket?",
+            "answer": 15,
+            "assetType": "illustration",
+            "metadata": {
+                "image": "mangoes_basket_15"
+            }
+        },
+        {
+            "id": "na_1_count_005",
+            "competency": "NA.1.6",
+            "topic": "Counting to 100",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Which picture models the number 25?",
+            "answer": "picture_25",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["picture_30", "picture_25", "picture_20"]
+            }
+        },
+        {
+            "id": "na_1_count_006",
+            "competency": "NA.1.4",
+            "topic": "Counting to 100",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Count the stars in the sky. How many stars do you see?",
+            "answer": 32,
+            "assetType": "illustration",
+            "metadata": {
+                "image": "stars_32"
+            }
+        },
+        {
+            "id": "na_1_count_007",
+            "competency": "NA.1.4",
+            "topic": "Counting to 100",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "What number comes just after 49?",
+            "answer": 50,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_1_count_008",
+            "competency": "NA.1.5",
+            "topic": "Counting to 100",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "How do you write the number seventy-six?",
+            "answer": 76,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_1_count_009",
+            "competency": "NA.1.4",
+            "topic": "Counting to 100",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "What number is one less than 100?",
+            "answer": 99,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

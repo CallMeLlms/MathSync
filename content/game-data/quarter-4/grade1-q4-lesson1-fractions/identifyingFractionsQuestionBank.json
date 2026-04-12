@@ -1,0 +1,126 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Identifying Fractions (1/2 and 1/4)",
+        "competency": "NA.4.1",
+        "performanceStandard": "Identify 1/2 and 1/4 of a whole and of a set.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "N/A": "Placeholder for Picker or DragDrop engine"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_4_fracid_001",
+            "competency": "NA.4.1",
+            "topic": "Fractions ID",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Use the paper circle. Fold it into two equal parts. What is one part called?",
+            "answer": "one-half",
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_fracid_002",
+            "competency": "NA.4.1",
+            "topic": "Fractions ID",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Take 4 blocks. Give half of them to me. How many blocks did you give?",
+            "answer": 2,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_fracid_003",
+            "competency": "NA.4.1",
+            "topic": "Fractions ID",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Split your 8 counters into 4 equal groups. What do we call one of these groups?",
+            "answer": "one-fourth",
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_fracid_004",
+            "competency": "NA.4.1",
+            "topic": "Fractions ID",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the picture of the pizza. Which slice shows one-fourth (1/4)?",
+            "answer": "slice_c",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["slice_a", "slice_b", "slice_c"]
+            }
+        },
+        {
+            "id": "na_4_fracid_005",
+            "competency": "NA.4.1",
+            "topic": "Fractions ID",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "In the drawing, which set of apples shows exactly half of the total?",
+            "answer": "set_b",
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_fracid_006",
+            "competency": "NA.4.1",
+            "topic": "Fractions ID",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Which colored part of the rectangle represents 1/2?",
+            "answer": "part_left",
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_fracid_007",
+            "competency": "NA.4.1",
+            "topic": "Fractions ID",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "What is 1/2 of 10?",
+            "answer": 5,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_fracid_008",
+            "competency": "NA.4.1",
+            "topic": "Fractions ID",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "If you share 12 cupcakes equally among 4 friends, what fraction does each friend get?",
+            "answer": "1/4",
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_fracid_009",
+            "competency": "NA.4.1",
+            "topic": "Fractions ID",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "What number is 1/4 of 16?",
+            "answer": 4,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

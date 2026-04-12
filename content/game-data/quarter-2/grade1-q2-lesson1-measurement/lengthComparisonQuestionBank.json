@@ -1,0 +1,140 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Comparing Lengths and Distances",
+        "competency": "MG.2.2",
+        "performanceStandard": "Use non-standard units to compare and measure length and distance.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "N/A": "Placeholder for Picker or DragDrop engine"
+        }
+    },
+    "questions": [
+        {
+            "id": "mg_2_comp_001",
+            "competency": "MG.2.2",
+            "topic": "Measurement Comparison",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Which of these two sticks is longer? Tap the longer stick.",
+            "answer": "stick_a",
+            "assetType": "manipulatives",
+            "metadata": {
+                "options": ["stick_a", "stick_b"]
+            }
+        },
+        {
+            "id": "mg_2_comp_002",
+            "competency": "MG.2.2",
+            "topic": "Measurement Comparison",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Arrange these three crayons from shortest to longest.",
+            "answer": "red, blue, yellow",
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_comp_003",
+            "competency": "MG.2.2",
+            "topic": "Measurement Comparison",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Which distance is shorter: from your desk to the door, or from your desk to the window?",
+            "answer": "to the door",
+            "assetType": "manipulatives",
+            "metadata": {
+                "options": ["to the door", "to the window"]
+            }
+        },
+        {
+            "id": "mg_2_comp_004",
+            "competency": "MG.2.2",
+            "topic": "Measurement Comparison",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the drawing. Which animal is taller: the giraffe or the elephant?",
+            "answer": "giraffe",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["giraffe", "elephant"]
+            }
+        },
+        {
+            "id": "mg_2_comp_005",
+            "competency": "MG.2.2",
+            "topic": "Measurement Comparison",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Which road is shorter in the picture?",
+            "answer": "road_b",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["road_a", "road_b"]
+            }
+        },
+        {
+            "id": "mg_2_comp_006",
+            "competency": "MG.2.2",
+            "topic": "Measurement Comparison",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Select the tallest tree in the forest picture.",
+            "answer": "tree_3",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["tree_1", "tree_2", "tree_3"]
+            }
+        },
+        {
+            "id": "mg_2_comp_007",
+            "competency": "MG.2.2",
+            "topic": "Measurement Comparison",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "If a banana is 4 blocks long and a carrot is 6 blocks long, which one is shorter?",
+            "answer": "banana",
+            "assetType": "text",
+            "metadata": {
+                "options": ["banana", "carrot"]
+            }
+        },
+        {
+            "id": "mg_2_comp_008",
+            "competency": "MG.2.2",
+            "topic": "Measurement Comparison",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Object A is longer than Object B. Object B is longer than Object C. Which object is the shortest?",
+            "answer": "Object C",
+            "assetType": "text",
+            "metadata": {
+                "options": ["Object A", "Object B", "Object C"]
+            }
+        },
+        {
+            "id": "mg_2_comp_009",
+            "competency": "MG.2.2",
+            "topic": "Measurement Comparison",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "What word means the same as 'the most tall'?",
+            "answer": "tallest",
+            "assetType": "text",
+            "metadata": {
+                "options": ["longer", "tallest", "shorter"]
+            }
+        }
+    ]
+}

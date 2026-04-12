@@ -1,0 +1,124 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Missing Numbers in Addition and Subtraction",
+        "competency": "NA.3.6",
+        "performanceStandard": "Perform subtraction of numbers with differences up to 20.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_3_missing_001",
+            "competency": "NA.3.6",
+            "topic": "Missing Numbers",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "You have 5 blocks. How many more blocks do you need to make 10 in total?",
+            "answer": 5,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_missing_002",
+            "competency": "NA.3.6",
+            "topic": "Missing Numbers",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "You had some sticks. You took away 2, and now you have 6! How many did you start with?",
+            "answer": 8,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_missing_003",
+            "competency": "NA.3.6",
+            "topic": "Missing Numbers",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "If we count 12 beads, and we remove some to have 7 left, how many did we remove?",
+            "answer": 5,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_missing_004",
+            "competency": "NA.3.6",
+            "topic": "Missing Numbers",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Look at the picture: 8 + __ = 12. How many more stars are needed?",
+            "answer": 4,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_missing_005",
+            "competency": "NA.3.6",
+            "topic": "Missing Numbers",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing: 15 - __ = 9. What is the missing number?",
+            "answer": 6,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_missing_006",
+            "competency": "NA.3.6",
+            "topic": "Missing Numbers",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Fill in the blank for the picture: __ + 7 = 15.",
+            "answer": 8,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_missing_007",
+            "competency": "NA.3.6",
+            "topic": "Missing Numbers",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Solve for the missing number: 6 + ? = 14",
+            "answer": 8,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_missing_008",
+            "competency": "NA.3.6",
+            "topic": "Missing Numbers",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "What is the missing value: 20 - ? = 11",
+            "answer": 9,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_missing_009",
+            "competency": "NA.3.6",
+            "topic": "Missing Numbers",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Find the minuend: ? - 4 = 14",
+            "answer": 18,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

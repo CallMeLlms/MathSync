@@ -1,0 +1,130 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Data Tables",
+        "competency": "DP.3.4",
+        "performanceStandard": "Represent and interpret data in a pictograph without a scale.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "MATCHER": "Used for matching graph data to table values"
+        }
+    },
+    "questions": [
+        {
+            "id": "dp_3_table_001",
+            "competency": "DP.3.4",
+            "topic": "Data Tables",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Match the pile of 3 blocks to the number 3 on the table.",
+            "pairs": [
+                {"left": "pile_3", "right": 3},
+                {"left": "pile_5", "right": 5}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "dp_3_table_002",
+            "competency": "DP.3.4",
+            "topic": "Data Tables",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Put the jars into the table correctly by counting the marbles inside.",
+            "pairs": [
+                {"left": "jar_7", "right": 7},
+                {"left": "jar_4", "right": 4}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "dp_3_table_003",
+            "competency": "DP.3.4",
+            "topic": "Data Tables",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Match the animal sets to their count: 2 cats, 6 dogs.",
+            "pairs": [
+                {"left": "cats_2", "right": 2},
+                {"left": "dogs_6", "right": 6}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "dp_3_table_004",
+            "competency": "DP.3.4",
+            "topic": "Data Tables",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Look at the pictograph. Now look at the table. What number should go in the 'Milk' row?",
+            "answer": 8,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_table_005",
+            "competency": "DP.3.4",
+            "topic": "Data Tables",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Fill in the missing table value for 'Blue Shirts' based on the drawing.",
+            "answer": 12,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_table_006",
+            "competency": "DP.3.4",
+            "topic": "Data Tables",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "The table says there are 4 hats. Does the pictograph match this? (Yes/No)",
+            "answer": "Yes",
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_table_007",
+            "competency": "DP.3.4",
+            "topic": "Data Tables",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "If a graph row has 9 symbols, what number should be written in the table for that row?",
+            "answer": 9,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_table_008",
+            "competency": "DP.3.4",
+            "topic": "Data Tables",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "In a table, Apple = 5 and Orange = 3. What is the total sum in the 'Total' row?",
+            "answer": 8,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_table_009",
+            "competency": "DP.3.4",
+            "topic": "Data Tables",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "A table shows 'Birds = ?'. If the graph has 15 bird symbols, what is the value of '?'?",
+            "answer": 15,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

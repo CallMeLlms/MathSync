@@ -1,0 +1,143 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Measurement with Non-Standard Units",
+        "competency": "MG.2.1",
+        "performanceStandard": "Use non-standard units to compare and measure length and distance.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "mg_2_meas_001",
+            "competency": "MG.2.1",
+            "topic": "Measurement",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Use the blocks provided. How many blocks long is your pencil?",
+            "answer": 5,
+            "assetType": "manipulatives",
+            "metadata": {
+                "unit": "blocks"
+            }
+        },
+        {
+            "id": "mg_2_meas_002",
+            "competency": "MG.2.1",
+            "topic": "Measurement",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Measure the width of the table using your hand-span. How many hand-spans is it?",
+            "answer": 6,
+            "assetType": "manipulatives",
+            "metadata": {
+                "unit": "hand-spans"
+            }
+        },
+        {
+            "id": "mg_2_meas_003",
+            "competency": "MG.2.1",
+            "topic": "Measurement",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Walk from the door to the window. How many steps or paces did you take?",
+            "answer": 12,
+            "assetType": "manipulatives",
+            "metadata": {
+                "unit": "paces"
+            }
+        },
+        {
+            "id": "mg_2_meas_004",
+            "competency": "MG.2.1",
+            "topic": "Measurement",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Look at the picture. How many paperclips long is the pen?",
+            "answer": 4,
+            "assetType": "illustration",
+            "metadata": {
+                "scenario": "pen_with_paperclips",
+                "count": 4
+            }
+        },
+        {
+            "id": "mg_2_meas_005",
+            "competency": "MG.2.1",
+            "topic": "Measurement",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing, how many crayons long is the notebook?",
+            "answer": 3,
+            "assetType": "illustration",
+            "metadata": {
+                "scenario": "notebook_with_crayons",
+                "count": 3
+            }
+        },
+        {
+            "id": "mg_2_meas_006",
+            "competency": "MG.2.1",
+            "topic": "Measurement",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Count the blocks next to the spoon. What is its length in blocks?",
+            "answer": 7,
+            "assetType": "illustration",
+            "metadata": {
+                "scenario": "spoon_with_blocks",
+                "count": 7
+            }
+        },
+        {
+            "id": "mg_2_meas_007",
+            "competency": "MG.2.1",
+            "topic": "Measurement",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "If a ruler is 12 inches long and a pencil is 7 inches, which one is longer?",
+            "answer": "ruler",
+            "assetType": "text",
+            "metadata": {
+                "options": ["ruler", "pencil"]
+            }
+        },
+        {
+            "id": "mg_2_meas_008",
+            "competency": "MG.2.1",
+            "topic": "Measurement",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "If one hand-span is 10 units and the table is 50 units long, how many hand-spans do you need?",
+            "answer": 5,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_meas_009",
+            "competency": "MG.2.1",
+            "topic": "Measurement",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Which unit is usually smaller: a finger width or a foot pace?",
+            "answer": "finger width",
+            "assetType": "text",
+            "metadata": {
+                "options": ["finger width", "foot pace"]
+            }
+        }
+    ]
+}

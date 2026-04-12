@@ -1,0 +1,124 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Money Word Problems",
+        "competency": "NA.4.7",
+        "performanceStandard": "Solve 1-step problems involving addition and subtraction of money.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_4_monprob_001",
+            "competency": "NA.4.7",
+            "topic": "Money Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Use the coins: A lollipop costs ₱5. You buy 2 lollipops. How much money do you need?",
+            "answer": 10,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monprob_002",
+            "competency": "NA.4.7",
+            "topic": "Money Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Use the bills: You have ₱50. You buy a notebook for ₱20. How much is your change?",
+            "answer": 30,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monprob_003",
+            "competency": "NA.4.7",
+            "topic": "Money Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "A toy car costs ₱45 and a ball costs ₱40. How much do they cost together?",
+            "answer": 85,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monprob_004",
+            "competency": "NA.4.7",
+            "topic": "Money Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Look at the price list. How much do the apple (₱10) and the bread (₱25) cost in total?",
+            "answer": 35,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monprob_005",
+            "competency": "NA.4.7",
+            "topic": "Money Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing, you have a ₱100 bill. You buy an ice cream for ₱60. What is the remaining amount shown in the picture?",
+            "answer": 40,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monprob_006",
+            "competency": "NA.4.7",
+            "topic": "Money Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Based on the drawing, if Ben has three ₱20 bills and buys a hat for ₱45, how much change does he get?",
+            "answer": 15,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monprob_007",
+            "competency": "NA.4.7",
+            "topic": "Money Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Sarah has ₱65. She earns ₱25 more by helping at home. What is her new total?",
+            "answer": 90,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monprob_008",
+            "competency": "NA.4.7",
+            "topic": "Money Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "A box of crayons costs ₱58. You have ₱45. How many more pesos do you need?",
+            "answer": 13,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_4_monprob_009",
+            "competency": "NA.4.7",
+            "topic": "Money Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Total cost of 3 pencils at ₱8 each?",
+            "answer": 24,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

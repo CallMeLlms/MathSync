@@ -1,0 +1,124 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Addition to 100 (No Regrouping)",
+        "competency": "NA.2.9",
+        "performanceStandard": "Perform addition of numbers with sums up to 100.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_2_add100_001",
+            "competency": "NA.2.9",
+            "topic": "Addition to 100",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Use the bundles and sticks: 32 + 5. What is the sum?",
+            "answer": 37,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_add100_002",
+            "competency": "NA.2.9",
+            "topic": "Addition to 100",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Combine 41 blocks and 20 blocks. How many blocks in total?",
+            "answer": 61,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_add100_003",
+            "competency": "NA.2.9",
+            "topic": "Addition to 100",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Use the Base-10 blocks: 24 + 33. What is the total?",
+            "answer": 57,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_add100_004",
+            "competency": "NA.2.9",
+            "topic": "Addition to 100",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Look at the picture. 52 birds are in a tree. 7 more fly in. How many birds now?",
+            "answer": 59,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_add100_005",
+            "competency": "NA.2.9",
+            "topic": "Addition to 100",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing, add the coins: ₱40 + ₱55. What is the total?",
+            "answer": 95,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_add100_006",
+            "competency": "NA.2.9",
+            "topic": "Addition to 100",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Count the Base-10 blocks in the picture: (3 tens, 6 ones) + (4 tens, 2 ones). Total is __?",
+            "answer": 78,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_add100_007",
+            "competency": "NA.2.9",
+            "topic": "Addition to 100",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "What is 72 + 14?",
+            "answer": 86,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_add100_008",
+            "competency": "NA.2.9",
+            "topic": "Addition to 100",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Solve the equation: 81 + 17 = ?",
+            "answer": 98,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_add100_009",
+            "competency": "NA.2.9",
+            "topic": "Addition to 100",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Add 65 and 30.",
+            "answer": 95,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

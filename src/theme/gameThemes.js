@@ -15,6 +15,10 @@ export const GameThemes = {
     scoreLabel: 'Activity Score',
     finishTitle: 'Lesson Complete!',
     finishButtonText: 'Back to Map',
+    touchTarget: {
+      minWidth: 44,
+      minHeight: 44,
+    },
     fontFamily: {
       title: 'Lexend-Black',
       body: 'PlusJakartaSans-Medium',

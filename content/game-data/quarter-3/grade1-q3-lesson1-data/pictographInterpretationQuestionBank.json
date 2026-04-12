@@ -1,0 +1,130 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Pictograph Interpretation",
+        "competency": "DP.3.3",
+        "performanceStandard": "Represent and interpret data in a pictograph without a scale.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "dp_3_int_001",
+            "competency": "DP.3.3",
+            "topic": "Data Interpretation",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Look at the objects: Which group has 4 items? Tap the group.",
+            "answer": "group_b",
+            "assetType": "manipulatives",
+            "metadata": {
+                "options": ["group_a", "group_b"]
+            }
+        },
+        {
+            "id": "dp_3_int_002",
+            "competency": "DP.3.3",
+            "topic": "Data Interpretation",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Count the real candies in the jar. How many are yellow?",
+            "answer": 5,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_int_003",
+            "competency": "DP.3.3",
+            "topic": "Data Interpretation",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Which color block is there the LEAST of in this pile?",
+            "answer": "green",
+            "assetType": "manipulatives",
+            "metadata": {
+                "options": ["red", "blue", "green"]
+            }
+        },
+        {
+            "id": "dp_3_int_004",
+            "competency": "DP.3.3",
+            "topic": "Data Interpretation",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Look at the pictograph of 'Weather'. How many sunny days were there last week?",
+            "answer": 4,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_int_005",
+            "competency": "DP.3.3",
+            "topic": "Data Interpretation",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the graph, how many more people like pizza than burgers?",
+            "answer": 3,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_int_006",
+            "competency": "DP.3.3",
+            "topic": "Data Interpretation",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Which toy in the pictograph had the fewest votes?",
+            "answer": "yo-yo",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["ball", "doll", "yo-yo"]
+            }
+        },
+        {
+            "id": "dp_3_int_007",
+            "competency": "DP.3.3",
+            "topic": "Data Interpretation",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "A pictograph shows 8 red balloons and 5 blue balloons. How many balloons are there in total?",
+            "answer": 13,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_int_008",
+            "competency": "DP.3.3",
+            "topic": "Data Interpretation",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "In a graph of 'Favorite Animals', 'Cat' has 10 symbols and 'Dog' has 8. How many fewer people like dogs?",
+            "answer": 2,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_int_009",
+            "competency": "DP.3.3",
+            "topic": "Data Interpretation",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "If you double the number of symbols in a row that has 3 symbols, how many symbols will it have now?",
+            "answer": 6,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

@@ -1,0 +1,130 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Repeating Patterns",
+        "competency": "NA.3.11",
+        "performanceStandard": "Determine and create repeating patterns.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "MATCHER": "Used for choosing the next item in a pattern"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_3_pat_001",
+            "competency": "NA.3.11",
+            "topic": "Identification of Next Terms",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Look at the pattern of blocks: Red, Blue, Red, Blue. What block comes next?",
+            "pairs": [
+                {"left": "pattern_next", "right": "red_block"}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "na_3_pat_002",
+            "competency": "NA.3.11",
+            "topic": "Identification of Next Terms",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Listen to the rhythm: Clap, Stomp, Clap, Stomp. What is the next action?",
+            "pairs": [
+                {"left": "pattern_next", "right": "clap_action"}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "na_3_pat_003",
+            "competency": "NA.3.11",
+            "topic": "Identification of Next Terms",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Look at the shapes: Circle, Square, Circle, Square. What shape comes next?",
+            "pairs": [
+                {"left": "pattern_next", "right": "circle_shape"}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "na_3_pat_004",
+            "competency": "NA.3.11",
+            "topic": "Identification of Next Terms",
+            "level": "pictorial",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "question": "Look at the picture: Apple, Banana, Cherry, Apple, Banana, ... What is next?",
+            "pairs": [
+                {"left": "pattern_next", "right": "cherry_icon"}
+            ],
+            "assetType": "illustration"
+        },
+        {
+            "id": "na_3_pat_005",
+            "competency": "NA.3.11",
+            "topic": "Identification of Next Terms",
+            "level": "pictorial",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "question": "In the drawing: Up arrow, Down arrow, Up arrow, Down arrow. What comes next?",
+            "pairs": [
+                {"left": "pattern_next", "right": "up_arrow"}
+            ],
+            "assetType": "illustration"
+        },
+        {
+            "id": "na_3_pat_006",
+            "competency": "NA.3.11",
+            "topic": "Identification of Next Terms",
+            "level": "pictorial",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "question": "Complete the color pattern: Yellow, Yellow, Green, Yellow, Yellow, ...?",
+            "pairs": [
+                {"left": "pattern_next", "right": "green_icon"}
+            ],
+            "assetType": "illustration"
+        },
+        {
+            "id": "na_3_pat_007",
+            "competency": "NA.3.11",
+            "topic": "Identification of Next Terms",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Identify the next two numbers in the sequence: 2, 4, 2, 4, __, __.",
+            "answer": "2, 4",
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_pat_008",
+            "competency": "NA.3.11",
+            "topic": "Identification of Next Terms",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "What are the next two letters: A, B, C, A, B, C, __, __?",
+            "answer": "A, B",
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_pat_009",
+            "competency": "NA.3.11",
+            "topic": "Identification of Next Terms",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Fill in the blank: 10, 20, 10, 20, __.",
+            "answer": 10,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

@@ -1,0 +1,136 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Equivalent Expressions",
+        "competency": "NA.3.7",
+        "performanceStandard": "Perform subtraction of numbers with differences up to 20.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "MATCHER": "Used for matching equivalent expressions"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_3_equiv_001",
+            "competency": "NA.3.7",
+            "topic": "Equivalent Expressions",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Match the groups of blocks that have the same total.",
+            "pairs": [
+                {"left": "2+3 blocks", "right": "1+4 blocks"},
+                {"left": "5+2 blocks", "right": "4+3 blocks"}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "na_3_equiv_002",
+            "competency": "NA.3.7",
+            "topic": "Equivalent Expressions",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Find the subtraction sets that equal the same amount of sticks.",
+            "pairs": [
+                {"left": "10-2 sticks", "right": "9-1 sticks"},
+                {"left": "8-3 sticks", "right": "6-1 sticks"}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "na_3_equiv_003",
+            "competency": "NA.3.7",
+            "topic": "Equivalent Expressions",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "question": "Match the mixed addition and subtraction piles.",
+            "pairs": [
+                {"left": "5+5 blocks", "right": "12-2 blocks"},
+                {"left": "3+4 blocks", "right": "10-3 blocks"}
+            ],
+            "assetType": "manipulatives"
+        },
+        {
+            "id": "na_3_equiv_004",
+            "competency": "NA.3.7",
+            "topic": "Equivalent Expressions",
+            "level": "pictorial",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "question": "Match the picture equations with the same result.",
+            "pairs": [
+                {"left": "8-2 drawing", "right": "3+3 drawing"},
+                {"left": "10-5 drawing", "right": "2+3 drawing"}
+            ],
+            "assetType": "illustration"
+        },
+        {
+            "id": "na_3_equiv_005",
+            "competency": "NA.3.7",
+            "topic": "Equivalent Expressions",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Is 7 + 2 equivalent to 10 - 1? (Yes/No)",
+            "answer": "Yes",
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_equiv_006",
+            "competency": "NA.3.7",
+            "topic": "Equivalent Expressions",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "What number makes 5 + 4 equivalent to 12 - __?",
+            "answer": 3,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_equiv_007",
+            "competency": "NA.3.7",
+            "topic": "Equivalent Expressions",
+            "level": "abstract",
+            "type": "MATCHER",
+            "difficulty": "Hard",
+            "question": "Match the equivalent number expressions.",
+            "pairs": [
+                {"left": "15-5", "right": "7+3"},
+                {"left": "18-6", "right": "9+3"}
+            ],
+            "assetType": "text"
+        },
+        {
+            "id": "na_3_equiv_008",
+            "competency": "NA.3.7",
+            "topic": "Equivalent Expressions",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Complete: 20 - 5 = 10 + __",
+            "answer": 5,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_equiv_009",
+            "competency": "NA.3.7",
+            "topic": "Equivalent Expressions",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Which one is NOT equivalent to 6 + 6?",
+            "answer": "15-4",
+            "assetType": "text",
+            "metadata": {
+                "options": ["10+2", "15-3", "15-4"]
+            }
+        }
+    ]
+}

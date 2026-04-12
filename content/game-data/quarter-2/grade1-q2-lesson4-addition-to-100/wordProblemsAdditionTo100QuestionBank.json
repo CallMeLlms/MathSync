@@ -1,0 +1,124 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Addition Word Problems up to 100",
+        "competency": "NA.2.10",
+        "performanceStandard": "Perform addition of numbers with sums up to 100.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_2_wordadd_001",
+            "competency": "NA.2.10",
+            "topic": "Addition Word Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Use the blocks: A shop sold 24 blue pens and 13 red pens. How many pens were sold in total?",
+            "answer": 37,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_wordadd_002",
+            "competency": "NA.2.10",
+            "topic": "Addition Word Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Use the stick bundles: Farmer Juan picked 50 coconuts in the morning and 35 in the afternoon. How many coconuts did he pick today?",
+            "answer": 85,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_wordadd_003",
+            "competency": "NA.2.10",
+            "topic": "Addition Word Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Use the counters: Maria has ₱62 and her mom gives her ₱20 more. How much money does Maria have now?",
+            "answer": 82,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_wordadd_004",
+            "competency": "NA.2.10",
+            "topic": "Addition Word Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Look at the picture. There are 45 students in the hall. 12 more walk in. How many students are there in the hall?",
+            "answer": 57,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_wordadd_005",
+            "competency": "NA.2.10",
+            "topic": "Addition Word Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing, a basket has 71 mangoes. Another basket has 15 mangoes. How many mangoes are there in total?",
+            "answer": 86,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_wordadd_006",
+            "competency": "NA.2.10",
+            "topic": "Addition Word Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Look at the fruit stand picture. There are 36 oranges and 42 apples. What is the total number of fruits?",
+            "answer": 78,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_wordadd_007",
+            "competency": "NA.2.10",
+            "topic": "Addition Word Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Ben collected 54 stickers. Sarah gave him 10 more. How many stickers does Ben have now?",
+            "answer": 64,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_wordadd_008",
+            "competency": "NA.2.10",
+            "topic": "Addition Word Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "A library has 63 science books and 24 story books on one shelf. How many books are on that shelf?",
+            "answer": 87,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_wordadd_009",
+            "competency": "NA.2.10",
+            "topic": "Addition Word Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Liza spent ₱45 on a notebook and ₱52 on a set of pencils. How much money did she spend in total?",
+            "answer": 97,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

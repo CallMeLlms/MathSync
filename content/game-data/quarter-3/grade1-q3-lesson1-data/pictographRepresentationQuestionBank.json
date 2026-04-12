@@ -1,0 +1,130 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Pictograph Representation",
+        "competency": "DP.3.2",
+        "performanceStandard": "Represent and interpret data in a pictograph without a scale.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "N/A": "Placeholder for Picker or DragDrop engine"
+        }
+    },
+    "questions": [
+        {
+            "id": "dp_3_rep_001",
+            "competency": "DP.3.2",
+            "topic": "Data Representation",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Use the real fruit: Place 4 apples and 2 bananas in the fruit stand. How many apples did you place?",
+            "answer": 4,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_rep_002",
+            "competency": "DP.3.2",
+            "topic": "Data Representation",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Arrange the toys on the shelf: 3 cars and 5 dolls. Which row has more toys?",
+            "answer": "dolls",
+            "assetType": "manipulatives",
+            "metadata": {
+                "options": ["cars", "dolls"]
+            }
+        },
+        {
+            "id": "dp_3_rep_003",
+            "competency": "DP.3.2",
+            "topic": "Data Representation",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Count the red blocks and blue blocks. Represent them in two piles. How many red blocks are there if we counted 6?",
+            "answer": 6,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_rep_004",
+            "competency": "DP.3.2",
+            "topic": "Data Representation",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the picture. Which fruit has the most symbols in the pictograph?",
+            "answer": "mango",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["apple", "mango", "banana"]
+            }
+        },
+        {
+            "id": "dp_3_rep_005",
+            "competency": "DP.3.2",
+            "topic": "Data Representation",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "How many star symbols are shown for 'Favorite Day'? Count the stars next to Friday.",
+            "answer": 5,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_rep_006",
+            "competency": "DP.3.2",
+            "topic": "Data Representation",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Drag 3 fish icons to the 'Ocean' row in the graph.",
+            "answer": "success",
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_rep_007",
+            "competency": "DP.3.2",
+            "topic": "Data Representation",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "If 1 heart symbol means 1 person, how many symbols do you need for 8 people?",
+            "answer": 8,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_rep_008",
+            "competency": "DP.3.2",
+            "topic": "Data Representation",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "In a pictograph, there are 4 cats and 6 dogs. How many more dog symbols are there than cat symbols?",
+            "answer": 2,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "dp_3_rep_009",
+            "competency": "DP.3.2",
+            "topic": "Data Representation",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "If we want to show 10 favorite pets, and 3 are birds and 7 are cats, which pet will have a longer row of symbols?",
+            "answer": "cats",
+            "assetType": "text",
+            "metadata": {
+                "options": ["birds", "cats"]
+            }
+        }
+    ]
+}

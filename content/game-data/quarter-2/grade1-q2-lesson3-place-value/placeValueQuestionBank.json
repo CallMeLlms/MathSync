@@ -1,0 +1,124 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Place Value (Tens and Ones)",
+        "competency": "NA.2.6",
+        "performanceStandard": "Order and decompose (into tens and ones) numbers up to 100.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_2_pv_001",
+            "competency": "NA.2.6",
+            "topic": "Place Value",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Look at the bundles of sticks. If there are 3 bundles of 10 and 4 single sticks, what is the digit in the TENS place?",
+            "answer": 3,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_pv_002",
+            "competency": "NA.2.6",
+            "topic": "Place Value",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "In 58 blocks, how many ONES blocks are there?",
+            "answer": 8,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_pv_003",
+            "competency": "NA.2.6",
+            "topic": "Place Value",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "If you have 9 bundles of 10 and no extra sticks, what is the digit in the ONES place?",
+            "answer": 0,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_pv_004",
+            "competency": "NA.2.6",
+            "topic": "Place Value",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Look at the picture of the number 72. Which digit is in the TENS place?",
+            "answer": 7,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_pv_005",
+            "competency": "NA.2.6",
+            "topic": "Place Value",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing of 16 balloons, what is the digit in the ONES place?",
+            "answer": 6,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_pv_006",
+            "competency": "NA.2.6",
+            "topic": "Place Value",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the number shown with Base-10 blocks (3 tens, 9 ones), what is the value of the 3?",
+            "answer": 30,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_pv_007",
+            "competency": "NA.2.6",
+            "topic": "Place Value",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "In the number 84, what is the value of the digit 8?",
+            "answer": 80,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_pv_008",
+            "competency": "NA.2.6",
+            "topic": "Place Value",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "What digit is in the tens place of the number 90?",
+            "answer": 9,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_pv_009",
+            "competency": "NA.2.6",
+            "topic": "Place Value",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "If 7 is in the ones place and 2 is in the tens place, what is the number?",
+            "answer": 27,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

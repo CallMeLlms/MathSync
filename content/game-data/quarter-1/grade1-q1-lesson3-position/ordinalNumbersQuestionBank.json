@@ -1,0 +1,148 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Ordinal Numbers up to 10th",
+        "competency": "NA.1.9",
+        "performanceStandard": "Use ordinal numbers up to 10th to describe position.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "N/A": "Placeholder for future Picker or DragDrop engine"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_1_ordinal_001",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Arrange these toy cars in a line. Tap the 1st car.",
+            "answer": "1st_car",
+            "assetType": "interactive_objects",
+            "metadata": {
+                "items": 5,
+                "targetPosition": 1
+            }
+        },
+        {
+            "id": "na_1_ordinal_002",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Here are 10 blocks in a row. Tap the 3rd block.",
+            "answer": "3rd_block",
+            "assetType": "interactive_objects",
+            "metadata": {
+                "items": 10,
+                "targetPosition": 3
+            }
+        },
+        {
+            "id": "na_1_ordinal_003",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Line up these stuffed animals. Tap the 5th animal.",
+            "answer": "5th_animal",
+            "assetType": "interactive_objects",
+            "metadata": {
+                "items": 7,
+                "targetPosition": 5
+            }
+        },
+        {
+            "id": "na_1_ordinal_004",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the students in line for the canteen. Who is 2nd in line?",
+            "answer": "maria",
+            "assetType": "illustration",
+            "metadata": {
+                "scenario": "canteen_line",
+                "options": ["juan", "maria", "pedro"]
+            }
+        },
+        {
+            "id": "na_1_ordinal_005",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the race. Which runner is in 4th place?",
+            "answer": "runner_blue",
+            "assetType": "illustration",
+            "metadata": {
+                "scenario": "running_race",
+                "options": ["runner_red", "runner_blue", "runner_green"]
+            }
+        },
+        {
+            "id": "na_1_ordinal_006",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Here is a shelf with toys. Which toy is on the 10th spot from the left?",
+            "answer": "robot",
+            "assetType": "illustration",
+            "metadata": {
+                "scenario": "toy_shelf",
+                "options": ["doll", "robot", "ball"]
+            }
+        },
+        {
+            "id": "na_1_ordinal_007",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Match the word 'first' to its number.",
+            "answer": "1st",
+            "assetType": "text",
+            "metadata": {
+                "options": ["1st", "2nd", "3rd"]
+            }
+        },
+        {
+            "id": "na_1_ordinal_008",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "In the alphabet, what is the 5th letter?",
+            "answer": "e",
+            "assetType": "text",
+            "metadata": {
+                "options": ["d", "e", "f"]
+            }
+        },
+        {
+            "id": "na_1_ordinal_009",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Numbers",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Which ordinal number comes after 8th?",
+            "answer": "9th",
+            "assetType": "text",
+            "metadata": {
+                "options": ["7th", "9th", "10th"]
+            }
+        }
+    ]
+}

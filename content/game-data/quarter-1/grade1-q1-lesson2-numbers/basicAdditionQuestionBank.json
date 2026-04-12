@@ -1,0 +1,139 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Basic Addition up to 20",
+        "competency": "NA.1.11",
+        "performanceStandard": "Perform addition of numbers with sums up to 20.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_1_basicadd_001",
+            "competency": "NA.1.11",
+            "topic": "Basic Addition to 20",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Count 4 red blocks and 3 blue blocks. How many blocks in total?",
+            "answer": 7,
+            "assetType": "manipulatives",
+            "metadata": {
+                "group_a": 4,
+                "group_b": 3
+            }
+        },
+        {
+            "id": "na_1_basicadd_002",
+            "competency": "NA.1.11",
+            "topic": "Basic Addition to 20",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Put 8 beads on the string. Add 6 more. How many beads are on the string?",
+            "answer": 14,
+            "assetType": "manipulatives",
+            "metadata": {
+                "group_a": 8,
+                "group_b": 6
+            }
+        },
+        {
+            "id": "na_1_basicadd_003",
+            "competency": "NA.1.11",
+            "topic": "Basic Addition to 20",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "You have 11 sticks. I give you 8 more sticks. How many sticks do you have now?",
+            "answer": 19,
+            "assetType": "manipulatives",
+            "metadata": {
+                "group_a": 11,
+                "group_b": 8
+            }
+        },
+        {
+            "id": "na_1_basicadd_004",
+            "competency": "NA.1.11",
+            "topic": "Basic Addition to 20",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Look at the picture. 2 birds are on the branch. 4 more birds fly in. How many birds are there now?",
+            "answer": 6,
+            "assetType": "illustration",
+            "metadata": {
+                "addends": [2, 4]
+            }
+        },
+        {
+            "id": "na_1_basicadd_005",
+            "competency": "NA.1.11",
+            "topic": "Basic Addition to 20",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Count the 7 apples in the basket and the 5 apples on the table. What is the total?",
+            "answer": 12,
+            "assetType": "illustration",
+            "metadata": {
+                "addends": [7, 5]
+            }
+        },
+        {
+            "id": "na_1_basicadd_006",
+            "competency": "NA.1.11",
+            "topic": "Basic Addition to 20",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "The picture shows 9 fish. Draw 7 more fish. How many fish are there in all?",
+            "answer": 16,
+            "assetType": "illustration",
+            "metadata": {
+                "addends": [9, 7]
+            }
+        },
+        {
+            "id": "na_1_basicadd_007",
+            "competency": "NA.1.11",
+            "topic": "Basic Addition to 20",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "What is 5 + 4?",
+            "answer": 9,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_1_basicadd_008",
+            "competency": "NA.1.11",
+            "topic": "Basic Addition to 20",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Add 8 and 7.",
+            "answer": 15,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_1_basicadd_009",
+            "competency": "NA.1.11",
+            "topic": "Basic Addition to 20",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Solve this equation: 12 + 6 = ?",
+            "answer": 18,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

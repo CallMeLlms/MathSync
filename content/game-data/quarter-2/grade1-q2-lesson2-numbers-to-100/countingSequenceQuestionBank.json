@@ -1,0 +1,124 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Counting Sequences up to 100",
+        "competency": "NA.2.4",
+        "performanceStandard": "Order and decompose (into tens and ones) numbers up to 100.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_2_seq_001",
+            "competency": "NA.2.4",
+            "topic": "Sequences",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Use the number line. What number comes just before 21?",
+            "answer": 20,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_seq_002",
+            "competency": "NA.2.4",
+            "topic": "Sequences",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Use the blocks. If you have 38 blocks and add 1 more, what is the next number?",
+            "answer": 39,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_seq_003",
+            "competency": "NA.2.4",
+            "topic": "Sequences",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Look at the pattern. Which number is between 74 and 76?",
+            "answer": 75,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_seq_004",
+            "competency": "NA.2.4",
+            "topic": "Sequences",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Look at the numbers on the train cars. What number is missing? 55, 56, __, 58.",
+            "answer": 57,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_seq_005",
+            "competency": "NA.2.4",
+            "topic": "Sequences",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Count by 10s using the bundles of sticks. What number comes after 80?",
+            "answer": 90,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_seq_006",
+            "competency": "NA.2.4",
+            "topic": "Sequences",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the picture, which number comes right before 100?",
+            "answer": 99,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_seq_007",
+            "competency": "NA.2.4",
+            "topic": "Sequences",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "What number is 10 more than 40?",
+            "answer": 50,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_seq_008",
+            "competency": "NA.2.4",
+            "topic": "Sequences",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Count backwards from 30. What number comes before 30?",
+            "answer": 29,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_seq_009",
+            "competency": "NA.2.4",
+            "topic": "Sequences",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Identify the missing number: 95, 96, 97, __, 99.",
+            "answer": 98,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

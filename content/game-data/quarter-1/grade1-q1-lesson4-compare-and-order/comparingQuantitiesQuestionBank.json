@@ -1,0 +1,152 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Comparing Quantities",
+        "competency": "NA.1.7",
+        "performanceStandard": "Compare and order numbers up to 20.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "N/A": "Placeholder for Picker engine"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_1_quant_001",
+            "competency": "NA.1.7",
+            "topic": "Comparing Quantities",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Which pile of blocks is bigger? Tap the bigger pile.",
+            "answer": "pile_10",
+            "assetType": "manipulatives",
+            "metadata": {
+                "pile_a": 5,
+                "pile_b": 10
+            }
+        },
+        {
+            "id": "na_1_quant_002",
+            "competency": "NA.1.7",
+            "topic": "Comparing Quantities",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Which group of pencils has fewer pencils?",
+            "answer": "group_3",
+            "assetType": "manipulatives",
+            "metadata": {
+                "group_a": 3,
+                "group_b": 7
+            }
+        },
+        {
+            "id": "na_1_quant_003",
+            "competency": "NA.1.7",
+            "topic": "Comparing Quantities",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Are these two sets of beads equal? Tap yes or no.",
+            "answer": "yes",
+            "assetType": "manipulatives",
+            "metadata": {
+                "set_a": 8,
+                "set_b": 8,
+                "options": ["yes", "no"]
+            }
+        },
+        {
+            "id": "na_1_quant_004",
+            "competency": "NA.1.7",
+            "topic": "Comparing Quantities",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the plates of cookies. Which plate has the most cookies?",
+            "answer": "plate_c",
+            "assetType": "illustration",
+            "metadata": {
+                "plate_a": 4,
+                "plate_b": 6,
+                "plate_c": 9
+            }
+        },
+        {
+            "id": "na_1_quant_005",
+            "competency": "NA.1.7",
+            "topic": "Comparing Quantities",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the baskets of fruit. Which basket has the least fruit?",
+            "answer": "basket_a",
+            "assetType": "illustration",
+            "metadata": {
+                "basket_a": 2,
+                "basket_b": 8,
+                "basket_c": 5
+            }
+        },
+        {
+            "id": "na_1_quant_006",
+            "competency": "NA.1.7",
+            "topic": "Comparing Quantities",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Look at the jars of marbles. Are jars A and B equal?",
+            "answer": "no",
+            "assetType": "illustration",
+            "metadata": {
+                "jar_a": 12,
+                "jar_b": 11,
+                "options": ["yes", "no"]
+            }
+        },
+        {
+            "id": "na_1_quant_007",
+            "competency": "NA.1.7",
+            "topic": "Comparing Quantities",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Which statement is true?",
+            "answer": "15 is greater than 10",
+            "assetType": "text",
+            "metadata": {
+                "options": ["15 is less than 10", "15 is greater than 10", "15 is equal to 10"]
+            }
+        },
+        {
+            "id": "na_1_quant_008",
+            "competency": "NA.1.7",
+            "topic": "Comparing Quantities",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Select the number that is less than 18.",
+            "answer": 16,
+            "assetType": "text",
+            "metadata": {
+                "options": [18, 19, 16]
+            }
+        },
+        {
+            "id": "na_1_quant_009",
+            "competency": "NA.1.7",
+            "topic": "Comparing Quantities",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Which number is equal to 10 + 2?",
+            "answer": 12,
+            "assetType": "text",
+            "metadata": {
+                "options": [10, 11, 12]
+            }
+        }
+    ]
+}

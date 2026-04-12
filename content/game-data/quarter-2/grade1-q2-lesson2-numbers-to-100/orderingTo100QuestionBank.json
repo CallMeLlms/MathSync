@@ -1,0 +1,140 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Ordering Numbers up to 100",
+        "competency": "NA.2.4",
+        "performanceStandard": "Order and decompose (into tens and ones) numbers up to 100.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "N/A": "Placeholder for DragDrop or Picker engine"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_2_order_001",
+            "competency": "NA.2.4",
+            "topic": "Ordering to 100",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Arrange these number blocks from smallest to largest: 45, 12, 34.",
+            "answer": "12, 34, 45",
+            "assetType": "manipulatives",
+            "metadata": {
+                "items": [45, 12, 34]
+            }
+        },
+        {
+            "id": "na_2_order_002",
+            "competency": "NA.2.4",
+            "topic": "Ordering to 100",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Place these house toys in order by their house numbers: 88, 76, 92.",
+            "answer": "76, 88, 92",
+            "assetType": "manipulatives",
+            "metadata": {
+                "items": [88, 76, 92]
+            }
+        },
+        {
+            "id": "na_2_order_003",
+            "competency": "NA.2.4",
+            "topic": "Ordering to 100",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Put these jars of marbles in order from the one with the MOST to the one with the LEAST: 50, 25, 75.",
+            "answer": "75, 50, 25",
+            "assetType": "manipulatives",
+            "metadata": {
+                "items": [50, 25, 75]
+            }
+        },
+        {
+            "id": "na_2_order_004",
+            "competency": "NA.2.4",
+            "topic": "Ordering to 100",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the price tags. Arrange the items from cheapest to most expensive: ₱45, ₱20, ₱65.",
+            "answer": "₱20, ₱45, ₱65",
+            "assetType": "illustration",
+            "metadata": {
+                "items": [45, 20, 65]
+            }
+        },
+        {
+            "id": "na_2_order_005",
+            "competency": "NA.2.4",
+            "topic": "Ordering to 100",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "In the picture, which runner should be at the 50m mark if the race is from 0 to 100?",
+            "answer": "runner_middle",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["runner_start", "runner_middle", "runner_end"]
+            }
+        },
+        {
+            "id": "na_2_order_006",
+            "competency": "NA.2.4",
+            "topic": "Ordering to 100",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Arrange the groups of base-10 blocks from smallest number to largest: group_32, group_58, group_14.",
+            "answer": "group_14, group_32, group_58",
+            "assetType": "illustration",
+            "metadata": {
+                "items": [32, 58, 14]
+            }
+        },
+        {
+            "id": "na_2_order_007",
+            "competency": "NA.2.4",
+            "topic": "Ordering to 100",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Complete the sequence: 45, 46, 47, __, __.",
+            "answer": "48, 49",
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_2_order_008",
+            "competency": "NA.2.4",
+            "topic": "Ordering to 100",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Which set of numbers is in order from largest to smallest?",
+            "answer": "89, 72, 41",
+            "assetType": "text",
+            "metadata": {
+                "options": ["41, 72, 89", "89, 72, 41", "72, 89, 41"]
+            }
+        },
+        {
+            "id": "na_2_order_009",
+            "competency": "NA.2.4",
+            "topic": "Ordering to 100",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "What is the correct order of these numbers from least to greatest: 100, 50, 75?",
+            "answer": "50, 75, 100",
+            "assetType": "text",
+            "metadata": {
+                "options": ["50, 75, 100", "100, 75, 50", "50, 100, 75"]
+            }
+        }
+    ]
+}

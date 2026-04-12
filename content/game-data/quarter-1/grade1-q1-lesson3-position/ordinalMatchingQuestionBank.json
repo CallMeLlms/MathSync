@@ -1,0 +1,152 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Ordinal Matching",
+        "competency": "NA.1.9",
+        "performanceStandard": "Use ordinal numbers up to 10th to describe position.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "MATCHER": "Used to match standard numerals to ordinal words"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_1_ord_match_001",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Matching",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Match the position block to its ordinal word.",
+            "pairs": [
+                {"left": "1st block", "right": "first"},
+                {"left": "2nd block", "right": "second"},
+                {"left": "3rd block", "right": "third"}
+            ],
+            "assetType": "interactive_objects"
+        },
+        {
+            "id": "na_1_ord_match_002",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Matching",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "question": "Match the block position to the correct word.",
+            "pairs": [
+                {"left": "4th block", "right": "fourth"},
+                {"left": "5th block", "right": "fifth"},
+                {"left": "6th block", "right": "sixth"}
+            ],
+            "assetType": "interactive_objects"
+        },
+        {
+            "id": "na_1_ord_match_003",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Matching",
+            "level": "concrete",
+            "type": "MATCHER",
+            "difficulty": "Hard",
+            "question": "Connect the end blocks to their ordinal words.",
+            "pairs": [
+                {"left": "8th block", "right": "eighth"},
+                {"left": "9th block", "right": "ninth"},
+                {"left": "10th block", "right": "tenth"}
+            ],
+            "assetType": "interactive_objects"
+        },
+        {
+            "id": "na_1_ord_match_004",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Matching",
+            "level": "pictorial",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Match the running position picture to the written word.",
+            "pairs": [
+                {"left": "runner in 1st", "right": "first"},
+                {"left": "runner in 2nd", "right": "second"},
+                {"left": "runner in 3rd", "right": "third"}
+            ],
+            "assetType": "illustration"
+        },
+        {
+            "id": "na_1_ord_match_005",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Matching",
+            "level": "pictorial",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "question": "Match the shelf toy picture position to the word.",
+            "pairs": [
+                {"left": "toy 4th", "right": "fourth"},
+                {"left": "toy 5th", "right": "fifth"},
+                {"left": "toy 6th", "right": "sixth"}
+            ],
+            "assetType": "illustration"
+        },
+        {
+            "id": "na_1_ord_match_006",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Matching",
+            "level": "pictorial",
+            "type": "MATCHER",
+            "difficulty": "Hard",
+            "question": "Connect the picture showing the last positions to the right word.",
+            "pairs": [
+                {"left": "toy 8th", "right": "eighth"},
+                {"left": "toy 9th", "right": "ninth"},
+                {"left": "toy 10th", "right": "tenth"}
+            ],
+            "assetType": "illustration"
+        },
+        {
+            "id": "na_1_ord_match_007",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Matching",
+            "level": "abstract",
+            "type": "MATCHER",
+            "difficulty": "Easy",
+            "question": "Match the number symbol to the word.",
+            "pairs": [
+                {"left": "1st", "right": "first"},
+                {"left": "2nd", "right": "second"},
+                {"left": "3rd", "right": "third"}
+            ],
+            "assetType": "text"
+        },
+        {
+            "id": "na_1_ord_match_008",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Matching",
+            "level": "abstract",
+            "type": "MATCHER",
+            "difficulty": "Medium",
+            "question": "Connect the symbol to the word.",
+            "pairs": [
+                {"left": "4th", "right": "fourth"},
+                {"left": "5th", "right": "fifth"},
+                {"left": "6th", "right": "sixth"},
+                {"left": "7th", "right": "seventh"}
+            ],
+            "assetType": "text"
+        },
+        {
+            "id": "na_1_ord_match_009",
+            "competency": "NA.1.9",
+            "topic": "Ordinal Matching",
+            "level": "abstract",
+            "type": "MATCHER",
+            "difficulty": "Hard",
+            "question": "Match these higher positions.",
+            "pairs": [
+                {"left": "8th", "right": "eighth"},
+                {"left": "9th", "right": "ninth"},
+                {"left": "10th", "right": "tenth"}
+            ],
+            "assetType": "text"
+        }
+    ]
+}

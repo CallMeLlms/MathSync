@@ -4,6 +4,7 @@ import Animated, { useAnimatedStyle, withSpring, useSharedValue } from 'react-na
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import SequenceVisualizer from '@/Components/Game/Global/Visualizers/SequenceVisualizer';
+import speechManager from '@/utils/speechManager';
 
 const { width, height } = Dimensions.get('window');
 
@@ -38,12 +39,19 @@ export default function ResultModal({
     transform: [{ scale: scale.value }]
   }));
 
+  const emoji = isCorrect ? '🎉' : '💪';
+  const statusTitle = isCorrect ? 'Perfect! Great job!' : "Not quite! Let's try once more!";
+  const statusColor = isCorrect ? Colors.success : Colors.error;
+
+  useEffect(() => {
+    if (isVisible) {
+      speechManager.speakFeedback(statusTitle, isCorrect);
+    }
+  }, [isVisible, isCorrect, statusTitle]);
+
   if (!isVisible) return null;
 
   const metadata = problem?.metadata || {};
-  const emoji = isCorrect ? '🎉' : '💪';
-  const statusTitle = isCorrect ? 'Perfect!' : 'Not Quite!';
-  const statusColor = isCorrect ? Colors.success : Colors.error;
 
   // Decide which visualizer to use based on topic
   const renderVisualizer = (items, label, isCorrectValue) => {

@@ -91,7 +91,10 @@ content/
 │   ├── G1.json                 # Grade 1 map (Garden Theme)
 │   └── G2.json                 # Grade 2 map
 ├── game-data/                  # Static Question Banks (Lessons)
-│   └── quarter-1/              # Nested by Quarter
+│   ├── quarter-1/              # Nested by Quarter
+│   ├── quarter-2/              # (e.g., measurement, place-value)
+│   ├── quarter-3/              # (e.g., pictographs, subtraction, patterns)
+│   └── quarter-4/              # (e.g., fractions, money, time, calendar)
 │       └── [lesson-topic]/     # Folder per topic
 │           └── bank.json       # JSON questions mapped by lessonResolver
 ```
@@ -117,6 +120,7 @@ assets/
 All significant changes and planned architecture must be logged using the following naming conventions:
 - **Plans**: `.agents/document/YYYY-MM-DD_HH-MM-SS-(TOPIC)-Document.md`
 - **Logs**: `.agents/logs/YYYY-MM-DD_HH-MM-SS-(TOPIC)-UI.md`
+- **Master Reference**: `.agents/logs/MathSync_G1_Full_History.md` (Consolidated log of all implementation steps)
 
 ---
 

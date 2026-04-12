@@ -1,0 +1,124 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Subtraction Word Problems up to 100",
+        "competency": "NA.3.8",
+        "performanceStandard": "Perform subtraction of numbers with differences up to 100.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_3_wordsub_001",
+            "competency": "NA.3.8",
+            "topic": "Subtraction Word Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Use the blocks: You have 18 candies and give 5 to your sister. How many candies do you have now?",
+            "answer": 13,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_wordsub_002",
+            "competency": "NA.3.8",
+            "topic": "Subtraction Word Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Use the stick bundles: A tree has 75 coconuts. 20 coconuts fall to the ground. How many are still on the tree?",
+            "answer": 55,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_wordsub_003",
+            "competency": "NA.3.8",
+            "topic": "Subtraction Word Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Use the counters: Maria had ₱98. She spent ₱45 on a gift. How much money does Maria have left?",
+            "answer": 53,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_wordsub_004",
+            "competency": "NA.3.8",
+            "topic": "Subtraction Word Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Look at the picture. There are 12 cars in the parking lot. 4 drive away. How many cars are left?",
+            "answer": 8,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_wordsub_005",
+            "competency": "NA.3.8",
+            "topic": "Subtraction Word Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing, a box has 67 mangos. Someone buys 25 mangos. How many mangos are left in the box?",
+            "answer": 42,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_wordsub_006",
+            "competency": "NA.3.8",
+            "topic": "Subtraction Word Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Look at the fruit stand picture. There were 89 apples. 44 were sold. How many apples are left?",
+            "answer": 45,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_wordsub_007",
+            "competency": "NA.3.8",
+            "topic": "Subtraction Word Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Ben had 19 stickers. He lost 7. How many stickers does Ben have now?",
+            "answer": 12,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_wordsub_008",
+            "competency": "NA.3.8",
+            "topic": "Subtraction Word Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "A library shelf had 56 books. Students borrowed 24 books. How many books are still on the shelf?",
+            "answer": 32,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "na_3_wordsub_009",
+            "competency": "NA.3.8",
+            "topic": "Subtraction Word Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Liza had ₱95. She bought a toy for ₱42. How much change did she get?",
+            "answer": 53,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

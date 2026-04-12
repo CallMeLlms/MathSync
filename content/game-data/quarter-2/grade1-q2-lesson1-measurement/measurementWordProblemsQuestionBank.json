@@ -1,0 +1,124 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Measurement Word Problems",
+        "competency": "MG.2.3",
+        "performanceStandard": "Use non-standard units to compare and measure length and distance.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "mg_2_prob_001",
+            "competency": "MG.2.3",
+            "topic": "Measurement Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Ana used 3 hand-spans to measure a book. Pedro used 4. How many hand-spans did they use altogether?",
+            "answer": 7,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_prob_002",
+            "competency": "MG.2.3",
+            "topic": "Measurement Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "A table is 10 blocks long. If you remove 4 blocks, how many blocks long is the remaining part?",
+            "answer": 6,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_prob_003",
+            "competency": "MG.2.3",
+            "topic": "Measurement Problems",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "You have a string that is 8 blocks long. You add another string that is 5 blocks long. What is the total length?",
+            "answer": 13,
+            "assetType": "manipulatives",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_prob_004",
+            "competency": "MG.2.3",
+            "topic": "Measurement Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Look at the picture. The blue ribbon is 5 blocks long. The red ribbon is 2 blocks longer. How long is the red ribbon?",
+            "answer": 7,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_prob_005",
+            "competency": "MG.2.3",
+            "topic": "Measurement Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing, the caterpillar is 4 paperclips long. The worm is 8 paperclips long. How much longer is the worm than the caterpillar?",
+            "answer": 4,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_prob_006",
+            "competency": "MG.2.3",
+            "topic": "Measurement Problems",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "The path to the tree is 15 steps. The path to the house is 12 steps. Which path is longer, and by how many steps?",
+            "answer": 3,
+            "assetType": "illustration",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_prob_007",
+            "competency": "MG.2.3",
+            "topic": "Measurement Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Liza has a rope that is 20 hand-spans long. She cuts off 7 hand-spans. How long is the rope now?",
+            "answer": 13,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_prob_008",
+            "competency": "MG.2.3",
+            "topic": "Measurement Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "If you put 3 pencils of the same length side-by-side and each is 5 blocks long, what is the total length?",
+            "answer": 15,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "mg_2_prob_009",
+            "competency": "MG.2.3",
+            "topic": "Measurement Problems",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "A desk is 12 hand-spans wide. A chair is 5 hand-spans wide. What is the total width of the desk and chair together?",
+            "answer": 17,
+            "assetType": "text",
+            "metadata": {}
+        }
+    ]
+}

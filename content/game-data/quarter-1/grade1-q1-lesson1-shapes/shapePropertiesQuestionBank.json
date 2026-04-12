@@ -1,0 +1,142 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Shape Properties",
+        "competency": "MG.1.2",
+        "performanceStandard": "Identify and distinguish simple 2-dimensional shapes.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "N/A": "Placeholder for Picker engine"
+        }
+    },
+    "questions": [
+        {
+            "id": "mg_1_props_001",
+            "competency": "MG.1.2",
+            "topic": "Shape Properties",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Tap the block that has exactly 4 corners.",
+            "answer": "square",
+            "assetType": "shape",
+            "metadata": {
+                "options": ["square", "triangle", "circle"]
+            }
+        },
+        {
+            "id": "mg_1_props_002",
+            "competency": "MG.1.2",
+            "topic": "Shape Properties",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Find the block with 3 sides and 3 corners.",
+            "answer": "triangle",
+            "assetType": "shape",
+            "metadata": {
+                "options": ["square", "rectangle", "triangle"]
+            }
+        },
+        {
+            "id": "mg_1_props_003",
+            "competency": "MG.1.2",
+            "topic": "Shape Properties",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Which of these blocks has 4 sides, but two are longer than the others?",
+            "answer": "rectangle",
+            "assetType": "shape",
+            "metadata": {
+                "options": ["square", "triangle", "rectangle"]
+            }
+        },
+        {
+            "id": "mg_1_props_004",
+            "competency": "MG.1.2",
+            "topic": "Shape Properties",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the drawing. How many corners does the TV screen have?",
+            "answer": 4,
+            "assetType": "illustration",
+            "metadata": {
+                "options": [3, 4, 5]
+            }
+        },
+        {
+            "id": "mg_1_props_005",
+            "competency": "MG.1.2",
+            "topic": "Shape Properties",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Count the straight sides on the pizza slice drawing. How many are there?",
+            "answer": 3,
+            "assetType": "illustration",
+            "metadata": {
+                "options": [2, 3, 4]
+            }
+        },
+        {
+            "id": "mg_1_props_006",
+            "competency": "MG.1.2",
+            "topic": "Shape Properties",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the window shape. Does it have equal sides?",
+            "answer": "yes",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["yes", "no"]
+            }
+        },
+        {
+            "id": "mg_1_props_007",
+            "competency": "MG.1.2",
+            "topic": "Shape Properties",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "A shape has 3 sides. Is it a rectangle?",
+            "answer": "no",
+            "assetType": "text",
+            "metadata": {
+                "options": ["yes", "no"]
+            }
+        },
+        {
+            "id": "mg_1_props_008",
+            "competency": "MG.1.2",
+            "topic": "Shape Properties",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Which of these is TRUE about a square?",
+            "answer": "It has 4 equal sides.",
+            "assetType": "text",
+            "metadata": {
+                "options": ["It has 3 corners.", "It has 4 equal sides.", "It has no straight sides."]
+            }
+        },
+        {
+            "id": "mg_1_props_009",
+            "competency": "MG.1.2",
+            "topic": "Shape Properties",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "How many corners are there inside a standard triangle?",
+            "answer": 3,
+            "assetType": "text",
+            "metadata": {
+                "options": [2, 3, 4]
+            }
+        }
+    ]
+}

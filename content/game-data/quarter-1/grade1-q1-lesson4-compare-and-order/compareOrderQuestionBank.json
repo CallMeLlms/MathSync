@@ -1,0 +1,147 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Compare and Order Numbers up to 20",
+        "competency": "NA.1.7-1.8",
+        "performanceStandard": "Compare and order numbers up to 20.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "N/A": "Placeholder for future Picker or DragDrop engine",
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "na_1_compare_001",
+            "competency": "NA.1.7",
+            "topic": "Compare Numbers",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Look at these two piles of sticks. Which pile has more sticks?",
+            "answer": "pile_b",
+            "assetType": "manipulatives",
+            "metadata": {
+                "pile_a": 8,
+                "pile_b": 12
+            }
+        },
+        {
+            "id": "na_1_compare_002",
+            "competency": "NA.1.7",
+            "topic": "Compare Numbers",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Easy",
+            "question": "Here are 15 beads and 11 beads. Tap the group with fewer beads.",
+            "answer": "group_11",
+            "assetType": "manipulatives",
+            "metadata": {
+                "group_a": 15,
+                "group_b": 11
+            }
+        },
+        {
+            "id": "na_1_order_001",
+            "competency": "NA.1.8",
+            "topic": "Order Numbers",
+            "level": "concrete",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Arrange these blocks from smallest stack to tallest stack.",
+            "answer": "ordered_small_to_tall",
+            "assetType": "manipulatives",
+            "metadata": {
+                "stacks": [4, 7, 12]
+            }
+        },
+        {
+            "id": "na_1_compare_003",
+            "competency": "NA.1.7",
+            "topic": "Compare Numbers",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the baskets of mangoes. Which basket has more?",
+            "answer": "basket_18",
+            "assetType": "illustration",
+            "metadata": {
+                "basket_a": 14,
+                "basket_b": 18
+            }
+        },
+        {
+            "id": "na_1_compare_004",
+            "competency": "NA.1.7",
+            "topic": "Compare Numbers",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Medium",
+            "question": "Look at the jars of candy. Which jar has fewer candies?",
+            "answer": "jar_7",
+            "assetType": "illustration",
+            "metadata": {
+                "jar_a": 15,
+                "jar_b": 7
+            }
+        },
+        {
+            "id": "na_1_order_002",
+            "competency": "NA.1.8",
+            "topic": "Order Numbers",
+            "level": "pictorial",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Arrange these pictures of numbered boxes from largest number to smallest number.",
+            "answer": "ordered_large_to_small",
+            "assetType": "illustration",
+            "metadata": {
+                "boxes": [19, 13, 8]
+            }
+        },
+        {
+            "id": "na_1_compare_005",
+            "competency": "NA.1.7",
+            "topic": "Compare Numbers",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Which number is larger, 14 or 19?",
+            "answer": 19,
+            "assetType": "text",
+            "metadata": {
+                "options": [14, 19]
+            }
+        },
+        {
+            "id": "na_1_compare_006",
+            "competency": "NA.1.7",
+            "topic": "Compare Numbers",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Which number is smaller, 20 or 12?",
+            "answer": 12,
+            "assetType": "text",
+            "metadata": {
+                "options": [20, 12]
+            }
+        },
+        {
+            "id": "na_1_order_003",
+            "competency": "NA.1.8",
+            "topic": "Order Numbers",
+            "level": "abstract",
+            "type": "N/A",
+            "difficulty": "Hard",
+            "question": "Choose the correct order of numbers from smallest to largest: 5, 11, 16.",
+            "answer": "5, 11, 16",
+            "assetType": "text",
+            "metadata": {
+                "options": ["16, 11, 5", "5, 16, 11", "5, 11, 16"]
+            }
+        }
+    ]
+}

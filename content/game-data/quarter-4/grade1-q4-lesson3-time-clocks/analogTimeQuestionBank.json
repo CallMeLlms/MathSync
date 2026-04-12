@@ -1,0 +1,138 @@
+{
+    "meta": {
+        "curriculum": "MATATAG K-10 Grade 1",
+        "language": "English",
+        "topic": "Time (Analog Clocks)",
+        "competency": "MG.4.9",
+        "performanceStandard": "Read and write time by the hour, half-hour, and quarter-hour.",
+        "totalQuestions": 9,
+        "cpaSplit": "3 concrete, 3 pictorial, 3 abstract",
+        "engines": {
+            "NUMPAD": "Used where numerical input is expected"
+        }
+    },
+    "questions": [
+        {
+            "id": "mg_4_clock_001",
+            "competency": "MG.4.9",
+            "topic": "Clock Reading",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Move the hands of the clock to show 3 o'clock. What number is the long hand pointing to?",
+            "answer": 12,
+            "assetType": "manipulatives",
+            "metadata": {
+                "targetTime": "3:00"
+            }
+        },
+        {
+            "id": "mg_4_clock_002",
+            "competency": "MG.4.9",
+            "topic": "Clock Reading",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Set the clock to half-past 5. On what number is the minute hand?",
+            "answer": 6,
+            "assetType": "manipulatives",
+            "metadata": {
+                "targetTime": "5:30"
+            }
+        },
+        {
+            "id": "mg_4_clock_003",
+            "competency": "MG.4.9",
+            "topic": "Clock Reading",
+            "level": "concrete",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "Show a quarter-past 8 on the clock. What number is the minute hand pointing at?",
+            "answer": 3,
+            "assetType": "manipulatives",
+            "metadata": {
+                "targetTime": "8:15"
+            }
+        },
+        {
+            "id": "mg_4_clock_004",
+            "competency": "MG.4.9",
+            "topic": "Clock Reading",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Easy",
+            "question": "Look at the picture. What time is shown on the clock?",
+            "answer": "10:00",
+            "assetType": "illustration",
+            "metadata": {
+                "reading": "10:00"
+            }
+        },
+        {
+            "id": "mg_4_clock_005",
+            "competency": "MG.4.9",
+            "topic": "Clock Reading",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "In the drawing, what time is it? The minute hand is at 6 and the hour hand is between 1 and 2.",
+            "answer": "1:30",
+            "assetType": "illustration",
+            "metadata": {
+                "reading": "1:30"
+            }
+        },
+        {
+            "id": "mg_4_clock_006",
+            "competency": "MG.4.9",
+            "topic": "Clock Reading",
+            "level": "pictorial",
+            "type": "NUMPAD",
+            "difficulty": "Medium",
+            "question": "According to the picture, the clock shows quarter-past 4. What is the digital time?",
+            "answer": "4:15",
+            "assetType": "illustration",
+            "metadata": {
+                "reading": "4:15"
+            }
+        },
+        {
+            "id": "mg_4_clock_007",
+            "competency": "MG.4.9",
+            "topic": "Clock Reading",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "If the minute hand points to 6, how many minutes past the hour is it?",
+            "answer": 30,
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "mg_4_clock_008",
+            "competency": "MG.4.9",
+            "topic": "Clock Reading",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Write 'nine thirty' in numbers.",
+            "answer": "9:30",
+            "assetType": "text",
+            "metadata": {}
+        },
+        {
+            "id": "mg_4_clock_009",
+            "competency": "MG.4.9",
+            "topic": "Clock Reading",
+            "level": "abstract",
+            "type": "NUMPAD",
+            "difficulty": "Hard",
+            "question": "Where does the minute hand point for 'quarter-past'?",
+            "answer": 3,
+            "assetType": "text",
+            "metadata": {
+                "options": [3, 6, 9, 12]
+            }
+        }
+    ]
+}

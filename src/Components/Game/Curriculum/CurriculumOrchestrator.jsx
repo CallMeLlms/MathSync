@@ -6,6 +6,7 @@ import useGameEngine from '@/stores/game-stores/useGameEngine';
 import useUserStore from '@/stores/user-stores/useUserStore';
 import { getGameTheme } from '@/theme/gameThemes';
 import { getBundledLesson } from './lessonResolver';
+import speechManager from '@/utils/speechManager';
 
 // Engines
 // import PickerEngine from './Engines/PickerEngine';
@@ -49,12 +50,27 @@ export default function CurriculumOrchestrator({
     if (content) {
       setLessonContent(content);
       startGameSession(lessonId);
+    } else {
+       speechManager.speakInstruction(theme.loadingText);
     }
     
     return () => {
       endGameSession();
+      speechManager.stop();
     };
   }, [lessonId, gradeKey]);
+
+  useEffect(() => {
+    if (lessonContent && lessonContent.questions) {
+      const currentQ = lessonContent.questions[currentQuestionIndex];
+      // Note: Assuming 'instruction' or 'question' text exists on currentQ. If not, it can be adjusted.
+      // Often times questions might have 'text' or 'instruction' field.
+      const textToSpeak = currentQ?.instruction || currentQ?.text || currentQ?.questionText;
+      if (textToSpeak) {
+        speechManager.speakInstruction(textToSpeak);
+      }
+    }
+  }, [lessonContent, currentQuestionIndex]);
 
   if (!lessonContent) {
     return (
