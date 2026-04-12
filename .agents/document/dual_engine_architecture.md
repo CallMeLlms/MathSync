@@ -227,6 +227,17 @@ There is **no `lessonResolver.js`**, no JSON import, and no `questions` array. T
 
 ---
 
+### The "Master Progress Switch" (Reference Note)
+
+The `CURRICULUM_GRADES` constant in `app/journey/[grade].jsx` acts as the primary toggle for journey map behavior. 
+
+| Configuration | Progress Logic | Use Case |
+|---|---|---|
+| `grade` IN `CURRICULUM_GRADES` | **Gated** (Locked/Active/Completed) | Official MATATAG Grade 1 Lessons |
+| `grade` NOT IN `CURRICULUM_GRADES` | **Open** (All nodes 'Active') | Generative Practice (Grades 2-6) |
+
+---
+
 ## 5. Access Control: Locked vs. Unlocked Progression
 
 This is one of the most important behavioral differences between the two engine types.
@@ -393,7 +404,7 @@ onPress={() => {
 ### Near-Term
 - [x] **Build `MatcherEngine.jsx`** — the number matching game to complete the SuperLesson playlist for "Pairing Petals"
 - [x] **Restore CPA ordering** in `lessonResolver.js` — NumberMatch (Concrete) → Addition (Pictorial) → ComposeDecompose (Abstract)
-- [ ] **Implement generative grade bypass** in `[grade].jsx` — add the `CURRICULUM_GRADES` constant and auto-unlock logic for G2–G6
+- [x] **Implement generative grade bypass** in `[grade].jsx` — added `CURRICULUM_GRADES` constant and auto-unlock logic for G2–G6
 
 ### Medium-Term
 - [ ] **Grade 1 Q1 Lesson 1 — Geometric Blooms** — Author question banks for shapes and connect to Node 1
