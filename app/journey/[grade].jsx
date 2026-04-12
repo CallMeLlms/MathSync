@@ -60,6 +60,7 @@ const LevelStartOverlay = ({ node, onStart, onCancel, isLocked }) => {
 };
 
 const EMPTY_ARRAY = [];
+const CURRICULUM_GRADES = ['G1']; // Only G1 uses locked/curriculum progression
 
 /**
  * Grade Journey Entry - Dynamic Route [grade].jsx
@@ -83,12 +84,18 @@ export default function GradeJourney() {
   const computedLevels = useMemo(() => {
     if (!curriculum) return [];
 
+    const isGenerativeGrade = !CURRICULUM_GRADES.includes(grade);
+
     return curriculum.levels.map((level, index) => {
+      // For generative grades (G2-G6), all nodes are unlocked by default
+      if (isGenerativeGrade) {
+        return { ...level, status: 'active' };
+      }
+
+      // For curriculum grades (G1), use gated progression logic
       const id = String(level.id);
       const isCompleted = completedLessons.includes(id);
       
-      // The first uncompleted lesson is active
-      // All previous lessons must be completed for a lesson to be active
       const allPreviousCompleted = curriculum.levels
         .slice(0, index)
         .every((prev) => completedLessons.includes(String(prev.id)));
@@ -104,7 +111,7 @@ export default function GradeJourney() {
 
       return { ...level, status };
     });
-  }, [curriculum, completedLessons]);
+  }, [curriculum, completedLessons, grade]);
 
   const handleNodePress = (node) => {
     setSelectedNode(node);

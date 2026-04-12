@@ -27,26 +27,15 @@ Following the Expo Router convention, the `app/` directory maps to the applicati
 ```
 app/
 ├── (auth)/                     # Authentication Route Group
-│   ├── SignIn.jsx              # Sign In Screen
-│   ├── SignUp.jsx              # Sign Up Screen
-│   └── _layout.js              # Auth Stack Layout
 ├── (drawer)/                   # Main Navigation (Drawer)
 │   ├── Home.jsx                # Dashboard / Landing
 │   ├── Grades.jsx              # Grade Selection Portal
 │   ├── Profile.jsx             # User Statistics
-│   ├── Settings.jsx            # User Preferences
-│   ├── Calendar.jsx            # Schedule/Event Tracking
 │   └── _layout.js              # Drawer Navigation Layout
-├── classroom/                   # Classroom Management
-│   ├── [id].jsx                # Specific Classroom View
-│   ├── assignment/             # Assignment Routes
-│   │   └── [assignmentId].jsx
-│   └── lesson/                 # Lesson Routes
-│       └── [lessonId].jsx
 ├── journey/                    # Grade Journeys
-│   └── [grade].jsx             # Dynamic Journey Entry (data-driven)
+│   └── [grade].jsx             # Dynamic Journey Entry (Progress & Node Mapping)
 ├── game/                       # Universal Game Route
-│   └── [lessonId].jsx          # Active Game Session
+│   └── [lessonId].jsx          # Active Game Session (Orchestrator Entry)
 ├── Index.jsx                    # Entry Point / Splash Redirect
 └── _layout.js                  # Root Application Layout
 ```
@@ -60,34 +49,27 @@ The `src/` directory contains all reusable logic, state, and UI components.
 src/
 ├── Components/                 # UI Components (PascalCase)
 │   ├── Game/                   # Unified Game Domain
-│   │   ├── Curriculum/         # Lesson-based games (MATATAG)
-│   │   │   ├── Orchestrators/  # Generic CurriculumOrchestrator
-│   │   │   └── Engines/        # Standard JSON-driven engines
-│   │   ├── Generative/         # Problem-generated games (Logic)
-│   │   │   ├── Orchestrators/  # Dynamic PracticeOrchestrator
-│   │   │   └── Engines/        # Logic-aware engines
-│   │   ├── Global/             # Cross-mode Shared UI (AssetDisplay, etc.)
+│   │   ├── Curriculum/         # Lesson-based games (Stack 1)
+│   │   │   ├── CurriculumOrchestrator.jsx # Unified lesson container
+│   │   │   ├── lessonResolver.js          # Node ID to Question Bank mapper
+│   │   │   └── Engines/        # Standard UI engines (Numpad, Compose, Matcher)
+│   │   ├── Generative/         # Problem-generated games (Stack 2)
+│   │   │   ├── Orchestrators/  # Dynamic PracticeOrchestrators
+│   │   │   └── Engines/        # Logic-aware engines (Ordering, Rounding)
+│   │   ├── Global/             # Game UI (Hud, Modals, AssetDisplay)
 │   │   └── Flow/               # Navigation UI (JourneyMap)
-│   ├── HomeComponents/         # Dashboard Widgets
-│   ├── Shared/                 # Common UI (Buttons, Cards)
+│   ├── Shared/                 # Common UI (Buttons, Cards, Overlays)
 │   └── Navigation/             # Custom Navigation Components
 ├── constants/                  # Configuration & Registry
-│   ├── colors.js               # Design Tokens
-│   └── assetMap.js             # Global Image/Audio Registry
-├── context/                    # React Context Providers
 ├── stores/                     # Global State (Zustand)
 │   ├── user-stores/            # User Profile & Activity
-│   └── game-stores/            # Active session & Engine logic
-├── hooks/                      # Custom React Hooks
-├── services/                   # External API & Auth Services
-├── theme/                      # Design Tokens
+│   └── game-stores/            # Active session & Engine logic (useGameEngine)
+├── theme/                      # Styling & Game Themes
 ├── utils/                      # Common Utility Helpers
 │   └── generators/             # Math Generation Library
-│       ├── common/             # Reusable Generator Logic
-│       ├── core/               # Math Primitives
 │       ├── grades/             # Grade-Specific Problem Brains
 │       │   ├── G1/ ... G6/     # Subfolders for each grade
-│       └── registry.js         # Central Topic-to-Brain Registry
+│       └── registry.js         # Central Topic-to-Generator Registry
 ```
 
 **Naming Rules for `/src`**:
@@ -105,13 +87,13 @@ The `content/` directory houses the "brains" of the application in JSON format.
 
 ```
 content/
-├── lesson-map/                 # Grade Journey maps (MATATAG)
-│   ├── G1.json                 # Grade 1 map
+├── lesson-map/                 # Grade Journey maps (Node definitions)
+│   ├── G1.json                 # Grade 1 map (Garden Theme)
 │   └── G2.json                 # Grade 2 map
 ├── game-data/                  # Static Question Banks (Lessons)
-│   └── G1-Q1-Lessons.json      # Grade 1 Data injected into the Engines
-└── generative-templates/       # Dynamic Generation Rules (Practice)
-    └── arithmetic-addition.json
+│   └── quarter-1/              # Nested by Quarter
+│       └── [lesson-topic]/     # Folder per topic
+│           └── bank.json       # JSON questions mapped by lessonResolver
 ```
 
 ---
@@ -119,8 +101,8 @@ content/
 ## 🎮 4. Dual-Stack Game Architecture (Standardized)
 MathSync utilizes a dual-stack approach to maintain strict logic isolation.
 
-- **Stack 1: Curriculum Games**: JSON-driven, grade-specific lessons aligned with MATATAG. Uses the generic `CurriculumOrchestrator`.
-- **Stack 2: Generative Games**: Logic-driven, infinite practice modes. Uses the `PracticeOrchestrator` (Logic Brains).
+- **Stack 1: Curriculum Games**: JSON-driven, grade-specific lessons aligned with MATATAG. Primarily used in Grade 1 as a prototyping sandox. Uses `CurriculumOrchestrator`.
+- **Stack 2: Generative Games**: Logic-driven, infinite practice modes. Used heavily in Grades 2–6. Uses the `PracticeOrchestrator` and procedural generators.
 
 ---
 
@@ -130,13 +112,6 @@ assets/
 ├── anim/                       # Lottie JSON Animations
 ├── fonts/                      # Custom Typefaces (Lexend, Plus Jakarta Sans)
 ├── images/                     # UI Imagery & Graphics
-│   └── games/                  # Centralized Game Assets (AssetMap mapped)
-├── sounds/                     # Game Audio & Feedback
-│   └── games/                  # Voiceovers and SFX
-└── audio/                      # Raw Audio Files
-```
-
----
 
 ## 📜 6. Timeline & Documentation Standards
 All significant changes and planned architecture must be logged using the following naming conventions:

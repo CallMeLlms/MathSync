@@ -13,6 +13,7 @@ import { getBundledLesson } from './lessonResolver';
 // import DragDropEngine from './Engines/DragDropEngine';
 import ComposeEngine from './Engines/ComposeEngine';
 import NumpadEngine from './Engines/NumpadEngine';
+import MatcherEngine from './Engines/MatcherEngine';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
 
@@ -101,14 +102,27 @@ export default function CurriculumOrchestrator({
       onError: (err) => console.warn(`[Engine Error] ${err}`)
     };
 
-    switch (lessonContent.type) {
+    // Evaluate engine type per-question, not per-lesson.
+    // This enables multi-engine lessons where the UI layer swaps automatically
+    // as the student advances (e.g. Matcher → Numpad → Composer).
+    const engineType = currentQuestion?.type?.toLowerCase();
+
+    switch (engineType) {
       // case 'picker': return <PickerEngine {...props} />;
       // case 'counter': return <CounterEngine {...props} />;
       // case 'dragdrop': return <DragDropEngine {...props} />;
       case 'composer': return <ComposeEngine {...props} />;
       case 'numpad': return <NumpadEngine {...props} />;
-      case 'matcher': return <Text style={styles.comingSoonText}>Matcher Engine — Coming Soon! 🚧</Text>;
-      default: return <Text style={styles.errorText}>Engine "{lessonContent.type}" not found.</Text>;
+      // MatcherEngine uses a different prop contract (question/onAnswer) than the
+      // standard Orchestrator API (data/onResult). Bridge inline to avoid touching the engine.
+      case 'matcher': return (
+        <MatcherEngine
+          key={currentQuestionIndex}
+          question={currentQuestion}
+          onAnswer={(isCorrect) => handleResult(isCorrect, [])}
+        />
+      );
+      default: return <Text style={styles.errorText}>Engine "{engineType}" not found.</Text>;
     }
   };
 
