@@ -29,6 +29,9 @@ export const useUserStore = create(
         streak: 0 
       },
       
+      // Curriculum progress: { G1: ['1', '3'], G2: [] }
+      completedLessons: {},
+      
       activities: [], // Array of { id, type, title, timestamp, points, icon }
 
       // --- Actions ---
@@ -54,10 +57,36 @@ export const useUserStore = create(
         stats: { ...state.stats, ...newStats }
       })),
 
+      /**
+       * Marks a curriculum lesson as completed for a given grade.
+       * @param {string} gradeKey - e.g. 'G1'
+       * @param {string|number} lessonId - e.g. '2'
+       */
+      markLessonComplete: (gradeKey, lessonId) => set((state) => {
+        const gradeProgress = state.completedLessons[gradeKey] || [];
+        const id = String(lessonId);
+        if (gradeProgress.includes(id)) return state;
+        return {
+          completedLessons: {
+            ...state.completedLessons,
+            [gradeKey]: [...gradeProgress, id]
+          }
+        };
+      }),
+
+      /**
+       * Returns whether a specific lesson has been completed.
+       */
+      isLessonComplete: (gradeKey, lessonId) => {
+        const gradeProgress = get().completedLessons[gradeKey] || [];
+        return gradeProgress.includes(String(lessonId));
+      },
+
       resetStore: () => set({ 
         currentGrade: null,
         profile: { name: 'Explorer', avatar: null, level: 1 },
         stats: { sunPoints: 0, badges: 0, problemsSolved: 0, accuracy: '0%', streak: 0 },
+        completedLessons: {},
         activities: []
       }),
     }),

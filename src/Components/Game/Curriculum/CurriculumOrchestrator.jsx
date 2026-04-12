@@ -3,13 +3,14 @@ import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ActivityIndicat
 import { useRouter } from 'expo-router';
 import Colors from '@/constants/colors';
 import useGameEngine from '@/stores/game-stores/useGameEngine';
+import useUserStore from '@/stores/user-stores/useUserStore';
 import { getGameTheme } from '@/theme/gameThemes';
 import { getBundledLesson } from './lessonResolver';
 
 // Engines
-import PickerEngine from './Engines/PickerEngine';
-import CounterEngine from './Engines/CounterEngine';
-import DragDropEngine from './Engines/DragDropEngine';
+// import PickerEngine from './Engines/PickerEngine';
+// import CounterEngine from './Engines/CounterEngine';
+// import DragDropEngine from './Engines/DragDropEngine';
 import ComposeEngine from './Engines/ComposeEngine';
 import NumpadEngine from './Engines/NumpadEngine';
 import ExitModal from '@/Components/Game/Global/ExitModal';
@@ -97,16 +98,16 @@ export default function CurriculumOrchestrator({
     const props = {
       data: currentQuestion,
       onResult: handleResult,
-      onComplete: handleComplete,
       onError: (err) => console.warn(`[Engine Error] ${err}`)
     };
 
     switch (lessonContent.type) {
-      case 'picker': return <PickerEngine {...props} />;
-      case 'counter': return <CounterEngine {...props} />;
-      case 'dragdrop': return <DragDropEngine {...props} />;
-      case 'compose': return <ComposeEngine {...props} />;
+      // case 'picker': return <PickerEngine {...props} />;
+      // case 'counter': return <CounterEngine {...props} />;
+      // case 'dragdrop': return <DragDropEngine {...props} />;
+      case 'composer': return <ComposeEngine {...props} />;
       case 'numpad': return <NumpadEngine {...props} />;
+      case 'matcher': return <Text style={styles.comingSoonText}>Matcher Engine — Coming Soon! 🚧</Text>;
       default: return <Text style={styles.errorText}>Engine "{lessonContent.type}" not found.</Text>;
     }
   };
@@ -135,7 +136,10 @@ export default function CurriculumOrchestrator({
              </Text>
              <TouchableOpacity 
                style={[styles.finishButton, { backgroundColor: theme.primaryColor }]} 
-               onPress={() => router.back()}
+               onPress={() => {
+                  useUserStore.getState().markLessonComplete(gradeKey, lessonId);
+                  router.back();
+               }}
              >
                 <Text style={[styles.finishText, { fontFamily: theme.fontFamily.accent }]}>
                   {theme.finishButtonText}
@@ -231,5 +235,12 @@ const styles = StyleSheet.create({
     color: Colors.error,
     textAlign: 'center',
     marginTop: 32,
+  },
+  comingSoonText: {
+    fontFamily: 'PlusJakartaSans-Bold',
+    color: Colors.onSurfaceVariant,
+    textAlign: 'center',
+    marginTop: 48,
+    fontSize: 18,
   }
 });

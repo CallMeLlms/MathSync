@@ -1,59 +1,73 @@
-import { View, Text, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
-import { useState, useMemo, useCallback } from 'react';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
   withSequence,
+  withTiming,
+  withRepeat,
+  withDelay,
   ZoomIn,
   FadeIn,
+  FadeInDown,
+  runOnJS,
 } from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
-import { Ionicons } from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const CHIP_COLORS = [
-  { bg: '#FF7043', border: '#E64A19' },
-  { bg: '#42A5F5', border: '#1565C0' },
-  { bg: '#66BB6A', border: '#2E7D32' },
-  { bg: '#AB47BC', border: '#7B1FA2' },
-  { bg: '#FFA726', border: '#EF6C00' },
-  { bg: '#26C6DA', border: '#00838F' },
+  { bg: '#FF7043', border: '#E64A19', glow: 'rgba(255,112,67,0.15)' },
+  { bg: '#42A5F5', border: '#1565C0', glow: 'rgba(66,165,245,0.15)' },
+  { bg: '#66BB6A', border: '#2E7D32', glow: 'rgba(102,187,106,0.15)' },
+  { bg: '#AB47BC', border: '#7B1FA2', glow: 'rgba(171,71,188,0.15)' },
+  { bg: '#FFA726', border: '#EF6C00', glow: 'rgba(255,167,38,0.15)' },
+  { bg: '#26C6DA', border: '#00838F', glow: 'rgba(38,198,218,0.15)' },
 ];
 
 // ─── NumberChip: a tappable number in the chip tray ───
-const NumberChip = ({ value, color, onPress, disabled }) => {
+const NumberChip = ({ value, color, onPress, disabled, index }) => {
   const scale = useSharedValue(1);
+
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
   }));
 
-  const handlePress = () => {
-    scale.value = withSequence(
-      withSpring(0.88, { damping: 8, stiffness: 400 }),
-      withSpring(1, { damping: 10, stiffness: 300 })
-    );
-    onPress(value);
-  };
+  const tap = Gesture.Tap()
+    .onBegin(() => {
+      scale.value = withSpring(0.85, { damping: 8, stiffness: 400 });
+    })
+    .onEnd(() => {
+      runOnJS(onPress)(value);
+    })
+    .onFinalize(() => {
+      scale.value = withSpring(1, { damping: 10, stiffness: 300 });
+    })
+    .enabled(!disabled);
 
   return (
-    <Animated.View entering={ZoomIn.springify()} style={animatedStyle}>
-      <TouchableOpacity
-        style={[
-          styles.chip,
-          { backgroundColor: color.bg, borderColor: color.border },
-          disabled && { opacity: 0.35 },
-        ]}
-        onPress={handlePress}
-        disabled={disabled}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.chipText}>{value}</Text>
-      </TouchableOpacity>
+    <Animated.View
+      entering={ZoomIn.springify().delay(index * 60)}
+      style={animatedStyle}
+    >
+      <GestureDetector gesture={tap}>
+        <Animated.View
+          style={[
+            styles.chip,
+            {
+              backgroundColor: color.bg,
+              borderColor: color.border,
+            },
+            disabled && { opacity: 0.3 },
+          ]}
+        >
+          <Text style={styles.chipText}>{value}</Text>
+        </Animated.View>
+      </GestureDetector>
     </Animated.View>
   );
 };
@@ -66,47 +80,47 @@ const DropSlot = ({ value, label, isWrong, isCorrect, onPress, disabled }) => {
     transform: [{ scale: slotScale.value }],
   }));
 
-  const handlePress = () => {
-    if (value === null || disabled) return;
-    slotScale.value = withSequence(
-      withSpring(0.9, { damping: 8, stiffness: 400 }),
-      withSpring(1, { damping: 10, stiffness: 300 })
-    );
-    onPress();
-  };
+  const tap = Gesture.Tap()
+    .onBegin(() => {
+      slotScale.value = withSpring(0.9, { damping: 8, stiffness: 400 });
+    })
+    .onEnd(() => {
+      if (value !== null) {
+        runOnJS(onPress)();
+      }
+    })
+    .onFinalize(() => {
+      slotScale.value = withSpring(1, { damping: 10, stiffness: 300 });
+    })
+    .enabled(!disabled);
 
   const bgColor = isCorrect
-    ? 'rgba(76,175,80,0.12)'
+    ? 'rgba(0,110,42,0.10)'
     : isWrong
-      ? 'rgba(244,67,54,0.08)'
+      ? 'rgba(186,26,26,0.08)'
       : value !== null
-        ? '#FFF8E1'
-        : '#FAFAFA';
+        ? Colors.primaryContainer
+        : Colors.surfaceContainerLowest;
 
   const borderColor = isCorrect
-    ? '#4CAF50'
+    ? Colors.success
     : isWrong
-      ? '#F44336'
+      ? Colors.error
       : value !== null
-        ? '#FFB74D'
-        : '#E0E0E0';
+        ? Colors.primary
+        : Colors.outlineVariant;
 
   const borderStyle = value !== null || isCorrect || isWrong ? 'solid' : 'dashed';
 
   return (
-    <Animated.View style={animatedStyle}>
-      <TouchableOpacity
-        style={[styles.slot, { backgroundColor: bgColor, borderColor, borderStyle }]}
-        onPress={handlePress}
-        disabled={value === null || disabled}
-        activeOpacity={0.7}
-      >
+    <GestureDetector gesture={tap}>
+      <Animated.View style={[animatedStyle, styles.slot, { backgroundColor: bgColor, borderColor, borderStyle }]}>
         {value !== null ? (
           <Animated.View entering={ZoomIn.springify()}>
             <Text style={[
               styles.slotValue,
-              isCorrect && { color: '#2E7D32' },
-              isWrong && { color: '#D32F2F' },
+              isCorrect && { color: Colors.success },
+              isWrong && { color: Colors.error },
             ]}>
               {value}
             </Text>
@@ -114,13 +128,13 @@ const DropSlot = ({ value, label, isWrong, isCorrect, onPress, disabled }) => {
         ) : (
           <Text style={styles.slotPlaceholder}>{label}</Text>
         )}
-      </TouchableOpacity>
-    </Animated.View>
+      </Animated.View>
+    </GestureDetector>
   );
 };
 
 // ─── ComposerEngine ───
-const ComposerEngine = ({ data, onResult, onComplete }) => {
+const ComposerEngine = ({ data, onResult }) => {
   const { target, chips = [], mode = 'decompose' } = data;
 
   const shuffledChips = useMemo(
@@ -132,13 +146,33 @@ const ComposerEngine = ({ data, onResult, onComplete }) => {
   const [slotB, setSlotB] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
-
-  // Track which chip indices are used (allows duplicate values in chips)
   const [usedIndices, setUsedIndices] = useState([]);
+
+  // Reset engine state when `data` changes (next question from Orchestrator)
+  useEffect(() => {
+    setSlotA(null);
+    setSlotB(null);
+    setAnswered(false);
+    setIsWrong(false);
+    setUsedIndices([]);
+  }, [data]);
+
+  // Idle pulsing animation on the target bubble
+  const targetPulse = useSharedValue(1);
+  useEffect(() => {
+    targetPulse.value = withRepeat(
+      withSequence(
+        withTiming(1.03, { duration: 1200 }),
+        withTiming(1.0, { duration: 1200 })
+      ),
+      -1,
+      true
+    );
+  }, [data]);
 
   const targetScale = useSharedValue(1);
   const targetStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: targetScale.value }],
+    transform: [{ scale: answered ? targetScale.value : targetPulse.value }],
   }));
 
   const handleChipTap = useCallback((value, chipIndex) => {
@@ -158,12 +192,10 @@ const ComposerEngine = ({ data, onResult, onComplete }) => {
     if (answered || isWrong) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
-    // If slot B has a value, shift it to A
     if (slotB !== null) {
       setSlotA(slotB);
       setSlotB(null);
-      // Remove last used index (slotA's chip goes back)
-      setUsedIndices(prev => prev.slice(0, 1).length === 0 ? [] : [prev[1]]);
+      setUsedIndices(prev => prev.length > 1 ? [prev[1]] : []);
     } else {
       setSlotA(null);
       setUsedIndices([]);
@@ -174,7 +206,6 @@ const ComposerEngine = ({ data, onResult, onComplete }) => {
     if (answered || isWrong) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setSlotB(null);
-    // Remove the second used index
     setUsedIndices(prev => prev.slice(0, 1));
   }, [answered, isWrong]);
 
@@ -198,8 +229,8 @@ const ComposerEngine = ({ data, onResult, onComplete }) => {
         withSpring(1.15, { damping: 8, stiffness: 200 }),
         withSpring(1.0, { damping: 12, stiffness: 200 })
       );
-      setTimeout(() => onResult(true, [slotA.toString(), slotB.toString()]), 800);
-      setTimeout(() => onComplete(), 1200);
+      // Only call onResult — the Orchestrator handles advancement via ResultModal
+      setTimeout(() => onResult(true, [slotA.toString(), slotB.toString()]), 600);
     } else {
       setIsWrong(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -212,9 +243,18 @@ const ComposerEngine = ({ data, onResult, onComplete }) => {
         setIsWrong(false);
       }, 1200);
     }
-  }, [slotA, slotB, answered, target, onResult, onComplete]);
+  }, [slotA, slotB, answered, target, onResult]);
 
   const isReadyToCheck = slotA !== null && slotB !== null;
+
+  // Dynamic instruction text
+  const getInstruction = () => {
+    if (answered) return '✅ Great job!';
+    if (isWrong) return 'Not quite — try again!';
+    if (isReadyToCheck) return 'Ready! Tap Check Answer.';
+    if (slotA !== null) return 'Pick a second number.';
+    return 'Tap a number chip below.';
+  };
 
   // Equation label based on mode
   const equationDisplay = mode === 'compose'
@@ -224,17 +264,32 @@ const ComposerEngine = ({ data, onResult, onComplete }) => {
   return (
     <View style={styles.container}>
       {/* Target Number Bubble */}
-      <Animated.View style={[styles.targetBubble, targetStyle, answered && styles.targetBubbleCorrect]}>
+      <Animated.View
+        entering={FadeInDown.springify().delay(100)}
+        style={[styles.targetBubble, targetStyle, answered && styles.targetBubbleCorrect]}
+      >
         <Text style={styles.targetLabel}>
           {mode === 'compose' ? 'Make this number!' : 'Break this number!'}
         </Text>
-        <Text style={[styles.targetNumber, answered && { color: '#2E7D32' }]}>
+        <Text style={[styles.targetNumber, answered && { color: Colors.success }]}>
           {target}
         </Text>
       </Animated.View>
 
+      {/* Instruction Text */}
+      <Animated.Text
+        entering={FadeIn.delay(200)}
+        style={[
+          styles.instructionText,
+          isWrong && { color: Colors.error },
+          answered && { color: Colors.success },
+        ]}
+      >
+        {getInstruction()}
+      </Animated.Text>
+
       {/* Number Bond Visual */}
-      <View style={styles.bondContainer}>
+      <Animated.View entering={FadeIn.delay(150)} style={styles.bondContainer}>
         {/* Connector lines */}
         <View style={styles.connectorRow}>
           <View style={styles.connectorLine} />
@@ -267,16 +322,19 @@ const ComposerEngine = ({ data, onResult, onComplete }) => {
         </View>
 
         {/* Equation Display */}
-        <Text style={[styles.equationText, answered && { color: '#2E7D32' }]}>
+        <Animated.Text
+          entering={FadeIn.delay(300)}
+          style={[styles.equationText, answered && { color: Colors.success }]}
+        >
           {isReadyToCheck
             ? `${mode === 'compose' ? `${slotA} + ${slotB} = ${target}` : `${target} = ${slotA} + ${slotB}`}`
             : equationDisplay
           }
-        </Text>
-      </View>
+        </Animated.Text>
+      </Animated.View>
 
       {/* Chip Tray */}
-      <View style={styles.chipTray}>
+      <Animated.View entering={FadeInDown.springify().delay(200)} style={styles.chipTray}>
         <View style={styles.chipGrid}>
           {shuffledChips.map((value, i) => {
             const isUsed = usedIndices.includes(i);
@@ -284,6 +342,7 @@ const ComposerEngine = ({ data, onResult, onComplete }) => {
               <NumberChip
                 key={`chip-${i}`}
                 value={value}
+                index={i}
                 color={CHIP_COLORS[i % CHIP_COLORS.length]}
                 onPress={() => handleChipTap(value, i)}
                 disabled={isUsed || answered || isWrong || isReadyToCheck}
@@ -291,32 +350,35 @@ const ComposerEngine = ({ data, onResult, onComplete }) => {
             );
           })}
         </View>
-      </View>
+      </Animated.View>
 
       {/* Footer Actions */}
       {!answered && (
         <Animated.View entering={FadeIn.duration(400)} style={styles.footer}>
           {usedIndices.length > 0 && !isWrong && (
-            <TouchableOpacity
-              style={styles.resetButton}
-              onPress={handleReset}
-              activeOpacity={0.7}
+            <GestureDetector
+              gesture={Gesture.Tap()
+                .onEnd(() => runOnJS(handleReset)())
+              }
             >
-              <Ionicons name="refresh" size={20} color="#FFFFFF" />
-              <Text style={styles.resetButtonText}>Reset</Text>
-            </TouchableOpacity>
+              <Animated.View entering={FadeIn.duration(200)} style={styles.resetButton}>
+                <Ionicons name="refresh" size={20} color="#FFFFFF" />
+                <Text style={styles.resetButtonText}>Reset</Text>
+              </Animated.View>
+            </GestureDetector>
           )}
 
           {isReadyToCheck && !isWrong && (
-            <Animated.View entering={ZoomIn.springify()}>
-              <TouchableOpacity
-                style={styles.checkButton}
-                onPress={handleCheckAnswer}
-                activeOpacity={0.8}
-              >
+            <GestureDetector
+              gesture={Gesture.Tap()
+                .onEnd(() => runOnJS(handleCheckAnswer)())
+              }
+            >
+              <Animated.View entering={ZoomIn.springify()} style={styles.checkButton}>
+                <Ionicons name="checkmark-circle" size={22} color="#FFF" />
                 <Text style={styles.checkButtonText}>Check Answer</Text>
-              </TouchableOpacity>
-            </Animated.View>
+              </Animated.View>
+            </GestureDetector>
           )}
         </Animated.View>
       )}
@@ -328,9 +390,11 @@ const SLOT_SIZE = SCREEN_WIDTH * 0.22;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
     width: '100%',
     paddingHorizontal: 12,
+    paddingTop: 16,
     gap: 14,
   },
   targetBubble: {
@@ -338,10 +402,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.surfaceContainerLowest,
     borderWidth: 3,
-    borderColor: '#FFB74D',
-    borderRadius: 24,
-    paddingVertical: 14,
-    paddingHorizontal: 28,
+    borderColor: Colors.primary,
+    borderRadius: 28,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
   },
   targetBubbleCorrect: {
     backgroundColor: Colors.tertiaryContainer,
@@ -349,14 +413,22 @@ const styles = StyleSheet.create({
   },
   targetLabel: {
     fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: SCREEN_HEIGHT * 0.015,
+    fontSize: SCREEN_HEIGHT * 0.014,
     color: Colors.onSurfaceVariant,
     marginBottom: 4,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
   },
   targetNumber: {
     fontFamily: 'Lexend-Black',
     fontSize: SCREEN_HEIGHT * 0.055,
     color: Colors.primary,
+  },
+  instructionText: {
+    fontFamily: 'PlusJakartaSans-SemiBold',
+    fontSize: SCREEN_HEIGHT * 0.016,
+    color: Colors.onSurfaceVariant,
+    textAlign: 'center',
   },
   bondContainer: {
     alignItems: 'center',
@@ -384,7 +456,7 @@ const styles = StyleSheet.create({
   slot: {
     width: SLOT_SIZE,
     height: SLOT_SIZE,
-    borderRadius: 20,
+    borderRadius: 22,
     borderWidth: 3,
     alignItems: 'center',
     justifyContent: 'center',
@@ -400,9 +472,9 @@ const styles = StyleSheet.create({
     color: Colors.outlineVariant,
   },
   plusSign: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     backgroundColor: Colors.surfaceContainerLowest,
     alignItems: 'center',
     justifyContent: 'center',
@@ -423,7 +495,7 @@ const styles = StyleSheet.create({
   chipTray: {
     width: '100%',
     backgroundColor: Colors.surfaceContainerLow,
-    borderRadius: 20,
+    borderRadius: 24,
     padding: 16,
     borderWidth: 1,
     borderColor: Colors.outlineVariant,
@@ -437,7 +509,7 @@ const styles = StyleSheet.create({
   chip: {
     minWidth: (SCREEN_WIDTH - 120) / 4,
     height: SCREEN_HEIGHT * 0.065,
-    borderRadius: 16,
+    borderRadius: 18,
     borderWidth: 3,
     alignItems: 'center',
     justifyContent: 'center',
@@ -459,31 +531,30 @@ const styles = StyleSheet.create({
   resetButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.error,
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 16,
-    borderWidth: 2,
-    borderColor: '#B71C1C',
+    backgroundColor: Colors.secondary,
+    paddingHorizontal: 22,
+    paddingVertical: 14,
+    borderRadius: 20,
     gap: 8,
   },
   resetButtonText: {
     fontFamily: 'PlusJakartaSans-Bold',
     color: '#FFFFFF',
-    fontSize: SCREEN_HEIGHT * 0.018,
+    fontSize: SCREEN_HEIGHT * 0.017,
   },
   checkButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: Colors.success,
     paddingHorizontal: 28,
     paddingVertical: 14,
-    borderRadius: 16,
-    borderWidth: 2,
-    borderColor: '#2E7D32',
+    borderRadius: 20,
+    gap: 8,
   },
   checkButtonText: {
-    fontFamily: 'Lexend-Black',
+    fontFamily: 'Lexend-Bold',
     color: '#FFF',
-    fontSize: SCREEN_HEIGHT * 0.02,
+    fontSize: SCREEN_HEIGHT * 0.019,
   },
 });
 

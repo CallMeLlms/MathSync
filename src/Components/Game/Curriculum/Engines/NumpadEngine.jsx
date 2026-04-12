@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
 import Animated, {
   useSharedValue,
@@ -7,9 +7,14 @@ import Animated, {
   withSequence,
   withTiming,
   withRepeat,
+  withDelay,
   ZoomIn,
   FadeIn,
+  FadeInDown,
+  FadeInUp,
+  runOnJS,
 } from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
@@ -22,33 +27,39 @@ const KEY_COLORS = [
 ];
 
 // ─── NumpadKey: A single number button ───
-const NumpadKey = ({ value, onPress, disabled, color }) => {
+const NumpadKey = ({ value, onPress, disabled, color, index }) => {
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
   }));
 
-  const handlePress = () => {
-    scale.value = withSequence(
-      withSpring(0.88, { damping: 8, stiffness: 400 }),
-      withSpring(1, { damping: 10, stiffness: 300 })
-    );
-    onPress(value);
-  };
+  const tap = Gesture.Tap()
+    .onBegin(() => {
+      scale.value = withSpring(0.85, { damping: 8, stiffness: 400 });
+    })
+    .onEnd(() => {
+      runOnJS(onPress)(value);
+    })
+    .onFinalize(() => {
+      scale.value = withSpring(1, { damping: 10, stiffness: 300 });
+    })
+    .enabled(!disabled);
 
   return (
-    <Animated.View style={animatedStyle}>
-      <TouchableOpacity
-        style={[
-          styles.numKey,
-          { backgroundColor: color, opacity: disabled ? 0.4 : 1 },
-        ]}
-        onPress={handlePress}
-        disabled={disabled}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.numKeyText}>{value}</Text>
-      </TouchableOpacity>
+    <Animated.View
+      entering={ZoomIn.springify().delay(index * 40)}
+      style={animatedStyle}
+    >
+      <GestureDetector gesture={tap}>
+        <Animated.View
+          style={[
+            styles.numKey,
+            { backgroundColor: color, opacity: disabled ? 0.35 : 1 },
+          ]}
+        >
+          <Text style={styles.numKeyText}>{value}</Text>
+        </Animated.View>
+      </GestureDetector>
     </Animated.View>
   );
 };
@@ -76,13 +87,20 @@ const BlinkingCursor = () => {
 };
 
 // ─── NumpadEngine ───
-const NumpadEngine = ({ data, onResult, onComplete }) => {
+const NumpadEngine = ({ data, onResult }) => {
   const { equation = {}, answer, maxDigits = 2 } = data;
   const { left = '', operator = '=', blank = 'right' } = equation;
 
   const [input, setInput] = useState('');
   const [answered, setAnswered] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
+
+  // Reset engine state when `data` changes (next question from Orchestrator)
+  useEffect(() => {
+    setInput('');
+    setAnswered(false);
+    setIsWrong(false);
+  }, [data]);
 
   const displayScale = useSharedValue(1);
   const displayStyle = useAnimatedStyle(() => ({
@@ -121,8 +139,8 @@ const NumpadEngine = ({ data, onResult, onComplete }) => {
     if (isCorrect) {
       setAnswered(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setTimeout(() => onResult(true, [input]), 800);
-      setTimeout(() => onComplete(), 1200);
+      // Only call onResult — the Orchestrator handles advancement via ResultModal
+      setTimeout(() => onResult(true, [input]), 600);
     } else {
       setIsWrong(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -134,6 +152,14 @@ const NumpadEngine = ({ data, onResult, onComplete }) => {
         setIsWrong(false);
       }, 1000);
     }
+  };
+
+  // Dynamic instruction text
+  const getInstruction = () => {
+    if (answered) return '✅ Correct!';
+    if (isWrong) return 'Not quite — try again!';
+    if (input.length > 0) return 'Tap Check when ready.';
+    return 'Type your answer on the numpad.';
   };
 
   // Build display equation
@@ -176,18 +202,31 @@ const NumpadEngine = ({ data, onResult, onComplete }) => {
   return (
     <View style={styles.container}>
       {/* Equation Display */}
-      <View style={styles.equationCard}>
+      <Animated.View entering={FadeInDown.springify().delay(100)} style={styles.equationCard}>
         {renderEquation()}
-      </View>
+      </Animated.View>
+
+      {/* Instruction Text */}
+      <Animated.Text
+        entering={FadeIn.delay(200)}
+        style={[
+          styles.instructionText,
+          isWrong && { color: Colors.error },
+          answered && { color: Colors.success },
+        ]}
+      >
+        {getInstruction()}
+      </Animated.Text>
 
       {/* Number Pad */}
-      <View style={styles.numpadContainer}>
+      <Animated.View entering={FadeInUp.springify().delay(150)} style={styles.numpadContainer}>
         {/* Row 1: 1-5 */}
         <View style={styles.numpadRow}>
-          {[1, 2, 3, 4, 5].map((n) => (
+          {[1, 2, 3, 4, 5].map((n, i) => (
             <NumpadKey
               key={`key-${n}`}
               value={n}
+              index={i}
               color={KEY_COLORS[n - 1]}
               onPress={handleKeyPress}
               disabled={answered || input.length >= maxDigits}
@@ -197,10 +236,11 @@ const NumpadEngine = ({ data, onResult, onComplete }) => {
 
         {/* Row 2: 6-0 */}
         <View style={styles.numpadRow}>
-          {[6, 7, 8, 9, 0].map((n) => (
+          {[6, 7, 8, 9, 0].map((n, i) => (
             <NumpadKey
               key={`key-${n}`}
               value={n}
+              index={i + 5}
               color={KEY_COLORS[n === 0 ? 9 : n - 1]}
               onPress={handleKeyPress}
               disabled={answered || input.length >= maxDigits}
@@ -210,54 +250,64 @@ const NumpadEngine = ({ data, onResult, onComplete }) => {
 
         {/* Row 3: Backspace + Check */}
         <View style={styles.actionRow}>
-          <TouchableOpacity
-            style={[styles.actionButton, styles.backspaceButton]}
-            onPress={handleBackspace}
-            disabled={answered || input.length === 0}
-            activeOpacity={0.7}
+          <GestureDetector
+            gesture={Gesture.Tap()
+              .onEnd(() => runOnJS(handleBackspace)())
+              .enabled(!answered && input.length > 0)
+            }
           >
-            <Ionicons
-              name="backspace-outline"
-              size={24}
-              color={input.length === 0 || answered ? 'rgba(255,255,255,0.4)' : '#FFFFFF'}
-            />
-            <Text style={[styles.actionButtonText, { opacity: input.length === 0 || answered ? 0.4 : 1 }]}>
-              Delete
-            </Text>
-          </TouchableOpacity>
+            <Animated.View
+              style={[
+                styles.actionButton,
+                styles.backspaceButton,
+                { opacity: input.length === 0 || answered ? 0.4 : 1 },
+              ]}
+            >
+              <Ionicons
+                name="backspace-outline"
+                size={24}
+                color="#FFFFFF"
+              />
+              <Text style={styles.actionButtonText}>
+                Delete
+              </Text>
+            </Animated.View>
+          </GestureDetector>
 
           {input.length > 0 && !answered && (
-            <Animated.View entering={ZoomIn.springify()}>
-              <TouchableOpacity
-                style={[styles.actionButton, styles.submitButton]}
-                onPress={handleCheckAnswer}
-                activeOpacity={0.8}
-              >
+            <GestureDetector
+              gesture={Gesture.Tap()
+                .onEnd(() => runOnJS(handleCheckAnswer)())
+              }
+            >
+              <Animated.View entering={ZoomIn.springify()} style={[styles.actionButton, styles.submitButton]}>
                 <Ionicons name="checkmark-circle" size={24} color="#FFFFFF" />
                 <Text style={styles.actionButtonText}>Check</Text>
-              </TouchableOpacity>
-            </Animated.View>
+              </Animated.View>
+            </GestureDetector>
           )}
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
     width: '100%',
     paddingHorizontal: 16,
-    gap: 16,
+    paddingTop: 16,
+    gap: 14,
   },
   equationCard: {
     width: '100%',
     backgroundColor: Colors.surfaceContainerLowest,
-    borderRadius: 20,
-    paddingVertical: 20,
+    borderRadius: 24,
+    paddingVertical: 24,
     paddingHorizontal: 16,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: Colors.outlineVariant,
     alignItems: 'center',
   },
@@ -282,8 +332,8 @@ const styles = StyleSheet.create({
     minHeight: SCREEN_HEIGHT * 0.065,
     backgroundColor: Colors.surfaceContainerLowest,
     borderWidth: 3,
-    borderColor: '#FFB74D',
-    borderRadius: 16,
+    borderColor: Colors.primary,
+    borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 16,
@@ -307,6 +357,12 @@ const styles = StyleSheet.create({
   answerTextCorrect: {
     color: Colors.success,
   },
+  instructionText: {
+    fontFamily: 'PlusJakartaSans-SemiBold',
+    fontSize: SCREEN_HEIGHT * 0.016,
+    color: Colors.onSurfaceVariant,
+    textAlign: 'center',
+  },
   cursor: {
     width: 3,
     height: SCREEN_HEIGHT * 0.04,
@@ -316,7 +372,7 @@ const styles = StyleSheet.create({
   numpadContainer: {
     width: '100%',
     backgroundColor: Colors.surfaceContainerLow,
-    borderRadius: 20,
+    borderRadius: 24,
     padding: 14,
     gap: 10,
     borderWidth: 1,
@@ -330,7 +386,7 @@ const styles = StyleSheet.create({
   numKey: {
     width: (SCREEN_WIDTH - 96) / 5,
     height: (SCREEN_WIDTH - 96) / 5,
-    borderRadius: 16,
+    borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -350,9 +406,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 26,
+    borderRadius: 20,
   },
   backspaceButton: {
     backgroundColor: Colors.secondary,
