@@ -5,6 +5,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 
 import authService from '@/services/authService';
+import useUserStore from '@/stores/user-stores/useUserStore';
+import { normalizeGrade, MathSyncAdmins } from '@/utils/gradeMapping';
 
 // Design System
 import Colors from '@/constants/colors';
@@ -18,6 +20,8 @@ export default function SignIn() {
   const [isFocused, setIsFocused] = useState(null);
 
   const router = useRouter();
+  const setProfile = useUserStore((state) => state.setProfile);
+  const setCurrentGrade = useUserStore((state) => state.setCurrentGrade);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -27,7 +31,24 @@ export default function SignIn() {
 
     setLoading(true);
     try {
-      await authService.signIn(email, password);
+      const response = await authService.signIn(email, password);
+      
+      // Extract user info from backend response
+      const { user } = response;
+      if (user) {
+        const isMaster = user.email === MathSyncAdmins.MASTER_CREDENTIAL;
+        const normalizedGrade = normalizeGrade(user.gradeLevel);
+
+        setProfile({
+          name: user.username || 'Explorer',
+          email: user.email,
+          isMaster,
+          registeredGrade: normalizedGrade
+        });
+        
+        setCurrentGrade(normalizedGrade);
+      }
+
       router.replace('/(drawer)/Home');
     } catch (error) {
        Alert.alert('Login Failed', error.message || 'Invalid email or password.');
@@ -150,10 +171,15 @@ export default function SignIn() {
                     </TouchableOpacity>
                   </View>
 
-                  {/* Guest Button (Left mainly for rapid testing but can be removed based on requirement) */}
+                  {/* Guest Button */}
                   <TouchableOpacity
                     style={[styles.guestButton, { height: SCREEN_HEIGHT * 0.07 }]}
-                    onPress={() => router.replace('/(drawer)/Home')}
+                    onPress={() => {
+                      // Guest has no email/registeredGrade, keeping them unlocked
+                      setProfile({ name: 'Guest', email: null, isMaster: false, registeredGrade: null });
+                      setCurrentGrade('G1'); // Default starting view
+                      router.replace('/(drawer)/Home');
+                    }}
                   >
                     <Text style={styles.guestButtonText}>Guest</Text>
                   </TouchableOpacity>

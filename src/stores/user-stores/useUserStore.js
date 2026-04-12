@@ -14,8 +14,11 @@ export const useUserStore = create(
       // --- State ---
       profile: { 
         name: 'Explorer', 
+        email: null,
         avatar: null, 
-        level: 1 
+        level: 1,
+        isMaster: false,
+        registeredGrade: null 
       },
       
       // The current selected grade context (e.g., 'G1', 'G2', etc.)
@@ -84,7 +87,14 @@ export const useUserStore = create(
 
       resetStore: () => set({ 
         currentGrade: null,
-        profile: { name: 'Explorer', avatar: null, level: 1 },
+        profile: { 
+          name: 'Explorer', 
+          email: null,
+          avatar: null, 
+          level: 1,
+          isMaster: false,
+          registeredGrade: null
+        },
         stats: { sunPoints: 0, badges: 0, problemsSolved: 0, accuracy: '0%', streak: 0 },
         completedLessons: {},
         activities: []

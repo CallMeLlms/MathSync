@@ -12,6 +12,7 @@ import Animated, {
 import Colors from '@/constants/colors';
 import JourneyMap from '@/Components/Game/Flow/JourneyMap';
 import useUserStore from '@/stores/user-stores/useUserStore';
+import { isGradeAuthorized } from '@/utils/gradeMapping';
 
 // Import curriculum data
 import G1Data from '@content/lesson-map/G1.json';
@@ -83,6 +84,15 @@ export default function GradeJourney() {
   // Compute dynamic statuses based on progress
   const computedLevels = useMemo(() => {
     if (!curriculum) return [];
+
+    // Guard Clause: Redirect if the user manually hits a URL for an unauthorized grade
+    const profile = useUserStore.getState().profile;
+    if (!isGradeAuthorized(grade, profile)) {
+       // Since useMemo runs during render, we use a setTimeout or a separate effect to redirect
+       // safely without causing React state warnings.
+       setTimeout(() => router.replace('/Grades'), 0);
+       return [];
+    }
 
     const isGenerativeGrade = !CURRICULUM_GRADES.includes(grade);
 

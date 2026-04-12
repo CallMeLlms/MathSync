@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Animated, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import useUserStore from '@/stores/user-stores/useUserStore';
+import { isGradeAuthorized } from '@/utils/gradeMapping';
 
 /**
  * Grades Screen - Grade Selection Portal
@@ -67,16 +68,24 @@ export default function Grades() {
   ];
 
   const handleGradeSelect = (gradeId) => {
-    // Only allow selecting G1 or G2 for now (demo logic)
-    if (gradeId === 'G1' || gradeId === 'G2') {
+    const profile = useUserStore.getState().profile;
+    
+    if (isGradeAuthorized(gradeId, profile)) {
       setCurrentGrade(gradeId);
       router.push(`/journey/${gradeId}`);
+    } else {
+      Alert.alert(
+        'Restricted Access',
+        `You are currently registered for Grade ${profile.registeredGrade?.replace('G', '') || 'X'}. Please contact your teacher to change levels.`
+      );
     }
   };
 
   const renderGradeCard = (grade) => {
-    const isLocked = grade.id !== 'G1' && grade.id !== 'G2';
-    const isActive = grade.id === 'G1'; // Grade 1 is the starting point
+    const profile = useUserStore.getState().profile;
+    const isAuthorized = isGradeAuthorized(grade.id, profile);
+    const isLocked = !isAuthorized;
+    const isActive = grade.id === currentGrade; // Use currentGrade to highlight instead of hardcoding G1
 
     return (
       <TouchableOpacity
