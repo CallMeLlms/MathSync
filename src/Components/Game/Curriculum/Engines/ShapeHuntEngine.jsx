@@ -99,8 +99,8 @@ const ShapeTile = ({ item, index, isFound, answered, onCorrect, onWrong }) => {
       borderFlash.value > 0.5
         ? Colors.error
         : isFound
-        ? Colors.success
-        : Colors.outlineVariant,
+          ? Colors.success
+          : Colors.outlineVariant,
   }));
 
   const tileBackground = isFound

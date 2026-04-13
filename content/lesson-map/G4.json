@@ -1,0 +1,39 @@
+{
+  "grade": "Grade 4",
+  "theme": "quaternary",
+  "levels": [
+    {
+      "id": 1,
+      "title": "Fraction Forge",
+      "subtitle": "Advanced fraction operations",
+      "topicId": "advanced-fractions",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.5,
+      "y": 0.85,
+      "icon": "pie-chart"
+    },
+    {
+      "id": 2,
+      "title": "Decimal Ascent",
+      "subtitle": "Order decimals by tenths and hundredths",
+      "topicId": "ordering-decimals",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.75,
+      "y": 0.55,
+      "icon": "trending-up"
+    },
+    {
+      "id": 3,
+      "title": "Measure Up",
+      "subtitle": "Compare and convert measurements",
+      "topicId": "measurement",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.3,
+      "y": 0.25,
+      "icon": "straighten"
+    }
+  ]
+}

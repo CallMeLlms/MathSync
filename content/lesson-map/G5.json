@@ -1,0 +1,39 @@
+{
+  "grade": "Grade 5",
+  "theme": "quinary",
+  "levels": [
+    {
+      "id": 1,
+      "title": "Factor Forest",
+      "subtitle": "Identify factors and multiples",
+      "topicId": "factors-multiples",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.5,
+      "y": 0.85,
+      "icon": "account-tree"
+    },
+    {
+      "id": 2,
+      "title": "Middle Ground",
+      "subtitle": "Find mean, median, and mode",
+      "topicId": "mean-median",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.75,
+      "y": 0.55,
+      "icon": "bar-chart"
+    },
+    {
+      "id": 3,
+      "title": "Percent Peaks",
+      "subtitle": "Calculate and convert percentages",
+      "topicId": "percentages",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.3,
+      "y": 0.25,
+      "icon": "percent"
+    }
+  ]
+}

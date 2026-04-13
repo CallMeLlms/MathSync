@@ -1,115 +1,121 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Colors from '@/constants/colors';
 import { MaterialIcons } from '@expo/vector-icons';
+import useUserStore from '@/stores/user-stores/useUserStore';
 
-const activityData = [
-  {
-    id: 1,
-    title: 'Earned Flower Master Badge',
-    time: '2 hours ago',
-    points: '+50',
-    icon: 'auto-awesome',
-    iconBg: Colors.tertiaryContainer,
-    iconColor: Colors.tertiary,
-  },
-  {
-    id: 2,
-    title: 'Labeled the Sunflower',
-    time: 'Yesterday',
-    points: '+10',
-    icon: 'emoji-nature',
-    iconBg: Colors.primaryContainer,
-    iconColor: Colors.primary,
-  },
-  {
-    id: 3,
-    title: 'Completed Quarter 1',
-    time: '3 days ago',
-    points: '+100',
-    icon: 'task-alt',
-    iconBg: Colors.secondaryContainer,
-    iconColor: Colors.secondary,
-  },
-];
+function formatRelativeTime(timestampUtc) {
+  const t = new Date(timestampUtc).getTime();
+  if (Number.isNaN(t)) return 'Just now';
+
+  const deltaMs = Date.now() - t;
+  const deltaSec = Math.max(0, Math.floor(deltaMs / 1000));
+
+  if (deltaSec < 60) return 'Just now';
+
+  const deltaMin = Math.floor(deltaSec / 60);
+  if (deltaMin < 60) return `${deltaMin}m ago`;
+
+  const deltaHr = Math.floor(deltaMin / 60);
+  if (deltaHr < 24) return `${deltaHr}h ago`;
+
+  const deltaDay = Math.floor(deltaHr / 24);
+  if (deltaDay === 1) return 'Yesterday';
+  if (deltaDay < 7) return `${deltaDay}d ago`;
+
+  return new Date(t).toLocaleDateString();
+}
 
 export default function ActivityFeed() {
+  const recentActivity = useUserStore((s) => s.recentActivity) ?? [];
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Recent Activity</Text>
-      <View style={styles.list}>
-        {activityData.map((item) => (
+      <ScrollView
+        style={styles.list}
+        contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled
+      >
+        {recentActivity.map((item) => (
           <View key={item.id} style={styles.itemPill}>
-            <View style={[styles.iconCircle, { backgroundColor: item.iconBg }]}>
-              <MaterialIcons name={item.icon} size={20} color={item.iconColor} />
+            <View style={styles.iconCircle}>
+              {item.iconType === 'emoji' ? (
+                <Text style={styles.emojiIcon}>{item.iconValue}</Text>
+              ) : (
+                <MaterialIcons name={item.iconValue} size={20} color={Colors.primary} />
+              )}
             </View>
             <View style={styles.itemInfo}>
-              <Text style={styles.itemTitle}>{item.title}</Text>
-              <Text style={styles.itemTime}>{item.time}</Text>
-            </View>
-            <View style={styles.pointsBox}>
-              <Text style={[styles.pointsText, { color: item.iconColor }]}>{item.points}</Text>
+              <Text style={styles.itemTitle} numberOfLines={2}>
+                {item.description}
+              </Text>
+              <Text style={styles.itemTime}>{formatRelativeTime(item.timestampUtc)}</Text>
             </View>
           </View>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 16,
     backgroundColor: Colors.surfaceContainerLow,
-    borderRadius: 32,
+    borderRadius: 24,
     marginHorizontal: 20,
     marginTop: 20,
   },
   title: {
     fontFamily: 'Lexend-Bold',
-    fontSize: 22,
+    fontSize: 20,
     color: Colors.onSurface,
-    marginBottom: 20,
+    marginBottom: 14,
   },
   list: {
-    gap: 12,
+    maxHeight: 240,
+  },
+  listContent: {
+    gap: 8,
+    paddingBottom: 2,
   },
   itemPill: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.surfaceContainerLowest,
-    padding: 12,
-    borderRadius: 40,
+    padding: 10,
+    borderRadius: 28,
     borderWidth: 1,
-    borderColor: 'rgba(35, 26, 13, 0.05)',
+    borderColor: Colors.outlineVariant,
   },
   iconCircle: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: Colors.primaryContainer,
+  },
+  emojiIcon: {
+    fontFamily: 'PlusJakartaSans-Bold',
+    fontSize: 18,
+    color: Colors.onSurface,
   },
   itemInfo: {
     flex: 1,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
   },
   itemTitle: {
     fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 14,
+    fontSize: 13,
     color: Colors.onSurface,
   },
   itemTime: {
     fontFamily: 'PlusJakartaSans-Medium',
-    fontSize: 10,
+    fontSize: 9,
     color: Colors.onSurfaceVariant,
-    marginTop: 2,
-  },
-  pointsBox: {
-    paddingHorizontal: 12,
-  },
-  pointsText: {
-    fontFamily: 'Lexend-Black',
-    fontSize: 16,
+    marginTop: 1,
   },
 });

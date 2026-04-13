@@ -11,12 +11,14 @@ import speechManager from '@/utils/speechManager';
 // Engines
 // import PickerEngine from './Engines/PickerEngine';
 // import CounterEngine from './Engines/CounterEngine';
+import PickerEngine from './Engines/PickerEngine';
 import ComposeEngine from './Engines/ComposeEngine';
 import NumpadEngine from './Engines/NumpadEngine';
 import MatcherEngine from './Engines/MatcherEngine';
 import DragDropEngine from './Engines/DragAndDropEngine';
 import ConnectDotsEngine from './Engines/ConnectTheDotsEngine';
 import ShapeTracerEngine from './Engines/ShapeTracerEngine';
+import ShapeHuntEngine from './Engines/ShapeHuntEngine';
 import OrdinalSequenceEngine from './Engines/OrdinalSequenceEngine';
 import SortEngine from './Engines/SortEngine';
 import ExitModal from '@/Components/Game/Global/ExitModal';
@@ -27,21 +29,21 @@ import ResultModal from '@/Components/Game/Global/ResultModal';
  * A unified, data-driven container for all curriculum lessons.
  * Adapted to support multiple grades and dynamic themes.
  */
-export default function CurriculumOrchestrator({ 
-  lessonId, 
-  gradeKey = 'G1' 
+export default function CurriculumOrchestrator({
+  lessonId,
+  gradeKey = 'G1'
 }) {
   const router = useRouter();
   const theme = getGameTheme(gradeKey);
   const [lessonContent, setLessonContent] = useState(null);
-  
-  const { 
-    startGameSession, 
-    endGameSession, 
-    recordAnswer, 
-    nextQuestion, 
+
+  const {
+    startGameSession,
+    endGameSession,
+    recordAnswer,
+    nextQuestion,
     currentQuestionIndex,
-    totalScore 
+    totalScore
   } = useGameEngine();
 
   const [showExitModal, setShowExitModal] = useState(false);
@@ -55,9 +57,9 @@ export default function CurriculumOrchestrator({
       setLessonContent(content);
       startGameSession(lessonId);
     } else {
-       speechManager.speakInstruction(theme.loadingText);
+      speechManager.speakInstruction(theme.loadingText);
     }
-    
+
     return () => {
       endGameSession();
       speechManager.stop();
@@ -111,7 +113,22 @@ export default function CurriculumOrchestrator({
     if (currentQuestionIndex + 1 < lessonContent.questions.length) {
       nextQuestion();
     } else {
-      nextQuestion(); // Trigger finish state
+      // Lesson finished — compute stats and navigate to the result screen.
+      const accuracy = lessonContent.questions.length > 0
+        ? Math.round((totalScore / lessonContent.questions.length) * 100)
+        : 0;
+      useUserStore.getState().markLessonComplete(gradeKey, lessonId);
+      endGameSession();
+      router.replace({
+        pathname: '/game/result',
+        params: {
+          lessonId,
+          gradeKey,
+          score: totalScore,
+          total: lessonContent.questions.length,
+          accuracy,
+        },
+      });
     }
   };
 
@@ -130,11 +147,13 @@ export default function CurriculumOrchestrator({
     switch (engineType) {
       // case 'picker': return <PickerEngine {...props} />;
       // case 'counter': return <CounterEngine {...props} />;
+      case 'picker': return <PickerEngine key={currentQuestionIndex} {...props} />;
       case 'composer': return <ComposeEngine {...props} />;
       case 'numpad': return <NumpadEngine {...props} />;
       case 'dragdrop': return <DragDropEngine key={currentQuestionIndex} {...props} />;
       case 'connectdots': return <ConnectDotsEngine key={currentQuestionIndex} {...props} />;
       case 'shapetracer': return <ShapeTracerEngine key={currentQuestionIndex} {...props} />;
+      case 'shape_hunt': return <ShapeHuntEngine key={currentQuestionIndex} {...props} />;
       case 'ordinal_sequence': return <OrdinalSequenceEngine key={currentQuestionIndex} {...props} />;
       case 'sort': return <SortEngine key={currentQuestionIndex} {...props} />;
       // MatcherEngine uses a different prop contract (question/onAnswer) than the
@@ -165,31 +184,15 @@ export default function CurriculumOrchestrator({
       {/* Gameplay Area */}
       <View style={styles.engineWrapper}>
         {isFinished ? (
-           <View style={styles.successContainer}>
-             <Text style={[styles.successTitle, { color: theme.primaryColor, fontFamily: theme.fontFamily.title }]}>
-               {theme.finishTitle}
-             </Text>
-             <Text style={[styles.successScore, { fontFamily: theme.fontFamily.body }]}>
-               You collected {totalScore} points
-             </Text>
-             <TouchableOpacity 
-               style={[styles.finishButton, { backgroundColor: theme.primaryColor }]} 
-               onPress={() => {
-                  useUserStore.getState().markLessonComplete(gradeKey, lessonId);
-                  router.back();
-               }}
-             >
-                <Text style={[styles.finishText, { fontFamily: theme.fontFamily.accent }]}>
-                  {theme.finishButtonText}
-                </Text>
-             </TouchableOpacity>
-           </View>
+          // Lesson is now handled by navigation to GameResultScreen.
+          // This fallback content is kept for safety, though it should never display.
+          null
         ) : (
           renderEngine()
         )}
       </View>
 
-      <ExitModal 
+      <ExitModal
         isVisible={showExitModal}
         onCancel={() => setShowExitModal(false)}
         onConfirm={() => {

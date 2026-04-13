@@ -39,6 +39,14 @@ export const useUserStore = create(
 
       activities: [], // Array of { id, type, title, timestamp, points, icon }
 
+      /**
+       * Recent activity feed (Profile UI).
+       * Stored with UTC timestamps; display formatting happens in UI.
+       *
+       * Shape: { id, iconType, iconValue, timestampUtc, description }
+       */
+      recentActivity: [],
+
       /*
        * XP session log (weekly chart / analytics) — separate from `activities` (UI feed).
        *
@@ -72,6 +80,21 @@ export const useUserStore = create(
           ...state.activities
         ].slice(0, 50) // Keep last 50
       })),
+
+      addRecentActivity: (activity) =>
+        set((state) => {
+          const entry = {
+            ...activity,
+            id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+            timestampUtc: new Date().toISOString(),
+          };
+
+          return {
+            recentActivity: [entry, ...(state.recentActivity ?? [])].slice(0, 30),
+          };
+        }),
+
+      clearRecentActivity: () => set({ recentActivity: [] }),
 
       /**
        * Persists one XP sample per game session (see inline note on `xpSessionLog`).
@@ -142,6 +165,7 @@ export const useUserStore = create(
         stats: { sunPoints: 0, badges: 0, problemsSolved: 0, accuracy: '0%', streak: 0 },
         completedLessons: {},
         activities: [],
+        recentActivity: [],
         xpSessionLog: [],
       }),
     }),

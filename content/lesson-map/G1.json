@@ -5,11 +5,12 @@
     {
       "id": 1,
       "title": "Geometric Blooms",
-      "subtitle": "2D Shapes — Circles, squares, triangles & more",
+      "subtitle": "2D Shapes — Identify circles, squares, triangles & more",
       "type": "lesson",
+      "quarter": 1,
       "status": "locked",
       "x": 0.5,
-      "y": 0.9,
+      "y": 0.97,
       "icon": "shape-outline"
     },
     {
@@ -17,9 +18,10 @@
       "title": "Pairing Petals",
       "subtitle": "Numbers — Read, write & add numbers up to 20",
       "type": "lesson",
+      "quarter": 1,
       "status": "locked",
       "x": 0.25,
-      "y": 0.75,
+      "y": 0.90,
       "icon": "plus"
     },
     {
@@ -27,30 +29,198 @@
       "title": "The Ranking Vines",
       "subtitle": "Ordinal Numbers — Describe position (1st–10th)",
       "type": "lesson",
+      "quarter": 1,
       "status": "locked",
       "x": 0.75,
-      "y": 0.6,
+      "y": 0.83,
       "icon": "list"
     },
     {
       "id": 4,
       "title": "Sorting Seeds",
-      "subtitle": "Compare & Order — Smallest to largest",
+      "subtitle": "Compare & Order — Arrange from smallest to largest",
       "type": "lesson",
+      "quarter": 1,
       "status": "locked",
-      "x": 0.4,
-      "y": 0.45,
+      "x": 0.35,
+      "y": 0.76,
       "icon": "bar-chart"
     },
     {
       "id": 5,
       "title": "The Master Gardener",
-      "subtitle": "Final Grade 1 Quarter 1 Review",
+      "subtitle": "Quarter 1 Boss — Final review of all Q1 topics",
       "type": "boss",
+      "quarter": 1,
+      "status": "locked",
+      "x": 0.65,
+      "y": 0.69,
+      "icon": "trophy"
+    },
+    {
+      "id": 6,
+      "title": "Measuring Meadow",
+      "subtitle": "Measurement — Compare lengths using non-standard units",
+      "type": "lesson",
+      "quarter": 2,
+      "status": "locked",
+      "x": 0.25,
+      "y": 0.62,
+      "icon": "resize"
+    },
+    {
+      "id": 7,
+      "title": "Hundred Vines",
+      "subtitle": "Numbers to 100 — Count, order & skip-count to 100",
+      "type": "lesson",
+      "quarter": 2,
+      "status": "locked",
+      "x": 0.7,
+      "y": 0.55,
+      "icon": "layers"
+    },
+    {
+      "id": 8,
+      "title": "Place Value Pond",
+      "subtitle": "Place Value — Tens and ones up to 100",
+      "type": "lesson",
+      "quarter": 2,
+      "status": "locked",
+      "x": 0.3,
+      "y": 0.48,
+      "icon": "grid"
+    },
+    {
+      "id": 9,
+      "title": "Addition Grove",
+      "subtitle": "Addition to 100 — Add two-digit numbers",
+      "type": "lesson",
+      "quarter": 2,
+      "status": "locked",
+      "x": 0.72,
+      "y": 0.41,
+      "icon": "plus-circle"
+    },
+    {
+      "id": 10,
+      "title": "The Harvest Master",
+      "subtitle": "Quarter 2 Boss — Final review of all Q2 topics",
+      "type": "boss",
+      "quarter": 2,
+      "status": "locked",
+      "x": 0.4,
+      "y": 0.34,
+      "icon": "trophy"
+    },
+    {
+      "id": 11,
+      "title": "Data Garden",
+      "subtitle": "Data — Read & create pictographs and data tables",
+      "type": "lesson",
+      "quarter": 3,
+      "status": "locked",
+      "x": 0.68,
+      "y": 0.28,
+      "icon": "pie-chart"
+    },
+    {
+      "id": 12,
+      "title": "Subtraction Springs",
+      "subtitle": "Subtraction to 20 — Take away and find missing numbers",
+      "type": "lesson",
+      "quarter": 3,
+      "status": "locked",
+      "x": 0.28,
+      "y": 0.22,
+      "icon": "minus-circle"
+    },
+    {
+      "id": 13,
+      "title": "The Deep Roots",
+      "subtitle": "Subtraction to 100 — Subtract two-digit numbers",
+      "type": "lesson",
+      "quarter": 3,
+      "status": "locked",
+      "x": 0.68,
+      "y": 0.16,
+      "icon": "minus"
+    },
+    {
+      "id": 14,
+      "title": "Pattern Trails",
+      "subtitle": "Patterns — Identify, extend & create repeating patterns",
+      "type": "lesson",
+      "quarter": 3,
+      "status": "locked",
+      "x": 0.32,
+      "y": 0.10,
+      "icon": "activity"
+    },
+    {
+      "id": 15,
+      "title": "Fruit Season Boss",
+      "subtitle": "Quarter 3 Boss — Final review of all Q3 topics",
+      "type": "boss",
+      "quarter": 3,
+      "status": "locked",
+      "x": 0.62,
+      "y": 0.05,
+      "icon": "trophy"
+    },
+    {
+      "id": 16,
+      "title": "Fraction Flowers",
+      "subtitle": "Fractions — Identify halves, thirds & fourths",
+      "type": "lesson",
+      "quarter": 4,
+      "status": "locked",
+      "x": 0.28,
+      "y": -0.02,
+      "icon": "divide-circle"
+    },
+    {
+      "id": 17,
+      "title": "Peso Market",
+      "subtitle": "Money — Identify & count Philippine peso coins and bills",
+      "type": "lesson",
+      "quarter": 4,
+      "status": "locked",
+      "x": 0.7,
+      "y": -0.09,
+      "icon": "dollar-sign"
+    },
+    {
+      "id": 18,
+      "title": "Garden Clock Tower",
+      "subtitle": "Time — Read analog clocks and tell time to the half hour",
+      "type": "lesson",
+      "quarter": 4,
+      "status": "locked",
+      "x": 0.3,
+      "y": -0.16,
+      "icon": "clock"
+    },
+    {
+      "id": 19,
+      "title": "Calendar Clearing",
+      "subtitle": "Calendar & Turns — Days, months & quarter/half turns",
+      "type": "lesson",
+      "quarter": 4,
+      "status": "locked",
+      "x": 0.68,
+      "y": -0.23,
+      "icon": "calendar"
+    },
+    {
+      "id": 20,
+      "title": "The Grand Gardener",
+      "subtitle": "Final Boss — Master all 4 Quarters of Grade 1",
+      "type": "boss",
+      "quarter": 4,
       "status": "locked",
       "x": 0.5,
-      "y": 0.2,
-      "icon": "trophy"
+      "y": -0.31,
+      "icon": "award"
     }
   ]
 }

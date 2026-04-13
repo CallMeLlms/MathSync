@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, LinearTransition, FadeIn } from 'react-native-reanimated';
@@ -69,11 +69,19 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, widt
  */
 export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
   const [selectedChoice, setSelectedChoice] = useState(null);
+  const answerTimeoutRef = useRef(null);
 
   // Reset local state when a new problem is passed
   useEffect(() => {
     setSelectedChoice(null);
   }, [problem?.answer]);
+
+  // Cancel any pending answer dispatch on unmount
+  useEffect(() => {
+    return () => {
+      if (answerTimeoutRef.current) clearTimeout(answerTimeoutRef.current);
+    };
+  }, []);
 
   if (!problem || !problem.metadata) return null;
 
@@ -90,9 +98,9 @@ export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
     const isCorrect = String(value) === String(answer);
     
     // Slight delay so the button can animate its selection state before moving on
-    setTimeout(() => {
+    answerTimeoutRef.current = setTimeout(() => {
         onAnswer(isCorrect, String(value));
-    }, 400); 
+    }, 400);
   };
 
   // Determine grid layout based on number of choices (usually 4)

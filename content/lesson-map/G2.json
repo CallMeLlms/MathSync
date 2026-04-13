@@ -4,43 +4,36 @@
   "levels": [
     {
       "id": 1,
-      "title": "Garden Review",
-      "subtitle": "Numbers up to 100",
+      "title": "Place Patrol",
+      "subtitle": "Identify place values and digit values",
+      "topicId": "place-value",
       "type": "lesson",
       "status": "active",
       "x": 0.5,
       "y": 0.85,
-      "icon": "history"
+      "icon": "filter-1"
     },
     {
       "id": 2,
-      "title": "Double Blooms",
-      "subtitle": "Addition with Regrouping",
+      "title": "Number Trail",
+      "subtitle": "Order whole numbers in sequences",
+      "topicId": "ordering-numbers",
       "type": "lesson",
-      "status": "locked",
-      "x": 0.7,
-      "y": 0.7,
-      "icon": "exposure-plus-2"
+      "status": "active",
+      "x": 0.75,
+      "y": 0.55,
+      "icon": "sort"
     },
     {
       "id": 3,
-      "title": "Butterfly Groups",
-      "subtitle": "Introductions to Multiplication",
+      "title": "Round the Bend",
+      "subtitle": "Round numbers to the nearest 10 and 100",
+      "topicId": "rounding",
       "type": "lesson",
-      "status": "locked",
+      "status": "active",
       "x": 0.3,
-      "y": 0.5,
-      "icon": "close"
-    },
-    {
-      "id": 4,
-      "title": "The Infinite Maze",
-      "subtitle": "Grade 2 Challenge",
-      "type": "boss",
-      "status": "locked",
-      "x": 0.5,
-      "y": 0.1,
-      "icon": "terrain"
+      "y": 0.25,
+      "icon": "refresh"
     }
   ]
 }

@@ -1,0 +1,39 @@
+{
+  "grade": "Grade 3",
+  "theme": "tertiary",
+  "levels": [
+    {
+      "id": 1,
+      "title": "Times Table Trek",
+      "subtitle": "Practice multiplication facts 1-12",
+      "topicId": "multiplication",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.5,
+      "y": 0.85,
+      "icon": "close"
+    },
+    {
+      "id": 2,
+      "title": "Pair the Products",
+      "subtitle": "Match multiplication equations to answers",
+      "topicId": "multiplication-matching",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.75,
+      "y": 0.55,
+      "icon": "compare-arrows"
+    },
+    {
+      "id": 3,
+      "title": "Clock & Coin",
+      "subtitle": "Tell time and count money",
+      "topicId": "time-money",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.3,
+      "y": 0.25,
+      "icon": "schedule"
+    }
+  ]
+}

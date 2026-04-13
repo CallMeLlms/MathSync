@@ -144,6 +144,16 @@ export default function MatchingEngine({ problem, onAnswer, theme }) {
     setIsProcessing(false);
   }, [problem]);
 
+  // Win condition: fire onAnswer once all cards are matched. Side effects belong here, not in state updaters.
+  useEffect(() => {
+    if (cards.length > 0 && matchedIds.length === cards.length) {
+      const timeoutId = setTimeout(() => {
+        onAnswer(true, `${cards.length / 2} Pairs Matched`);
+      }, 800);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [matchedIds, cards, onAnswer]);
+
   const handleCardPress = useCallback((id) => {
     if (isProcessing || selectedIds.includes(id) || matchedIds.includes(id)) return;
 
@@ -158,26 +168,13 @@ export default function MatchingEngine({ problem, onAnswer, theme }) {
         const card2 = cards.find(c => c.id === updated[1]);
 
         if (card1.pairId === card2.pairId) {
-          // Math!
+          // Match! Side effects happen outside setMatchedIds updater (which must be pure).
           setTimeout(() => {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            
-            setMatchedIds(mPrev => {
-              const newMatched = [...mPrev, updated[0], updated[1]];
-              
-              // Check Win Condition
-              if (newMatched.length === cards.length && cards.length > 0) {
-                // Delay dispatching success slightly to let animation play out
-                setTimeout(() => {
-                   onAnswer(true, `${(cards.length)/2} Pairs Matched`);
-                }, 800);
-              }
-              return newMatched;
-            });
-            
+            setMatchedIds(mPrev => [...mPrev, updated[0], updated[1]]);
             setSelectedIds([]);
             setIsProcessing(false);
-          }, 300); // Short delay to let users see the selection
+          }, 300);
         } else {
           // Mismatch
           setTimeout(() => {
@@ -197,10 +194,8 @@ export default function MatchingEngine({ problem, onAnswer, theme }) {
 
   // Grid math
   const cardCount = cards.length;
-  // Compute best columns: roughly 6 pairs = 12 cards => 3x4 grid
-  // 4 pairs = 8 cards => 2x4 grid or 3 columns with odd wrap. Let's force 3 columns for tablet, 2 columns for phones on small counts, but for general matching, 3 columns is usually a safe visual max before cards get too tiny on phones.
-  const columns = isTablet ? 4 : (cardCount <= 8 ? 2 : 3);
   const isTablet = width > 768;
+  const columns = isTablet ? 4 : (cardCount <= 8 ? 2 : 3);
   const paddingX = 48; // Total horizontal padding in container
   const gap = 12; // Gap between cards
   const availableWidth = width - paddingX - (gap * (columns - 1));

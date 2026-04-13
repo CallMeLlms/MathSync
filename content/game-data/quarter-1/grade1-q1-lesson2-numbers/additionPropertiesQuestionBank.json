@@ -32,7 +32,7 @@
             "competency": "NA.1.12",
             "topic": "Addition Properties",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "PICKER",
             "difficulty": "Medium",
             "question": "Look at the picture. 4 birds plus 3 birds is the same as 3 birds plus what number of birds?",
             "answer": 4,

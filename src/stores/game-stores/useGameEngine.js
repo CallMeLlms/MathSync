@@ -50,6 +50,14 @@ const useGameEngine = create((set, get) => ({
         timestampUtc: new Date().toISOString(),
         lessonId: state.activeLessonId,
       });
+
+      useUserStore.getState().addRecentActivity({
+        iconType: 'material',
+        iconValue: 'task-alt',
+        description: state.activeLessonId
+          ? `Played session: ${String(state.activeLessonId)}`
+          : 'Played a lesson session',
+      });
     }
     set({
       isSessionActive: false,

@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Colors from '@/constants/colors';
-import { Feather } from '@expo/vector-icons';
+import BadgeItem from '@/Components/Profile/BadgeItem';
 
-// Placeholder mock data
 const BADGES = [
-  { id: '1', name: 'First Win', icon: 'award', color: Colors.primary },
-  { id: '2', name: '10 Streak', icon: 'zap', color: Colors.tertiary },
-  { id: '3', name: 'Master Add', icon: 'plus-circle', color: Colors.secondary },
-  { id: '4', name: 'Fast Solver', icon: 'clock', color: Colors.primary },
+  { id: 'first_lesson', title: 'First Lesson', subtitle: 'Completed', assetId: 'icon_runner_1st', earned: true },
+  { id: 'streak_three', title: 'Streak Spark', subtitle: 'Completed', assetId: 'icon_star', earned: true },
+  { id: 'shape_scout', title: 'Shape Scout', subtitle: 'Completed', assetId: 'icon_diamond', earned: true },
+  { id: 'time_keeper', title: 'Time Keeper', subtitle: 'Locked', assetId: 'icon_clock_3', earned: false },
 ];
 
 export default function BadgeSection() {
@@ -23,10 +22,12 @@ export default function BadgeSection() {
       >
         {BADGES.map((badge) => (
           <View key={badge.id} style={styles.badgeCard}>
-            <View style={[styles.iconWrapper, { backgroundColor: badge.color + '15' }]}>
-              <Feather name={badge.icon} size={32} color={badge.color} />
-            </View>
-            <Text style={styles.badgeName}>{badge.name}</Text>
+            <BadgeItem
+              title={badge.title}
+              subtitle={badge.subtitle}
+              assetId={badge.assetId}
+              earned={badge.earned}
+            />
           </View>
         ))}
       </ScrollView>
@@ -48,25 +49,9 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 24, // Padding at edges
-    gap: 16,
+    gap: 12,
   },
   badgeCard: {
-    alignItems: 'center',
-    width: 80,
-  },
-  iconWrapper: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.surfaceContainerHigh,
-    marginBottom: 8,
-  },
-  badgeName: {
-    fontFamily: 'PlusJakartaSans-Medium',
-    fontSize: 12,
-    color: Colors.onSurfaceVariant,
-    textAlign: 'center',
+    width: 150,
   },
 });

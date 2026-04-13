@@ -1,0 +1,17 @@
+{
+  "grade": "Grade 6",
+  "theme": "senary",
+  "levels": [
+    {
+      "id": 1,
+      "title": "Algebra Apex",
+      "subtitle": "Solve basic algebraic expressions",
+      "topicId": "algebra-basics",
+      "type": "lesson",
+      "status": "active",
+      "x": 0.5,
+      "y": 0.5,
+      "icon": "functions"
+    }
+  ]
+}

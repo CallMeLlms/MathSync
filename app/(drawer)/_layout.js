@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import CustomDrawerContent from '@/Components/Navigation/CustomDrawerContent';
@@ -60,6 +59,16 @@ const DrawerLayout = () => {
           title: "Profile",
           drawerIcon: ({ color, size }) => (
             <AntDesign name="user" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name="Badges"
+        options={{
+          title: "Badges",
+          drawerIcon: ({ color, size }) => (
+            <Feather name="award" size={size} color={color} />
           ),
         }}
       />

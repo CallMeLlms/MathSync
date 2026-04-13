@@ -154,7 +154,7 @@ const ActiveNode = ({ level, onPress, theme }) => {
  */
 export default function JourneyMap({ levels = [], onNodePress }) {
   const { width } = useWindowDimensions();
-  const MAP_HEIGHT = 1000;
+  const MAP_HEIGHT = 2400;
   const NODE_SIZE = 64;
 
   // Sort levels by Y coordinate to draw the path correctly top-to-bottom
@@ -183,7 +183,7 @@ export default function JourneyMap({ levels = [], onNodePress }) {
   // Generate firefly positions scattered across the map
   const fireflies = React.useMemo(() => {
     const particles = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 20; i++) {
       particles.push({
         id: `firefly-${i}`,
         x: Math.random() * (width - 20),

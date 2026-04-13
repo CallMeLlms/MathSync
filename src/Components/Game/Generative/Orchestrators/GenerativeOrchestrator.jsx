@@ -121,8 +121,12 @@ export default function GenerativeOrchestrator({
   const handleFeedbackComplete = useCallback(() => {
     setShowFeedback(false);
     if (isLastAnswerCorrect) {
-      // Synchronously prepare next state to prevent frame lag
-      generateNextProblem(templateData?.rules);
+      try {
+        // Synchronously prepare next state to prevent frame lag
+        generateNextProblem(templateData?.rules);
+      } catch (e) {
+        console.error('[GenerativeOrchestrator] Generator error:', e);
+      }
       setCurrentIndex(prev => prev + 1);
     }
   }, [isLastAnswerCorrect, generateNextProblem, templateData]);

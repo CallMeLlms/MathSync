@@ -16,11 +16,19 @@ import { isGradeAuthorized } from '@/utils/gradeMapping';
 
 // Import curriculum data
 import G1Data from '@content/lesson-map/G1.json';
-// import G2Data from '@content/lesson-map/G2.json';
+import G2Data from '@content/lesson-map/G2.json';
+import G3Data from '@content/lesson-map/G3.json';
+import G4Data from '@content/lesson-map/G4.json';
+import G5Data from '@content/lesson-map/G5.json';
+import G6Data from '@content/lesson-map/G6.json';
 
 const CURRICULUM_MAP = {
   'G1': G1Data,
-  // 'G2': G2Data,
+  'G2': G2Data,
+  'G3': G3Data,
+  'G4': G4Data,
+  'G5': G5Data,
+  'G6': G6Data,
 };
 
 /**
@@ -131,7 +139,12 @@ export default function GradeJourney() {
   const handleStartLesson = () => {
     if (!selectedNode) return;
     setSelectedNode(null);
-    router.push(`/game/${selectedNode.id}?grade=${grade}`);
+
+    if (CURRICULUM_GRADES.includes(grade)) {
+      router.push(`/game/${selectedNode.id}?grade=${grade}`);
+    } else {
+      router.push(`/game/${selectedNode.topicId}?grade=${grade}&type=generative`);
+    }
   };
 
   if (!curriculum) {
