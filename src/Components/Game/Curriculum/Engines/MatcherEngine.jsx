@@ -7,7 +7,6 @@ import Animated, {
   withSequence,
   ZoomIn,
   FadeIn,
-  FadeInDown,
 } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
@@ -111,7 +110,7 @@ const MatchItem = ({
 
 // ─── MatcherEngine ───
 const MatcherEngine = ({ question, onAnswer }) => {
-  const { pairs = [], question: questionText } = question;
+  const { pairs = [] } = question;
 
   // Shuffle left and right independently on question mount
   const leftItems = useMemo(
@@ -203,11 +202,8 @@ const MatcherEngine = ({ question, onAnswer }) => {
   return (
     <View style={styles.container}>
 
-      {/* ── Question Header ── */}
-      <Animated.View entering={FadeInDown.duration(400)} style={styles.questionContainer}>
-        <Text style={styles.questionText}>
-          {questionText || 'Match each item to its pair.'}
-        </Text>
+      {/* ── Dynamic Instruction Hint ── */}
+      <Animated.View entering={FadeIn.duration(400)} style={styles.hintContainer}>
         <Text style={styles.instructionHint}>{instructionHint}</Text>
       </Animated.View>
 
@@ -314,18 +310,11 @@ const styles = StyleSheet.create({
     paddingTop: 24,
   },
 
-  // ─── Question Header ───
-  questionContainer: {
+  // ─── Dynamic Hint ───
+  hintContainer: {
     alignItems: 'center',
-    marginBottom: 24,
     paddingHorizontal: 8,
-  },
-  questionText: {
-    fontFamily: 'Lexend-Bold',
-    fontSize: 22,
-    color: Colors.onSurface,
-    textAlign: 'center',
-    marginBottom: 8,
+    paddingBottom: 12,
   },
   instructionHint: {
     fontFamily: 'PlusJakartaSans-Medium',

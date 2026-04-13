@@ -20,11 +20,8 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
-  withSequence,
-  withTiming,
   ZoomIn,
   FadeIn,
-  FadeInDown,
   runOnJS,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -33,7 +30,7 @@ import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const OPTION_COLORS = [
   '#FF7043', '#42A5F5', '#66BB6A', '#AB47BC',
@@ -77,41 +74,40 @@ const OptionTile = ({ label, color, index, isSelected, isCorrect, isWrong, disab
         : Colors.surfaceContainerLowest;
 
   return (
-    <Animated.View
-      entering={ZoomIn.springify().delay(index * 80)}
-      style={animatedStyle}
-    >
-      <GestureDetector gesture={tap}>
-        <Animated.View
-          style={[
-            styles.optionTile,
-            {
-              backgroundColor: bgColor,
-              borderColor: borderColor,
-              borderWidth: isSelected || isCorrect || isWrong ? 3 : 2,
-            },
-          ]}
-        >
-          <View style={[styles.optionDot, { backgroundColor: color }]} />
-          <Text
+    <Animated.View entering={ZoomIn.springify().delay(index * 80)}>
+      <Animated.View style={animatedStyle}>
+        <GestureDetector gesture={tap}>
+          <Animated.View
             style={[
-              styles.optionText,
-              isCorrect && { color: Colors.success },
-              isWrong && { color: Colors.error },
+              styles.optionTile,
+              {
+                backgroundColor: bgColor,
+                borderColor: borderColor,
+                borderWidth: isSelected || isCorrect || isWrong ? 3 : 2,
+              },
             ]}
-            numberOfLines={2}
-            adjustsFontSizeToFit
           >
-            {String(label)}
-          </Text>
-          {isCorrect && (
-            <Ionicons name="checkmark-circle" size={22} color={Colors.success} style={styles.optionIcon} />
-          )}
-          {isWrong && (
-            <Ionicons name="close-circle" size={22} color={Colors.error} style={styles.optionIcon} />
-          )}
-        </Animated.View>
-      </GestureDetector>
+            <View style={[styles.optionDot, { backgroundColor: color }]} />
+            <Text
+              style={[
+                styles.optionText,
+                isCorrect && { color: Colors.success },
+                isWrong && { color: Colors.error },
+              ]}
+              numberOfLines={2}
+              adjustsFontSizeToFit
+            >
+              {String(label)}
+            </Text>
+            {isCorrect && (
+              <Ionicons name="checkmark-circle" size={22} color={Colors.success} style={styles.optionIcon} />
+            )}
+            {isWrong && (
+              <Ionicons name="close-circle" size={22} color={Colors.error} style={styles.optionIcon} />
+            )}
+          </Animated.View>
+        </GestureDetector>
+      </Animated.View>
     </Animated.View>
   );
 };
@@ -193,11 +189,9 @@ const PickerEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
-      {/* Question Display */}
-      <Animated.View entering={FadeInDown.springify().delay(100)} style={styles.questionCard}>
-        <Text style={styles.questionText}>{questionText || 'Pick the correct answer.'}</Text>
+      {/* Dynamic Instruction Hint */}
+      <Animated.View entering={FadeIn.delay(100)} style={styles.hintContainer}>
         <Animated.Text
-          entering={FadeIn.delay(200)}
           style={[
             styles.instructionText,
             answered && isCorrectResult && { color: Colors.success },
@@ -255,22 +249,10 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     gap: 16,
   },
-  questionCard: {
-    width: '100%',
-    backgroundColor: Colors.surfaceContainerLowest,
-    borderRadius: 24,
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    borderWidth: 2,
-    borderColor: Colors.outlineVariant,
+  hintContainer: {
     alignItems: 'center',
-    gap: 8,
-  },
-  questionText: {
-    fontFamily: 'Lexend-Bold',
-    fontSize: SCREEN_HEIGHT * 0.024,
-    color: Colors.onSurface,
-    textAlign: 'center',
+    paddingHorizontal: 8,
+    paddingBottom: 4,
   },
   instructionText: {
     fontFamily: 'PlusJakartaSans-SemiBold',

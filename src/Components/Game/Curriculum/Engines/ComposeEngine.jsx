@@ -50,24 +50,23 @@ const NumberChip = ({ value, color, onPress, disabled, index }) => {
     .enabled(!disabled);
 
   return (
-    <Animated.View
-      entering={ZoomIn.springify().delay(index * 60)}
-      style={animatedStyle}
-    >
-      <GestureDetector gesture={tap}>
-        <Animated.View
-          style={[
-            styles.chip,
-            {
-              backgroundColor: color.bg,
-              borderColor: color.border,
-            },
-            disabled && { opacity: 0.3 },
-          ]}
-        >
-          <Text style={styles.chipText}>{value}</Text>
-        </Animated.View>
-      </GestureDetector>
+    <Animated.View entering={ZoomIn.springify().delay(index * 60)}>
+      <Animated.View style={animatedStyle}>
+        <GestureDetector gesture={tap}>
+          <Animated.View
+            style={[
+              styles.chip,
+              {
+                backgroundColor: color.bg,
+                borderColor: color.border,
+              },
+              disabled && { opacity: 0.3 },
+            ]}
+          >
+            <Text style={styles.chipText}>{value}</Text>
+          </Animated.View>
+        </GestureDetector>
+      </Animated.View>
     </Animated.View>
   );
 };

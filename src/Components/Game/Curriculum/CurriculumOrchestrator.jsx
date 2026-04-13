@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ActivityIndicator, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import useGameEngine from '@/stores/game-stores/useGameEngine';
 import useUserStore from '@/stores/user-stores/useUserStore';
@@ -21,6 +22,10 @@ import ShapeTracerEngine from './Engines/ShapeTracerEngine';
 import ShapeHuntEngine from './Engines/ShapeHuntEngine';
 import OrdinalSequenceEngine from './Engines/OrdinalSequenceEngine';
 import SortEngine from './Engines/SortEngine';
+// Gesture-heavy engines must render inside a plain View — a ScrollView would
+// intercept their touch responder and break drag/draw interactions.
+const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer']);
+
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
 
@@ -91,6 +96,7 @@ export default function CurriculumOrchestrator({
 
   const currentQuestion = lessonContent.questions[currentQuestionIndex];
   const isFinished = currentQuestionIndex >= lessonContent.questions.length;
+  const questionText = currentQuestion?.question || currentQuestion?.instruction || currentQuestion?.text || null;
 
   const handleResult = (isCorrect, userAnswerItems = []) => {
     recordAnswer(isCorrect);
@@ -132,6 +138,9 @@ export default function CurriculumOrchestrator({
     }
   };
 
+  // Hoisted so the JSX wrapper can read it for the ScrollView/View decision.
+  const engineType = currentQuestion?.type?.toLowerCase();
+
   const renderEngine = () => {
     const props = {
       data: currentQuestion,
@@ -142,7 +151,6 @@ export default function CurriculumOrchestrator({
     // Evaluate engine type per-question, not per-lesson.
     // This enables multi-engine lessons where the UI layer swaps automatically
     // as the student advances (e.g. Matcher → Numpad → Composer).
-    const engineType = currentQuestion?.type?.toLowerCase();
 
     switch (engineType) {
       // case 'picker': return <PickerEngine {...props} />;
@@ -174,23 +182,33 @@ export default function CurriculumOrchestrator({
       {/* HUD */}
       <View style={styles.hud}>
         <TouchableOpacity style={styles.exitButton} onPress={() => setShowExitModal(true)}>
-          <Text style={[styles.exitText, { fontFamily: theme.fontFamily.accent }]}>{theme.exitText}</Text>
+          <Ionicons name="close" size={24} color={Colors.onSurfaceVariant} />
         </TouchableOpacity>
-        <Text style={[styles.scoreText, { color: theme.primaryColor, fontFamily: theme.fontFamily.accent }]}>
-          {theme.scoreLabel}: {totalScore}
-        </Text>
       </View>
 
-      {/* Gameplay Area */}
-      <View style={styles.engineWrapper}>
-        {isFinished ? (
-          // Lesson is now handled by navigation to GameResultScreen.
-          // This fallback content is kept for safety, though it should never display.
-          null
-        ) : (
-          renderEngine()
-        )}
-      </View>
+      {/* Question Header */}
+      {questionText ? (
+        <View style={styles.questionHeader}>
+          <Text style={styles.questionHeaderText}>{questionText}</Text>
+        </View>
+      ) : null}
+
+      {/* Gameplay Area — gesture engines use a plain View to preserve touch
+          responders; all other engines use a ScrollView so content is never
+          clipped on smaller devices. */}
+      {GESTURE_ENGINES.has(engineType) ? (
+        <View style={styles.engineWrapper}>
+          {isFinished ? null : renderEngine()}
+        </View>
+      ) : (
+        <ScrollView
+          style={styles.engineScrollWrapper}
+          contentContainerStyle={styles.engineScrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          {isFinished ? null : renderEngine()}
+        </ScrollView>
+      )}
 
       <ExitModal
         isVisible={showExitModal}
@@ -228,49 +246,50 @@ const styles = StyleSheet.create({
   },
   hud: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.outlineVariant,
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
   },
   exitButton: {
-    padding: 8,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: Colors.surfaceContainerLow,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: Colors.outlineVariant,
   },
-  exitText: {
-    color: Colors.onSurfaceVariant,
-    fontSize: 16,
+  questionHeader: {
+    marginHorizontal: 20,
+    marginTop: 8,
+    marginBottom: 8,
+    backgroundColor: Colors.surfaceContainerLow,
+    borderWidth: 1.5,
+    borderColor: Colors.outlineVariant,
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    alignItems: 'center',
   },
-  scoreText: {
-    fontSize: 18,
+  questionHeaderText: {
+    fontFamily: 'Lexend-Bold',
+    fontSize: 24,
+    color: Colors.onSurface,
+    textAlign: 'center',
+    lineHeight: 32,
   },
   engineWrapper: {
     flex: 1,
+    paddingTop: 24,
   },
-  successContainer: {
+  engineScrollWrapper: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
   },
-  successTitle: {
-    fontSize: 32,
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  successScore: {
-    fontSize: 20,
-    color: Colors.onSurface,
-    marginBottom: 40,
-  },
-  finishButton: {
-    paddingHorizontal: 32,
-    paddingVertical: 16,
-    borderRadius: 100,
-  },
-  finishText: {
-    color: '#FFF',
-    fontSize: 16,
+  engineScrollContent: {
+    flexGrow: 1,
+    paddingTop: 24,
+    paddingBottom: 32,
   },
   errorText: {
     color: Colors.error,

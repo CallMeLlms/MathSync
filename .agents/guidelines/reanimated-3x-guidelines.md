@@ -906,7 +906,36 @@ const pan = Gesture.Pan().onUpdate((e) => {
 })
 ```
 
-### 8.7 Over-using `runOnJS`
+### 8.7 Mixing layout animations with `transform` animated styles on the same component
+
+```jsx
+// ❌ Wrong: layout animation (entering) and useAnimatedStyle transform on the same Animated.View
+// Produces: [Reanimated] Property "transform" of AnimatedComponent(View) may be overwritten
+//           by a layout animation. Please wrap your component with an animated view and apply
+//           the layout animation on the wrapper.
+const animatedStyle = useAnimatedStyle(() => ({
+  transform: [{ scale: scale.value }],
+}));
+
+return (
+  <Animated.View entering={ZoomIn.springify()} style={animatedStyle}>
+    {/* content */}
+  </Animated.View>
+);
+
+// ✅ Correct: outer Animated.View owns the layout animation, inner owns the transform style
+return (
+  <Animated.View entering={ZoomIn.springify()}>
+    <Animated.View style={animatedStyle}>
+      {/* content */}
+    </Animated.View>
+  </Animated.View>
+);
+```
+
+> **Rule:** Never put both an `entering`/`exiting`/`layout` prop AND a `style` containing `transform` on the same `Animated.View`. The layout animation uses `transform` internally — it will overwrite any transform from `useAnimatedStyle` on the same node. Always separate them onto two layers: one wrapper for the layout animation, one inner for the animated style.
+
+### 8.8 Over-using `runOnJS`
 
 ```jsx
 // ❌ Wrong: using runOnJS as a crutch for all logic

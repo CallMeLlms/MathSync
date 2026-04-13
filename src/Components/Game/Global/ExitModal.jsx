@@ -37,8 +37,8 @@ export default function ExitModal({
 
   return (
     <View style={[StyleSheet.absoluteFillObject, styles.overlay]}>
-        <Animated.View 
-          style={[styles.card, animatedStyle]}
+        <Animated.View
+          style={[styles.card, { borderColor: theme.primaryColor }, animatedStyle]}
           accessibilityRole="alert"
         >
           {/* Header */}
@@ -91,24 +91,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
-    elevation: 100,
     zIndex: 100,
   },
   card: {
     width: '100%',
     maxWidth: 360,
     backgroundColor: Colors.surface,
-    borderRadius: 28,
-    borderWidth: 3,
-    borderColor: Colors.outlineVariant,
-    padding: 24,
+    borderRadius: 32,
+    borderWidth: 4,
+    padding: 28,
     alignItems: 'center',
   },
   iconCircle: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: Colors.surfaceVariant,
+    backgroundColor: Colors.surfaceContainerHigh,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -139,7 +137,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   cancelButton: {
-    backgroundColor: Colors.surfaceVariant,
+    backgroundColor: Colors.surfaceContainerHigh,
   },
   confirmButton: {
     backgroundColor: Colors.error,

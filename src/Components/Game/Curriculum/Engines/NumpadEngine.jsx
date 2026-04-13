@@ -46,20 +46,19 @@ const NumpadKey = ({ value, onPress, disabled, color, index }) => {
     .enabled(!disabled);
 
   return (
-    <Animated.View
-      entering={ZoomIn.springify().delay(index * 40)}
-      style={animatedStyle}
-    >
-      <GestureDetector gesture={tap}>
-        <Animated.View
-          style={[
-            styles.numKey,
-            { backgroundColor: color, opacity: disabled ? 0.35 : 1 },
-          ]}
-        >
-          <Text style={styles.numKeyText}>{value}</Text>
-        </Animated.View>
-      </GestureDetector>
+    <Animated.View entering={ZoomIn.springify().delay(index * 40)}>
+      <Animated.View style={animatedStyle}>
+        <GestureDetector gesture={tap}>
+          <Animated.View
+            style={[
+              styles.numKey,
+              { backgroundColor: color, opacity: disabled ? 0.35 : 1 },
+            ]}
+          >
+            <Text style={styles.numKeyText}>{value}</Text>
+          </Animated.View>
+        </GestureDetector>
+      </Animated.View>
     </Animated.View>
   );
 };

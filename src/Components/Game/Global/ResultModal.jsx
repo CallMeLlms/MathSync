@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
-    elevation: 99,
     zIndex: 100,
   },
   card: {
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
     borderRadius: 32,
     borderWidth: 4,
-    padding: 32,
+    padding: 28,
     alignItems: 'center',
   },
   emoji: {
