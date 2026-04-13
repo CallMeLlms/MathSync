@@ -37,7 +37,7 @@ export default function Grades() {
       id: 'G3', 
       title: 'Grade 3', 
       desc: 'Learning the secrets of vertical forests and tall vines.',
-      icon: 'potted-plant', 
+      icon: 'eco',
       color: Colors.tertiary, 
       bg: Colors.surfaceContainerLow 
     },
