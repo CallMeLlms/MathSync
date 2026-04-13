@@ -70,7 +70,7 @@ const CURRICULUM_GRADES = ['G1']; // Only G1 uses locked/curriculum progression
 export default function GradeJourney() {
   const { grade } = useLocalSearchParams();
   const router = useRouter();
-  
+
   const completedLessonsMap = useUserStore((s) => s.completedLessons);
   const completedLessons = completedLessonsMap[grade] || EMPTY_ARRAY;
 
@@ -88,10 +88,10 @@ export default function GradeJourney() {
     // Guard Clause: Redirect if the user manually hits a URL for an unauthorized grade
     const profile = useUserStore.getState().profile;
     if (!isGradeAuthorized(grade, profile)) {
-       // Since useMemo runs during render, we use a setTimeout or a separate effect to redirect
-       // safely without causing React state warnings.
-       setTimeout(() => router.replace('/Grades'), 0);
-       return [];
+      // Since useMemo runs during render, we use a setTimeout or a separate effect to redirect
+      // safely without causing React state warnings.
+      setTimeout(() => router.replace('/Grades'), 0);
+      return [];
     }
 
     const isGenerativeGrade = !CURRICULUM_GRADES.includes(grade);
@@ -105,7 +105,7 @@ export default function GradeJourney() {
       // For curriculum grades (G1), use gated progression logic
       const id = String(level.id);
       const isCompleted = completedLessons.includes(id);
-      
+
       const allPreviousCompleted = curriculum.levels
         .slice(0, index)
         .every((prev) => completedLessons.includes(String(prev.id)));
@@ -155,8 +155,8 @@ export default function GradeJourney() {
       <Stack.Screen options={{ headerShown: false }} />
 
       <View style={styles.content}>
-        <JourneyMap 
-          levels={computedLevels} 
+        <JourneyMap
+          levels={computedLevels}
           onNodePress={handleNodePress}
         />
       </View>
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingTop: 72,
+    paddingTop: 20,
   },
   emptyContent: {
     flex: 1,

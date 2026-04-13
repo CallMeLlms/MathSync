@@ -36,6 +36,7 @@ import G1_OrdinalSequence from '@content/game-data/quarter-1/grade1-q1-lesson3-p
 import G1_CompareOrder from '@content/game-data/quarter-1/grade1-q1-lesson4-compare-and-order/compareOrderQuestionBank.json';
 import G1_ComparingQty from '@content/game-data/quarter-1/grade1-q1-lesson4-compare-and-order/comparingQuantitiesQuestionBank.json';
 import G1_NumberLine from '@content/game-data/quarter-1/grade1-q1-lesson4-compare-and-order/numberLineOrderingQuestionBank.json';
+import G1_SortTest from '@content/game-data/quarter-1/grade1-q1-lesson4-compare-and-order/sortEngineTestBank.json';
 
 // ─── Fisher-Yates Shuffle ────────────────────────────────────────────
 function shuffle(arr) {
@@ -131,7 +132,7 @@ const BUNDLED_DATA = {
           competency: 'NA.1.7–1.8',
           description: 'Compare & Order — Smallest to largest',
         },
-        questions: getPlayableQuestions([G1_CompareOrder, G1_ComparingQty, G1_NumberLine]),
+        questions: getPlayableQuestions([G1_CompareOrder, G1_ComparingQty, G1_NumberLine, G1_SortTest]),
       },
     ],
   },

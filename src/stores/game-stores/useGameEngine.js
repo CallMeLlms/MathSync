@@ -1,4 +1,9 @@
 import { create } from 'zustand';
+import useUserStore from '@/stores/user-stores/useUserStore';
+
+function createSessionId() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+}
 
 /**
  * useGameEngine Store
@@ -9,6 +14,7 @@ const useGameEngine = create((set, get) => ({
   totalScore: 0,
   currentQuestionIndex: 0,
   isSessionActive: false,
+  sessionId: null,
 
   // Start a new game session
   startGameSession: (lessonId) => set({
@@ -16,6 +22,7 @@ const useGameEngine = create((set, get) => ({
     totalScore: 0,
     currentQuestionIndex: 0,
     isSessionActive: true,
+    sessionId: createSessionId(),
   }),
 
   // Record an answer result
@@ -33,11 +40,25 @@ const useGameEngine = create((set, get) => ({
     currentQuestionIndex: state.currentQuestionIndex + 1,
   })),
 
-  // End the game session
-  endGameSession: () => set({
-    isSessionActive: false,
-    activeLessonId: null,
-  }),
+  // End the game session (logs XP once per sessionId — see useUserStore xpSessionLog note)
+  endGameSession: () => {
+    const state = get();
+    if (state.sessionId) {
+      useUserStore.getState().logXpSession({
+        sessionId: state.sessionId,
+        xp: state.totalScore,
+        timestampUtc: new Date().toISOString(),
+        lessonId: state.activeLessonId,
+      });
+    }
+    set({
+      isSessionActive: false,
+      activeLessonId: null,
+      sessionId: null,
+      currentQuestionIndex: 0,
+      totalScore: 0,
+    });
+  },
 }));
 
 export default useGameEngine;

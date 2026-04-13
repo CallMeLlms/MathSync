@@ -16,7 +16,7 @@
  *   - g1_q4_money_peso_1, g1_q4_money_peso_5, g1_q4_money_peso_10
  */
 
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import Animated, {
   useSharedValue,
@@ -34,10 +34,7 @@ import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const ITEM_SIZE = (SCREEN_WIDTH - 80) / 2;
-
-const ITEM_COLORS = [
+const getSharedColors = () => [
   { bg: Colors.primary, border: Colors.onPrimaryContainer, text: Colors.onPrimary },
   { bg: Colors.secondary, border: Colors.onSecondaryContainer, text: Colors.onSecondary },
   { bg: Colors.tertiary, border: Colors.onTertiaryContainer, text: Colors.onTertiary },
@@ -49,9 +46,10 @@ const hapticLight = () => {
 };
 
 // ─── DroppedItemDisplay: renders the item inside the basket ───
-const DroppedItemDisplay = ({ value, data, isWrong, isCorrect, onRemove, disabled }) => {
-  const bg = isWrong ? Colors.error : isCorrect ? Colors.success : '#FF8F00';
-  const borderColor = isWrong ? '#C62828' : isCorrect ? '#2E7D32' : '#E65100';
+const DroppedItemDisplay = ({ value, data, isWrong, isCorrect, onRemove, disabled, screenHeight, baseStyles }) => {
+  const bg = isWrong ? Colors.errorContainer : isCorrect ? Colors.successContainer : Colors.primaryContainer;
+  const borderColor = isWrong ? Colors.error : isCorrect ? Colors.success : Colors.primary;
+  const textColor = isWrong ? Colors.onErrorContainer : isCorrect ? Colors.onSuccessContainer : Colors.onPrimaryContainer;
 
   const removeScale = useSharedValue(1);
   const removeStyle = useAnimatedStyle(() => ({
@@ -74,15 +72,15 @@ const DroppedItemDisplay = ({ value, data, isWrong, isCorrect, onRemove, disable
     <Animated.View entering={ZoomIn.springify()}>
       <GestureDetector gesture={tap}>
         <Animated.View
-          style={[styles.droppedItem, { backgroundColor: bg, borderColor }, removeStyle]}
+          style={[baseStyles.droppedItem, { backgroundColor: bg, borderColor }, removeStyle]}
         >
           {data?.assetId && (
             <AssetDisplay
               assetId={data.assetId}
-              style={{ width: SCREEN_HEIGHT * 0.045, height: SCREEN_HEIGHT * 0.045 }}
+              style={{ width: screenHeight * 0.045, height: screenHeight * 0.045 }}
             />
           )}
-          <Text style={styles.droppedText}>{String(value)}</Text>
+          <Text style={[baseStyles.droppedText, { color: textColor, fontSize: screenHeight * 0.032 }]}>{String(value)}</Text>
         </Animated.View>
       </GestureDetector>
     </Animated.View>
@@ -98,6 +96,9 @@ const DraggableItem = ({
   gridLayout,
   onDropInZone,
   disabled,
+  screenHeight,
+  itemSize,
+  baseStyles,
 }) => {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -119,7 +120,7 @@ const DraggableItem = ({
       centerY >= dz.y &&
       centerY <= dz.y + dz.height
     );
-  }, []);
+  }, [dropZoneLayout, gridLayout]);
 
   const handleRelease = useCallback(
     (tx, ty) => {
@@ -169,8 +170,10 @@ const DraggableItem = ({
         <GestureDetector gesture={pan}>
           <Animated.View
             style={[
-              styles.draggableItem,
+              baseStyles.draggableItem,
               {
+                width: itemSize,
+                height: itemSize * 0.7,
                 backgroundColor: colorTheme.bg,
                 borderColor: colorTheme.border,
                 opacity: disabled ? 0.5 : 1,
@@ -181,10 +184,10 @@ const DraggableItem = ({
             {data?.assetId && (
               <AssetDisplay
                 assetId={data.assetId}
-                style={{ width: SCREEN_HEIGHT * 0.045, height: SCREEN_HEIGHT * 0.045 }}
+                style={{ width: screenHeight * 0.045, height: screenHeight * 0.045 }}
               />
             )}
-            <Text style={[styles.itemText, { color: colorTheme.text }]}>
+            <Text style={[baseStyles.itemText, { color: colorTheme.text, fontSize: screenHeight * 0.026 }]}>
               {String(value)}
             </Text>
           </Animated.View>
@@ -196,6 +199,11 @@ const DraggableItem = ({
 
 // ─── DragDropEngine: main engine component ───
 const DragDropEngine = ({ data, onResult }) => {
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  const styles = useMemo(() => getDynamicStyles(screenWidth, screenHeight), [screenWidth, screenHeight]);
+  const itemSize = (screenWidth - 80) / 2;
+  const itemColors = useMemo(() => getSharedColors(), []);
+
   const { dragItems = [], answer, question: instructionText } = data;
 
   const shuffled = useMemo(
@@ -312,11 +320,13 @@ const DragDropEngine = ({ data, onResult }) => {
             isCorrect={answered && droppedItem === answer}
             onRemove={handleRemoveFromBasket}
             disabled={answered || isWrong}
+            screenHeight={screenHeight}
+            baseStyles={baseStyles}
           />
         ) : (
           <Animated.View
             entering={FadeIn.duration(300)}
-            style={styles.emptyDropZone}
+            style={baseStyles.emptyDropZone}
           >
             <Ionicons name="basket" size={48} color={Colors.primary} />
             <Text style={styles.dropZoneHint}>Drop here!</Text>
@@ -326,7 +336,7 @@ const DragDropEngine = ({ data, onResult }) => {
 
       {/* Draggable Items Grid */}
       <View
-        style={styles.grid}
+        style={[baseStyles.grid, { minHeight: itemSize * 0.7 + 20 }]}
         onLayout={(e) => {
           const { x, y } = e.nativeEvent.layout;
           gridLayout.current = { x, y };
@@ -339,22 +349,25 @@ const DragDropEngine = ({ data, onResult }) => {
               key={`drag-${value}`}
               value={value}
               data={data}
-              colorTheme={ITEM_COLORS[i % ITEM_COLORS.length]}
+              colorTheme={itemColors[i % itemColors.length]}
               dropZoneLayout={dropZoneLayout}
               gridLayout={gridLayout}
               onDropInZone={handleDropInZone}
               disabled={answered || droppedItem !== null}
+              screenHeight={screenHeight}
+              itemSize={itemSize}
+              baseStyles={baseStyles}
             />
           );
         })}
       </View>
 
       {/* Check Answer Button */}
-      <View style={styles.footer}>
+      <View style={baseStyles.footer}>
         {droppedItem !== null && !answered && (
           <GestureDetector gesture={checkTap}>
-            <Animated.View entering={ZoomIn.springify()} exiting={ZoomOut} style={styles.checkButton}>
-              <Ionicons name="checkmark-circle" size={22} color="#FFF" />
+            <Animated.View entering={ZoomIn.springify()} exiting={ZoomOut} style={baseStyles.checkButton}>
+              <Ionicons name="checkmark-circle" size={22} color={Colors.onPrimary} />
               <Text style={styles.checkButtonText}>Check Answer</Text>
             </Animated.View>
           </GestureDetector>
@@ -364,7 +377,69 @@ const DragDropEngine = ({ data, onResult }) => {
   );
 };
 
-const styles = StyleSheet.create({
+// Base styles that don't depend on dynamic dimensions
+const baseStyles = StyleSheet.create({
+  droppedItem: {
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 18,
+    borderWidth: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 12,
+    minHeight: 44,
+    minWidth: 44,
+  },
+  droppedText: {
+    fontFamily: 'Lexend-Black',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 14,
+    paddingHorizontal: 8,
+  },
+  draggableItem: {
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 3,
+    flexDirection: 'row',
+    gap: 8,
+    minHeight: 44,
+    minWidth: 44,
+  },
+  itemText: {
+    fontFamily: 'Lexend-Black',
+  },
+  emptyDropZone: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  footer: {
+    minHeight: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  checkButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.success,
+    paddingHorizontal: 28,
+    paddingVertical: 14,
+    borderRadius: 20,
+    minHeight: 44,
+    minWidth: 44,
+    gap: 8,
+  },
+});
+
+// Dynamic styles generated based on width and height
+const getDynamicStyles = (screenWidth, screenHeight) => StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -387,13 +462,13 @@ const styles = StyleSheet.create({
   },
   hintText: {
     fontFamily: 'PlusJakartaSans-SemiBold',
-    fontSize: SCREEN_HEIGHT * 0.016,
+    fontSize: screenHeight * 0.016,
     color: Colors.onSurfaceVariant,
     flex: 1,
   },
   dropZone: {
     width: '100%',
-    minHeight: SCREEN_HEIGHT * 0.18,
+    minHeight: screenHeight * 0.18,
     borderWidth: 3,
     borderStyle: 'dashed',
     borderColor: Colors.primary,
@@ -412,78 +487,15 @@ const styles = StyleSheet.create({
     borderColor: Colors.error,
     backgroundColor: Colors.secondaryContainer,
   },
-  emptyDropZone: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-  },
   dropZoneHint: {
     fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: SCREEN_HEIGHT * 0.018,
+    fontSize: screenHeight * 0.018,
     color: Colors.primary,
-  },
-  droppedItem: {
-    paddingHorizontal: 24,
-    paddingVertical: 14,
-    borderRadius: 18,
-    borderWidth: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    gap: 12,
-    minHeight: 44,
-    minWidth: 44,
-  },
-  droppedText: {
-    fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.032,
-    color: Colors.onPrimary,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 14,
-    paddingHorizontal: 8,
-    minHeight: ITEM_SIZE * 0.7 + 20,
-  },
-  draggableItem: {
-    width: ITEM_SIZE,
-    height: ITEM_SIZE * 0.7,
-    borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 3,
-    flexDirection: 'row',
-    gap: 8,
-    minHeight: 44,
-    minWidth: 44,
-  },
-  itemText: {
-    fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.026,
-  },
-  footer: {
-    minHeight: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  checkButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.success,
-    paddingHorizontal: 28,
-    paddingVertical: 14,
-    borderRadius: 20,
-    minHeight: 44,
-    minWidth: 44,
-    gap: 8,
   },
   checkButtonText: {
     fontFamily: 'Lexend-Bold',
     color: Colors.onPrimary,
-    fontSize: SCREEN_HEIGHT * 0.019,
+    fontSize: screenHeight * 0.019,
   },
 });
 

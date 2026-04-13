@@ -154,7 +154,7 @@ const ActiveNode = ({ level, onPress, theme }) => {
  */
 export default function JourneyMap({ levels = [], onNodePress }) {
   const { width } = useWindowDimensions();
-  const MAP_HEIGHT = 900; 
+  const MAP_HEIGHT = 1000;
   const NODE_SIZE = 64;
 
   // Sort levels by Y coordinate to draw the path correctly top-to-bottom
@@ -269,7 +269,7 @@ export default function JourneyMap({ levels = [], onNodePress }) {
   return (
     <View style={styles.container}>
       <ScrollView
-        contentContainerStyle={{ height: MAP_HEIGHT }}
+        contentContainerStyle={{ height: MAP_HEIGHT + 160, paddingVertical: 80 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Background SVG Path */}
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
   nodeContainer: {
     position: 'absolute',
     alignItems: 'center',
-    width: 80, 
+    width: 80,
   },
   nodeTouchable: {
     width: 72,
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 4,
-    borderColor: Colors.surface, 
+    borderColor: Colors.surface,
   },
   // ─── Active (Pulsing) ───
   activeOuterRing: {
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: Colors.surface, 
+    borderColor: Colors.surface,
   },
   glowRing: {
     ...StyleSheet.absoluteFillObject,
@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
   labelText: {
     fontFamily: 'PlusJakartaSans-Bold',
     fontSize: 14,
-    color: Colors.success, 
+    color: Colors.success,
     textAlign: 'center',
   },
   labelTextActive: {
