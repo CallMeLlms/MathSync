@@ -31,24 +31,28 @@
             "competency": "MG.4.10",
             "topic": "Calendar Ordering",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "PICKER",
             "difficulty": "Medium",
             "question": "Look at the calendar page. What day comes after Wednesday?",
             "answer": "Thursday",
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": {
+                "options": ["Tuesday", "Wednesday", "Thursday", "Friday"]
+            }
         },
         {
             "id": "mg_4_calseq_007",
             "competency": "MG.4.10",
             "topic": "Calendar Ordering",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "PICKER",
             "difficulty": "Hard",
             "question": "Which month is the 5th month of the year?",
             "answer": "May",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": ["April", "May", "June", "July"]
+            }
         }
     ]
 }

@@ -50,12 +50,14 @@
             "competency": "NA.3.11",
             "topic": "Mixed Patterns",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "PICKER",
             "difficulty": "Hard",
             "question": "What are the next three letters: X, Y, Z, X, Y, Z, __, __, __?",
             "answer": "X, Y, Z",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": ["X, Y, Z", "Z, Y, X", "X, X, Z", "Y, Z, X"]
+            }
         }
     ]
 }

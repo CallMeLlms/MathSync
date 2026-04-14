@@ -22,7 +22,7 @@
             "question": "Use the paper circle. Fold it into two equal parts. What is one part called?",
             "answer": "one-half",
             "assetType": "manipulatives",
-            "metadata": {},
+            "metadata": { "options": ["one-whole", "one-half", "one-fourth"] },
             "assetId": "shape_circle"
         },
         {

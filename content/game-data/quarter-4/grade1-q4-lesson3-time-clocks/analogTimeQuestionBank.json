@@ -31,13 +31,14 @@
             "competency": "MG.4.9",
             "topic": "Clock Reading",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "PICKER",
             "difficulty": "Easy",
             "question": "Look at the picture. What time is shown on the clock?",
             "answer": "10:00",
             "assetId": "clock_face_10_00",
             "metadata": {
-                "reading": "10:00"
+                "reading": "10:00",
+                "options": ["9:00", "10:00", "10:30", "11:00"]
             }
         },
         {

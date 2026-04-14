@@ -19,17 +19,12 @@
             "level": "concrete",
             "type": "DRAGDROP",
             "difficulty": "Easy",
-            "question": "Drag two triangles together to make a square.",
-            "answer": "success",
+            "question": "Which two shapes make a square when put together?",
+            "answer": "2 triangles",
+            "assetId": "shape_triangle",
             "assetType": "manipulatives",
-            "metadata": {
-                "pieces": [
-                    "triangle",
-                    "triangle"
-                ],
-                "target": "square"
-            },
-            "assetId": "shape_triangle"
+            "dragItems": ["2 triangles", "2 circles", "2 squares"],
+            "metadata": {}
         },
         {
             "id": "mg_1_comp_004",

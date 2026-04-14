@@ -29,24 +29,28 @@
             "competency": "MG.4.11",
             "topic": "Calendar Use",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "PICKER",
             "difficulty": "Medium",
             "question": "Look at the picture of the December calendar. What day is Christmas (December 25)?",
             "answer": "Thursday",
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": {
+                "options": ["Monday", "Wednesday", "Thursday", "Saturday"]
+            }
         },
         {
             "id": "mg_4_caluse_007",
             "competency": "MG.4.11",
             "topic": "Calendar Use",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "PICKER",
             "difficulty": "Hard",
             "question": "If February has 28 days, what is the date of the day after February 28?",
             "answer": "March 1",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": ["February 27", "February 28", "March 1", "March 2"]
+            }
         }
     ]
 }

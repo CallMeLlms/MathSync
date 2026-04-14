@@ -43,12 +43,14 @@
             "competency": "NA.3.11",
             "topic": "Identification of Next Terms",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "PICKER",
             "difficulty": "Hard",
             "question": "Identify the next two numbers in the sequence: 2, 4, 2, 4, __, __.",
             "answer": "2, 4",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": ["2, 4", "4, 2", "2, 2", "4, 4"]
+            }
         }
     ]
 }

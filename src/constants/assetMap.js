@@ -33,21 +33,40 @@ export const AssetMap = {
   'money_coin_20':   require('@assets/games/shared/money/Coin20.webp'),
 
   // ─── Shared: Clocks (Real Assets) ────────────────────────────────
-  'clock_face_3_00':  require('@assets/games/shared/clocks/Clock-Face-3_00.webp'),
-  'clock_face_7_30':  require('@assets/games/shared/clocks/Clock-Face-7_30.webp'),
-  'clock_face_10_00': require('@assets/games/shared/clocks/Clock-Face-10_00.webp'),
+  'clock_face_1_00':  require('@assets/games/shared/clocks/Clock-Face-1.webp'),
+  'clock_face_2_00':  require('@assets/games/shared/clocks/Clock-Face-2.webp'),
+  'clock_face_3_00':  require('@assets/games/shared/clocks/Clock-Face-3.webp'),
+  'clock_face_4_00':  require('@assets/games/shared/clocks/Clock-Face-4.webp'),
+  'clock_face_5_00':  require('@assets/games/shared/clocks/Clock-Face-5.webp'),
+  'clock_face_6_00':  require('@assets/games/shared/clocks/Clock-Face-6.webp'),
+  'clock_face_7_30':  require('@assets/games/shared/clocks/Clock-Face-7.webp'),
+  'clock_face_8_00':  require('@assets/games/shared/clocks/Clock-Face-8.webp'),
+  'clock_face_9_00':  require('@assets/games/shared/clocks/Clock-Face-9.webp'),
+  'clock_face_10_00': require('@assets/games/shared/clocks/Clock-Face-10.webp'),
+  'clock_face_11_00': require('@assets/games/shared/clocks/Clock-Face-11.webp'),
+  'clock_face_12_00': require('@assets/games/shared/clocks/Clock-Face-12.webp'),
+
+  // ─── Shared: Base-10 Blocks (Real Assets) ────────────────────────
+  'block_tens':                    require('@assets/games/shared/blocks/Base-10-Block.webp'),
+  'block_ones':                    require('@assets/games/shared/blocks/Base-10-1-Block.webp'),
+  'g1_q2_manipulative_tens_block': require('@assets/games/shared/blocks/Base-10-Block.webp'),
+  'g1_q2_diagram_base10_addition': require('@assets/games/shared/blocks/Base-10-1-Block.webp'),
+
+  // ─── Shared: Sticks (Real Assets) ────────────────────────────────
+  'stick_single':       require('@assets/games/shared/sticks/Stick-1.webp'),
+  'stick_bundle_10':    require('@assets/games/shared/sticks/Stick-Bundle-10.webp'),
+  'stick_bundle_10_v1': require('@assets/games/shared/sticks/Stick-Bundle-10-Var-1.webp'),
+  'stick_bundle_10_v2': require('@assets/games/shared/sticks/Stick-Bundle-10-Var-2.webp'),
+
+  // ─── Shared: Measurement Tools (Real Assets) ─────────────────────
+  'tool_hand':      require('@assets/games/shared/paperclip-ruler-hand/Hand.webp'),
+  'tool_paperclip': require('@assets/games/shared/paperclip-ruler-hand/Paperclip.webp'),
+  'tool_ruler':     require('@assets/games/shared/paperclip-ruler-hand/Ruler.webp'),
 
   // ─── Quarter 1: Shapes — TODO: Add PNG/SVG assets to @assets/images/games/ ──
   // 'g1_q1_shape_triangle': require('@assets/images/games/g1_q1_shape_triangle.png'),
   // 'g1_q1_shape_square':   require('@assets/images/games/g1_q1_shape_square.png'),
   // 'g1_q1_object_door':    require('@assets/images/games/g1_q1_object_door.png'),
-
-  // ─── Quarter 2: Pictorial Addition — TODO: Add Base-10 Block assets ──────────
-  // 'g1_q2_manipulative_tens_block':      require('@assets/images/games/g1_q2_manipulative_tens_block.png'),
-  // 'g1_q2_manipulative_tens_ones_block': require('@assets/images/games/g1_q2_manipulative_tens_ones_block.png'),
-  // 'g1_q2_manipulative_stick_bundle':    require('@assets/images/games/g1_q2_manipulative_stick_bundle.png'),
-  // 'g1_q2_diagram_base10_addition':      require('@assets/images/games/g1_q2_diagram_base10_addition.png'),
-  // 'g1_q2_diagram_bundle_count':         require('@assets/images/games/g1_q2_diagram_bundle_count.png'),
 
   // ─── Quarter 4: Money — TODO: Add high-fidelity peso denomination assets ──────
   // 'g1_q4_money_peso_1_coin':   require('@assets/images/games/g1_q4_money_peso_1_coin.png'),
@@ -55,11 +74,6 @@ export const AssetMap = {
   // 'g1_q4_money_peso_20_bill':  require('@assets/images/games/g1_q4_money_peso_20_bill.png'),
   // 'g1_q4_money_peso_100_bill': require('@assets/images/games/g1_q4_money_peso_100_bill.png'),
   // 'g1_q4_money_peso_coins_set':require('@assets/images/games/g1_q4_money_peso_coins_set.png'),
-
-  // ─── Quarter 4: Time — TODO: Add additional clock face assets ───────────────
-  // 'clock_face_noon':  require('@assets/games/shared/clocks/Clock-Face-12_00.webp'),
-  // 'clock_face_2_00':  require('@assets/games/shared/clocks/Clock-Face-2_00.webp'),
-  // 'clock_face_9_00':  require('@assets/games/shared/clocks/Clock-Face-9_00.webp'),
 
   // ─── Emoji Registry: Animals ─────────────────────────────────────
   'icon_duck':       'emoji:🦆',

@@ -45,12 +45,14 @@
             "competency": "MG.4.9",
             "topic": "Clock Matching",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "PICKER",
             "difficulty": "Hard",
-            "question": "Is 'Quarter-to 5' the same as '4:45'? (Yes/No)",
+            "question": "Is 'Quarter-to 5' the same as '4:45'?",
             "answer": "Yes",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": ["Yes", "No"]
+            }
         }
     ]
 }

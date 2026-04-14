@@ -27,6 +27,7 @@ import GeoboardEngine from './Engines/GeoboardEngine';
 // intercept their touch responder and break drag/draw interactions.
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard']);
 
+import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
 
@@ -195,6 +196,17 @@ export default function CurriculumOrchestrator({
         </View>
       ) : null}
 
+      {/* Question Asset — shown when the question references an illustration or manipulative */}
+      {currentQuestion?.assetId && currentQuestion?.assetType !== 'text' ? (
+        <View style={styles.questionAssetContainer}>
+          <AssetDisplay
+            assetId={currentQuestion.assetId}
+            style={styles.questionAsset}
+            resizeMode="contain"
+          />
+        </View>
+      ) : null}
+
       {/* Gameplay Area — gesture engines use a plain View to preserve touch
           responders; all other engines use a ScrollView so content is never
           clipped on smaller devices. */}
@@ -304,5 +316,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 48,
     fontSize: 18,
-  }
+  },
+  questionAssetContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingBottom: 8,
+  },
+  questionAsset: {
+    width: 200,
+    height: 160,
+  },
 });

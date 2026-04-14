@@ -5,8 +5,8 @@
         "topic": "2D Shapes",
         "competency": "MG.1.1-1.3",
         "performanceStandard": "Identify and distinguish simple 2-dimensional shapes.",
-        "totalQuestions": 3,
-        "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
+        "totalQuestions": 5,
+        "cpaSplit": "2 concrete, 2 pictorial, 1 abstract",
         "engines": {
             "N/A": "Placeholder for future Picker or DragDrop engine"
         }
@@ -67,6 +67,34 @@
                     "big square"
                 ]
             }
+        },
+        {
+            "id": "mg_1_shapes_010",
+            "competency": "MG.1.1",
+            "topic": "2D Shapes",
+            "level": "concrete",
+            "type": "SHAPETRACER",
+            "difficulty": "Easy",
+            "question": "Trace the triangle with your finger!",
+            "shape": "triangle",
+            "traceMode": "guided",
+            "answer": "triangle",
+            "assetType": "interactive",
+            "metadata": {}
+        },
+        {
+            "id": "mg_1_shapes_011",
+            "competency": "MG.1.2",
+            "topic": "2D Shapes",
+            "level": "pictorial",
+            "type": "GEOBOARD",
+            "difficulty": "Medium",
+            "question": "Draw a square on the dot board!",
+            "shape": "square",
+            "traceMode": "free",
+            "answer": "square",
+            "assetType": "interactive",
+            "metadata": {}
         }
     ]
 }
