@@ -1,14 +1,14 @@
 /**
  * ShapeHuntEngine — Grade 1 Shapes / Geometry Game Engine
  *
- * Students tap matching shapes in a shuffled grid to "hunt" all
- * instances of a target shape (e.g. "Tap all the circles!").
+ * Students tap shapes to build a selection, then press "Check Answer"
+ * to verify. Selections are toggleable (tap again to deselect).
  *
- * Mechanic: Multi-target tap select with per-tap feedback.
- *  - Correct tap: tile spring-locks, green border, checkmark badge
- *  - Wrong tap: tile shakes, red flash, resets (does NOT stay selected)
- *  - Check Answer button appears once foundSet.size === targetCount
- *  - isCorrect = (wrongTaps === 0)
+ * Mechanic: Toggle-select with deferred answer checking.
+ *  - Tap unselected tile: selects it (spring pop, green border, checkmark)
+ *  - Tap selected tile: deselects it (scale back, border clears)
+ *  - Check Answer button appears once any shape is selected
+ *  - isCorrect = all targets selected AND no non-targets selected
  *
  * Competency: MG.1.1–1.3 (2D Shapes)
  * Shadow-Free Design System compliant.
@@ -32,8 +32,6 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
-  withTiming,
-  withSequence,
   runOnJS,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -46,66 +44,62 @@ import speechManager from '@/utils/speechManager';
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const hapticLight = () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-const hapticMedium = () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+// Amber used only for missed-target indicator post-check (no token in palette)
+const COLOR_MISSED = '#b45309';
 
 /**
- * ShapeTile — individual tappable shape tile.
- * Per-tile shared values keep animation drivers scoped (no cross-tile churn).
+ * Resolves badge props for post-check or pre-check states.
+ * Returns { icon, bgColor } or null (no badge).
  */
-const ShapeTile = ({ item, index, isFound, answered, onCorrect, onWrong }) => {
-  const scale = useSharedValue(1);
-  const translateX = useSharedValue(0);
-  const borderFlash = useSharedValue(0); // 0 = neutral, 1 = wrong flash
+const resolveBadge = ({ isSelected, answered, resolvedCorrect, resolvedMissed }) => {
+  if (!answered && isSelected) return { icon: 'checkmark', bgColor: Colors.success };
+  if (answered && resolvedCorrect) return { icon: 'checkmark', bgColor: Colors.success };
+  if (answered && isSelected && !resolvedCorrect) return { icon: 'close', bgColor: Colors.error };
+  if (answered && resolvedMissed) return { icon: 'alert', bgColor: COLOR_MISSED };
+  return null;
+};
 
+/**
+ * ShapeTile — individual tappable/toggleable shape tile.
+ * Per-tile shared value keeps scale animation scoped to the tile.
+ */
+const ShapeTile = ({ item, index, isSelected, answered, resolvedCorrect, resolvedMissed, onToggle }) => {
+  const scale = useSharedValue(1);
+
+  // Wrapper owns the entering layout animation.
+  // Inner Animated.View owns the scale transform — kept separate per Reanimated anti-pattern 8.7.
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { scale: scale.value },
-      { translateX: translateX.value },
-    ],
+    transform: [{ scale: scale.value }],
   }));
 
   const handleTapJS = useCallback(() => {
-    if (item.isTarget) {
-      scale.value = withSequence(
-        withSpring(1.12, { damping: 10, stiffness: 220 }),
-        withSpring(1, { damping: 12, stiffness: 180 })
-      );
-      hapticLight();
-      onCorrect(item.id);
+    if (isSelected) {
+      scale.value = withSpring(1, { damping: 12, stiffness: 180 });
     } else {
-      translateX.value = withSequence(
-        withSpring(-10, { damping: 8, stiffness: 300 }),
-        withSpring(10, { damping: 8, stiffness: 300 }),
-        withSpring(-5, { damping: 8, stiffness: 300 }),
-        withSpring(0, { damping: 10, stiffness: 220 })
-      );
-      borderFlash.value = withSequence(
-        withTiming(1, { duration: 120 }),
-        withTiming(0, { duration: 450 })
-      );
-      hapticMedium();
-      onWrong();
+      scale.value = withSpring(1.1, { damping: 10, stiffness: 220 }, () => {
+        scale.value = withSpring(1, { damping: 12, stiffness: 180 });
+      });
     }
-  }, [item, onCorrect, onWrong, scale, translateX, borderFlash]);
+    hapticLight();
+    onToggle(item.id);
+  }, [item.id, isSelected, onToggle, scale]);
 
   const tap = Gesture.Tap()
-    .enabled(!answered && !isFound)
-    .onEnd(() => {
-      runOnJS(handleTapJS)();
-    });
+    .enabled(!answered)
+    .onEnd(() => { runOnJS(handleTapJS)(); });
 
-  const flashStyle = useAnimatedStyle(() => ({
-    borderColor:
-      borderFlash.value > 0.5
-        ? Colors.error
-        : isFound
-          ? Colors.success
-          : Colors.outlineVariant,
-  }));
+  // Border color — static from React state, no animation needed
+  let borderColor = Colors.outlineVariant;
+  if (answered) {
+    if (resolvedCorrect) borderColor = Colors.success;
+    else if (resolvedMissed) borderColor = COLOR_MISSED;
+    else if (isSelected) borderColor = Colors.error;
+  } else if (isSelected) {
+    borderColor = Colors.success;
+  }
 
-  const tileBackground = isFound
-    ? Colors.surfaceContainerLow
-    : Colors.surfaceContainerHigh;
+  const badge = resolveBadge({ isSelected, answered, resolvedCorrect, resolvedMissed });
 
   return (
     <Animated.View
@@ -116,20 +110,20 @@ const ShapeTile = ({ item, index, isFound, answered, onCorrect, onWrong }) => {
         <Animated.View
           style={[
             styles.tile,
-            { backgroundColor: tileBackground },
+            { backgroundColor: isSelected ? Colors.surfaceContainerLow : Colors.surfaceContainerHigh, borderColor },
             animatedStyle,
-            flashStyle,
           ]}
         >
           <View style={styles.shapeImage}>
             <AssetDisplay assetId={item.assetId} />
           </View>
-          {isFound && (
+          {badge && (
             <Animated.View
               entering={ZoomIn.springify().damping(12)}
-              style={styles.badge}
+              exiting={ZoomOut}
+              style={[styles.badge, { backgroundColor: badge.bgColor }]}
             >
-              <Ionicons name="checkmark" size={16} color={Colors.onPrimary} />
+              <Ionicons name={badge.icon} size={16} color={Colors.onPrimary} />
             </Animated.View>
           )}
         </Animated.View>
@@ -142,8 +136,7 @@ const ShapeTile = ({ item, index, isFound, answered, onCorrect, onWrong }) => {
 const ShapeHuntEngine = ({ data, onResult }) => {
   const { items = [], question: instructionText } = data;
 
-  const [foundSet, setFoundSet] = useState(() => new Set());
-  const [wrongTaps, setWrongTaps] = useState(0);
+  const [selectedSet, setSelectedSet] = useState(() => new Set());
   const [resolved, setResolved] = useState(false);
 
   const targetCount = useMemo(
@@ -153,8 +146,7 @@ const ShapeHuntEngine = ({ data, onResult }) => {
 
   // Reset engine state when `data` changes (next question)
   useEffect(() => {
-    setFoundSet(new Set());
-    setWrongTaps(0);
+    setSelectedSet(new Set());
     setResolved(false);
   }, [data]);
 
@@ -168,26 +160,27 @@ const ShapeHuntEngine = ({ data, onResult }) => {
     };
   }, [instructionText]);
 
-  const handleCorrect = useCallback((id) => {
-    setFoundSet(prev => {
-      if (prev.has(id)) return prev;
+  const handleToggle = useCallback((id) => {
+    setSelectedSet(prev => {
       const next = new Set(prev);
-      next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
   }, []);
 
-  const handleWrong = useCallback(() => {
-    setWrongTaps(prev => prev + 1);
-  }, []);
-
-  const canCheck = foundSet.size === targetCount && !resolved && targetCount > 0;
+  const canCheck = selectedSet.size > 0 && !resolved;
 
   const handleCheckAnswer = useCallback(() => {
     if (resolved || !canCheck) return;
     setResolved(true);
 
-    const isCorrect = wrongTaps === 0;
+    const allTargetsFound = items.filter(i => i.isTarget).every(i => selectedSet.has(i.id));
+    const noWrongSelected = items.filter(i => !i.isTarget).every(i => !selectedSet.has(i.id));
+    const isCorrect = allTargetsFound && noWrongSelected;
 
     if (isCorrect) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -197,25 +190,21 @@ const ShapeHuntEngine = ({ data, onResult }) => {
       speechManager.speakFeedback('Good try!', false);
     }
 
-    const foundAssets = items
-      .filter(it => foundSet.has(it.id))
+    const selectedAssets = items
+      .filter(it => selectedSet.has(it.id))
       .map(it => it.assetId);
 
-    setTimeout(() => onResult(isCorrect, foundAssets), 700);
-  }, [resolved, canCheck, wrongTaps, items, foundSet, onResult]);
+    setTimeout(() => onResult(isCorrect, selectedAssets), 700);
+  }, [resolved, canCheck, items, selectedSet, onResult]);
 
   const checkTap = Gesture.Tap()
     .enabled(canCheck)
     .onEnd(() => runOnJS(handleCheckAnswer)());
 
   const getInstruction = () => {
-    if (resolved) {
-      return wrongTaps === 0
-        ? 'Perfect hunt! All found.'
-        : `Found all — with ${wrongTaps} miss${wrongTaps > 1 ? 'es' : ''}.`;
-    }
-    if (canCheck) return 'All found! Check your answer.';
-    return instructionText || 'Tap all the matching shapes.';
+    if (resolved) return 'Check the results!';
+    if (selectedSet.size > 0) return 'Tap again to deselect \u2022 Check when ready';
+    return instructionText || 'Tap shapes to select them.';
   };
 
   return (
@@ -233,18 +222,19 @@ const ShapeHuntEngine = ({ data, onResult }) => {
             key={`${data?.id || 'q'}-${item.id}`}
             item={item}
             index={idx}
-            isFound={foundSet.has(item.id)}
+            isSelected={selectedSet.has(item.id)}
             answered={resolved}
-            onCorrect={handleCorrect}
-            onWrong={handleWrong}
+            resolvedCorrect={resolved && item.isTarget && selectedSet.has(item.id)}
+            resolvedMissed={resolved && item.isTarget && !selectedSet.has(item.id)}
+            onToggle={handleToggle}
           />
         ))}
       </View>
 
-      {/* Progress indicator */}
+      {/* Selection counter */}
       <View style={styles.progressContainer}>
         <Text style={styles.progressText}>
-          Found {foundSet.size} of {targetCount}
+          Selected {selectedSet.size} of {targetCount}
         </Text>
       </View>
 
@@ -321,7 +311,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -8,
     right: -8,
-    backgroundColor: Colors.success,
     width: 28,
     height: 28,
     borderRadius: 14,

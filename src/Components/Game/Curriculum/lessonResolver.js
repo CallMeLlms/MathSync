@@ -99,6 +99,11 @@ import G1_CalendarSequence from '@content/game-data/quarter-4/grade1-q4-lesson4-
 import G1_RotationsTurns from '@content/game-data/quarter-4/grade1-q4-lesson4-calendar-turns/rotationsTurnsQuestionBank.json';
 import G1_UsingCalendar from '@content/game-data/quarter-4/grade1-q4-lesson4-calendar-turns/usingCalendarQuestionBank.json';
 
+// ─── DEV ONLY: Engine Lab ────────────────────────────────────────────
+// One question per engine type. Navigate to lesson ID '99' to run the lab.
+// Remove this import (and the lesson entry below) before shipping to production.
+import EngineLabBank from '@content/game-data/dev/engineLabQuestionBank.json';
+
 // ─── Fisher-Yates Shuffle ────────────────────────────────────────────
 function shuffle(arr) {
   const a = [...arr];
@@ -399,6 +404,20 @@ const BUNDLED_DATA = {
           G1_PlaceValue, G1_AdditionTo100, G1_BasicSubtraction20, G1_ComplexPatterns,
           G1_IdentifyingFractions, G1_MoneyId, G1_AnalogTime, G1_CalendarSequence,
         ]),
+      },
+
+      // --- Node 99 (DEV): "Engine Lab" — one question per engine type ---
+      // Navigate to lesson ID '99' to cycle through every engine in sequence.
+      // Remove before production.
+      {
+        id: '99',
+        meta: {
+          topic: 'Engine Lab',
+          curriculum: 'DEV',
+          competency: 'N/A',
+          description: 'DEV — One question per engine type for visual testing',
+        },
+        questions: getPlayableQuestions([EngineLabBank]),
       },
     ],
   },

@@ -22,9 +22,10 @@ import ShapeTracerEngine from './Engines/ShapeTracerEngine';
 import ShapeHuntEngine from './Engines/ShapeHuntEngine';
 import OrdinalSequenceEngine from './Engines/OrdinalSequenceEngine';
 import SortEngine from './Engines/SortEngine';
+import GeoboardEngine from './Engines/GeoboardEngine';
 // Gesture-heavy engines must render inside a plain View — a ScrollView would
 // intercept their touch responder and break drag/draw interactions.
-const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer']);
+const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard']);
 
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
@@ -164,6 +165,7 @@ export default function CurriculumOrchestrator({
       case 'shape_hunt': return <ShapeHuntEngine key={currentQuestionIndex} {...props} />;
       case 'ordinal_sequence': return <OrdinalSequenceEngine key={currentQuestionIndex} {...props} />;
       case 'sort': return <SortEngine key={currentQuestionIndex} {...props} />;
+      case 'geoboard': return <GeoboardEngine key={currentQuestionIndex} {...props} />;
       // MatcherEngine uses a different prop contract (question/onAnswer) than the
       // standard Orchestrator API (data/onResult). Bridge inline to avoid touching the engine.
       case 'matcher': return (

@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     marginHorizontal: 16,
     marginTop: 16,
+    gap: 12,
   },
   title: {
     fontFamily: 'Lexend-Bold',

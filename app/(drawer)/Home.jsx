@@ -170,6 +170,16 @@ export default function Home() {
 
         {/* Progress Bloom Section */}
 
+        {/* DEV: Engine Lab shortcut — remove before production */}
+        <TouchableOpacity
+          style={styles.devLabButton}
+          activeOpacity={0.8}
+          onPress={() => router.push('/game/99')}
+        >
+          <MaterialIcons name="science" size={20} color="#FFF" />
+          <Text style={styles.devLabText}>🧪 Engine Lab (DEV)</Text>
+        </TouchableOpacity>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -346,6 +356,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.onSurfaceVariant,
     marginTop: 12,
+  },
+  devLabButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: '#6750A4',
+    borderRadius: 16,
+    paddingVertical: 14,
+    marginTop: 8,
+  },
+  devLabText: {
+    fontFamily: 'PlusJakartaSans-Bold',
+    fontSize: 15,
+    color: '#FFF',
   },
 
 });

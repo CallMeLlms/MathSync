@@ -33,7 +33,7 @@ const CustomDrawerContent = (props) => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Navigation Items */}
         <View style={styles.navSection}>
-          {state.routes.map((route, index) => {
+          {state.routes.filter(route => route.name !== 'Calendar').map((route, index) => {
             const isFocused = state.index === index;
             const { options } = props.descriptors[route.key];
             const label = options.title !== undefined ? options.title : route.name;

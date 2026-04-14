@@ -52,7 +52,10 @@
             "answer": "ruler",
             "assetType": "text",
             "metadata": {
-                "options": ["ruler", "pencil"]
+                "options": [
+                    "ruler",
+                    "pencil"
+                ]
             }
         }
     ]

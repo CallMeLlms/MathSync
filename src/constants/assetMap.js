@@ -85,6 +85,7 @@ export const AssetMap = {
   'icon_pie':        'emoji:🥧',
   'icon_rice':       'emoji:🍚',
   'icon_egg':        'emoji:🥚',
+  'icon_cherry':     'emoji:🍒',
   'icon_carrot':     'emoji:🥕',
   'icon_star_fruit': 'emoji:🌟',
 
@@ -113,12 +114,17 @@ export const AssetMap = {
   'icon_cloud':         'emoji:☁️',
   'icon_rainbow':       'emoji:🌈',
   'icon_umbrella':      'emoji:☂️',
+  'icon_shoe':          'emoji:👟',
+  'icon_sock':          'emoji:🧦',
+  'icon_arrow_right':   'emoji:➡️',
 
   // ─── Emoji Registry: People & Positions ─────────────────────────
   'icon_boy':           'emoji:👦',
   'icon_girl':          'emoji:👧',
   'icon_teacher':       'emoji:🧑‍🏫',
   'icon_student':       'emoji:🧑‍🎓',
+  'icon_face_happy':    'emoji:😊',
+  'icon_face_sad':      'emoji:😢',
   'icon_family':        'emoji:👨‍👩‍👧‍👦',
   'icon_runner_1st':    'emoji:🥇',
   'icon_runner_2nd':    'emoji:🥈',
@@ -145,8 +151,10 @@ export const AssetMap = {
   // ─── Emoji Registry: Time & Calendar ────────────────────────────
   'icon_calendar':      'emoji:📅',
   'icon_clock_noon':    'emoji:🕛',
+  'icon_clock_2':       'emoji:🕑',
   'icon_clock_3':       'emoji:🕒',
   'icon_clock_7':       'emoji:🕖',
+  'icon_clock_9':       'emoji:🕘',
   'icon_weekend':       'emoji:📆',
 
   // ─── Emoji Registry: Nature & Environment ────────────────────────

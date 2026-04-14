@@ -22,7 +22,7 @@ export default function Profile() {
             </View>
             <Feather name="arrow-right-circle" size={22} color={Colors.primary} />
           </Pressable>
-          <AchievementSection />
+          {/* <AchievementSection /> */}
           <ProfileBarGraph />
           <ActivityFeed />
         </View>
