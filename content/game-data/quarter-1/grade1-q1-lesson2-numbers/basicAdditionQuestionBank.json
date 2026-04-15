@@ -17,7 +17,7 @@
             "competency": "NA.1.11",
             "topic": "Basic Addition to 20",
             "level": "concrete",
-            "type": "NUMPAD",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Easy",
             "question": "Count 4 red blocks and 3 blue blocks. How many blocks in total?",
             "answer": 7,
@@ -32,11 +32,12 @@
             "competency": "NA.1.11",
             "topic": "Basic Addition to 20",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Easy",
             "question": "Look at the picture. 2 birds are on the branch. 4 more birds fly in. How many birds are there now?",
             "answer": 6,
             "assetType": "illustration",
+            "assetId": "icon_bird",
             "metadata": {
                 "addends": [2, 4]
             }
@@ -51,6 +52,7 @@
             "question": "What is 5 + 4?",
             "answer": 9,
             "assetType": "text",
+            "equation": { "left": "5 + 4", "operator": "=", "blank": "right" },
             "metadata": {}
         }
     ]

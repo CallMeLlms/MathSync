@@ -17,17 +17,16 @@
             "competency": "MG.1.1",
             "topic": "2D Shapes",
             "level": "concrete",
-            "type": "SHAPE_HUNT",
+            "type": "PICKER",
             "difficulty": "Easy",
             "question": "Tap the block that is a triangle.",
             "answer": "triangle",
-            "assetType": "shape",
-            "assetId": "shape_triangle",
+            "assetType": "text",
             "metadata": {
                 "options": [
-                    "shape_triangle",
-                    "shape_square",
-                    "shape_rectangle"
+                    "triangle",
+                    "square",
+                    "rectangle"
                 ]
             }
         },
@@ -36,12 +35,11 @@
             "competency": "MG.1.1",
             "topic": "2D Shapes",
             "level": "pictorial",
-            "type": "SHAPE_HUNT",
+            "type": "PICKER",
             "difficulty": "Medium",
             "question": "Look at the picture. Which object is shaped like a rectangle?",
             "answer": "door",
-            "assetType": "illustration",
-            "assetId": "shape_rectangle",
+            "assetType": "text",
             "metadata": {
                 "options": [
                     "door",

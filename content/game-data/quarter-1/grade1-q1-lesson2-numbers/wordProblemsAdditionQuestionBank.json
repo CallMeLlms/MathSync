@@ -17,11 +17,12 @@
             "competency": "NA.1.13",
             "topic": "Addition Word Problems",
             "level": "concrete",
-            "type": "NUMPAD",
+            "type": "WORD_PROBLEM",
             "difficulty": "Easy",
             "question": "Use the blocks to help: Juan has 3 toy cars. He buys 2 more. How many toy cars does Juan have now?",
             "answer": 5,
             "assetType": "manipulatives",
+            "assetId": "icon_toy_car",
             "metadata": {}
         },
         {
@@ -29,11 +30,12 @@
             "competency": "NA.1.13",
             "topic": "Addition Word Problems",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "WORD_PROBLEM",
             "difficulty": "Easy",
             "question": "Look at the picture. There are 4 ducks in the pond. 5 more ducks join them. How many ducks are in the pond?",
             "answer": 9,
             "assetType": "illustration",
+            "assetId": "icon_duck",
             "metadata": {}
         },
         {
@@ -41,11 +43,12 @@
             "competency": "NA.1.13",
             "topic": "Addition Word Problems",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "WORD_PROBLEM",
             "difficulty": "Easy",
             "question": "Ben has 6 pencils. He finds 4 more pencils. How many pencils does Ben have?",
             "answer": 10,
             "assetType": "text",
+            "assetId": "icon_pencil",
             "metadata": {}
         }
     ]

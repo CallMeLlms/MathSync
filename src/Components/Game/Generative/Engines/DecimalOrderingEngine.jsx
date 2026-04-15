@@ -297,7 +297,7 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
           style={[
             styles.controlBtn, 
             styles.checkBtn, 
-            { backgroundColor: isComplete ? theme.primaryColor : Colors.surfaceVariant }
+            { backgroundColor: isComplete ? theme.primaryColor : Colors.surfaceContainer }
           ]} 
           onPress={handleCheck}
           disabled={!isComplete}
@@ -356,19 +356,22 @@ const styles = StyleSheet.create({
     maxWidth: 100,
     borderRadius: 16,
     borderWidth: 3,
+    borderBottomWidth: 5,
+    borderRightWidth: 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
   slotEmpty: {
     borderStyle: 'dashed',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    backgroundColor: Colors.surfaceContainerLow,
   },
   slotFilled: {
     borderStyle: 'solid',
     backgroundColor: Colors.surface,
   },
   slotActiveTarget: {
-    backgroundColor: 'rgba(0,0,0,0.02)',
+    backgroundColor: Colors.primaryContainer,
+    borderStyle: 'solid',
   },
   slotText: {
     fontSize: 24,

@@ -48,9 +48,10 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme }) {
           { 
             backgroundColor: isSelected ? theme.primaryColor : Colors.surface,
             borderColor: isSelected ? theme.primaryColor : Colors.outlineVariant,
-            // Tactile border (shadow-free depth)
-            borderBottomWidth: isSelected ? 3 : 5, 
-            borderRightWidth: isSelected ? 3 : 4,
+            // Tactile border: pressed state flattens bottom/right depth
+            borderBottomWidth: isSelected ? 1 : 5,
+            borderRightWidth: isSelected ? 1 : 4,
+            opacity: isSelected ? 0.95 : 1,
           }
         ]}
       >
@@ -130,6 +131,7 @@ export default function RoundingEngine({ problem, onAnswer, theme }) {
 
   const { metadata, choices, answer } = problem;
   const { number, roundTo, displayQuestion } = metadata;
+  const safeChoices = choices ?? [];
 
   const handleChoiceSelect = (value) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -177,7 +179,7 @@ export default function RoundingEngine({ problem, onAnswer, theme }) {
           Select your answer:
         </Text>
         <View style={[styles.choicesGrid, { gap: isTablet ? 24 : 16 }]}>
-          {choices.map((choice, index) => (
+          {safeChoices.map((choice, index) => (
             <AnimatedChoiceTile
               key={`choice-${choice}-${index}`}
               value={choice}
@@ -195,7 +197,7 @@ export default function RoundingEngine({ problem, onAnswer, theme }) {
           style={[
             styles.submitButton,
             { 
-              backgroundColor: selectedChoice !== null ? theme.primaryColor : Colors.surfaceVariant,
+              backgroundColor: selectedChoice !== null ? theme.primaryColor : Colors.surfaceContainer,
               borderColor: selectedChoice !== null ? theme.primaryColor : Colors.outlineVariant,
             }
           ]}

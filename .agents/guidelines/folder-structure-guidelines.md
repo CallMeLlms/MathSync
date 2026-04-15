@@ -16,6 +16,7 @@ MathSync/
 │   ├── logs/                   # Implementation Timelines & Summaries
 │   └── guidelines/             # Core Project Standards
 ├── scratch/                    # Temporary & Experimental Scripts
+├── scripts/                    # Build & Utility Scripts
 └── package.json
 ```
 
@@ -32,6 +33,7 @@ app/
 │   ├── Grades.jsx              # Grade Selection Portal
 │   ├── Profile.jsx             # User Statistics
 │   └── _layout.js              # Drawer Navigation Layout
+├── classroom/                  # Teacher/Classroom features
 ├── journey/                    # Grade Journeys
 │   └── [grade].jsx             # Dynamic Journey Entry (Progress & Node Mapping)
 ├── game/                       # Universal Game Route
@@ -57,23 +59,31 @@ src/
 │   │   │   ├── Orchestrators/  # Dynamic PracticeOrchestrators
 │   │   │   └── Engines/        # Logic-aware engines (Ordering, Rounding)
 │   │   ├── Global/             # Game UI (Hud, Modals, AssetDisplay)
+│   │   │   ├── EngineBase/     # Standardized Tonal-Layering UI system
+│   │   │   └── Visualizers/    # Low-level game inputs (NumPad, JoyStick)
 │   │   └── Flow/               # Navigation UI (JourneyMap)
-│   ├── Shared/                 # Common UI (Buttons, Cards, Overlays)
-│   └── Navigation/             # Custom Navigation Components
+│   ├── LessonComponents/       # Reusable lesson Atoms (Card, Option, Prompt)
+│   ├── Navigation/             # Custom Navigation (DrawerContent, Tabs)
+│   └── Profile/                # User settings & stats UI
 ├── constants/                  # Configuration & Registry
+├── context/                    # React Contexts (Global settings)
+├── hooks/                      # Custom hooks library
+├── services/                   # Singleton services (Analytics, Tracking)
 ├── stores/                     # Global State (Zustand)
 │   ├── user-stores/            # User Profile & Activity
 │   └── game-stores/            # Active session & Engine logic (useGameEngine)
 ├── theme/                      # Styling & Game Themes
 ├── utils/                      # Common Utility Helpers
 │   └── generators/             # Math Generation Library
-│       ├── grades/             # Grade-Specific Problem Brains
-│       │   ├── G1/ ... G6/     # Subfolders for each grade
+│       ├── core/               # Shared generator logic
+│       ├── common/             # General math helpers
+│       ├── grades/             # Grade-Specific Problem Brains (G1..G6)
 │       └── registry.js         # Central Topic-to-Generator Registry
 ```
 
 **Naming Rules for `/src`**:
 - **Path Aliases**: All internal `src` imports MUST use the `@/` alias.
+    - **Note**: `jsconfig.json` may contain additional aliases (e.g., `@hooks/`, `@constants/`). To ensure build compatibility, only use the authorized set defined in `babel.config.js`: `@/`, `@assets`, and `@content`.
 - **Assets & Content**: Use `@assets` for media and `@content` for data.
 - **Components & Folders**: Must use **`PascalCase`** (e.g., `Profile/`, `WelcomeCard.jsx`).
 - **Non-Component Folders**: Must use **`lowercase`** or **`kebab-case`** (e.g., `user-stores/`, `utils/`).

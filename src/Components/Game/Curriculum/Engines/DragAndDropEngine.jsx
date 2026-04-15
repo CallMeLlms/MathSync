@@ -46,7 +46,7 @@ const hapticLight = () => {
 };
 
 // ─── DroppedItemDisplay: renders the item inside the basket ───
-const DroppedItemDisplay = ({ value, data, isWrong, isCorrect, onRemove, disabled, screenHeight, baseStyles }) => {
+const DroppedItemDisplay = ({ value, assetId, isWrong, isCorrect, onRemove, disabled, screenHeight, baseStyles }) => {
   const bg = isWrong ? Colors.errorContainer : isCorrect ? Colors.successContainer : Colors.primaryContainer;
   const borderColor = isWrong ? Colors.error : isCorrect ? Colors.success : Colors.primary;
   const textColor = isWrong ? Colors.onErrorContainer : isCorrect ? Colors.onSuccessContainer : Colors.onPrimaryContainer;
@@ -74,9 +74,9 @@ const DroppedItemDisplay = ({ value, data, isWrong, isCorrect, onRemove, disable
         <Animated.View
           style={[baseStyles.droppedItem, { backgroundColor: bg, borderColor }, removeStyle]}
         >
-          {data?.assetId && (
+          {assetId && (
             <AssetDisplay
-              assetId={data.assetId}
+              assetId={assetId}
               style={{ width: screenHeight * 0.045, height: screenHeight * 0.045 }}
             />
           )}
@@ -90,7 +90,7 @@ const DroppedItemDisplay = ({ value, data, isWrong, isCorrect, onRemove, disable
 // ─── DraggableItem: a single draggable choice ───
 const DraggableItem = ({
   value,
-  data,
+  assetId,
   colorTheme,
   dropZoneLayout,
   gridLayout,
@@ -181,9 +181,9 @@ const DraggableItem = ({
               animatedStyle,
             ]}
           >
-            {data?.assetId && (
+            {assetId && (
               <AssetDisplay
-                assetId={data.assetId}
+                assetId={assetId}
                 style={{ width: screenHeight * 0.045, height: screenHeight * 0.045 }}
               />
             )}
@@ -206,8 +206,11 @@ const DragDropEngine = ({ data, onResult }) => {
 
   const { dragItems = [], answer, question: instructionText } = data;
 
+  // Normalize dragItems: support legacy string entries and new {value, assetId} objects.
   const shuffled = useMemo(
-    () => [...dragItems].sort(() => Math.random() - 0.5),
+    () => [...dragItems]
+      .map(item => (typeof item === 'string' ? { value: item, assetId: null } : item))
+      .sort(() => Math.random() - 0.5),
     [dragItems]
   );
 
@@ -235,11 +238,11 @@ const DragDropEngine = ({ data, onResult }) => {
   }, [instructionText]);
 
   const handleDropInZone = useCallback(
-    (value) => {
+    (item) => {
       if (answered || droppedItem !== null) return;
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsWrong(false);
-      setDroppedItem(value);
+      setDroppedItem(item);
     },
     [answered, droppedItem]
   );
@@ -254,16 +257,17 @@ const DragDropEngine = ({ data, onResult }) => {
   const handleCheckAnswer = useCallback(() => {
     if (!droppedItem || answered) return;
 
-    if (droppedItem === answer) {
+    const droppedValue = droppedItem.value;
+    if (droppedValue === answer) {
       setAnswered(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       speechManager.speakFeedback('Correct! Well done!', true);
-      setTimeout(() => onResult(true, [String(droppedItem)]), 600);
+      setTimeout(() => onResult(true, [String(droppedValue)]), 600);
     } else {
       setIsWrong(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       speechManager.speakFeedback('Not quite! Try again.', false);
-      onResult(false, [String(droppedItem)]);
+      onResult(false, [String(droppedValue)]);
       setTimeout(() => {
         setDroppedItem(null);
         setIsWrong(false);
@@ -314,10 +318,10 @@ const DragDropEngine = ({ data, onResult }) => {
       >
         {droppedItem !== null ? (
           <DroppedItemDisplay
-            value={droppedItem}
-            data={data}
+            value={droppedItem.value}
+            assetId={droppedItem.assetId}
             isWrong={isWrong}
-            isCorrect={answered && droppedItem === answer}
+            isCorrect={answered && droppedItem.value === answer}
             onRemove={handleRemoveFromBasket}
             disabled={answered || isWrong}
             screenHeight={screenHeight}
@@ -342,17 +346,17 @@ const DragDropEngine = ({ data, onResult }) => {
           gridLayout.current = { x, y };
         }}
       >
-        {shuffled.map((value, i) => {
-          if (value === droppedItem) return null;
+        {shuffled.map((item, i) => {
+          if (droppedItem && item.value === droppedItem.value) return null;
           return (
             <DraggableItem
-              key={`drag-${value}`}
-              value={value}
-              data={data}
+              key={`drag-${item.value}`}
+              value={item.value}
+              assetId={item.assetId}
               colorTheme={itemColors[i % itemColors.length]}
               dropZoneLayout={dropZoneLayout}
               gridLayout={gridLayout}
-              onDropInZone={handleDropInZone}
+              onDropInZone={() => handleDropInZone(item)}
               disabled={answered || droppedItem !== null}
               screenHeight={screenHeight}
               itemSize={itemSize}

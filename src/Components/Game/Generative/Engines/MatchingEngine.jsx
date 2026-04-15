@@ -58,13 +58,13 @@ const MatchCard = React.memo(({ card, isSelected, isMatched, disabled, onPress, 
     const backgroundColor = interpolateColor(
       selectionProgress.value,
       [0, 0.5, 1],
-      [Colors.surface, `${theme.primaryColor}20`, '#4CAF5020']
+      [Colors.surface, `${theme.primaryColor}20`, Colors.tertiaryContainer]
     );
 
     const borderColor = interpolateColor(
       selectionProgress.value,
       [0, 0.5, 1],
-      [Colors.outlineVariant, theme.primaryColor, '#4CAF50']
+      [Colors.outlineVariant, theme.primaryColor, Colors.success]
     );
 
     return {
@@ -87,7 +87,7 @@ const MatchCard = React.memo(({ card, isSelected, isMatched, disabled, onPress, 
         <Text
           style={[
             styles.cardText,
-            { color: isMatched ? '#2E7D32' : (isSelected ? theme.primaryColor : Colors.onSurfaceVariant) },
+            { color: isMatched ? Colors.onTertiaryContainer : (isSelected ? theme.primaryColor : Colors.onSurfaceVariant) },
             { fontSize: size * 0.22, fontFamily: theme.fontFamily.title }
           ]}
           numberOfLines={1}
@@ -166,6 +166,11 @@ export default function MatchingEngine({ problem, onAnswer, theme }) {
         setIsProcessing(true);
         const card1 = cards.find(c => c.id === updated[0]);
         const card2 = cards.find(c => c.id === updated[1]);
+
+        if (!card1 || !card2) {
+          setIsProcessing(false);
+          return [];
+        }
 
         if (card1.pairId === card2.pairId) {
           // Match! Side effects happen outside setMatchedIds updater (which must be pure).
@@ -293,15 +298,15 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.success,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: '#FFF',
+    borderColor: Colors.surface,
     elevation: 2,
   },
   matchedBadgeText: {
-    color: '#FFF',
+    color: Colors.surface,
     fontSize: 12,
     fontWeight: 'bold',
   }

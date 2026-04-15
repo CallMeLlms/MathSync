@@ -110,27 +110,41 @@ export default function AdvancedFractionsEngine({ problem, onAnswer, theme }) {
           {/* Sub-generator Problem Content */}
           {renderProblemArea()}
 
-          {/* Interactive Answer Input */}
+          {/* Interactive Answer Input — split into numerator/denominator tap zones */}
           <View style={styles.inputContainer}>
-            <TouchableOpacity 
-              onPress={() => handleFieldSelect("numerator")}
-              activeOpacity={0.8}
-              style={[
-                styles.inputBoxHolder, 
-                activeField === "numerator" && { borderColor: theme.primaryColor, borderWidth: 3 }
-              ]}
-            >
-               <FractionVisual 
-                 numerator={inputNumerator} 
-                 denominator={inputDenominator} 
-                 theme={theme} 
-                 isInput={true}
-                 isActive={true} 
-               />
-               <Text style={[styles.focusLabel, { fontFamily: theme.fontFamily.body, color: theme.primaryColor }]}>
-                  {activeField === "numerator" ? "Numerator" : "Denominator"}
-               </Text>
-            </TouchableOpacity>
+            <View style={styles.inputBoxHolder}>
+              <TouchableOpacity
+                onPress={() => handleFieldSelect("numerator")}
+                activeOpacity={0.8}
+                style={[
+                  styles.inputFieldZone,
+                  activeField === "numerator" && { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15` }
+                ]}
+              >
+                <Text style={[styles.inputFieldText, { fontFamily: theme.fontFamily.accent, color: Colors.onSurface }]}>
+                  {inputNumerator || "_"}
+                </Text>
+              </TouchableOpacity>
+
+              <View style={[styles.fractionDivider, { backgroundColor: theme.primaryColor }]} />
+
+              <TouchableOpacity
+                onPress={() => handleFieldSelect("denominator")}
+                activeOpacity={0.8}
+                style={[
+                  styles.inputFieldZone,
+                  activeField === "denominator" && { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15` }
+                ]}
+              >
+                <Text style={[styles.inputFieldText, { fontFamily: theme.fontFamily.accent, color: Colors.onSurface }]}>
+                  {inputDenominator || "_"}
+                </Text>
+              </TouchableOpacity>
+
+              <Text style={[styles.focusLabel, { fontFamily: theme.fontFamily.body, color: theme.primaryColor }]}>
+                {activeField === "numerator" ? "Numerator" : "Denominator"}
+              </Text>
+            </View>
           </View>
 
         </View>
@@ -207,14 +221,32 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   inputBoxHolder: {
-    padding: 16,
+    padding: 12,
     borderRadius: 16,
-    borderWidth: 3,
-    borderColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.surfaceVariant,
+    backgroundColor: Colors.surfaceContainer,
     minWidth: 100,
+  },
+  inputFieldZone: {
+    minWidth: 72,
+    minHeight: 56,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: Colors.outlineVariant,
+    backgroundColor: Colors.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  inputFieldText: {
+    fontSize: 32,
+  },
+  fractionDivider: {
+    width: 72,
+    height: 3,
+    borderRadius: 2,
+    marginVertical: 6,
   },
   focusLabel: {
     position: 'absolute',

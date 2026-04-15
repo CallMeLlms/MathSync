@@ -23,6 +23,8 @@ import ShapeHuntEngine from './Engines/ShapeHuntEngine';
 import OrdinalSequenceEngine from './Engines/OrdinalSequenceEngine';
 import SortEngine from './Engines/SortEngine';
 import GeoboardEngine from './Engines/GeoboardEngine';
+import VisualNumpadEngine from './Engines/VisualNumpadEngine';
+import WordProblemEngine from './Engines/WordProblemEngine';
 // Gesture-heavy engines must render inside a plain View — a ScrollView would
 // intercept their touch responder and break drag/draw interactions.
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard']);
@@ -159,7 +161,9 @@ export default function CurriculumOrchestrator({
       // case 'counter': return <CounterEngine {...props} />;
       case 'picker': return <PickerEngine key={currentQuestionIndex} {...props} />;
       case 'composer': return <ComposeEngine {...props} />;
-      case 'numpad': return <NumpadEngine {...props} />;
+      case 'numpad': return <NumpadEngine key={currentQuestionIndex} {...props} />;
+      case 'visual_numpad': return <VisualNumpadEngine key={currentQuestionIndex} {...props} />;
+      case 'word_problem': return <WordProblemEngine key={currentQuestionIndex} {...props} />;
       case 'dragdrop': return <DragDropEngine key={currentQuestionIndex} {...props} />;
       case 'connectdots': return <ConnectDotsEngine key={currentQuestionIndex} {...props} />;
       case 'shapetracer': return <ShapeTracerEngine key={currentQuestionIndex} {...props} />;
@@ -196,8 +200,13 @@ export default function CurriculumOrchestrator({
         </View>
       ) : null}
 
-      {/* Question Asset — shown when the question references an illustration or manipulative */}
-      {currentQuestion?.assetId && currentQuestion?.assetType !== 'text' ? (
+      {/* Question Asset — shown when the question references an illustration or manipulative.
+          Engines that own their own visual layout (VISUAL_NUMPAD, WORD_PROBLEM) render their
+          asset internally; skip the shared top-asset slot to avoid duplication. */}
+      {currentQuestion?.assetId
+        && currentQuestion?.assetType !== 'text'
+        && engineType !== 'visual_numpad'
+        && engineType !== 'word_problem' ? (
         <View style={styles.questionAssetContainer}>
           <AssetDisplay
             assetId={currentQuestion.assetId}

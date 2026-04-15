@@ -25,7 +25,8 @@ Consistency in naming is critical for codebase navigability. Follow these patter
 ### Path Aliases
 - **Use Aliases**: Use the `@/` prefix for imports within the `src/` directory (e.g., `import Colors from '@/constants/colors'`).
 - **Media & Content**: Use `@assets` for media files (images/sounds) and `@content` for curricula/JSON data structures.
-- **Avoid Long Relative Paths**: Do not use deeply nested relative paths (e.g., `../../../../src/...`) unless absolutely necessary. Standardize on the mapped aliases defined in `babel.config.js`.
+- **Authorized Aliases Only**: **Do not** use aliases like `@hooks`, `@constants`, or `@services` in code, even if they appear in IDE suggestions. Standardize exclusively on the set defined in `babel.config.js` (`@/`, `@assets`, `@content`).
+- **Avoid Long Relative Paths**: Do not use deeply nested relative paths (e.g., `../../../../src/...`) unless absolutely necessary. Standardize on the mapped aliases.
 
 ### Components & UI
 - **Component Files**: Use `PascalCase` and the `.jsx` extension (e.g., `WelcomeCard.jsx`, `MathChoices.jsx`).
@@ -51,6 +52,7 @@ To maintain scalability across grades and themes, all game-related development m
     - **Engines**: Engines must be pure UI implementations that accept a standardized `data` prop.
 - **Generative Stack (`src/Components/Game/Generative/`)**: Reserved for infinite practice modes driven by math logic (Generators).
 - **Global Stack (`src/Components/Game/Global/`)**: Houses cross-mode UI "Atoms" (e.g., `AssetDisplay.jsx`, `GameFeedback.jsx`). No business logic should exist here.
+    - **EngineBase**: All curriculum engines should ideally utilize the `EngineBase` components for consistent tonal-layering, shadow-free UI, and standardized padding/margins.
 
 ### 🎨 Visual Identity & Theming
 - **Mandatory Registry**: **Never** hardcode background colors, loading text, or grade-specific fonts inside a component. 

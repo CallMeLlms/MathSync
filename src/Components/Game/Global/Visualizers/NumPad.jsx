@@ -51,7 +51,7 @@ const NumPad = ({
     let textColor = Colors.onSurface;
 
     if (isSpecial) {
-      bgColor = Colors.surfaceVariant;
+      bgColor = Colors.surfaceContainerHigh;
     }
     
     if (isSubmit && canSubmit) {

@@ -80,6 +80,7 @@ export default function MeasurementEngine({ problem, onAnswer, theme }) {
 
   const { metadata, choices, answer } = problem;
   const { displayQuestion, category, categoryIcon, conversion, comparison, type, isWordProblem } = metadata;
+  const safeChoices = choices ?? [];
 
   const handleChoiceSelect = (value) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -167,7 +168,7 @@ export default function MeasurementEngine({ problem, onAnswer, theme }) {
 
   // Determine Choice tile layout length
   const getChoiceTileWidth = () => {
-    const isLongText = choices.some(c => String(c).length > 10);
+    const isLongText = safeChoices.some(c => String(c).length > 10);
     if (isLongText || isWordProblem) return isTablet ? '45%' : '100%'; // Stack vertically on phones if text is long
     return '45%'; // Standard 2x2 grid
   };
@@ -189,7 +190,7 @@ export default function MeasurementEngine({ problem, onAnswer, theme }) {
           Select your answer
         </Text>
         <View style={styles.choicesGrid}>
-          {choices.map((choice, index) => (
+          {safeChoices.map((choice, index) => (
             <AnimatedChoiceTile
               key={`choice-${choice}-${index}`}
               value={choice}
@@ -207,7 +208,7 @@ export default function MeasurementEngine({ problem, onAnswer, theme }) {
           style={[
             styles.submitButton,
             { 
-              backgroundColor: selectedChoice !== null ? theme.primaryColor : Colors.surfaceVariant,
+              backgroundColor: selectedChoice !== null ? theme.primaryColor : Colors.surfaceContainer,
               borderColor: selectedChoice !== null ? theme.primaryColor : Colors.outlineVariant,
             }
           ]}

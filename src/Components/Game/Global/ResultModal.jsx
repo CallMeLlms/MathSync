@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   reviewContainer: {
-    backgroundColor: Colors.surfaceVariant + '40',
+    backgroundColor: Colors.surfaceContainer,
     borderRadius: 16,
     padding: 16,
     width: '100%',

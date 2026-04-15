@@ -29,8 +29,9 @@ The single most important thing to understand. Two independent game pipelines ex
 
 - **Curriculum Stack** ([src/Components/Game/Curriculum/](src/Components/Game/Curriculum/)) — used by **G1**. JSON question banks in [content/game-data/](content/game-data/) are merged by [lessonResolver.js](src/Components/Game/Curriculum/lessonResolver.js) into a "SuperLesson" playlist, driven by `CurriculumOrchestrator.jsx`, which routes to per-question UI engines (NumpadEngine, ComposeEngine, MatcherEngine) based on each question's `type` field.
 - **Generative Stack** ([src/Components/Game/Generative/](src/Components/Game/Generative/)) — used by **G2–G6**. No JSON; procedural generators under [src/utils/generators/grades/](src/utils/generators/grades/) produce fresh problems at runtime via a `PracticeOrchestrator`. Uses a central `registry.js` to map topics → generators.
-- **Global** ([src/Components/Game/Global/](src/Components/Game/Global/)) — cross-mode UI atoms (AssetDisplay, HUD, modals). **No business logic here.**
+- **Global** ([src/Components/Game/Global/](src/Components/Game/Global/)) — cross-mode UI atoms (AssetDisplay, HUD, modals). Includes `EngineBase` for standardized game UI. **No business logic here.**
 - **Flow** ([src/Components/Game/Flow/](src/Components/Game/Flow/)) — JourneyMap and navigation UI.
+- **Support**: `services/` (tracking), `context/` (global setup), `classroom/` (teacher tools).
 
 ### Critical invariants
 
@@ -45,7 +46,7 @@ The single most important thing to understand. Two independent game pipelines ex
 ## Code Conventions (enforced)
 
 - **JS only** — `.jsx` for components (PascalCase filenames), `.js` for everything else (camelCase filenames). No TS.
-- **Path aliases** (defined in [babel.config.js](babel.config.js)): `@/` → `src/`, `@assets` → `assets/`, `@content` → `content/`. Use them instead of long relative paths.
+- **Path aliases** (defined in [babel.config.js](babel.config.js)): `@/` → `src/`, `@assets` → `assets/`, `@content` → `content/`. Use **only** these three; avoid IDE-suggested aliases like `@hooks` or `@constants`.
 - **Folder casing**: PascalCase for component dirs (`GameComponents/`), lowercase/kebab-case for non-component dirs (`utils/`, `stores/user-stores/`).
 - **Styling**: `StyleSheet.create()` from `react-native` only. No Tailwind / NativeWind. camelCase style keys. Styles live at the bottom of the file; inline styles are reserved for runtime-computed values.
 - **Design tokens**: never hardcode hex codes or grade fonts in components. Pull colors from [src/constants/colors](src/constants/colors) and game visual DNA from [src/theme/gameThemes.js](src/theme/gameThemes.js). Fonts are `PlusJakartaSans` and `Lexend` (not Satoshi).

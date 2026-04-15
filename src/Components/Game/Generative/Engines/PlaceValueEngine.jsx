@@ -116,6 +116,7 @@ export default function PlaceValueEngine({ problem, onAnswer, theme }) {
 
   const { metadata, choices, answer } = problem;
   const { type, number, num1, num2, targetPlace, displayQuestion, displayText, placeValues } = metadata;
+  const safeChoices = choices ?? [];
 
   const handleChoiceSelect = (value) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -188,9 +189,9 @@ export default function PlaceValueEngine({ problem, onAnswer, theme }) {
 
   // Determine Choice tile layout length
   const getChoiceTileWidth = () => {
-    const isLongText = choices.some(c => String(c).length > 6);
+    const isLongText = safeChoices.some(c => String(c).length > 6);
     if (isLongText) return '100%'; // Stack vertically if text is super long
-    if (choices.length <= 4) return '45%'; // 2x2 grid
+    if (safeChoices.length <= 4) return '45%'; // 2x2 grid
     return '30%'; // 3x2 grid if more choices
   };
 
@@ -214,7 +215,7 @@ export default function PlaceValueEngine({ problem, onAnswer, theme }) {
           Tap your answer
         </Text>
         <View style={styles.choicesGrid}>
-          {choices.map((choice, index) => (
+          {safeChoices.map((choice, index) => (
             <AnimatedChoiceTile
               key={`choice-${choice}-${index}`}
               value={choice}
@@ -233,7 +234,7 @@ export default function PlaceValueEngine({ problem, onAnswer, theme }) {
           style={[
             styles.submitButton,
             { 
-              backgroundColor: selectedChoice !== null ? theme.primaryColor : Colors.surfaceVariant,
+              backgroundColor: selectedChoice !== null ? theme.primaryColor : Colors.surfaceContainer,
               borderColor: selectedChoice !== null ? theme.primaryColor : Colors.outlineVariant,
             }
           ]}

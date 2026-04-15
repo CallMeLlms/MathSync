@@ -17,7 +17,7 @@
             "competency": "NA.1.4",
             "topic": "Counting to 100",
             "level": "concrete",
-            "type": "NUMPAD",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Easy",
             "question": "Count the blocks. How many are there in total?",
             "answer": 8,
@@ -31,13 +31,15 @@
             "competency": "NA.1.4",
             "topic": "Counting to 100",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Medium",
             "question": "Look at the picture. How many mangoes are in the basket?",
             "answer": 15,
+            "maxDigits": 2,
             "assetType": "illustration",
             "metadata": {
-                "image": "mangoes_basket_15"
+                "image": "mangoes_basket_15",
+                "count": 15
             },
             "assetId": "icon_mango"
         },
@@ -46,10 +48,11 @@
             "competency": "NA.1.4",
             "topic": "Counting to 100",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "WORD_PROBLEM",
             "difficulty": "Hard",
             "question": "What number comes just after 49?",
             "answer": 50,
+            "maxDigits": 2,
             "assetType": "text",
             "metadata": {}
         }

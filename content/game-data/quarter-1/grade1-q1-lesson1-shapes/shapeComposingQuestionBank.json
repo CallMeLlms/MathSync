@@ -21,9 +21,12 @@
             "difficulty": "Easy",
             "question": "Which two shapes make a square when put together?",
             "answer": "2 triangles",
-            "assetId": "shape_triangle",
             "assetType": "manipulatives",
-            "dragItems": ["2 triangles", "2 circles", "2 squares"],
+            "dragItems": [
+                { "value": "2 triangles", "assetId": "shape_triangle" },
+                { "value": "2 circles",   "assetId": "shape_circle"   },
+                { "value": "2 squares",   "assetId": "shape_square"   }
+            ],
             "metadata": {}
         },
         {

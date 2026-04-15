@@ -70,15 +70,22 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, widt
 export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const answerTimeoutRef = useRef(null);
+  const isMountedRef = useRef(true);
 
-  // Reset local state when a new problem is passed
+  // Reset local state and cancel any pending dispatch when a new problem arrives
   useEffect(() => {
     setSelectedChoice(null);
+    if (answerTimeoutRef.current) {
+      clearTimeout(answerTimeoutRef.current);
+      answerTimeoutRef.current = null;
+    }
   }, [problem?.answer]);
 
-  // Cancel any pending answer dispatch on unmount
+  // Track mount state so deferred onAnswer cannot fire on a dead component
   useEffect(() => {
+    isMountedRef.current = true;
     return () => {
+      isMountedRef.current = false;
       if (answerTimeoutRef.current) clearTimeout(answerTimeoutRef.current);
     };
   }, []);
@@ -87,26 +94,26 @@ export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
 
   const { metadata, choices, answer } = problem;
   const { displayQuestion, coinBreakdown, time } = metadata;
+  const safeChoices = choices ?? [];
 
   const handleChoiceSelect = (value) => {
+    if (selectedChoice !== null) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setSelectedChoice(value);
-    
-    // In Time & Money, let's fast-evaluate for fluidity, but keeping a submit button
-    // helps kids think before confirming. Let's auto-submit after a tiny visual delay.
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
     const isCorrect = String(value) === String(answer);
-    
+
     // Slight delay so the button can animate its selection state before moving on
     answerTimeoutRef.current = setTimeout(() => {
-        onAnswer(isCorrect, String(value));
+      if (!isMountedRef.current) return;
+      onAnswer(isCorrect, String(value));
     }, 400);
   };
 
   // Determine grid layout based on number of choices (usually 4)
   const isTablet = width > 768;
   const getChoiceTileWidth = () => {
-    if (choices.length <= 4) return isTablet ? '40%' : '45%'; // 2x2 grid
+    if (safeChoices.length <= 4) return isTablet ? '40%' : '45%'; // 2x2 grid
     return isTablet ? '30%' : '45%'; // 3x2 grid if more choices
   };
 
@@ -138,7 +145,7 @@ export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
           Tap your answer
         </Text>
         <View style={styles.choicesGrid}>
-          {choices.map((choice, index) => (
+          {safeChoices.map((choice, index) => (
             <AnimatedChoiceTile
               key={`choice-${choice}-${index}`}
               value={choice}
