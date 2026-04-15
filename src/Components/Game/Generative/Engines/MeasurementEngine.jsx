@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, LinearTransition, FadeIn } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, LinearTransition, FadeIn, runOnJS } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
@@ -20,8 +20,8 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, widt
     .onBegin(() => {
       scale.value = withSpring(0.92, { damping: 15, stiffness: 200 });
     })
-    .onTouchesUp(() => {
-      if (onSelect && !disabled) onSelect(value);
+    .onEnd(() => {
+      if (onSelect && !disabled) runOnJS(onSelect)(value);
     })
     .onFinalize(() => {
       scale.value = withSpring(1, { damping: 15, stiffness: 200 });
@@ -71,9 +71,11 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, widt
  */
 export default function MeasurementEngine({ problem, onAnswer, theme }) {
   const [selectedChoice, setSelectedChoice] = useState(null);
+  const hasAnswered = useRef(false);
 
   useEffect(() => {
     setSelectedChoice(null);
+    hasAnswered.current = false;
   }, [problem?.answer]);
 
   if (!problem || !problem.metadata) return null;
@@ -83,15 +85,34 @@ export default function MeasurementEngine({ problem, onAnswer, theme }) {
   const safeChoices = choices ?? [];
 
   const handleChoiceSelect = (value) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    console.log('[MeasurementEngine] Choice selected:', value);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (e) {
+      console.warn('[MeasurementEngine] Haptics error:', e);
+    }
     setSelectedChoice(value);
   };
 
   const handleSubmit = () => {
-    if (selectedChoice === null) return;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    console.log('[MeasurementEngine] handleSubmit pressed');
+    if (selectedChoice === null || hasAnswered.current) return;
+    hasAnswered.current = true;
+    
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch (e) {
+      console.warn('[MeasurementEngine] Haptics error:', e);
+    }
+
     const isCorrect = String(selectedChoice) === String(answer);
-    onAnswer(isCorrect, String(selectedChoice));
+    console.log('[MeasurementEngine] Answer evaluation - isCorrect:', isCorrect);
+    
+    try {
+      onAnswer(isCorrect, String(selectedChoice));
+    } catch (e) {
+      console.error('[MeasurementEngine] onAnswer callback crash:', e);
+    }
   };
 
   const isTablet = width > 768;

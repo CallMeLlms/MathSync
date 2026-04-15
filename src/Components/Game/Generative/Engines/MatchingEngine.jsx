@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, useWindowDimensions } from 'react-native';
 import Animated, { 
   useSharedValue, 
@@ -43,7 +43,7 @@ const MatchCard = React.memo(({ card, isSelected, isMatched, disabled, onPress, 
     .onBegin(() => {
       scale.value = withSpring(0.95, { damping: 10, stiffness: 300 });
     })
-    .onTouchesUp(() => {
+    .onEnd(() => {
       if (onPress) runOnJS(onPress)(card.id);
     })
     .onFinalize(() => {
@@ -117,6 +117,7 @@ export default function MatchingEngine({ problem, onAnswer, theme }) {
   const [selectedIds, setSelectedIds] = useState([]);
   const [matchedIds, setMatchedIds] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const hasAnswered = useRef(false);
 
   // Initialization: Break pairs into shuffled cards
   useEffect(() => {
@@ -142,13 +143,20 @@ export default function MatchingEngine({ problem, onAnswer, theme }) {
     setSelectedIds([]);
     setMatchedIds([]);
     setIsProcessing(false);
+    hasAnswered.current = false;
   }, [problem]);
 
   // Win condition: fire onAnswer once all cards are matched. Side effects belong here, not in state updaters.
   useEffect(() => {
-    if (cards.length > 0 && matchedIds.length === cards.length) {
+    if (cards.length > 0 && matchedIds.length === cards.length && !hasAnswered.current) {
+      console.log('[MatchingEngine] All pairs matched. Completing problem...');
+      hasAnswered.current = true;
       const timeoutId = setTimeout(() => {
-        onAnswer(true, `${cards.length / 2} Pairs Matched`);
+        try {
+          onAnswer(true, `${cards.length / 2} Pairs Matched`);
+        } catch (e) {
+          console.error('[MatchingEngine] onAnswer callback crash:', e);
+        }
       }, 800);
       return () => clearTimeout(timeoutId);
     }
@@ -157,7 +165,12 @@ export default function MatchingEngine({ problem, onAnswer, theme }) {
   const handleCardPress = useCallback((id) => {
     if (isProcessing || selectedIds.includes(id) || matchedIds.includes(id)) return;
 
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    console.log('[MatchingEngine] Card pressed:', id);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (e) {
+      console.warn('[MatchingEngine] Haptics error:', e);
+    }
     
     setSelectedIds(prev => {
       const updated = [...prev, id];
@@ -175,7 +188,12 @@ export default function MatchingEngine({ problem, onAnswer, theme }) {
         if (card1.pairId === card2.pairId) {
           // Match! Side effects happen outside setMatchedIds updater (which must be pure).
           setTimeout(() => {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            console.log('[MatchingEngine] MATCH FOUND!');
+            try {
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            } catch (e) {
+              console.warn('[MatchingEngine] Haptics error:', e);
+            }
             setMatchedIds(mPrev => [...mPrev, updated[0], updated[1]]);
             setSelectedIds([]);
             setIsProcessing(false);
@@ -183,7 +201,12 @@ export default function MatchingEngine({ problem, onAnswer, theme }) {
         } else {
           // Mismatch
           setTimeout(() => {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            console.log('[MatchingEngine] Mismatch.');
+            try {
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            } catch (e) {
+              console.warn('[MatchingEngine] Haptics error:', e);
+            }
             setSelectedIds([]);
             setIsProcessing(false);
           }, 600); // Give user enough time to realize it was a mismatch

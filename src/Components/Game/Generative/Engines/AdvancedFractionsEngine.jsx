@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '@/constants/colors';
 
@@ -15,12 +15,14 @@ export default function AdvancedFractionsEngine({ problem, onAnswer, theme }) {
   const [inputNumerator, setInputNumerator] = useState("");
   const [inputDenominator, setInputDenominator] = useState("");
   const [activeField, setActiveField] = useState("numerator");
+  const hasAnswered = useRef(false);
 
   // Reset inputs when problem changes
   useEffect(() => {
     setInputNumerator("");
     setInputDenominator("");
     setActiveField("numerator");
+    hasAnswered.current = false;
   }, [problem?.answer]);
 
   if (!problem || !problem.metadata) return null;
@@ -48,9 +50,19 @@ export default function AdvancedFractionsEngine({ problem, onAnswer, theme }) {
   const canSubmit = inputNumerator.length > 0 && inputDenominator.length > 0;
 
   const handleSubmit = () => {
+    console.log('[AdvancedFractionsEngine] handleSubmit pressed');
+    if (!canSubmit || hasAnswered.current) return;
+    hasAnswered.current = true;
+    
     const userAnswer = `${inputNumerator}/${inputDenominator}`;
     const isCorrect = userAnswer === answer;
-    onAnswer(isCorrect, userAnswer);
+    console.log('[AdvancedFractionsEngine] Answer evaluation - isCorrect:', isCorrect);
+    
+    try {
+      onAnswer(isCorrect, userAnswer);
+    } catch (e) {
+      console.error('[AdvancedFractionsEngine] onAnswer callback crash:', e);
+    }
   };
 
   // Switch between numerator and denominator input focus

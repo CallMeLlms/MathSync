@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, { useAnimatedStyle, withSpring, useSharedValue, LinearTransition, FadeIn, runOnJS } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -119,6 +119,7 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
   const [availableNumbers, setAvailableNumbers] = useState([]);
   const [placedNumbers, setPlacedNumbers] = useState({});
   const [selectedNumber, setSelectedNumber] = useState(null);
+  const hasAnswered = useRef(false);
   
   // Custom Decimal Feature: The Zero Alignment Helper
   const [useAlignmentHelper, setUseAlignmentHelper] = useState(false);
@@ -131,11 +132,18 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
       setPlacedNumbers({});
       setSelectedNumber(null);
       setUseAlignmentHelper(false);
+      hasAnswered.current = false;
     }
   }, [problem]);
 
   const handleAvailableNumberTap = (number) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    console.log('[DecimalOrderingEngine] Available number tapped:', number);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (e) {
+      console.warn('[DecimalOrderingEngine] Haptics error:', e);
+    }
+    
     if (selectedNumber === number) {
       setSelectedNumber(null);
     } else {
@@ -147,7 +155,12 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
     if (selectedNumber === null) return;
     if (placedNumbers[slotIndex] !== undefined) return;
 
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    console.log('[DecimalOrderingEngine] Placing number into slot:', slotIndex);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch (e) {
+      console.warn('[DecimalOrderingEngine] Haptics error:', e);
+    }
 
     setPlacedNumbers((prev) => ({ ...prev, [slotIndex]: selectedNumber }));
     setAvailableNumbers((prev) => prev.filter((n) => n !== selectedNumber));
@@ -180,7 +193,15 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
   }
 
   const handleCheck = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    console.log('[DecimalOrderingEngine] handleCheck pressed');
+    if (hasAnswered.current) return;
+    hasAnswered.current = true;
+    
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    } catch (e) {
+      console.warn('[DecimalOrderingEngine] Haptics error:', e);
+    }
     
     const placedOrder = [];
     for (let i = 0; i < totalSlots; i++) {
@@ -191,9 +212,14 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
 
     const userAnswerStr = placedOrder.join(', ');
     const isCorrect = userAnswerStr === problem.answer;
+    console.log('[DecimalOrderingEngine] Answer evaluation - isCorrect:', isCorrect);
     
     // Send standard validation shape back to Orchestrator
-    onAnswer(isCorrect, userAnswerStr);
+    try {
+      onAnswer(isCorrect, userAnswerStr);
+    } catch (e) {
+      console.error('[DecimalOrderingEngine] onAnswer callback crash:', e);
+    }
   };
 
   const isComplete = Object.keys(placedNumbers).length === totalSlots;

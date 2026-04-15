@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, { useAnimatedStyle, withSpring, useSharedValue, LinearTransition, FadeIn, runOnJS } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -113,6 +113,7 @@ export default function OrderingEngine({ problem, onAnswer, theme }) {
   const [availableNumbers, setAvailableNumbers] = useState([]);
   const [placedNumbers, setPlacedNumbers] = useState({});
   const [selectedNumber, setSelectedNumber] = useState(null);
+  const hasAnswered = useRef(false);
 
   const totalSlots = problem?.choices?.length || 0;
 
@@ -122,11 +123,18 @@ export default function OrderingEngine({ problem, onAnswer, theme }) {
       setAvailableNumbers([...problem.choices]);
       setPlacedNumbers({});
       setSelectedNumber(null);
+      hasAnswered.current = false;
     }
   }, [problem]);
 
   const handleAvailableNumberTap = (number) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    console.log('[OrderingEngine] Available number tapped:', number);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (e) {
+      console.warn('[OrderingEngine] Haptics error:', e);
+    }
+    
     if (selectedNumber === number) {
       setSelectedNumber(null);
     } else {
@@ -138,7 +146,12 @@ export default function OrderingEngine({ problem, onAnswer, theme }) {
     if (selectedNumber === null) return;
     if (placedNumbers[slotIndex] !== undefined) return;
 
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    console.log('[OrderingEngine] Placing number into slot:', slotIndex);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch (e) {
+      console.warn('[OrderingEngine] Haptics error:', e);
+    }
 
     setPlacedNumbers((prev) => ({ ...prev, [slotIndex]: selectedNumber }));
     setAvailableNumbers((prev) => prev.filter((n) => n !== selectedNumber));
@@ -166,7 +179,15 @@ export default function OrderingEngine({ problem, onAnswer, theme }) {
   };
 
   const handleCheck = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    console.log('[OrderingEngine] handleCheck pressed');
+    if (hasAnswered.current) return;
+    hasAnswered.current = true;
+    
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    } catch (e) {
+      console.warn('[OrderingEngine] Haptics error:', e);
+    }
     
     const placedOrder = [];
     for (let i = 0; i < totalSlots; i++) {
@@ -177,9 +198,14 @@ export default function OrderingEngine({ problem, onAnswer, theme }) {
 
     const userAnswerStr = placedOrder.join(', ');
     const isCorrect = userAnswerStr === problem.answer;
+    console.log('[OrderingEngine] Answer evaluation - isCorrect:', isCorrect);
     
     // Send standard validation shape back to Orchestrator
-    onAnswer(isCorrect, userAnswerStr);
+    try {
+      onAnswer(isCorrect, userAnswerStr);
+    } catch (e) {
+      console.error('[OrderingEngine] onAnswer callback crash:', e);
+    }
   };
 
   const isComplete = Object.keys(placedNumbers).length === totalSlots;

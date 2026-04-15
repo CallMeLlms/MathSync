@@ -106,14 +106,21 @@ export default function GenerativeOrchestrator({
 
   // 3. Handle Engine Answer
   const handleAnswer = useCallback((isCorrect, userAnswerStr) => {
+    console.log('[GenerativeOrchestrator] handleAnswer triggered:', { isCorrect, userAnswerStr });
     setIsLastAnswerCorrect(isCorrect);
     setLastUserAnswer(userAnswerStr);
-    setShowFeedback(true);
     
-    if (isCorrect) {
-      updateScore(10);
-    } else {
-      updateScore(-2);
+    try {
+      setShowFeedback(true);
+      console.log('[GenerativeOrchestrator] Feedback modal requested');
+      
+      if (isCorrect) {
+        updateScore(10);
+      } else {
+        updateScore(-2);
+      }
+    } catch (e) {
+      console.error('[GenerativeOrchestrator] scoring/feedback state update crash:', e);
     }
   }, [updateScore]);
 

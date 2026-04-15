@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, LinearTransition, FadeIn } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, LinearTransition, FadeIn, runOnJS } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
@@ -18,14 +18,7 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme }) {
       scale.value = withSpring(0.92, { damping: 15, stiffness: 200 });
     })
     .onEnd(() => {
-      if (onSelect) {
-        // use runOnJS safely if necessary, but since we are not inside a worklet we can directly invoke
-      }
-    })
-    .onTouchesUp(() => {
-      if (onSelect && !disabled) {
-          onSelect(value);
-      }
+      if (onSelect && !disabled) runOnJS(onSelect)(value);
     })
     .onFinalize(() => {
       scale.value = withSpring(1, { damping: 15, stiffness: 200 });
@@ -121,10 +114,12 @@ function NumberLineHint({ number, roundToBase, theme }) {
 export default function RoundingEngine({ problem, onAnswer, theme }) {
   const { width } = useWindowDimensions();
   const [selectedChoice, setSelectedChoice] = useState(null);
+  const hasAnswered = useRef(false);
 
   // Reset local state when a new problem is passed
   useEffect(() => {
     setSelectedChoice(null);
+    hasAnswered.current = false;
   }, [problem?.answer]);
 
   if (!problem || !problem.metadata) return null;
@@ -134,15 +129,34 @@ export default function RoundingEngine({ problem, onAnswer, theme }) {
   const safeChoices = choices ?? [];
 
   const handleChoiceSelect = (value) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    console.log('[RoundingEngine] Choice selected:', value);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (e) {
+      console.warn('[RoundingEngine] Haptics error:', e);
+    }
     setSelectedChoice(value);
   };
 
   const handleSubmit = () => {
-    if (selectedChoice === null) return;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    console.log('[RoundingEngine] Submit pressed. Selected:', selectedChoice);
+    if (selectedChoice === null || hasAnswered.current) return;
+    hasAnswered.current = true;
+
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch (e) {
+      console.warn('[RoundingEngine] Haptics error:', e);
+    }
+
     const isCorrect = String(selectedChoice) === String(answer);
-    onAnswer(isCorrect, String(selectedChoice));
+    console.log('[RoundingEngine] Answer evaluation - isCorrect:', isCorrect);
+    
+    try {
+      onAnswer(isCorrect, String(selectedChoice));
+    } catch (e) {
+      console.error('[RoundingEngine] onAnswer callback crash:', e);
+    }
   };
 
   const isTablet = width > 768;

@@ -21,8 +21,8 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, widt
     .onBegin(() => {
       scale.value = withSpring(0.92, { damping: 15, stiffness: 200 });
     })
-    .onTouchesUp(() => {
-      if (onSelect && !disabled) onSelect(value);
+    .onEnd(() => {
+      if (onSelect && !disabled) runOnJS(onSelect)(value);
     })
     .onFinalize(() => {
       scale.value = withSpring(1, { damping: 15, stiffness: 200 });
@@ -71,10 +71,12 @@ export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const answerTimeoutRef = useRef(null);
   const isMountedRef = useRef(true);
+  const hasAnswered = useRef(false);
 
   // Reset local state and cancel any pending dispatch when a new problem arrives
   useEffect(() => {
     setSelectedChoice(null);
+    hasAnswered.current = false;
     if (answerTimeoutRef.current) {
       clearTimeout(answerTimeoutRef.current);
       answerTimeoutRef.current = null;
@@ -97,16 +99,29 @@ export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
   const safeChoices = choices ?? [];
 
   const handleChoiceSelect = (value) => {
-    if (selectedChoice !== null) return;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    console.log('[TimeMoneyEngine] Choice selected:', value);
+    if (selectedChoice !== null || hasAnswered.current) return;
+    hasAnswered.current = true;
+    
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (e) {
+      console.warn('[TimeMoneyEngine] Haptics error:', e);
+    }
+    
     setSelectedChoice(value);
 
     const isCorrect = String(value) === String(answer);
+    console.log('[TimeMoneyEngine] Answer evaluation - isCorrect:', isCorrect);
 
     // Slight delay so the button can animate its selection state before moving on
     answerTimeoutRef.current = setTimeout(() => {
       if (!isMountedRef.current) return;
-      onAnswer(isCorrect, String(value));
+      try {
+        onAnswer(isCorrect, String(value));
+      } catch (e) {
+        console.error('[TimeMoneyEngine] onAnswer callback crash:', e);
+      }
     }, 400);
   };
 

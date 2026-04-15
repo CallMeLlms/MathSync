@@ -45,18 +45,26 @@ class SpeechManager {
    * @param {boolean} isCorrect - Whether the feedback is for a correct answer
    */
   speakFeedback(text, isCorrect = true) {
+    console.log('[SpeechManager] Speaking feedback:', text);
     if (!text) return;
-    this.stop();
+    try {
+      this.stop();
 
-    Speech.speak(text, {
-      language: 'en',
-      rate: 1.0,   // Normal to slightly peppy
-      pitch: isCorrect ? 1.2 : 1.1, // Higher pitch for success
-      onStart: () => { this.isSpeaking = true; },
-      onDone: () => { this.isSpeaking = false; },
-      onStopped: () => { this.isSpeaking = false; },
-      onError: () => { this.isSpeaking = false; }
-    });
+      Speech.speak(text, {
+        language: 'en',
+        rate: 1.0,   // Normal to slightly peppy
+        pitch: isCorrect ? 1.2 : 1.1, // Higher pitch for success
+        onStart: () => { this.isSpeaking = true; },
+        onDone: () => { this.isSpeaking = false; },
+        onStopped: () => { this.isSpeaking = false; },
+        onError: (error) => { 
+          console.warn('[SpeechManager] Speech error caught in onError:', error);
+          this.isSpeaking = false; 
+        }
+      });
+    } catch (e) {
+      console.error('[SpeechManager] Speech.speak fatal error:', e);
+    }
   }
 }
 
