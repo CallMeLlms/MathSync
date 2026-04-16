@@ -35,6 +35,7 @@
             "difficulty": "Medium",
             "question": "Look at the drawing of a house roof. It is made of two shapes. What are they?",
             "answer": "triangles",
+            "assetId": "mg_1_comp_004",
             "assetType": "illustration",
             "metadata": {
                 "options": [

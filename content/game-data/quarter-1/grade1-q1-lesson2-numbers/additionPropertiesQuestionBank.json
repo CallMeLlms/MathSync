@@ -22,6 +22,7 @@
             "difficulty": "Easy",
             "question": "You have 5 blocks. I give you 0 more blocks. How many blocks do you have?",
             "answer": 5,
+            "assetId": "na_1_addprop_001",
             "assetType": "manipulatives",
             "metadata": {
                 "property": "zero_identity"
@@ -37,6 +38,7 @@
             "question": "4 birds plus 3 birds is the same as 3 birds plus __ birds. What number goes in the blank?",
             "answer": 4,
             "maxDigits": 1,
+            "assetId": "na_1_addprop_004",
             "assetType": "illustration",
             "metadata": {
                 "property": "commutative"

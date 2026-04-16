@@ -63,6 +63,24 @@ export const AssetMap = {
   'tool_paperclip': require('@assets/games/shared/paperclip-ruler-hand/Paperclip.webp'),
   'tool_ruler':     require('@assets/games/shared/paperclip-ruler-hand/Ruler.webp'),
 
+  // ─── Q1 Lesson 1 — Shapes (Real Assets) ─────────────────────────────
+  'mg_1_shapes_004':   require('@assets/games/q1-assets/mg_1_shapes_004.png'),
+  'mg_1_shapes_007':   require('@assets/games/q1-assets/mg_1_shapes_007.png'),
+  'mg_1_props_001':    require('@assets/games/q1-assets/mg_1_props_001.png'),
+  'mg_1_props_004':    require('@assets/games/q1-assets/mg_1_props_004.png'),
+  'mg_1_props_007':    require('@assets/games/q1-assets/mg_1_props_007.png'),
+  'mg_1_comp_004':     require('@assets/games/q1-assets/mg_1_comp_004.png'),
+
+  // ─── Q1 Lesson 2 — Numbers & Addition (Real Assets) ─────────────────
+  'na_1_addprop_001':  require('@assets/games/q1-assets/na_1_addprop_001.png'),
+  'na_1_addprop_004':  require('@assets/games/q1-assets/na_1_addprop_004.png'),
+  'na_1_basicadd_001': require('@assets/games/q1-assets/na_1_basicadd_001.png'),
+  'na_1_basicadd_004': require('@assets/games/q1-assets/na_1_basicadd_004.png'),
+  'na_1_addword_001':  require('@assets/games/q1-assets/na_1_addword_001.png'),
+  'na_1_addword_004':  require('@assets/games/q1-assets/na_1_addword_004.png'),
+  'na_1_addword_007':  require('@assets/games/q1-assets/na_1_addword_007.png'),
+  'Big_square':        require('@assets/games/q1-assets/Big_square.png'),
+
   // ─── Quarter 1: Shapes — TODO: Add PNG/SVG assets to @assets/images/games/ ──
   // 'g1_q1_shape_triangle': require('@assets/images/games/g1_q1_shape_triangle.png'),
   // 'g1_q1_shape_square':   require('@assets/images/games/g1_q1_shape_square.png'),

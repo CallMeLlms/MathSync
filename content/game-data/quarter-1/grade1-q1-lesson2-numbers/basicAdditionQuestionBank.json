@@ -21,6 +21,7 @@
             "difficulty": "Easy",
             "question": "Count 4 red blocks and 3 blue blocks. How many blocks in total?",
             "answer": 7,
+            "assetId": "na_1_basicadd_001",
             "assetType": "manipulatives",
             "metadata": {
                 "group_a": 4,
@@ -37,7 +38,7 @@
             "question": "Look at the picture. 2 birds are on the branch. 4 more birds fly in. How many birds are there now?",
             "answer": 6,
             "assetType": "illustration",
-            "assetId": "icon_bird",
+            "assetId": "na_1_basicadd_004",
             "metadata": {
                 "addends": [2, 4]
             }

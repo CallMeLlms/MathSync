@@ -189,29 +189,21 @@ const ShapeComposeEngine = ({ data, onResult }) => {
 
       setUsedSet(nextUsed);
       setSlotsFilled(nextFilled);
-
-      if (nextFilled >= requiredCount) {
-        setResolved(true);
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        speechManager.speakFeedback('Amazing! You made it!', true);
-        setTimeout(() => onResult(true, [type]), 900);
-      }
     } else {
-      // Wrong tile — flash error, don't penalise
+      // Wrong tile — flash error only, never auto-submit
       setRejectedIdx(idx);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setTimeout(() => setRejectedIdx(null), 600);
-
-      // If no valid moves remain and slots aren't full, auto-fail
-      const validRemaining = palette.filter(
-        (t, i) => accepts.includes(t) && !usedSet.has(i)
-      );
-      if (validRemaining.length === 0 && slotsFilled < requiredCount) {
-        setResolved(true);
-        setTimeout(() => onResult(false, [type]), 700);
-      }
     }
-  }, [resolved, usedSet, accepts, slotsFilled, requiredCount, palette, onResult]);
+  }, [resolved, usedSet, accepts, slotsFilled]);
+
+  const handleSubmit = useCallback(() => {
+    if (resolved || slotsFilled < requiredCount) return;
+    setResolved(true);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    speechManager.speakFeedback('Amazing! You made it!', true);
+    setTimeout(() => onResult(true, Array.from(usedSet).map(i => palette[i])), 900);
+  }, [resolved, slotsFilled, requiredCount, usedSet, palette, onResult]);
 
   const getHintText = () => {
     if (resolved)         return 'You did it!';
@@ -263,11 +255,24 @@ const ShapeComposeEngine = ({ data, onResult }) => {
         ))}
       </View>
 
-      {/* Progress */}
-      <View style={styles.progressContainer}>
-        <Text style={styles.progressText}>
-          Placed {slotsFilled} of {requiredCount}
-        </Text>
+      {/* Footer: progress + submit */}
+      <View style={styles.footerRow}>
+        <View style={styles.progressContainer}>
+          <Text style={styles.progressText}>
+            Placed {slotsFilled} of {requiredCount}
+          </Text>
+        </View>
+
+        {slotsFilled >= requiredCount && !resolved && (
+          <GestureDetector
+            gesture={Gesture.Tap().onEnd(() => runOnJS(handleSubmit)())}
+          >
+            <Animated.View entering={ZoomIn.springify()} style={styles.submitButton}>
+              <Ionicons name="checkmark-circle" size={20} color="#FFFFFF" />
+              <Text style={styles.submitButtonText}>Submit</Text>
+            </Animated.View>
+          </GestureDetector>
+        )}
       </View>
 
     </View>
@@ -413,6 +418,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.surfaceContainerLowest,
   },
+  footerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
   progressContainer: {
     backgroundColor: Colors.surfaceContainerLow,
     paddingHorizontal: 16,
@@ -425,6 +435,20 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans-Regular',
     fontSize: SCREEN_HEIGHT * 0.015,
     color: Colors.onSurfaceVariant,
+  },
+  submitButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: Colors.success,
+    paddingVertical: 10,
+    paddingHorizontal: 22,
+    borderRadius: 20,
+  },
+  submitButtonText: {
+    fontFamily: 'PlusJakartaSans-Bold',
+    fontSize: SCREEN_HEIGHT * 0.017,
+    color: '#FFFFFF',
   },
 });
 

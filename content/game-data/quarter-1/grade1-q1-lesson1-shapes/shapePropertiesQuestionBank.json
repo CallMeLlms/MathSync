@@ -21,6 +21,7 @@
             "difficulty": "Easy",
             "question": "Tap the block that has exactly 4 corners.",
             "answer": "square",
+            "assetId": "mg_1_props_001",
             "assetType": "shape",
             "metadata": {
                 "options": [
@@ -39,6 +40,7 @@
             "difficulty": "Medium",
             "question": "Look at the drawing. How many corners does the TV screen have?",
             "answer": 4,
+            "assetId": "mg_1_props_004",
             "assetType": "illustration",
             "metadata": {
                 "options": [
@@ -57,7 +59,8 @@
             "difficulty": "Hard",
             "question": "A shape has 3 sides. Is it a rectangle?",
             "answer": "no",
-            "assetType": "text",
+            "assetId": "mg_1_props_007",
+            "assetType": "illustration",
             "metadata": {
                 "options": [
                     "yes",

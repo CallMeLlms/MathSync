@@ -39,7 +39,8 @@
             "difficulty": "Medium",
             "question": "Look at the picture. Which object is shaped like a rectangle?",
             "answer": "door",
-            "assetType": "text",
+            "assetId": "mg_1_shapes_004",
+            "assetType": "illustration",
             "metadata": {
                 "options": [
                     "door",
@@ -57,7 +58,8 @@
             "difficulty": "Hard",
             "question": "If you put two identical squares side by side, what shape do you make?",
             "answer": "rectangle",
-            "assetType": "text",
+            "assetId": "mg_1_shapes_007",
+            "assetType": "illustration",
             "metadata": {
                 "options": [
                     "rectangle",
