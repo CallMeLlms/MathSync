@@ -17,36 +17,39 @@
             "competency": "NA.2.5",
             "topic": "Skip Counting",
             "level": "concrete",
-            "type": "NUMPAD",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Easy",
-            "question": "Count the pairs of shoes. How many are there in total if you count by 2s: 2, 4, 6, 8, __?",
+            "question": "Count by 2s. What number comes next?",
             "answer": 10,
+            "maxDigits": 2,
             "assetType": "manipulatives",
-            "metadata": {}
+            "metadata": { "sequence": [2, 4, 6, 8, null] }
         },
         {
             "id": "na_2_skip_004",
             "competency": "NA.2.5",
             "topic": "Skip Counting",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Medium",
-            "question": "Look at the socks. How many socks are there if you count in 2s? 2, 4, 6, 8, 10, __?",
+            "question": "Count by 2s. What number comes next?",
             "answer": 12,
+            "maxDigits": 2,
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": { "sequence": [2, 4, 6, 8, 10, null] }
         },
         {
             "id": "na_2_skip_007",
             "competency": "NA.2.5",
             "topic": "Skip Counting",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Hard",
-            "question": "Fill in the missing number in the skip counting sequence: 40, 50, 60, __, 80.",
+            "question": "What number is missing?",
             "answer": 70,
+            "maxDigits": 2,
             "assetType": "text",
-            "metadata": {}
+            "metadata": { "sequence": [40, 50, 60, null, 80] }
         }
     ]
 }

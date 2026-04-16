@@ -6,6 +6,7 @@
  * (pure-equation input) and word problems (no visual).
  *
  * Visual zone resolves from `data.metadata`:
+ *   - `sequence: [2, 4, null, 8]` → horizontal row of number cards; null = dashed blank
  *   - `addends: [a, b]` → two groups of the same assetId, separated by "+"
  *   - `group_a` + `group_b` → red-tinted group A + blue-tinted group B
  *   - `count: N` → N tiles of the assetId
@@ -124,10 +125,47 @@ const PlusSeparator = () => (
   </Animated.View>
 );
 
+// ─── SequenceCard — one box in the number sequence row ───
+// value: number → solid card; null → dashed pulsing blank
+const SequenceCard = ({ value, index }) => {
+  const isBlank = value === null;
+  const blinkOpacity = useSharedValue(1);
+
+  useEffect(() => {
+    if (isBlank) {
+      blinkOpacity.value = withRepeat(
+        withSequence(
+          withTiming(0.25, { duration: 560 }),
+          withTiming(1.0,  { duration: 560 })
+        ),
+        -1,
+        false
+      );
+    }
+  }, [isBlank, blinkOpacity]);
+
+  const blinkStyle = useAnimatedStyle(() => ({ opacity: blinkOpacity.value }));
+
+  return (
+    <Animated.View
+      entering={ZoomIn.springify().delay(index * 60)}
+      style={[styles.seqCard, isBlank && styles.seqCardBlank]}
+    >
+      {isBlank ? (
+        <Animated.View style={blinkStyle}>
+          <Text style={styles.seqCardBlankText}>?</Text>
+        </Animated.View>
+      ) : (
+        <Text style={styles.seqCardText}>{value}</Text>
+      )}
+    </Animated.View>
+  );
+};
+
 // ─── VisualNumpadEngine ───
 const VisualNumpadEngine = ({ data, onResult }) => {
   const { answer, maxDigits = 2, assetId, metadata = {} } = data;
-  const { addends, group_a, group_b, count } = metadata;
+  const { addends, group_a, group_b, count, sequence } = metadata;
 
   const [input, setInput] = useState('');
   const [answered, setAnswered] = useState(false);
@@ -198,6 +236,10 @@ const VisualNumpadEngine = ({ data, onResult }) => {
 
   // Build visual group model — which tiles to render
   const visualGroups = useMemo(() => {
+    // Number sequence / skip counting / missing number in sequence
+    if (Array.isArray(sequence)) {
+      return { mode: 'sequence', items: sequence };
+    }
     // Two groups via addends (same assetId for both)
     if (Array.isArray(addends) && addends.length === 2) {
       const iconA = assetId || 'icon_star';
@@ -228,7 +270,7 @@ const VisualNumpadEngine = ({ data, onResult }) => {
       return { mode: 'single', tiles: [assetId] };
     }
     return { mode: 'none' };
-  }, [addends, group_a, group_b, count, assetId]);
+  }, [addends, group_a, group_b, count, assetId, sequence]);
 
   const getInstruction = () => {
     if (answered) return '✅ Correct!';
@@ -238,6 +280,15 @@ const VisualNumpadEngine = ({ data, onResult }) => {
   };
 
   const renderVisualZone = () => {
+    if (visualGroups.mode === 'sequence') {
+      return (
+        <View style={styles.sequenceRow}>
+          {visualGroups.items.map((val, i) => (
+            <SequenceCard key={i} value={val} index={i} />
+          ))}
+        </View>
+      );
+    }
     if (visualGroups.mode === 'two-group') {
       return (
         <View style={styles.visualRow}>
@@ -537,6 +588,38 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans-Bold',
     fontSize: SCREEN_HEIGHT * 0.017,
     color: '#FFFFFF',
+  },
+  sequenceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  seqCard: {
+    width: SCREEN_HEIGHT * 0.068,
+    height: SCREEN_HEIGHT * 0.068,
+    borderRadius: 14,
+    backgroundColor: Colors.surfaceContainerLow,
+    borderWidth: 2,
+    borderColor: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  seqCardBlank: {
+    borderStyle: 'dashed',
+    borderColor: Colors.secondary,
+    backgroundColor: Colors.secondaryContainer,
+  },
+  seqCardText: {
+    fontFamily: 'Lexend-Black',
+    fontSize: SCREEN_HEIGHT * 0.026,
+    color: Colors.onSurface,
+  },
+  seqCardBlankText: {
+    fontFamily: 'Lexend-Black',
+    fontSize: SCREEN_HEIGHT * 0.026,
+    color: Colors.onSecondaryContainer,
   },
 });
 

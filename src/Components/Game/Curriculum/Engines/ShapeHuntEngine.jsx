@@ -17,7 +17,8 @@
  *
  * JSON question shape:
  *   {
- *     question: "Tap all the circles!",
+ *     prompt: "Tap all the circles!",
+ *     audio: "shape_hunt_circles.mp3",
  *     items: [{ id, assetId, isTarget }, ...]
  *   }
  */
@@ -134,7 +135,7 @@ const ShapeTile = ({ item, index, isSelected, answered, resolvedCorrect, resolve
 
 // ─── ShapeHuntEngine: main engine component ───
 const ShapeHuntEngine = ({ data, onResult }) => {
-  const { items = [], question: instructionText } = data;
+  const { items = [], prompt: instructionText } = data;
 
   const [selectedSet, setSelectedSet] = useState(() => new Set());
   const [resolved, setResolved] = useState(false);

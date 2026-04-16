@@ -17,24 +17,26 @@
             "competency": "NA.2.4",
             "topic": "Sequences",
             "level": "concrete",
-            "type": "NUMPAD",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Easy",
-            "question": "Use the number line. What number comes just before 21?",
+            "question": "What number comes just before 21?",
             "answer": 20,
+            "maxDigits": 2,
             "assetType": "manipulatives",
-            "metadata": {}
+            "metadata": { "sequence": [null, 21] }
         },
         {
             "id": "na_2_seq_004",
             "competency": "NA.2.4",
             "topic": "Sequences",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Medium",
-            "question": "Look at the numbers on the train cars. What number is missing? 55, 56, __, 58.",
+            "question": "What number is missing in the sequence?",
             "answer": 57,
+            "maxDigits": 2,
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": { "sequence": [55, 56, null, 58] }
         },
         {
             "id": "na_2_seq_007",

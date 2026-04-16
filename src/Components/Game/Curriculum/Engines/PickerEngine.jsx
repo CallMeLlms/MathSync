@@ -1,13 +1,15 @@
 /**
- * PickerEngine — Simple Multiple-Choice Engine
+ * PickerEngine — Multiple-Choice Visual Tile Engine
  *
- * Renders a question prompt and a grid of tappable option tiles.
- * The student picks one answer from `metadata.options`.
+ * Renders a 2-column grid of large tappable option tiles.
+ * Correct tap: green border + checkmark, auto-advance after 600ms.
+ * Wrong tap: red flash for 600ms, reset — student can retry.
+ * No "Check" button — feedback is immediate on tap.
  *
  * Data contract (from Orchestrator `data` prop):
  *   {
  *     question: "Which shape has 4 corners?",
- *     answer: "square" | 4,           // string or number
+ *     answer: "square" | 4,
  *     metadata: { options: ["square", "circle", "triangle"] }
  *   }
  *
@@ -38,7 +40,8 @@ const OPTION_COLORS = [
 ];
 
 // ─── OptionTile ───
-const OptionTile = ({ label, color, index, isSelected, isCorrect, isWrong, disabled, onPress }) => {
+// state: 'idle' | 'correct' | 'wrong'
+const OptionTile = ({ label, color, index, state, disabled, onPress }) => {
   const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -47,7 +50,7 @@ const OptionTile = ({ label, color, index, isSelected, isCorrect, isWrong, disab
 
   const tap = Gesture.Tap()
     .onBegin(() => {
-      scale.value = withSpring(0.92, { damping: 8, stiffness: 400 });
+      scale.value = withSpring(0.9, { damping: 8, stiffness: 400 });
     })
     .onEnd(() => {
       runOnJS(onPress)(label);
@@ -57,53 +60,55 @@ const OptionTile = ({ label, color, index, isSelected, isCorrect, isWrong, disab
     })
     .enabled(!disabled);
 
-  const borderColor = isCorrect
-    ? Colors.success
-    : isWrong
-      ? Colors.error
-      : isSelected
-        ? Colors.primary
-        : Colors.outlineVariant;
+  const borderColor =
+    state === 'correct' ? Colors.success :
+    state === 'wrong'   ? Colors.error :
+                          Colors.outlineVariant;
 
-  const bgColor = isCorrect
-    ? 'rgba(76,175,80,0.12)'
-    : isWrong
-      ? 'rgba(211,47,47,0.08)'
-      : isSelected
-        ? Colors.primaryContainer
-        : Colors.surfaceContainerLowest;
+  const bgColor =
+    state === 'correct' ? 'rgba(76,175,80,0.15)' :
+    state === 'wrong'   ? 'rgba(211,47,47,0.12)' :
+                          Colors.surfaceContainerLowest;
+
+  const textColor =
+    state === 'correct' ? Colors.success :
+    state === 'wrong'   ? Colors.error :
+                          Colors.onSurface;
 
   return (
-    <Animated.View entering={ZoomIn.springify().delay(index * 80)}>
-      <Animated.View style={animatedStyle}>
+    <Animated.View
+      entering={ZoomIn.springify().delay(index * 80)}
+      style={styles.tileWrapper}
+    >
+      <Animated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
         <GestureDetector gesture={tap}>
           <Animated.View
             style={[
               styles.optionTile,
               {
                 backgroundColor: bgColor,
-                borderColor: borderColor,
-                borderWidth: isSelected || isCorrect || isWrong ? 3 : 2,
+                borderColor,
+                borderWidth: state !== 'idle' ? 3 : 2,
               },
             ]}
           >
-            <View style={[styles.optionDot, { backgroundColor: color }]} />
+            <View style={[styles.colorBar, { backgroundColor: color }]} />
             <Text
-              style={[
-                styles.optionText,
-                isCorrect && { color: Colors.success },
-                isWrong && { color: Colors.error },
-              ]}
-              numberOfLines={2}
+              style={[styles.optionText, { color: textColor }]}
+              numberOfLines={3}
               adjustsFontSizeToFit
             >
               {String(label)}
             </Text>
-            {isCorrect && (
-              <Ionicons name="checkmark-circle" size={22} color={Colors.success} style={styles.optionIcon} />
+            {state === 'correct' && (
+              <Animated.View entering={ZoomIn.springify()} style={styles.resultBadge}>
+                <Ionicons name="checkmark-circle" size={24} color={Colors.success} />
+              </Animated.View>
             )}
-            {isWrong && (
-              <Ionicons name="close-circle" size={22} color={Colors.error} style={styles.optionIcon} />
+            {state === 'wrong' && (
+              <Animated.View entering={ZoomIn.springify()} style={styles.resultBadge}>
+                <Ionicons name="close-circle" size={24} color={Colors.error} />
+              </Animated.View>
             )}
           </Animated.View>
         </GestureDetector>
@@ -117,21 +122,21 @@ const PickerEngine = ({ data, onResult }) => {
   const { question: questionText, answer, metadata = {} } = data;
   const options = metadata.options || [];
 
-  const [selected, setSelected] = useState(null);
-  const [answered, setAnswered] = useState(false);
-  const [isCorrectResult, setIsCorrectResult] = useState(false);
+  // Per-option state keyed by stringified option value
+  const [tileStates, setTileStates] = useState({});
+  const [resolved, setResolved] = useState(false);
 
   // Shuffle options once per question
   const shuffledOptions = useMemo(
     () => [...options].sort(() => Math.random() - 0.5),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [data]
   );
 
   // Reset on question change
   useEffect(() => {
-    setSelected(null);
-    setAnswered(false);
-    setIsCorrectResult(false);
+    setTileStates({});
+    setResolved(false);
   }, [data]);
 
   // Speak the question
@@ -142,50 +147,38 @@ const PickerEngine = ({ data, onResult }) => {
     }
   }, [questionText]);
 
-  const handleSelect = (option) => {
-    if (answered) return;
+  const handleTap = (option) => {
+    if (resolved) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setSelected(option);
-  };
 
-  const handleCheckAnswer = () => {
-    if (selected === null || answered) return;
-
-    const normalizedSelected = String(selected).toLowerCase().trim();
+    const key = String(option);
+    const normalizedSelected = key.toLowerCase().trim();
     const normalizedAnswer = String(answer).toLowerCase().trim();
     const isCorrect = normalizedSelected === normalizedAnswer;
 
-    setAnswered(true);
-    setIsCorrectResult(isCorrect);
-
     if (isCorrect) {
+      setTileStates({ [key]: 'correct' });
+      setResolved(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       speechManager.speakFeedback('Correct!', true);
-      setTimeout(() => onResult(true, [String(selected)]), 700);
+      setTimeout(() => onResult(true, [key]), 600);
     } else {
+      setTileStates(prev => ({ ...prev, [key]: 'wrong' }));
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      speechManager.speakFeedback('Try again!', false);
-      onResult(false, [String(selected)]);
-      // Reset after showing error
       setTimeout(() => {
-        setSelected(null);
-        setAnswered(false);
-        setIsCorrectResult(false);
-      }, 1200);
+        setTileStates(prev => {
+          const next = { ...prev };
+          delete next[key];
+          return next;
+        });
+      }, 600);
     }
   };
 
   const getInstruction = () => {
-    if (answered && isCorrectResult) return '✅ Correct!';
-    if (answered && !isCorrectResult) return 'Not quite — try again!';
-    if (selected !== null) return 'Tap Check when ready.';
+    if (resolved) return '✅ Correct!';
     return 'Tap your answer.';
   };
-
-  // Gesture for the check button
-  const checkTap = Gesture.Tap()
-    .enabled(selected !== null && !answered)
-    .onEnd(() => runOnJS(handleCheckAnswer)());
 
   return (
     <View style={styles.container}>
@@ -194,51 +187,36 @@ const PickerEngine = ({ data, onResult }) => {
         <Animated.Text
           style={[
             styles.instructionText,
-            answered && isCorrectResult && { color: Colors.success },
-            answered && !isCorrectResult && { color: Colors.error },
+            resolved && { color: Colors.success },
           ]}
         >
           {getInstruction()}
         </Animated.Text>
       </Animated.View>
 
-      {/* Options Grid */}
+      {/* 2-column options grid */}
       <View style={styles.optionsGrid}>
         {shuffledOptions.map((opt, idx) => {
-          const isThisSelected = selected !== null && String(selected) === String(opt);
-          const isCorrect = answered && isCorrectResult && isThisSelected;
-          const isWrong = answered && !isCorrectResult && isThisSelected;
-
+          const key = String(opt);
+          const state = tileStates[key] || 'idle';
           return (
             <OptionTile
               key={`opt-${idx}`}
               label={opt}
               color={OPTION_COLORS[idx % OPTION_COLORS.length]}
               index={idx}
-              isSelected={isThisSelected && !answered}
-              isCorrect={isCorrect}
-              isWrong={isWrong}
-              disabled={answered}
-              onPress={handleSelect}
+              state={state}
+              disabled={resolved || state === 'wrong'}
+              onPress={handleTap}
             />
           );
         })}
       </View>
-
-      {/* Check Button */}
-      <View style={styles.footer}>
-        {selected !== null && !answered && (
-          <GestureDetector gesture={checkTap}>
-            <Animated.View entering={ZoomIn.springify()} style={styles.checkButton}>
-              <Ionicons name="checkmark-circle" size={22} color="#FFFFFF" />
-              <Text style={styles.checkButtonText}>Check Answer</Text>
-            </Animated.View>
-          </GestureDetector>
-        )}
-      </View>
     </View>
   );
 };
+
+const TILE_HEIGHT = SCREEN_HEIGHT * 0.13;
 
 const styles = StyleSheet.create({
   container: {
@@ -261,54 +239,40 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   optionsGrid: {
-    width: '100%',
-    gap: 10,
-  },
-  optionTile: {
-    width: '100%',
-    minHeight: SCREEN_HEIGHT * 0.075,
-    borderRadius: 18,
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 18,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    width: '100%',
     gap: 12,
   },
-  optionDot: {
-    width: 14,
-    height: 14,
-    borderRadius: 7,
+  tileWrapper: {
+    width: '47%',
+    height: TILE_HEIGHT,
+  },
+  optionTile: {
+    flex: 1,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 14,
+    gap: 8,
+    position: 'relative',
+  },
+  colorBar: {
+    width: 32,
+    height: 6,
+    borderRadius: 3,
   },
   optionText: {
     fontFamily: 'Lexend-Bold',
-    fontSize: SCREEN_HEIGHT * 0.021,
-    color: Colors.onSurface,
-    flex: 1,
+    fontSize: SCREEN_HEIGHT * 0.022,
+    textAlign: 'center',
+    flexShrink: 1,
   },
-  optionIcon: {
-    marginLeft: 'auto',
-  },
-  footer: {
-    minHeight: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 4,
-  },
-  checkButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.success,
-    paddingHorizontal: 28,
-    paddingVertical: 14,
-    borderRadius: 20,
-    minHeight: 44,
-    minWidth: 44,
-    gap: 8,
-  },
-  checkButtonText: {
-    fontFamily: 'Lexend-Bold',
-    color: '#FFFFFF',
-    fontSize: SCREEN_HEIGHT * 0.019,
+  resultBadge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
   },
 });
 

@@ -31,14 +31,13 @@
             "competency": "NA.1.8",
             "topic": "Ordering Numbers",
             "level": "pictorial",
-            "type": "PICKER",
+            "type": "VISUAL_NUMPAD",
             "difficulty": "Medium",
-            "question": "Look at the number line. What number is missing between 11 and 13?",
+            "question": "What number is missing?",
             "answer": 12,
+            "maxDigits": 2,
             "assetType": "illustration",
-            "metadata": {
-                "options": [10, 12, 14]
-            }
+            "metadata": { "sequence": [11, null, 13] }
         },
         {
             "id": "na_1_seq_007",

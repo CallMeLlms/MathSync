@@ -20,6 +20,7 @@ import DragDropEngine from './Engines/DragAndDropEngine';
 import ConnectDotsEngine from './Engines/ConnectTheDotsEngine';
 import ShapeTracerEngine from './Engines/ShapeTracerEngine';
 import ShapeHuntEngine from './Engines/ShapeHuntEngine';
+import ShapeComposeEngine from './Engines/ShapeComposeEngine';
 import OrdinalSequenceEngine from './Engines/OrdinalSequenceEngine';
 import SortEngine from './Engines/SortEngine';
 import GeoboardEngine from './Engines/GeoboardEngine';
@@ -168,6 +169,7 @@ export default function CurriculumOrchestrator({
       case 'connectdots': return <ConnectDotsEngine key={currentQuestionIndex} {...props} />;
       case 'shapetracer': return <ShapeTracerEngine key={currentQuestionIndex} {...props} />;
       case 'shape_hunt': return <ShapeHuntEngine key={currentQuestionIndex} {...props} />;
+      case 'compose_drag': return <ShapeComposeEngine key={currentQuestionIndex} {...props} />;
       case 'ordinal_sequence': return <OrdinalSequenceEngine key={currentQuestionIndex} {...props} />;
       case 'sort': return <SortEngine key={currentQuestionIndex} {...props} />;
       case 'geoboard': return <GeoboardEngine key={currentQuestionIndex} {...props} />;

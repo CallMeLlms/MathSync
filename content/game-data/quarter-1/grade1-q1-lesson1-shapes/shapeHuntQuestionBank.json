@@ -20,7 +20,8 @@
             "level": "concrete",
             "type": "SHAPE_HUNT",
             "difficulty": "Easy",
-            "question": "Tap all the circles!",
+            "prompt": "Tap all the circles!",
+            "audio": "shape_hunt_circles.mp3",
             "items": [
                 { "id": "h1", "assetId": "shape_circle", "isTarget": true },
                 { "id": "h2", "assetId": "shape_square", "isTarget": false },
@@ -38,7 +39,8 @@
             "level": "concrete",
             "type": "SHAPE_HUNT",
             "difficulty": "Easy",
-            "question": "Tap all the triangles!",
+            "prompt": "Tap all the triangles!",
+            "audio": "shape_hunt_triangles.mp3",
             "items": [
                 { "id": "h1", "assetId": "shape_square", "isTarget": false },
                 { "id": "h2", "assetId": "shape_triangle", "isTarget": true },
@@ -56,7 +58,8 @@
             "level": "concrete",
             "type": "SHAPE_HUNT",
             "difficulty": "Medium",
-            "question": "Find all the squares!",
+            "prompt": "Find all the squares!",
+            "audio": "shape_hunt_squares.mp3",
             "items": [
                 { "id": "h1", "assetId": "shape_circle", "isTarget": false },
                 { "id": "h2", "assetId": "shape_square", "isTarget": true },
@@ -75,7 +78,8 @@
             "level": "pictorial",
             "type": "SHAPE_HUNT",
             "difficulty": "Medium",
-            "question": "Tap all shapes with 4 sides!",
+            "prompt": "Tap all shapes with 4 sides!",
+            "audio": "shape_hunt_4sides.mp3",
             "items": [
                 { "id": "h1", "assetId": "shape_triangle", "isTarget": false },
                 { "id": "h2", "assetId": "shape_square", "isTarget": true },
@@ -94,7 +98,8 @@
             "level": "pictorial",
             "type": "SHAPE_HUNT",
             "difficulty": "Hard",
-            "question": "Find every shape with 3 corners!",
+            "prompt": "Find every shape with 3 corners!",
+            "audio": "shape_hunt_3corners.mp3",
             "items": [
                 { "id": "h1", "assetId": "shape_circle", "isTarget": false },
                 { "id": "h2", "assetId": "shape_triangle", "isTarget": true },
@@ -114,7 +119,8 @@
             "level": "abstract",
             "type": "SHAPE_HUNT",
             "difficulty": "Hard",
-            "question": "Tap shapes that are NOT circles!",
+            "prompt": "Tap shapes that are NOT circles!",
+            "audio": "shape_hunt_not_circles.mp3",
             "items": [
                 { "id": "h1", "assetId": "shape_square", "isTarget": true },
                 { "id": "h2", "assetId": "shape_circle", "isTarget": false },

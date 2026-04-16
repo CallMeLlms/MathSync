@@ -32,14 +32,14 @@
             "competency": "NA.1.12",
             "topic": "Addition Properties",
             "level": "pictorial",
-            "type": "PICKER",
+            "type": "NUMPAD",
             "difficulty": "Medium",
-            "question": "Look at the picture. 4 birds plus 3 birds is the same as 3 birds plus what number of birds?",
+            "question": "4 birds plus 3 birds is the same as 3 birds plus __ birds. What number goes in the blank?",
             "answer": 4,
+            "maxDigits": 1,
             "assetType": "illustration",
             "metadata": {
-                "property": "commutative",
-                "options": [3, 4, 7]
+                "property": "commutative"
             }
         },
         {

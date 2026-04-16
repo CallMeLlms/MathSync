@@ -17,7 +17,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.justcallmellams.MathSync"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -28,6 +29,14 @@
       "expo-sqlite",
       "expo-asset",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "52e8764d-0c6e-411b-90ca-ce4cdbb0d826"
+      }
+    }
   }
 }
