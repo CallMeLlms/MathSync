@@ -1,7 +1,8 @@
-// ClockSetterEngine — Stage 1: hour-only mode.
-// Hour hand rotates and snaps to 12 whole-hour positions.
-// Minute hand is frozen at 12 o'clock (decorative only).
-// Validation is exact whole-hour match.
+// ClockSetterEngine — Stage 1: hour-only | Stage 2: half-hour
+// Stage 1 (mode: 'hour-only'): hour hand rotates, snaps to 12 whole-hour positions.
+//   Minute hand frozen at 12 (decorative). Validation: exact hour match.
+// Stage 2 (mode: 'half-hour'): both hands interactive.
+//   Minute hand snaps to 0 or 180° (0 or 30 min). Validation: hour + minute match.
 
 import { View, Text, StyleSheet } from 'react-native';
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -33,26 +34,44 @@ const CLOCK_NUMBERS      = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const computeHourAngle = (hour, minute = 0) =>
   (((hour % 12) * 30) + minute * 0.5 + 360) % 360;
 
+const computeMinuteAngle = (m) => ((m * 6) + 360) % 360;
+
 // Worklet-safe snap to nearest multiple of step
 const snapToStep = (angle, step) => {
   'worklet';
   return (Math.round(angle / step) * step + 360) % 360;
 };
 
+// Worklet-safe snap to nearest angle in allowed list (circular distance)
+const snapToAllowed = (angle, allowed) => {
+  'worklet';
+  let best = allowed[0];
+  let bestDiff = Infinity;
+  for (let i = 0; i < allowed.length; i++) {
+    const diff = Math.abs(((angle - allowed[i] + 540) % 360) - 180);
+    if (diff < bestDiff) { bestDiff = diff; best = allowed[i]; }
+  }
+  return best;
+};
+
 // ── ClockSetterEngine ─────────────────────────────────────────────
 export default function ClockSetterEngine({ data, onResult }) {
   const { targetTime, initialTime = { hour: 12, minute: 0 } } = data;
+  const isHalfHour = data.mode === 'half-hour';
 
   // ── React state ────────────────────────────────────────────────
-  const [snapHour, setSnapHour]   = useState(initialTime.hour ?? 12);
-  const [answered, setAnswered]   = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
+  const [snapHour,   setSnapHour]   = useState(initialTime.hour ?? 12);
+  const [snapMinute, setSnapMinute] = useState(initialTime.minute ?? 0);
+  const [answered,   setAnswered]   = useState(false);
+  const [isCorrect,  setIsCorrect]  = useState(false);
 
   // ── Shared values ──────────────────────────────────────────────
   const hourAngle       = useSharedValue(computeHourAngle(initialTime.hour ?? 12));
+  const minuteAngle     = useSharedValue(computeMinuteAngle(initialTime.minute ?? 0));
   const clockCenterX    = useSharedValue(0);
   const clockCenterY    = useSharedValue(0);
   const hourHandScale   = useSharedValue(1);
+  const minuteHandScale = useSharedValue(1);
   const btnTranslateY   = useSharedValue(0);
   const btnBorderBottom = useSharedValue(6);
 
@@ -61,13 +80,17 @@ export default function ClockSetterEngine({ data, onResult }) {
   // ── Reset on new question ──────────────────────────────────────
   useEffect(() => {
     const h = initialTime?.hour ?? 12;
+    const m = initialTime?.minute ?? 0;
     setSnapHour(h);
+    setSnapMinute(m);
     setAnswered(false);
     setIsCorrect(false);
     hourAngle.value       = computeHourAngle(h);
+    minuteAngle.value     = computeMinuteAngle(m);
     btnTranslateY.value   = 0;
     btnBorderBottom.value = 6;
     hourHandScale.value   = 1;
+    minuteHandScale.value = 1;
   }, [data]);
 
   // ── Clock center measurement ───────────────────────────────────
@@ -78,38 +101,49 @@ export default function ClockSetterEngine({ data, onResult }) {
     });
   };
 
-  // ── Snap callback — runs on JS thread via runOnJS ──────────────
+  // ── Snap callbacks — run on JS thread via runOnJS ──────────────
   const onHourSnap = useCallback((newHour) => {
     console.log('[ClockSetter] snapHour →', newHour);
     setSnapHour(newHour);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   }, []);
 
+  const onMinuteSnap = useCallback((newMinute) => {
+    console.log('[ClockSetter] snapMinute →', newMinute);
+    setSnapMinute(newMinute);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  }, []);
+
   // ── Validation ─────────────────────────────────────────────────
   const handleCheck = () => {
     if (answered) return;
-    const tH = targetTime.hour % 12 || 12;
-    const correct = snapHour === tH;
-    console.log('[ClockSetter] CHECK — snapHour:', snapHour, '| target:', tH, '| correct:', correct);
+    const tH       = targetTime.hour % 12 || 12;
+    const hourOk   = snapHour === tH;
+    const minuteOk = isHalfHour ? snapMinute === targetTime.minute : true;
+    const correct  = hourOk && minuteOk;
+    console.log('[ClockSetter] CHECK — hour:', snapHour, '/', tH, '| min:', snapMinute, '/', targetTime.minute, '| correct:', correct);
     setAnswered(true);
     setIsCorrect(correct);
     if (correct) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setTimeout(() => onResult(true, [{ hour: snapHour, minute: 0 }]), 700);
+      setTimeout(() => onResult(true, [{ hour: snapHour, minute: snapMinute }]), 700);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      onResult(false, [{ hour: snapHour, minute: 0 }]);
+      onResult(false, [{ hour: snapHour, minute: snapMinute }]);
       setTimeout(() => {
         const h = initialTime?.hour ?? 12;
+        const m = initialTime?.minute ?? 0;
         setAnswered(false);
         setIsCorrect(false);
         setSnapHour(h);
-        hourAngle.value = withSpring(computeHourAngle(h), { damping: 18, stiffness: 200 });
+        setSnapMinute(m);
+        hourAngle.value   = withSpring(computeHourAngle(h),   { damping: 18, stiffness: 200 });
+        minuteAngle.value = withSpring(computeMinuteAngle(m), { damping: 18, stiffness: 200 });
       }, 1400);
     }
   };
 
-  // ── Clock pan — entire face is the drag target ─────────────────
+  // ── Clock pan — entire face is the drag target for the hour hand ─
   const clockPan = Gesture.Pan()
     .onBegin(() => {
       hourHandScale.value = withSpring(1.1, { damping: 15, stiffness: 300 });
@@ -130,6 +164,28 @@ export default function ClockSetterEngine({ data, onResult }) {
       hourHandScale.value = withSpring(1, { damping: 15, stiffness: 300 });
     })
     .enabled(!answered);
+
+  // ── Minute pan — wraps only the minute pivot (half-hour mode only) ─
+  const minutePan = Gesture.Pan()
+    .onBegin(() => {
+      minuteHandScale.value = withSpring(1.1, { damping: 15, stiffness: 300 });
+    })
+    .onChange((e) => {
+      'worklet';
+      if (clockCenterX.value === 0 && clockCenterY.value === 0) return;
+      const dx = e.absoluteX - clockCenterX.value;
+      const dy = e.absoluteY - clockCenterY.value;
+      minuteAngle.value = ((Math.atan2(dy, dx) * 180 / Math.PI) + 90 + 360) % 360;
+    })
+    .onEnd(() => {
+      'worklet';
+      const snapped = snapToAllowed(minuteAngle.value, [0, 180]);
+      const newM = snapped === 0 ? 0 : 30;
+      minuteAngle.value = withSpring(snapped, { damping: 18, stiffness: 300 });
+      runOnJS(onMinuteSnap)(newM);
+      minuteHandScale.value = withSpring(1, { damping: 15, stiffness: 300 });
+    })
+    .enabled(isHalfHour && !answered);
 
   // ── Check button tap ───────────────────────────────────────────
   const checkTap = Gesture.Tap()
@@ -152,6 +208,13 @@ export default function ClockSetterEngine({ data, onResult }) {
     ],
   }));
 
+  const minutePivotStyle = useAnimatedStyle(() => ({
+    transform: [
+      { rotate: `${minuteAngle.value}deg` },
+      { scale: minuteHandScale.value },
+    ],
+  }));
+
   const btnAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: btnTranslateY.value }],
     borderBottomWidth: btnBorderBottom.value,
@@ -161,6 +224,7 @@ export default function ClockSetterEngine({ data, onResult }) {
   const getInstruction = () => {
     if (answered && isCorrect)  return "That's right! Great job!";
     if (answered && !isCorrect) return 'Not quite — try again!';
+    if (isHalfHour) return 'Drag both hands to show the time!';
     return 'Drag the green hand to show the hour!';
   };
 
@@ -240,10 +304,18 @@ export default function ClockSetterEngine({ data, onResult }) {
               </Text>
             ))}
 
-            {/* Minute hand — frozen at 12, decorative */}
-            <View style={styles.handPivot}>
-              <View style={styles.minuteHand} />
-            </View>
+            {/* Minute hand — interactive in half-hour, frozen at 12 in hour-only */}
+            {isHalfHour ? (
+              <GestureDetector gesture={minutePan}>
+                <Animated.View style={[styles.handPivot, minutePivotStyle]}>
+                  <View style={styles.minuteHand} />
+                </Animated.View>
+              </GestureDetector>
+            ) : (
+              <View style={styles.handPivot}>
+                <View style={[styles.minuteHand, { opacity: 0.25 }]} />
+              </View>
+            )}
 
             {/* Hour hand — interactive */}
             <Animated.View style={[styles.handPivot, hourPivotStyle]}>
@@ -351,7 +423,6 @@ const styles = StyleSheet.create({
     borderColor: '#1565C0',
     bottom: 0,
     left: -(MINUTE_HAND_WIDTH / 2),
-    opacity: 0.25,
   },
   centerDot: {
     position: 'absolute',
