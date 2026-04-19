@@ -212,3 +212,38 @@
       "traceMode": "guided",
       "answer": "triangle"
     },
+
+
+<!-- FOR CLOCK ENGINE SPECIFIC MODE HOUR ONLY OR HALF HOUR -->
+    {
+      "id": "lab-clocksetter-1",
+      "type": "NUMPAD",
+      "question": "Set the clock to 3 o'clock!",
+      "targetTime": { "hour": 3, "minute": 0 },
+      "initialTime": { "hour": 12, "minute": 0 },
+      "mode": "hour-only"
+    },
+    {
+      "id": "lab-clocksetter-2",
+      "type": "CLOCKSETTER",
+      "question": "What time is 7 o'clock? Set the clock!",
+      "targetTime": { "hour": 7, "minute": 0 },
+      "initialTime": { "hour": 12, "minute": 0 },
+      "mode": "hour-only"
+    },
+    {
+      "id": "lab-clocksetter-3",
+      "type": "CLOCKSETTER",
+      "question": "Set the clock to 3:30!",
+      "targetTime": { "hour": 3, "minute": 30 },
+      "initialTime": { "hour": 12, "minute": 0 },
+      "mode": "half-hour"
+    },
+    {
+      "id": "lab-clocksetter-4",
+      "type": "CLOCKSETTER",
+      "question": "Set the clock to 9:30!",
+      "targetTime": { "hour": 9, "minute": 30 },
+      "initialTime": { "hour": 12, "minute": 0 },
+      "mode": "half-hour"
+    },
