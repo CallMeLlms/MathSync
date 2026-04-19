@@ -1,8 +1,7 @@
-// ClockSetterEngine — Stage 1: hour-only | Stage 2: half-hour
-// Stage 1 (mode: 'hour-only'): hour hand rotates, snaps to 12 whole-hour positions.
-//   Minute hand frozen at 12 (decorative). Validation: exact hour match.
-// Stage 2 (mode: 'half-hour'): both hands interactive.
-//   Minute hand snaps to 0 or 180° (0 or 30 min). Validation: hour + minute match.
+// ClockSetterEngine — Stage 1: hour-only | Stage 2: half-hour | Stage 3: quarter-hour
+// Stage 1 (mode: 'hour-only'):    hour hand only, snaps to 12 whole-hour positions.
+// Stage 2 (mode: 'half-hour'):    both hands; minute snaps to 0° or 180° (0 or 30 min).
+// Stage 3 (mode: 'quarter-hour'): both hands; minute snaps to 0°, 90°, 180°, 270° (0/15/30/45 min).
 
 import { View, Text, StyleSheet } from 'react-native';
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -57,7 +56,8 @@ const snapToAllowed = (angle, allowed) => {
 // ── ClockSetterEngine ─────────────────────────────────────────────
 export default function ClockSetterEngine({ data, onResult }) {
   const { targetTime, initialTime = { hour: 12, minute: 0 } } = data;
-  const isHalfHour = data.mode === 'half-hour';
+  const isMinuteActive = data.mode === 'half-hour' || data.mode === 'quarter-hour';
+  const allowedMinuteAngles = data.mode === 'quarter-hour' ? [0, 90, 180, 270] : [0, 180];
 
   // ── React state ────────────────────────────────────────────────
   const [snapHour,   setSnapHour]   = useState(initialTime.hour ?? 12);
@@ -119,7 +119,7 @@ export default function ClockSetterEngine({ data, onResult }) {
     if (answered) return;
     const tH       = targetTime.hour % 12 || 12;
     const hourOk   = snapHour === tH;
-    const minuteOk = isHalfHour ? snapMinute === targetTime.minute : true;
+    const minuteOk = isMinuteActive ? snapMinute === targetTime.minute : true;
     const correct  = hourOk && minuteOk;
     console.log('[ClockSetter] CHECK — hour:', snapHour, '/', tH, '| min:', snapMinute, '/', targetTime.minute, '| correct:', correct);
     setAnswered(true);
@@ -179,13 +179,13 @@ export default function ClockSetterEngine({ data, onResult }) {
     })
     .onEnd(() => {
       'worklet';
-      const snapped = snapToAllowed(minuteAngle.value, [0, 180]);
-      const newM = snapped === 0 ? 0 : 30;
+      const snapped = snapToAllowed(minuteAngle.value, allowedMinuteAngles);
+      const newM = snapped === 0 ? 0 : snapped === 90 ? 15 : snapped === 180 ? 30 : 45;
       minuteAngle.value = withSpring(snapped, { damping: 18, stiffness: 300 });
       runOnJS(onMinuteSnap)(newM);
       minuteHandScale.value = withSpring(1, { damping: 15, stiffness: 300 });
     })
-    .enabled(isHalfHour && !answered);
+    .enabled(isMinuteActive && !answered);
 
   // ── Check button tap ───────────────────────────────────────────
   const checkTap = Gesture.Tap()
@@ -224,7 +224,7 @@ export default function ClockSetterEngine({ data, onResult }) {
   const getInstruction = () => {
     if (answered && isCorrect)  return "That's right! Great job!";
     if (answered && !isCorrect) return 'Not quite — try again!';
-    if (isHalfHour) return 'Drag both hands to show the time!';
+    if (isMinuteActive) return 'Drag both hands to show the time!';
     return 'Drag the green hand to show the hour!';
   };
 
@@ -305,7 +305,7 @@ export default function ClockSetterEngine({ data, onResult }) {
             ))}
 
             {/* Minute hand — interactive in half-hour, frozen at 12 in hour-only */}
-            {isHalfHour ? (
+            {isMinuteActive ? (
               <GestureDetector gesture={minutePan}>
                 <Animated.View style={[styles.handPivot, minutePivotStyle]}>
                   <View style={styles.minuteHand} />

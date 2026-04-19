@@ -24,8 +24,8 @@
     {
       "id": "lab-clocksetter-3",
       "type": "CLOCKSETTER",
-      "question": "Set the clock to 3:20!",
-      "targetTime": { "hour": 3, "minute": 20 },
+      "question": "Set the clock to 3:30!",
+      "targetTime": { "hour": 3, "minute": 30 },
       "initialTime": { "hour": 12, "minute": 0 },
       "mode": "half-hour"
     },
@@ -36,6 +36,23 @@
       "targetTime": { "hour": 9, "minute": 30 },
       "initialTime": { "hour": 12, "minute": 0 },
       "mode": "half-hour"
+    },
+    {
+      "id": "lab-clocksetter-5",
+      "type": "CLOCKSETTER",
+      "question": "Set the clock to 2:15!",
+      "targetTime": { "hour": 2, "minute": 15 },
+      "initialTime": { "hour": 12, "minute": 0 },
+      "mode": "quarter-hour"
+    },
+    {
+      "id": "lab-clocksetter-6",
+      "type": "CLOCKSETTER",
+      "question": "Set the clock to 5:45!",
+      "targetTime": { "hour": 5, "minute": 45 },
+      "initialTime": { "hour": 12, "minute": 0 },
+      "mode": "quarter-hour"
     }
+
   ]
 }
