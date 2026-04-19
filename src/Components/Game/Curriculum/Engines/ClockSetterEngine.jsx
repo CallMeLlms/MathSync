@@ -80,6 +80,7 @@ export default function ClockSetterEngine({ data, onResult }) {
 
   // ── Snap callback — runs on JS thread via runOnJS ──────────────
   const onHourSnap = useCallback((newHour) => {
+    console.log('[ClockSetter] snapHour →', newHour);
     setSnapHour(newHour);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   }, []);
@@ -89,6 +90,7 @@ export default function ClockSetterEngine({ data, onResult }) {
     if (answered) return;
     const tH = targetTime.hour % 12 || 12;
     const correct = snapHour === tH;
+    console.log('[ClockSetter] CHECK — snapHour:', snapHour, '| target:', tH, '| correct:', correct);
     setAnswered(true);
     setIsCorrect(correct);
     if (correct) {
@@ -122,11 +124,9 @@ export default function ClockSetterEngine({ data, onResult }) {
     .onEnd(() => {
       'worklet';
       const snapped = snapToStep(hourAngle.value, 30);
-      // Inline hour calculation to stay worklet-safe
-      const prevH = Math.round(((hourAngle.value % 360) + 360) % 360 / 30) % 12 || 12;
-      const newH  = Math.round(((snapped % 360) + 360) % 360 / 30) % 12 || 12;
+      const newH = Math.round(((snapped % 360) + 360) % 360 / 30) % 12 || 12;
       hourAngle.value = withSpring(snapped, { damping: 18, stiffness: 300 });
-      if (prevH !== newH) runOnJS(onHourSnap)(newH);
+      runOnJS(onHourSnap)(newH);
       hourHandScale.value = withSpring(1, { damping: 15, stiffness: 300 });
     })
     .enabled(!answered);
