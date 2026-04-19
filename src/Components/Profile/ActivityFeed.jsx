@@ -65,8 +65,10 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.surfaceContainerLow,
     borderRadius: 24,
-    marginHorizontal: 20,
     marginTop: 20,
+    borderWidth: 2,
+    borderBottomWidth: 7,
+    borderColor: Colors.outlineVariant,
   },
   title: {
     fontFamily: 'Lexend-Bold',
