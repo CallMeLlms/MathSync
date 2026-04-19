@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
 import Animated, {
   useSharedValue,
@@ -7,7 +7,6 @@ import Animated, {
   withSequence,
   withTiming,
   withRepeat,
-  withDelay,
   ZoomIn,
   FadeIn,
   FadeInDown,
@@ -19,51 +18,83 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-
-const KEY_COLORS = [
-  '#FF7043', '#42A5F5', '#66BB6A', '#AB47BC', '#FFA726',
-  '#26C6DA', '#EF5350', '#5C6BC0', '#8D6E63', '#78909C',
-];
-
-// ─── NumpadKey: A single number button ───
-const NumpadKey = ({ value, onPress, disabled, color, index }) => {
+// ─── NumpadKey: A single bulky tactile button ───
+const NumpadKey = ({ value, onPress, disabled, index }) => {
   const scale = useSharedValue(1);
+  const translateY = useSharedValue(0);
+
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [{ scale: scale.value }, { translateY: translateY.value }],
   }));
 
   const tap = Gesture.Tap()
     .onBegin(() => {
-      scale.value = withSpring(0.85, { damping: 8, stiffness: 400 });
+      scale.value = withSpring(0.97, { damping: 15, stiffness: 400 });
+      translateY.value = withTiming(2, { duration: 60 });
     })
     .onEnd(() => {
       runOnJS(onPress)(value);
     })
     .onFinalize(() => {
-      scale.value = withSpring(1, { damping: 10, stiffness: 300 });
+      scale.value = withSpring(1, { damping: 12, stiffness: 300 });
+      translateY.value = withSpring(0, { damping: 12, stiffness: 300 });
     })
     .enabled(!disabled);
 
   return (
-    <Animated.View entering={ZoomIn.springify().delay(index * 40)}>
-      <Animated.View style={animatedStyle}>
-        <GestureDetector gesture={tap}>
-          <Animated.View
-            style={[
-              styles.numKey,
-              { backgroundColor: color, opacity: disabled ? 0.35 : 1 },
-            ]}
-          >
-            <Text style={styles.numKeyText}>{value}</Text>
-          </Animated.View>
-        </GestureDetector>
+  <Animated.View 
+    entering={ZoomIn.springify().delay(index * 30)} 
+    style={styles.numKeyWrapper} // Add the flex: 1 style here!
+  >
+    <GestureDetector gesture={tap}>
+      <Animated.View style={[styles.numKey, animatedStyle, { opacity: disabled ? 0.35 : 1 }]}>
+        <Text style={styles.numKeyText}>{value}</Text>
       </Animated.View>
-    </Animated.View>
+    </GestureDetector>
+  </Animated.View>
   );
 };
 
-// ─── Blinking Cursor ───
+// ─── BackspaceKey ───
+const BackspaceKey = ({ onPress, disabled }) => {
+  const scale = useSharedValue(1);
+  const translateY = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }, { translateY: translateY.value }],
+  }));
+
+  const tap = Gesture.Tap()
+    .onBegin(() => {
+      scale.value = withSpring(0.97, { damping: 15, stiffness: 400 });
+      translateY.value = withTiming(2, { duration: 60 });
+    })
+    .onEnd(() => {
+      runOnJS(onPress)();
+    })
+    .onFinalize(() => {
+      scale.value = withSpring(1, { damping: 12, stiffness: 300 });
+      translateY.value = withSpring(0, { damping: 12, stiffness: 300 });
+    })
+    .enabled(!disabled);
+
+  return (
+    <GestureDetector gesture={tap}>
+      <Animated.View
+        style={[
+          styles.numKey,
+          styles.backspaceKey,
+          animatedStyle,
+          { opacity: disabled ? 0.35 : 1 },
+        ]}
+      >
+        <Ionicons name="backspace-outline" size={26} color={Colors.onSurfaceVariant} />
+      </Animated.View>
+    </GestureDetector>
+  );
+};
+
+// ─── BlinkingCursor ───
 const BlinkingCursor = () => {
   const opacity = useSharedValue(1);
 
@@ -85,6 +116,44 @@ const BlinkingCursor = () => {
   return <Animated.View style={[styles.cursor, animatedStyle]} />;
 };
 
+// ─── CheckButton: Full-width solid primary CTA ───
+const CheckButton = ({ onPress, disabled }) => {
+  const scale = useSharedValue(1);
+  const translateY = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }, { translateY: translateY.value }],
+  }));
+
+  const tap = Gesture.Tap()
+    .onBegin(() => {
+      scale.value = withSpring(0.97, { damping: 15, stiffness: 400 });
+      translateY.value = withTiming(3, { duration: 80 });
+    })
+    .onEnd(() => {
+      runOnJS(onPress)();
+    })
+    .onFinalize(() => {
+      scale.value = withSpring(1, { damping: 12, stiffness: 300 });
+      translateY.value = withSpring(0, { damping: 12, stiffness: 300 });
+    })
+    .enabled(!disabled);
+
+  return (
+    <GestureDetector gesture={tap}>
+      <Animated.View
+        entering={FadeIn.delay(200)}
+        style={[
+          disabled ? styles.checkButtonDisabled : styles.checkButton,
+          animatedStyle,
+        ]}
+      >
+        <Text style={[styles.checkButtonText, disabled && { color: Colors.onSurfaceVariant }]}>CHECK</Text>
+      </Animated.View>
+    </GestureDetector>
+  );
+};
+
 // ─── NumpadEngine ───
 const NumpadEngine = ({ data, onResult }) => {
   const { equation = {}, answer, maxDigits = 2 } = data;
@@ -104,6 +173,11 @@ const NumpadEngine = ({ data, onResult }) => {
   const displayScale = useSharedValue(1);
   const displayStyle = useAnimatedStyle(() => ({
     transform: [{ scale: displayScale.value }],
+  }));
+
+  const shakeX = useSharedValue(0);
+  const shakeStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: shakeX.value }],
   }));
 
   const handleKeyPress = (digit) => {
@@ -145,6 +219,15 @@ const NumpadEngine = ({ data, onResult }) => {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       onResult(false, [input]);
 
+      // Shake animation for wrong answer
+      shakeX.value = withSequence(
+        withTiming(10, { duration: 50 }),
+        withTiming(-10, { duration: 50 }),
+        withTiming(8, { duration: 50 }),
+        withTiming(-8, { duration: 50 }),
+        withTiming(0, { duration: 50 })
+      );
+
       // Clear input after showing error
       setTimeout(() => {
         setInput('');
@@ -163,40 +246,49 @@ const NumpadEngine = ({ data, onResult }) => {
 
   // Build display equation
   const renderEquation = () => {
+    const answerBoxContent = input.length > 0 ? (
+      <Text style={[styles.answerText, answered && styles.answerTextCorrect]}>
+        {input}
+      </Text>
+    ) : (
+      <BlinkingCursor />
+    );
+
+    const answerBox = (
+      <Animated.View
+        style={[
+          styles.answerBox,
+          displayStyle,
+          shakeStyle,
+          isWrong && styles.answerBoxWrong,
+          answered && styles.answerBoxCorrect,
+        ]}
+      >
+        {answerBoxContent}
+      </Animated.View>
+    );
+
     if (blank === 'right') {
       return (
         <View style={styles.equationRow}>
           <Text style={styles.equationText}>{left}</Text>
           <Text style={styles.equationOperator}>{operator}</Text>
-          <Animated.View style={[styles.answerBox, displayStyle, isWrong && styles.answerBoxWrong, answered && styles.answerBoxCorrect]}>
-            {input.length > 0 ? (
-              <Text style={[styles.answerText, answered && styles.answerTextCorrect]}>
-                {input}
-              </Text>
-            ) : (
-              <BlinkingCursor />
-            )}
-          </Animated.View>
+          {answerBox}
         </View>
       );
     }
+
     // blank === 'left': ___ = right side
     return (
       <View style={styles.equationRow}>
-        <Animated.View style={[styles.answerBox, displayStyle, isWrong && styles.answerBoxWrong, answered && styles.answerBoxCorrect]}>
-          {input.length > 0 ? (
-            <Text style={[styles.answerText, answered && styles.answerTextCorrect]}>
-              {input}
-            </Text>
-          ) : (
-            <BlinkingCursor />
-          )}
-        </Animated.View>
+        {answerBox}
         <Text style={styles.equationOperator}>{operator}</Text>
         <Text style={styles.equationText}>{left}</Text>
       </View>
     );
   };
+
+  const keysDisabled = answered || input.length >= maxDigits;
 
   return (
     <View style={styles.container}>
@@ -217,76 +309,36 @@ const NumpadEngine = ({ data, onResult }) => {
         {getInstruction()}
       </Animated.Text>
 
-      {/* Number Pad */}
+      {/* Numpad — 3x4 Bulky Grid */}
       <Animated.View entering={FadeInUp.springify().delay(150)} style={styles.numpadContainer}>
-        {/* Row 1: 1-5 */}
+        {/* Row 1: 1-3 */}
         <View style={styles.numpadRow}>
-          {[1, 2, 3, 4, 5].map((n, i) => (
-            <NumpadKey
-              key={`key-${n}`}
-              value={n}
-              index={i}
-              color={KEY_COLORS[n - 1]}
-              onPress={handleKeyPress}
-              disabled={answered || input.length >= maxDigits}
-            />
+          {[1, 2, 3].map((n, i) => (
+            <NumpadKey key={`key-${n}`} value={n} index={i} onPress={handleKeyPress} disabled={keysDisabled} />
           ))}
         </View>
-
-        {/* Row 2: 6-0 */}
+        {/* Row 2: 4-6 */}
         <View style={styles.numpadRow}>
-          {[6, 7, 8, 9, 0].map((n, i) => (
-            <NumpadKey
-              key={`key-${n}`}
-              value={n}
-              index={i + 5}
-              color={KEY_COLORS[n === 0 ? 9 : n - 1]}
-              onPress={handleKeyPress}
-              disabled={answered || input.length >= maxDigits}
-            />
+          {[4, 5, 6].map((n, i) => (
+            <NumpadKey key={`key-${n}`} value={n} index={i + 3} onPress={handleKeyPress} disabled={keysDisabled} />
           ))}
         </View>
-
-        {/* Row 3: Backspace + Check */}
-        <View style={styles.actionRow}>
-          <GestureDetector
-            gesture={Gesture.Tap()
-              .onEnd(() => runOnJS(handleBackspace)())
-              .enabled(!answered && input.length > 0)
-            }
-          >
-            <Animated.View
-              style={[
-                styles.actionButton,
-                styles.backspaceButton,
-                { opacity: input.length === 0 || answered ? 0.4 : 1 },
-              ]}
-            >
-              <Ionicons
-                name="backspace-outline"
-                size={24}
-                color="#FFFFFF"
-              />
-              <Text style={styles.actionButtonText}>
-                Delete
-              </Text>
-            </Animated.View>
-          </GestureDetector>
-
-          {input.length > 0 && !answered && (
-            <GestureDetector
-              gesture={Gesture.Tap()
-                .onEnd(() => runOnJS(handleCheckAnswer)())
-              }
-            >
-              <Animated.View entering={ZoomIn.springify()} style={[styles.actionButton, styles.submitButton]}>
-                <Ionicons name="checkmark-circle" size={24} color="#FFFFFF" />
-                <Text style={styles.actionButtonText}>Check</Text>
-              </Animated.View>
-            </GestureDetector>
-          )}
+        {/* Row 3: 7-9 */}
+        <View style={styles.numpadRow}>
+          {[7, 8, 9].map((n, i) => (
+            <NumpadKey key={`key-${n}`} value={n} index={i + 6} onPress={handleKeyPress} disabled={keysDisabled} />
+          ))}
+        </View>
+        {/* Row 4: Empty - 0 - Backspace */}
+        <View style={styles.numpadRow}>
+          <View style={styles.emptyKey} />
+          <NumpadKey key="key-0" value={0} index={9} onPress={handleKeyPress} disabled={keysDisabled} />
+          <BackspaceKey onPress={handleBackspace} disabled={answered || input.length === 0} />
         </View>
       </Animated.View>
+
+      {/* Full-Width Check Button */}
+      <CheckButton onPress={handleCheckAnswer} disabled={input.length === 0 || answered} />
     </View>
   );
 };
@@ -298,12 +350,13 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 16,
     paddingTop: 16,
+    paddingBottom: 16,
     gap: 14,
   },
   equationCard: {
     width: '100%',
     backgroundColor: Colors.surfaceContainerLowest,
-    borderRadius: 24,
+    borderRadius: 20,
     paddingVertical: 24,
     paddingHorizontal: 16,
     borderWidth: 2,
@@ -318,21 +371,21 @@ const styles = StyleSheet.create({
   },
   equationText: {
     fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.042,
+    fontSize: 36,
     color: Colors.onSurface,
   },
   equationOperator: {
     fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: SCREEN_HEIGHT * 0.035,
+    fontSize: 28,
     color: Colors.onSurfaceVariant,
   },
   answerBox: {
-    minWidth: SCREEN_WIDTH * 0.2,
-    minHeight: SCREEN_HEIGHT * 0.065,
+    minWidth: 80,
+    minHeight: 56,
     backgroundColor: Colors.surfaceContainerLowest,
     borderWidth: 3,
     borderColor: Colors.primary,
-    borderRadius: 18,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 16,
@@ -350,7 +403,7 @@ const styles = StyleSheet.create({
   },
   answerText: {
     fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.042,
+    fontSize: 36,
     color: Colors.onSurface,
   },
   answerTextCorrect: {
@@ -358,67 +411,82 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     fontFamily: 'PlusJakartaSans-SemiBold',
-    fontSize: SCREEN_HEIGHT * 0.016,
+    fontSize: 13,
     color: Colors.onSurfaceVariant,
     textAlign: 'center',
   },
   cursor: {
     width: 3,
-    height: SCREEN_HEIGHT * 0.04,
+    height: 32,
     backgroundColor: Colors.primary,
     borderRadius: 2,
   },
+
+  // ─── Bulky Numpad (Duolingo-style) ───
   numpadContainer: {
     width: '100%',
-    backgroundColor: Colors.surfaceContainerLow,
-    borderRadius: 24,
-    padding: 14,
-    gap: 10,
-    borderWidth: 1,
-    borderColor: Colors.outlineVariant,
+    paddingHorizontal: 16,
+    gap: 2,
+    marginTop: 'auto',
   },
   numpadRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 8,
+    justifyContent: 'space-between', // Ensures equal spacing
+    gap: 12,
+    marginBottom: 12, // Vertical gap between rows
   },
   numKey: {
-    width: (SCREEN_WIDTH - 96) / 5,
-    height: (SCREEN_WIDTH - 96) / 5,
-    borderRadius: 18,
+    flex: 1, // This is key
+    // Removed maxWidth to let flex handle sizing
+    aspectRatio: 1 / 0.85, // Slightly wider than tall for that "bulky" look
+    backgroundColor: Colors.surfaceContainerLowest, 
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#E5E5E5', 
+    // The "Depth" - Increase this for the Duolingo look
+    borderBottomWidth: 6, 
+    borderBottomColor: '#D5D4D4',
   },
+  numKeyWrapper: {
+    flex: 1, // Added this style for the Animated wrapper
+  },
+  emptyKey: {
+    flex: 1,
+  },
+
   numKeyText: {
-    fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.032,
-    color: '#FFFFFF',
-  },
-  actionRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 12,
-    marginTop: 4,
-  },
-  actionButton: {
-    flexDirection: 'row',
+    fontFamily: 'Lexend-Bold',
+    fontSize: 26,
+    color: Colors.onSurface,
+  }, 
+
+  // ─── Check CTA (Duolingo-style: grey → green) ───
+  checkButton: {
+    width: '100%',
+    backgroundColor: Colors.success,
+    borderRadius: 16,
+    paddingVertical: 18,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 14,
-    paddingHorizontal: 26,
-    borderRadius: 20,
+    borderBottomColor: '#00531e',
   },
-  backspaceButton: {
-    backgroundColor: Colors.secondary,
+  checkButtonDisabled: {
+    width: '100%',
+    backgroundColor: Colors.surfaceContainerHigh,
+    borderRadius: 16,
+    paddingVertical: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 4,
+    borderBottomColor: Colors.outlineVariant,
   },
-  submitButton: {
-    backgroundColor: Colors.success,
-  },
-  actionButtonText: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: SCREEN_HEIGHT * 0.017,
-    color: '#FFFFFF',
+  checkButtonText: {
+    fontFamily: 'Lexend-Bold',
+    fontSize: 18,
+    color: Colors.onTertiary,
+    letterSpacing: 1,
   },
 });
 

@@ -147,4 +147,76 @@ The project is strictly JavaScript-only.
 
 ---
 
+## 🧱. Core Principle: Tactile Depth (The 3D Rule)
+
+**Drop shadows (`shadowColor`, `elevation`) remain strictly prohibited.** Depth is achieved through the **Layered Border** technique.
+
+### The "Bulky" Construction
+Every interactive element must follow this CSS construction:
+* **Border:** A standard `borderWidth: 2` around the entire element.
+* **Bottom Depth:** A `borderBottomWidth` between **4px and 8px** (depending on element size).
+* **Border Radius:** Generous rounding (**12px to 20px**) to maintain a friendly, soft appearance.
+
+### The "Sinking" Interaction
+Buttons must not just change opacity; they must **physically sink** when pressed to simulate a mechanical button.
+* **Idle State:** `translateY: 0`, `borderBottomWidth: 6`.
+* **Pressed State:** `translateY: 4`, `borderBottomWidth: 2`.
+
+---
+
+## 3. Component Specs: The "MathSync Button"
+
+To maintain consistency across the app, use these standard dimensions for interactive components.
+
+| Component | Aspect Ratio | Border Radius | Depth (Bottom) |
+| :--- | :--- | :--- | :--- |
+| **Numpad Key** | `1 / 0.85` | `16px` | `6px` |
+| **Action Button** | Full Width | `16px` | `4px` |
+| **Operation Icon** | `1 / 1` | `12px` | `4px` |
+
+---
+
+## 4. Gradients & Layering
+
+Gradients should be used **inside** the bulky containers. The `LinearGradient` acts as the "skin" of the button surface.
+
+```jsx
+// Correct Layering Pattern
+<View style={styles.bulkyContainer}> // Has borderBottomWidth
+  <LinearGradient colors={['#81C784', '#4CAF50']} style={styles.surface}>
+     <Text>1</Text>
+  </LinearGradient>
+</View>
+```
+
+---
+
+## 5. Typography
+
+**Lexend** is the primary font for all "Bulky" elements. Its geometric nature pairs perfectly with thick borders.
+
+* **Buttons/Keys:** Use `Lexend-Bold` or `Lexend-Black`.
+* **Letter Spacing:** For "Check" or "Continue" buttons, use `letterSpacing: 1.2` to increase authority.
+* **Input Displays:** Use `Lexend-Black` for large equation numbers.
+
+---
+
+## 6. Responsive Logic (MathSync Priority)
+
+1.  **Flexbox & Aspect Ratio:** Use `flex: 1` combined with `aspectRatio` for grid items (like numpads). This ensures buttons stay "square-ish" and bulky regardless of screen width.
+2.  **Safe Areas:** When using `useWindowDimensions`, always incorporate `useSafeAreaInsets` for the bottom Action Bar to ensure it clears the "Home Indicator" on iOS devices.
+3.  **The Max-Width Rule:** On tablets, use `maxWidth` (e.g., `480px`) for containers to prevent buttons from becoming unnaturally wide.
+
+---
+
+## 7. Technical Requirements
+
+* **Animation Engine:** Use `react-native-reanimated` for all tactile transitions.
+* **Haptics:** Every "Sinking" button press **must** trigger `Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)`.
+* **JS-Only:** No TypeScript. Use `.jsx` for all UI components.
+
+---
+
+_Last Updated: April 2026 — **Transition to Tactile Bulky UI Complete.**
+
 _Last Updated: April 2026 for MathSync — **Shadow-Free & Typography Integrated**._
