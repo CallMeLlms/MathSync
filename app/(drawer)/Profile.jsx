@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 10,
   },
-  
+
   badgesCta: {
     marginTop: 16,
     paddingVertical: 16,

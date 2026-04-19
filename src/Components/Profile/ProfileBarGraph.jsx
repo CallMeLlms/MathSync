@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surfaceContainerLow,
     borderRadius: 26,
     borderWidth: 2,
-    // borderBottomWidth: 7,
+    borderBottomWidth: 8,
     borderColor: Colors.outlineVariant,
     marginTop: 16,
     gap: 12,

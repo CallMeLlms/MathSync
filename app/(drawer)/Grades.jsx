@@ -191,11 +191,11 @@ function GradeCard({ grade, isActive, isLocked, onPress }) {
             </View>
 
             <View style={styles.cardFooter}>
-              <View style={styles.lessonTrack}>
+              {/* <View style={styles.lessonTrack}>
                 <View style={[styles.lessonNode, styles.lessonNodeDone]} />
                 <View style={[styles.lessonNode, isActive && styles.lessonNodeCurrent]} />
                 <View style={[styles.lessonNode, !isLocked && !isActive && styles.lessonNodeOpen]} />
-              </View>
+              </View> */}
 
               <View
                 style={[
@@ -522,8 +522,8 @@ const styles = StyleSheet.create({
   },
   cardFooter: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: 'end',
+    justifyContent: 'flex-end',
     gap: 12,
     marginTop: 20,
   },
