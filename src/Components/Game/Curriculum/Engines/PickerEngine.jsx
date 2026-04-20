@@ -209,10 +209,6 @@ const PickerEngine = ({ data, onResult }) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Animated.View entering={FadeIn.delay(200)} style={styles.questionContainer}>
-          <Text style={styles.questionText}>{questionText}</Text>
-        </Animated.View>
-
         <View style={styles.optionsList}>
           {shuffledOptions.map((opt, idx) => (
             <OptionButton
