@@ -53,6 +53,7 @@
             "difficulty": "Hard",
             "question": "What is 1/2 of 10?",
             "answer": 5,
+            "equation": { "left": "1/2 of 10", "operator": "=", "blank": "right" },
             "assetType": "text",
             "metadata": {}
         }

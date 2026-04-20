@@ -17,7 +17,7 @@
             "competency": "NA.4.5",
             "topic": "Money Value",
             "level": "concrete",
-            "type": "NUMPAD",
+            "type": "N/A",
             "difficulty": "Easy",
             "question": "You have two ₱10 coins. What is the total value?",
             "answer": 20,
@@ -30,7 +30,7 @@
             "competency": "NA.4.5",
             "topic": "Money Value",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "N/A",
             "difficulty": "Medium",
             "question": "Look at the picture. There is one ₱50 bill and three ₱10 coins. Total set value is __?",
             "answer": 80,
@@ -47,6 +47,7 @@
             "difficulty": "Hard",
             "question": "Add ₱35 and ₱15.",
             "answer": 50,
+            "equation": { "left": "35 + 15", "operator": "=", "blank": "right" },
             "assetType": "text",
             "metadata": {}
         }

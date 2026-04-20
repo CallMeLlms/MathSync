@@ -21,6 +21,7 @@
             "difficulty": "Easy",
             "question": "Add the blocks. (20 + 3) + 5. What is the total?",
             "answer": 28,
+            "equation": { "left": "(20 + 3) + 5", "operator": "=", "blank": "right" },
             "assetType": "manipulatives",
             "metadata": {}
         },
@@ -33,6 +34,7 @@
             "difficulty": "Medium",
             "question": "Look at the expanded form: 10 + 5 + 4. What is the sum?",
             "answer": 19,
+            "equation": { "left": "10 + 5 + 4", "operator": "=", "blank": "right" },
             "assetType": "illustration",
             "metadata": {}
         },
@@ -45,6 +47,7 @@
             "difficulty": "Hard",
             "question": "What is the result of 60 + 5 + 20 + 3?",
             "answer": 88,
+            "equation": { "left": "60 + 5 + 20 + 3", "operator": "=", "blank": "right" },
             "assetType": "text",
             "metadata": {}
         }

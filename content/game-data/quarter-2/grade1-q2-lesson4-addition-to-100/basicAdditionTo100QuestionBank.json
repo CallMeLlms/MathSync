@@ -21,6 +21,7 @@
             "difficulty": "Easy",
             "question": "Use the bundles and sticks: 32 + 5. What is the sum?",
             "answer": 37,
+            "equation": { "left": "32 + 5", "operator": "=", "blank": "right" },
             "assetType": "manipulatives",
             "metadata": {}
         },
@@ -29,7 +30,7 @@
             "competency": "NA.2.9",
             "topic": "Addition to 100",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "N/A",
             "difficulty": "Medium",
             "question": "Look at the picture. 52 birds are in a tree. 7 more fly in. How many birds now?",
             "answer": 59,
@@ -45,6 +46,7 @@
             "difficulty": "Hard",
             "question": "What is 72 + 14?",
             "answer": 86,
+            "equation": { "left": "72 + 14", "operator": "=", "blank": "right" },
             "assetType": "text",
             "metadata": {}
         }

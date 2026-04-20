@@ -21,6 +21,7 @@
             "difficulty": "Easy",
             "question": "Use the bundles and sticks: 45 - 3. What is the difference?",
             "answer": 42,
+            "equation": { "left": "45 - 3", "operator": "=", "blank": "right" },
             "assetType": "manipulatives",
             "metadata": {}
         },
@@ -29,7 +30,7 @@
             "competency": "NA.3.9",
             "topic": "Subtraction to 100",
             "level": "pictorial",
-            "type": "NUMPAD",
+            "type": "N/A",
             "difficulty": "Medium",
             "question": "Look at the picture. There are 56 fish in the pond. 12 fish swim away. How many fish stay?",
             "answer": 44,
@@ -45,6 +46,7 @@
             "difficulty": "Hard",
             "question": "What is 67 minus 14?",
             "answer": 53,
+            "equation": { "left": "67 - 14", "operator": "=", "blank": "right" },
             "assetType": "text",
             "metadata": {}
         }

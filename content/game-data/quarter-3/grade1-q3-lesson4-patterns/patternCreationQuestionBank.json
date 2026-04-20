@@ -43,7 +43,7 @@
             "competency": "NA.3.12",
             "topic": "Pattern Rules",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "N/A",
             "difficulty": "Hard",
             "question": "If the pattern rule is +5, what number comes after 10, 15, 20?",
             "answer": 25,

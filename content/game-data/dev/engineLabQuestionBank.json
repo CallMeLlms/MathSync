@@ -13,6 +13,15 @@
         "options": ["5", "6", "7"]
       }
     },
+
+    {
+      "id": "lab-numpad-1",
+      "type": "NUMPAD",
+      "question": "What is 5 + 3?",
+      "equation": { "left": "5 + 3", "operator": "=", "blank": "right" },
+      "answer": 8,
+      "maxDigits": 2
+    },
      {
       "id": "lab-geoboard-4",
       "type": "GEOBOARD",
@@ -28,6 +37,14 @@
       "targetTime": { "hour": 5, "minute": 45 },
       "initialTime": { "hour": 12, "minute": 0 },
       "mode": "quarter-hour"
+    },
+    {
+      "id": "lab-composer-7",
+      "type": "COMPOSER",
+      "question": "Find two numbers that make 8!",
+      "target": 8,
+      "chips": [2, 3, 4, 5, 6],
+      "mode": "compose"
     }
 
   ]

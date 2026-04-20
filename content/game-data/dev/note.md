@@ -13,7 +13,7 @@
       "question": "What is 3 + 4?",
       "answer": "7",
       "metadata": {
-        "options": ["5", "6", "7", "8"]
+        "options": ["5", "6", "7",]
       }
     },
 

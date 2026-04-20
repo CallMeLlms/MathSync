@@ -21,6 +21,7 @@
             "difficulty": "Easy",
             "question": "Use the bundles: (50 + 6) - 4. What is the result?",
             "answer": 52,
+            "equation": { "left": "(50 + 6) - 4", "operator": "=", "blank": "right" },
             "assetType": "manipulatives",
             "metadata": {}
         },
@@ -33,6 +34,7 @@
             "difficulty": "Medium",
             "question": "Look at the expanded form in the drawing: 70 + 8 - 2. What is the sum?",
             "answer": 76,
+            "equation": { "left": "70 + 8 - 2", "operator": "=", "blank": "right" },
             "assetType": "illustration",
             "metadata": {}
         },
@@ -45,6 +47,7 @@
             "difficulty": "Hard",
             "question": "What is the answer to (30 + 9) - (10 + 4)?",
             "answer": 25,
+            "equation": { "left": "(30 + 9) - (10 + 4)", "operator": "=", "blank": "right" },
             "assetType": "text",
             "metadata": {}
         }
