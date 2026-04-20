@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import Animated, { useAnimatedStyle, withSpring, useSharedValue } from 'react-native-reanimated';
+import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
+import Animated, { 
+  useAnimatedStyle, 
+  withSpring, 
+  useSharedValue,
+  withTiming,
+  interpolate
+} from 'react-native-reanimated';
+import * as Haptics from 'expo-haptics';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import SequenceVisualizer from '@/Components/Game/Global/Visualizers/SequenceVisualizer';
@@ -23,10 +30,11 @@ export default function ResultModal({
 }) {
   const scale = useSharedValue(0.85);
   const opacity = useSharedValue(0);
+  const pressTranslation = useSharedValue(0);
 
   useEffect(() => {
     if (isVisible) {
-      scale.value = withSpring(1, { damping: 12, stiffness: 200 });
+      scale.value = withSpring(1, { damping: 15, stiffness: 150 });
       opacity.value = withSpring(1);
     } else {
       scale.value = 0.85;
@@ -38,6 +46,17 @@ export default function ResultModal({
     opacity: opacity.value,
     transform: [{ scale: scale.value }]
   }));
+
+  const buttonAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: pressTranslation.value }],
+      borderBottomWidth: interpolate(
+        pressTranslation.value,
+        [0, 4],
+        [6, 2]
+      )
+    };
+  });
 
   const emoji = isCorrect ? '🎉' : '💪';
   const statusTitle = isCorrect ? 'Perfect! Great job!' : "Not quite! Let's try once more!";
@@ -108,14 +127,26 @@ export default function ResultModal({
           </View>
 
           {/* Footer Action */}
-          <TouchableOpacity 
-            style={[styles.continueButton, { backgroundColor: statusColor }]}
+          <Pressable 
+            onPressIn={() => {
+              pressTranslation.value = withTiming(4, { duration: 100 });
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }}
+            onPressOut={() => {
+              pressTranslation.value = withTiming(0, { duration: 100 });
+            }}
             onPress={onContinue}
-            activeOpacity={0.8}
+            style={styles.buttonWrapper}
           >
-            <Text style={[styles.continueText, { fontFamily: theme.fontFamily.accent }]}>Continue</Text>
-            <MaterialIcons name="arrow-forward" size={20} color="#FFF" />
-          </TouchableOpacity>
+            <Animated.View style={[
+              styles.continueButton, 
+              buttonAnimatedStyle,
+              { backgroundColor: statusColor, borderColor: 'rgba(0,0,0,0.1)' }
+            ]}>
+              <Text style={[styles.continueText, { fontFamily: theme.fontFamily.accent }]}>Continue</Text>
+              <MaterialIcons name="arrow-forward" size={20} color="#FFF" />
+            </Animated.View>
+          </Pressable>
          
         </Animated.View>
       </View>
@@ -136,7 +167,9 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     backgroundColor: Colors.surface,
     borderRadius: 32,
-    borderWidth: 4,
+    borderWidth: 2,
+    borderBottomWidth: 8,
+    borderColor: 'rgba(0,0,0,0.1)',
     padding: 28,
     alignItems: 'center',
   },
@@ -145,9 +178,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     marginBottom: 24,
     textAlign: 'center',
+    lineHeight: 34,
   },
   contentContainer: {
     width: '100%',
@@ -155,36 +189,45 @@ const styles = StyleSheet.create({
   },
   reviewContainer: {
     backgroundColor: Colors.surfaceContainer,
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: 'rgba(0,0,0,0.05)',
+    padding: 20,
     width: '100%',
-    gap: 16,
+    gap: 20,
   },
   reviewBlock: {
     alignItems: 'center',
   },
   reviewLabel: {
-    fontSize: 12,
+    fontSize: 13,
     color: Colors.onSurfaceVariant,
-    marginBottom: 4,
+    marginBottom: 6,
     textTransform: 'uppercase',
-    letterSpacing: 1,
+    letterSpacing: 1.5,
+    opacity: 0.7,
   },
   reviewText: {
-    fontSize: 18,
+    fontSize: 20,
     color: Colors.onSurface,
+  },
+  buttonWrapper: {
+    width: '100%',
   },
   continueButton: {
     width: '100%',
     height: 64,
-    borderRadius: 32,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderBottomWidth: 6,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    gap: 12,
   },
   continueText: {
     color: '#FFF',
     fontSize: 20,
+    letterSpacing: 1,
   }
 });
