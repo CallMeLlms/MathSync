@@ -30,12 +30,14 @@ import Animated, {
   ZoomOut,
   FadeIn,
   FadeInDown,
+  FadeOut,
   useSharedValue,
   useAnimatedStyle,
   withSpring,
   runOnJS,
+  Layout,
 } from 'react-native-reanimated';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
@@ -66,38 +68,50 @@ const resolveBadge = ({ isSelected, answered, resolvedCorrect, resolvedMissed })
  * Per-tile shared value keeps scale animation scoped to the tile.
  */
 const ShapeTile = ({ item, index, isSelected, answered, resolvedCorrect, resolvedMissed, onToggle }) => {
-  const scale = useSharedValue(1);
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
 
-  // Wrapper owns the entering layout animation.
-  // Inner Animated.View owns the scale transform — kept separate per Reanimated anti-pattern 8.7.
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
   }));
 
-  const handleTapJS = useCallback(() => {
-    if (isSelected) {
-      scale.value = withSpring(1, { damping: 12, stiffness: 180 });
-    } else {
-      scale.value = withSpring(1.1, { damping: 10, stiffness: 220 }, () => {
-        scale.value = withSpring(1, { damping: 12, stiffness: 180 });
-      });
-    }
+  const handlePressIn = () => {
+    if (answered) return;
+    translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
     hapticLight();
-    onToggle(item.id);
-  }, [item.id, isSelected, onToggle, scale]);
+  };
 
-  const tap = Gesture.Tap()
-    .enabled(!answered)
-    .onEnd(() => { runOnJS(handleTapJS)(); });
+  const handlePressOut = () => {
+    if (answered) return;
+    translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+  };
+
+  const handlePress = () => {
+    if (answered) return;
+    onToggle(item.id);
+  };
 
   // Border color — static from React state, no animation needed
   let borderColor = Colors.outlineVariant;
+  let shadowColor = '#d1d5db'; // Default shadow color for depth
+
   if (answered) {
-    if (resolvedCorrect) borderColor = Colors.success;
-    else if (resolvedMissed) borderColor = COLOR_MISSED;
-    else if (isSelected) borderColor = Colors.error;
+    if (resolvedCorrect) {
+      borderColor = Colors.success;
+      shadowColor = '#1b5e20';
+    } else if (resolvedMissed) {
+      borderColor = COLOR_MISSED;
+      shadowColor = '#78350f';
+    } else if (isSelected) {
+      borderColor = Colors.error;
+      shadowColor = '#b71c1c';
+    }
   } else if (isSelected) {
     borderColor = Colors.success;
+    shadowColor = '#1b5e20';
   }
 
   const badge = resolveBadge({ isSelected, answered, resolvedCorrect, resolvedMissed });
@@ -105,13 +119,24 @@ const ShapeTile = ({ item, index, isSelected, answered, resolvedCorrect, resolve
   return (
     <Animated.View
       entering={FadeInDown.delay(index * 70).springify().damping(14)}
+      layout={Layout.springify()}
       style={styles.tileWrapper}
     >
-      <GestureDetector gesture={tap}>
+      <Pressable
+        onPress={handlePress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={answered}
+        style={{ flex: 1 }}
+      >
         <Animated.View
           style={[
             styles.tile,
-            { backgroundColor: isSelected ? Colors.surfaceContainerLow : Colors.surfaceContainerHigh, borderColor },
+            { 
+              backgroundColor: isSelected ? Colors.surfaceContainerLow : Colors.surfaceContainerHigh, 
+              borderColor: borderColor,
+              borderBottomColor: shadowColor,
+            },
             animatedStyle,
           ]}
         >
@@ -128,7 +153,7 @@ const ShapeTile = ({ item, index, isSelected, answered, resolvedCorrect, resolve
             </Animated.View>
           )}
         </Animated.View>
-      </GestureDetector>
+      </Pressable>
     </Animated.View>
   );
 };
@@ -198,14 +223,11 @@ const ShapeHuntEngine = ({ data, onResult }) => {
     setTimeout(() => onResult(isCorrect, selectedAssets), 700);
   }, [resolved, canCheck, items, selectedSet, onResult]);
 
-  const checkTap = Gesture.Tap()
-    .enabled(canCheck)
-    .onEnd(() => runOnJS(handleCheckAnswer)());
 
   const getInstruction = () => {
     if (resolved) return 'Check the results!';
     if (selectedSet.size > 0) return 'Tap again to deselect \u2022 Check when ready';
-    return instructionText || 'Tap shapes to select them.';
+    return 'Tap shapes to select them.';
   };
 
   return (
@@ -242,19 +264,55 @@ const ShapeHuntEngine = ({ data, onResult }) => {
       {/* Footer: Check Answer */}
       <View style={styles.footer}>
         {canCheck && (
-          <GestureDetector gesture={checkTap}>
-            <Animated.View
-              entering={ZoomIn.springify()}
-              exiting={ZoomOut}
-              style={styles.checkButton}
-            >
-              <Ionicons name="checkmark-circle" size={22} color={Colors.onPrimary} />
-              <Text style={styles.checkButtonText}>Check Answer</Text>
-            </Animated.View>
-          </GestureDetector>
+          <Animated.View
+            entering={ZoomIn.springify()}
+            exiting={FadeOut}
+            style={styles.checkButtonContainer}
+          >
+            <TactileCheckButton 
+              onPress={handleCheckAnswer}
+              label="CHECK ANSWER"
+            />
+          </Animated.View>
         )}
       </View>
     </View>
+  );
+};
+
+// ─── TactileCheckButton ───
+const TactileCheckButton = ({ onPress, label }) => {
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
+  }));
+
+  const handlePressIn = () => {
+    translateY.value = withSpring(4);
+    bottomWidth.value = withSpring(2);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  };
+
+  const handlePressOut = () => {
+    translateY.value = withSpring(0);
+    bottomWidth.value = withSpring(6);
+  };
+
+  return (
+    <Pressable
+      onPress={onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      style={{ width: '100%' }}
+    >
+      <Animated.View style={[styles.checkButton, animatedStyle]}>
+        <Ionicons name="checkmark-circle" size={22} color={Colors.onPrimary} />
+        <Text style={styles.checkButtonText}>{label}</Text>
+      </Animated.View>
+    </Pressable>
   );
 };
 
@@ -299,6 +357,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 18,
     borderWidth: 2,
+    borderBottomWidth: 6,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -334,26 +393,35 @@ const styles = StyleSheet.create({
     color: Colors.onSurfaceVariant,
   },
   footer: {
-    minHeight: 60,
+    width: '100%',
+    minHeight: 80,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 4,
+  },
+  checkButtonContainer: {
+    width: '100%',
+    paddingHorizontal: 10,
   },
   checkButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.success,
+    borderColor: '#1b5e20', // Darker green for depth
+    borderWidth: 2,
+    borderBottomWidth: 6,
     paddingHorizontal: 28,
     paddingVertical: 14,
     borderRadius: 20,
-    minHeight: 44,
-    minWidth: 44,
+    minHeight: 56,
+    justifyContent: 'center',
     gap: 8,
   },
   checkButtonText: {
     fontFamily: 'Lexend-Bold',
     color: Colors.onPrimary,
     fontSize: SCREEN_HEIGHT * 0.019,
+    letterSpacing: 1.1,
   },
 });
 

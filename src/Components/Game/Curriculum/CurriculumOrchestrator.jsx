@@ -103,7 +103,7 @@ export default function CurriculumOrchestrator({
 
   const currentQuestion = lessonContent.questions[currentQuestionIndex];
   const isFinished = currentQuestionIndex >= lessonContent.questions.length;
-  const questionText = currentQuestion?.question || currentQuestion?.instruction || currentQuestion?.text || null;
+  const questionText = currentQuestion?.question || currentQuestion?.instruction || currentQuestion?.text || currentQuestion?.prompt || null;
 
   const handleResult = (isCorrect, userAnswerItems = []) => {
     recordAnswer(isCorrect);

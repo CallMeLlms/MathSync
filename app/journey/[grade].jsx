@@ -68,7 +68,7 @@ const LevelStartOverlay = ({ node, onStart, onCancel, isLocked }) => {
   );
 };
 
-const EMPTY_ARRAY = [];
+const EMPTY_PROGRESS = {};
 const CURRICULUM_GRADES = ['G1']; // Only G1 uses locked/curriculum progression
 
 /**
@@ -80,7 +80,7 @@ export default function GradeJourney() {
   const router = useRouter();
 
   const completedLessonsMap = useUserStore((s) => s.completedLessons);
-  const completedLessons = completedLessonsMap[grade] || EMPTY_ARRAY;
+  const completedLessons = completedLessonsMap[grade] || EMPTY_PROGRESS;
 
   const [selectedNode, setSelectedNode] = useState(null);
 
@@ -112,11 +112,11 @@ export default function GradeJourney() {
 
       // For curriculum grades (G1), use gated progression logic
       const id = String(level.id);
-      const isCompleted = completedLessons.includes(id);
+      const isCompleted = !!completedLessons[id];
 
       const allPreviousCompleted = curriculum.levels
         .slice(0, index)
-        .every((prev) => completedLessons.includes(String(prev.id)));
+        .every((prev) => !!completedLessons[String(prev.id)]);
 
       let status;
       if (isCompleted) {
