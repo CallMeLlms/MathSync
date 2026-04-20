@@ -13,84 +13,109 @@ import Animated, {
   FadeInUp,
   runOnJS,
 } from 'react-native-reanimated';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 
 // ─── NumpadKey: A single bulky tactile button ───
 const NumpadKey = ({ value, onPress, disabled, index }) => {
-  const scale = useSharedValue(1);
   const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }, { translateY: translateY.value }],
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
   }));
 
-  const tap = Gesture.Tap()
-    .onBegin(() => {
-      scale.value = withSpring(0.97, { damping: 15, stiffness: 400 });
-      translateY.value = withTiming(2, { duration: 60 });
-    })
-    .onEnd(() => {
-      runOnJS(onPress)(value);
-    })
-    .onFinalize(() => {
-      scale.value = withSpring(1, { damping: 12, stiffness: 300 });
-      translateY.value = withSpring(0, { damping: 12, stiffness: 300 });
-    })
-    .enabled(!disabled);
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = () => {
+    if (disabled) return;
+    translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+  };
+
+  const handlePress = () => {
+    if (disabled) return;
+    onPress(value);
+  };
 
   return (
-  <Animated.View 
-    entering={ZoomIn.springify().delay(index * 30)} 
-    style={styles.numKeyWrapper} // Add the flex: 1 style here!
-  >
-    <GestureDetector gesture={tap}>
-      <Animated.View style={[styles.numKey, animatedStyle, { opacity: disabled ? 0.35 : 1 }]}>
-        <Text style={styles.numKeyText}>{value}</Text>
-      </Animated.View>
-    </GestureDetector>
-  </Animated.View>
+    <Animated.View 
+      entering={ZoomIn.springify().delay(index * 30)} 
+      style={styles.numKeyWrapper}
+    >
+      <Pressable
+        onPress={handlePress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={disabled}
+        style={{ flex: 1 }}
+      >
+        <Animated.View 
+          style={[
+            styles.numKey, 
+            animatedStyle, 
+            { opacity: disabled ? 0.35 : 1 }
+          ]}
+        >
+          <Text style={styles.numKeyText}>{value}</Text>
+        </Animated.View>
+      </Pressable>
+    </Animated.View>
   );
 };
 
 // ─── BackspaceKey ───
 const BackspaceKey = ({ onPress, disabled }) => {
-  const scale = useSharedValue(1);
   const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }, { translateY: translateY.value }],
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
   }));
 
-  const tap = Gesture.Tap()
-    .onBegin(() => {
-      scale.value = withSpring(0.97, { damping: 15, stiffness: 400 });
-      translateY.value = withTiming(2, { duration: 60 });
-    })
-    .onEnd(() => {
-      runOnJS(onPress)();
-    })
-    .onFinalize(() => {
-      scale.value = withSpring(1, { damping: 12, stiffness: 300 });
-      translateY.value = withSpring(0, { damping: 12, stiffness: 300 });
-    })
-    .enabled(!disabled);
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = () => {
+    if (disabled) return;
+    translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+  };
 
   return (
-    <GestureDetector gesture={tap}>
-      <Animated.View
-        style={[
-          styles.numKey,
-          styles.backspaceKey,
-          animatedStyle,
-          { opacity: disabled ? 0.35 : 1 },
-        ]}
+    <View style={styles.numKeyWrapper}>
+      <Pressable
+        onPress={onPress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={disabled}
+        style={{ flex: 1 }}
       >
-        <Ionicons name="backspace-outline" size={26} color={Colors.onSurfaceVariant} />
-      </Animated.View>
-    </GestureDetector>
+        <Animated.View
+          style={[
+            styles.numKey,
+            styles.backspaceKey,
+            animatedStyle,
+            { opacity: disabled ? 0.35 : 1 },
+          ]}
+        >
+          <Ionicons name="backspace-outline" size={26} color={Colors.onSurfaceVariant} />
+        </Animated.View>
+      </Pressable>
+    </View>
   );
 };
 
@@ -118,29 +143,34 @@ const BlinkingCursor = () => {
 
 // ─── CheckButton: Full-width solid primary CTA ───
 const CheckButton = ({ onPress, disabled }) => {
-  const scale = useSharedValue(1);
   const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }, { translateY: translateY.value }],
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
   }));
 
-  const tap = Gesture.Tap()
-    .onBegin(() => {
-      scale.value = withSpring(0.97, { damping: 15, stiffness: 400 });
-      translateY.value = withTiming(3, { duration: 80 });
-    })
-    .onEnd(() => {
-      runOnJS(onPress)();
-    })
-    .onFinalize(() => {
-      scale.value = withSpring(1, { damping: 12, stiffness: 300 });
-      translateY.value = withSpring(0, { damping: 12, stiffness: 300 });
-    })
-    .enabled(!disabled);
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(4);
+    bottomWidth.value = withSpring(2);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  };
+
+  const handlePressOut = () => {
+    translateY.value = withSpring(0);
+    bottomWidth.value = withSpring(6);
+  };
 
   return (
-    <GestureDetector gesture={tap}>
+    <Pressable
+      onPress={onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      disabled={disabled}
+      style={{ width: '100%' }}
+    >
       <Animated.View
         entering={FadeIn.delay(200)}
         style={[
@@ -150,7 +180,7 @@ const CheckButton = ({ onPress, disabled }) => {
       >
         <Text style={[styles.checkButtonText, disabled && { color: Colors.onSurfaceVariant }]}>CHECK</Text>
       </Animated.View>
-    </GestureDetector>
+    </Pressable>
   );
 };
 
@@ -470,6 +500,9 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#00531e',
+    borderBottomWidth: 6,
     borderBottomColor: '#00531e',
   },
   checkButtonDisabled: {
@@ -479,14 +512,16 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 4,
+    borderWidth: 2,
+    borderBottomWidth: 6,
+    borderColor: Colors.outlineVariant,
     borderBottomColor: Colors.outlineVariant,
   },
   checkButtonText: {
     fontFamily: 'Lexend-Bold',
     fontSize: 18,
-    color: Colors.onTertiary,
-    letterSpacing: 1,
+    color: '#fff',
+    letterSpacing: 1.2,
   },
 });
 
