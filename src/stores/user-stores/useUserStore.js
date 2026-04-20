@@ -30,11 +30,13 @@ export const useUserStore = create(
         sunPoints: 0, 
         badges: 0, 
         problemsSolved: 0, 
+        totalCorrect: 0,
+        totalAttempted: 0,
         accuracy: '0%', 
         streak: 0 
       },
       
-      // Curriculum progress: { G1: ['1', '3'], G2: [] }
+      // Curriculum progress: { gradeKey: { lessonId: { completed, score, accuracy, timestamp } } }
       completedLessons: {},
 
       activities: [], // Array of { id, type, title, timestamp, points, icon }
@@ -123,23 +125,81 @@ export const useUserStore = create(
           return { xpSessionLog: merged };
         }),
 
+      /**
+       * Records the result of a lesson session.
+       * Handles anti-farming (points once) and best-record retention (highest score).
+       */
+      recordSessionResult: (gradeKey, lessonId, results) => set((state) => {
+        const { correctCount, totalQuestions, score } = results;
+        const id = String(lessonId);
+        
+        // 1. Calculate accuracy safely
+        const sessionAccuracy = totalQuestions > 0 
+          ? Math.round((correctCount / totalQuestions) * 100) 
+          : 0;
+
+        // 2. Anti-Farming & New Progress
+        const gradeLessons = state.completedLessons[gradeKey] || {};
+        const existingRecord = gradeLessons[id];
+        const isFirstTime = !existingRecord;
+
+        // Points and Solve count only for first-time completion
+        const pointsToAdd = isFirstTime ? score : 0;
+        const solvedToAdd = isFirstTime ? totalQuestions : 0;
+
+        // 3. Update Individual Lesson Record (Keep highest score/accuracy)
+        const newRecord = {
+          completed: true,
+          score: existingRecord ? Math.max(existingRecord.score, score) : score,
+          accuracy: existingRecord ? Math.max(existingRecord.accuracy, sessionAccuracy) : sessionAccuracy,
+          timestamp: new Date().toISOString()
+        };
+
+        // 4. Update Global Stats
+        const newTotalCorrect = (state.stats.totalCorrect || 0) + correctCount;
+        const newTotalAttempted = (state.stats.totalAttempted || 0) + totalQuestions;
+        const globalAccuracy = newTotalAttempted > 0 
+          ? `${Math.round((newTotalCorrect / newTotalAttempted) * 100)}%` 
+          : '0%';
+
+        return {
+          stats: {
+            ...state.stats,
+            sunPoints: (state.stats.sunPoints || 0) + pointsToAdd,
+            problemsSolved: (state.stats.problemsSolved || 0) + solvedToAdd,
+            totalCorrect: newTotalCorrect,
+            totalAttempted: newTotalAttempted,
+            accuracy: globalAccuracy
+          },
+          completedLessons: {
+            ...state.completedLessons,
+            [gradeKey]: {
+              ...gradeLessons,
+              [id]: newRecord
+            }
+          }
+        };
+      }),
+
       updateStats: (newStats) => set((state) => ({
         stats: { ...state.stats, ...newStats }
       })),
 
       /**
        * Marks a curriculum lesson as completed for a given grade.
-       * @param {string} gradeKey - e.g. 'G1'
-       * @param {string|number} lessonId - e.g. '2'
+       * @deprecated Use recordSessionResult instead.
        */
       markLessonComplete: (gradeKey, lessonId) => set((state) => {
-        const gradeProgress = state.completedLessons[gradeKey] || [];
+        const gradeProgress = state.completedLessons[gradeKey] || {};
         const id = String(lessonId);
-        if (gradeProgress.includes(id)) return state;
+        if (gradeProgress[id]) return state;
         return {
           completedLessons: {
             ...state.completedLessons,
-            [gradeKey]: [...gradeProgress, id]
+            [gradeKey]: {
+              ...gradeProgress,
+              [id]: { completed: true, score: 0, accuracy: 0, timestamp: new Date().toISOString() }
+            }
           }
         };
       }),
@@ -148,8 +208,8 @@ export const useUserStore = create(
        * Returns whether a specific lesson has been completed.
        */
       isLessonComplete: (gradeKey, lessonId) => {
-        const gradeProgress = get().completedLessons[gradeKey] || [];
-        return gradeProgress.includes(String(lessonId));
+        const gradeProgress = get().completedLessons[gradeKey] || {};
+        return !!gradeProgress[String(lessonId)];
       },
 
       resetStore: () => set({ 
@@ -162,7 +222,15 @@ export const useUserStore = create(
           isMaster: false,
           registeredGrade: null
         },
-        stats: { sunPoints: 0, badges: 0, problemsSolved: 0, accuracy: '0%', streak: 0 },
+        stats: { 
+          sunPoints: 0, 
+          badges: 0, 
+          problemsSolved: 0, 
+          totalCorrect: 0,
+          totalAttempted: 0,
+          accuracy: '0%', 
+          streak: 0 
+        },
         completedLessons: {},
         activities: [],
         recentActivity: [],

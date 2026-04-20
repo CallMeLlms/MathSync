@@ -54,7 +54,8 @@ export default function CurriculumOrchestrator({
     recordAnswer,
     nextQuestion,
     currentQuestionIndex,
-    totalScore
+    totalScore,
+    correctCount
   } = useGameEngine();
 
   const [showExitModal, setShowExitModal] = useState(false);
@@ -125,21 +126,20 @@ export default function CurriculumOrchestrator({
     if (currentQuestionIndex + 1 < lessonContent.questions.length) {
       nextQuestion();
     } else {
-      // Lesson finished — compute stats and navigate to the result screen.
-      const accuracy = lessonContent.questions.length > 0
-        ? Math.round((totalScore / lessonContent.questions.length) * 100)
-        : 0;
-      useUserStore.getState().markLessonComplete(gradeKey, lessonId);
+      // Lesson finished — persist result to store and navigate.
+      const questionLength = lessonContent.questions.length;
+      
+      useUserStore.getState().recordSessionResult(gradeKey, lessonId, {
+        correctCount,
+        totalQuestions: questionLength,
+        score: totalScore
+      });
+
       endGameSession();
+      
       router.replace({
         pathname: '/game/result',
-        params: {
-          lessonId,
-          gradeKey,
-          score: totalScore,
-          total: lessonContent.questions.length,
-          accuracy,
-        },
+        params: { lessonId, gradeKey },
       });
     }
   };

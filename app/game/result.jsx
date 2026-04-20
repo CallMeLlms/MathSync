@@ -11,15 +11,15 @@ import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import { getGameTheme } from '@/theme/gameThemes';
 
+import useUserStore from '@/stores/user-stores/useUserStore';
+
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 /**
  * GameResultScreen
  *
  * High-aesthetic victory/summary screen shown when a lesson session ends.
- * Receives result data via route params and calls markLessonComplete for persistence.
- *
- * Route: /game/result?lessonId=X&gradeKey=G1&score=N&total=N&accuracy=N
+ * Selects performance data from useUserStore using the lessonId.
  */
 
 const BulkyButton = ({ title, onPress, type = 'primary', theme }) => {
@@ -72,10 +72,16 @@ export default function GameResultScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
   
-  const score = Number(params.score ?? 0);
-  const total = Number(params.total ?? 0);
-  const accuracy = Number(params.accuracy ?? 0);
+  const lessonId = params.lessonId;
   const gradeKey = params.gradeKey ?? 'G1';
+
+  // Fetch performance data directly from the store
+  const lessonData = useUserStore(state => 
+    state.completedLessons[gradeKey]?.[lessonId]
+  );
+  
+  const score = lessonData?.score ?? 0;
+  const accuracy = lessonData?.accuracy ?? 0;
   
   const theme = getGameTheme(gradeKey);
 
@@ -142,8 +148,10 @@ export default function GameResultScreen() {
             <View style={styles.statDivider} />
 
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: theme.primaryColor }]}>{total}</Text>
-              <Text style={styles.statLabel}>📝 solved</Text>
+              <Text style={[styles.statValue, { color: theme.primaryColor }]}>
+                {lessonData ? 'BEST' : '--'}
+              </Text>
+              <Text style={styles.statLabel}>🏆 status</Text>
             </View>
           </View>
         </View>

@@ -12,6 +12,7 @@ function createSessionId() {
 const useGameEngine = create((set, get) => ({
   activeLessonId: null,
   totalScore: 0,
+  correctCount: 0,
   currentQuestionIndex: 0,
   isSessionActive: false,
   sessionId: null,
@@ -20,6 +21,7 @@ const useGameEngine = create((set, get) => ({
   startGameSession: (lessonId) => set({
     activeLessonId: lessonId,
     totalScore: 0,
+    correctCount: 0,
     currentQuestionIndex: 0,
     isSessionActive: true,
     sessionId: createSessionId(),
@@ -28,6 +30,7 @@ const useGameEngine = create((set, get) => ({
   // Record an answer result
   recordAnswer: (isCorrect) => set((state) => ({
     totalScore: isCorrect ? state.totalScore + 10 : state.totalScore,
+    correctCount: isCorrect ? state.correctCount + 1 : state.correctCount,
   })),
 
   // Flexible point updating (used by Generative Engines)
@@ -65,6 +68,7 @@ const useGameEngine = create((set, get) => ({
       sessionId: null,
       currentQuestionIndex: 0,
       totalScore: 0,
+      correctCount: 0,
     });
   },
 }));
