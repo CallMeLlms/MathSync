@@ -5,6 +5,15 @@
   },
   "questions": [
      {
+      "id": "lab-picker-2",
+      "type": "PICKER",
+      "question": "What is 3 + 4?",
+      "answer": "7",
+      "metadata": {
+        "options": ["5", "6", "7"]
+      }
+    },
+     {
       "id": "lab-geoboard-4",
       "type": "GEOBOARD",
       "question": "Follow the hint and draw a triangle!",
