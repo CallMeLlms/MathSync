@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import { useRouter } from 'expo-router';
+import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import Animated, { 
+  useSharedValue, 
+  useAnimatedStyle, 
+  withSpring 
+} from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
+import { getGameTheme } from '@/theme/gameThemes';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-
-const GRADE_COLORS = {
-  G1: { primary: '#4CAF78', secondary: '#2E7D52', accent: '#F9C74F', bg: '#F0FFF4' },
-};
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 /**
  * GameResultScreen
@@ -17,19 +21,63 @@ const GRADE_COLORS = {
  *
  * Route: /game/result?lessonId=X&gradeKey=G1&score=N&total=N&accuracy=N
  */
+
+const BulkyButton = ({ title, onPress, type = 'primary', theme }) => {
+  const translateY = useSharedValue(0);
+  const borderBottomWidth = useSharedValue(6);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: borderBottomWidth.value,
+  }));
+
+  const handlePressIn = () => {
+    translateY.value = withSpring(4);
+    borderBottomWidth.value = withSpring(2);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = () => {
+    translateY.value = withSpring(0);
+    borderBottomWidth.value = withSpring(6);
+  };
+
+  const isPrimary = type === 'primary';
+
+  return (
+    <Pressable 
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      onPress={onPress}
+      style={styles.buttonWrapper}
+    >
+      <Animated.View style={[
+        styles.button,
+        isPrimary ? { backgroundColor: theme.primaryColor, borderColor: Colors.onPrimaryContainer } : styles.secondaryButton,
+        animatedStyle
+      ]}>
+        <Text style={[
+          styles.buttonText, 
+          { fontFamily: isPrimary ? 'Lexend-Bold' : 'PlusJakartaSans-Bold' },
+          !isPrimary ? { color: theme.primaryColor } : { color: '#FFFFFF' }
+        ]}>
+          {title}
+        </Text>
+      </Animated.View>
+    </Pressable>
+  );
+};
+
 export default function GameResultScreen() {
   const router = useRouter();
-
-  // Read params from route
-  const { useLocalSearchParams } = require('expo-router');
   const params = useLocalSearchParams();
+  
   const score = Number(params.score ?? 0);
   const total = Number(params.total ?? 0);
   const accuracy = Number(params.accuracy ?? 0);
   const gradeKey = params.gradeKey ?? 'G1';
-  const lessonId = params.lessonId ?? null;
-
-  const colors = GRADE_COLORS[gradeKey] ?? GRADE_COLORS.G1;
+  
+  const theme = getGameTheme(gradeKey);
 
   const getVictoryEmoji = () => {
     if (accuracy >= 90) return '🏆';
@@ -52,125 +100,134 @@ export default function GameResultScreen() {
     return 'Every attempt makes you smarter. Try again!';
   };
 
+  const gradientColors = accuracy >= 70 
+    ? [Colors.surfaceContainerLowest, Colors.surfaceContainerLow]
+    : [Colors.surfaceContainerLow, Colors.surfaceContainer];
+
   return (
-    <View style={[styles.container, { backgroundColor: colors.bg }]}>
-      {/* Trophy / Star Emoji */}
-      <View style={styles.heroSection}>
-        <Text style={styles.victoryEmoji}>{getVictoryEmoji()}</Text>
-        <Text style={[styles.victoryTitle, { color: colors.secondary }]}>
-          {getVictoryTitle()}
-        </Text>
-        <Text style={styles.victoryMessage}>{getVictoryMessage()}</Text>
-      </View>
-
-      {/* Stats Card */}
-      <View style={[styles.statsCard, { borderColor: colors.primary }]}>
-        <View style={styles.statRow}>
-          <View style={styles.statItem}>
-            <Text style={[styles.statValue, { color: colors.primary }]}>
-              {score}
-            </Text>
-            <Text style={styles.statLabel}>☀️ Sun Points</Text>
-          </View>
-
-          <View style={[styles.statDivider, { backgroundColor: colors.primary }]} />
-
-          <View style={styles.statItem}>
-            <Text style={[styles.statValue, { color: colors.primary }]}>
-              {accuracy}%
-            </Text>
-            <Text style={styles.statLabel}>🎯 Accuracy</Text>
-          </View>
-
-          <View style={[styles.statDivider, { backgroundColor: colors.primary }]} />
-
-          <View style={styles.statItem}>
-            <Text style={[styles.statValue, { color: colors.primary }]}>
-              {total}
-            </Text>
-            <Text style={styles.statLabel}>📝 Questions</Text>
-          </View>
+    <LinearGradient 
+      colors={[theme.backgroundColor, Colors.surfaceContainerLow]} 
+      style={styles.container}
+    >
+      <View style={styles.content}>
+        {/* Hero Section */}
+        <View style={styles.heroSection}>
+          <Text style={styles.victoryEmoji}>{getVictoryEmoji()}</Text>
+          <Text style={[styles.victoryTitle, { color: theme.primaryColor }]}>
+            {getVictoryTitle()}
+          </Text>
+          <Text style={styles.victoryMessage}>{getVictoryMessage()}</Text>
         </View>
-      </View>
 
-      {/* Accuracy Bar */}
-      <View style={styles.accuracyBarWrapper}>
-        <Text style={styles.accuracyBarLabel}>Lesson Score</Text>
-        <View style={styles.accuracyBarTrack}>
-          <View
-            style={[
-              styles.accuracyBarFill,
-              {
-                width: `${Math.min(accuracy, 100)}%`,
-                backgroundColor:
-                  accuracy >= 70 ? colors.primary : Colors.error,
-              },
-            ]}
+        {/* Stats Card */}
+        <View style={[styles.statsCard, { borderColor: Colors.outlineVariant }]}>
+          <LinearGradient
+            colors={gradientColors}
+            style={StyleSheet.absoluteFill}
+            borderRadius={24}
           />
+          <View style={styles.statRow}>
+            <View style={styles.statItem}>
+              <Text style={[styles.statValue, { color: theme.primaryColor }]}>{score}</Text>
+              <Text style={styles.statLabel}>☀️ points</Text>
+            </View>
+
+            <View style={styles.statDivider} />
+
+            <View style={styles.statItem}>
+              <Text style={[styles.statValue, { color: theme.primaryColor }]}>{accuracy}%</Text>
+              <Text style={styles.statLabel}>🎯 accuracy</Text>
+            </View>
+
+            <View style={styles.statDivider} />
+
+            <View style={styles.statItem}>
+              <Text style={[styles.statValue, { color: theme.primaryColor }]}>{total}</Text>
+              <Text style={styles.statLabel}>📝 solved</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Accuracy Bar */}
+        <View style={styles.accuracyBarWrapper}>
+          <Text style={styles.accuracyBarLabel}>LESSON PROGRESS</Text>
+          <View style={styles.accuracyBarTrack}>
+            <View
+              style={[
+                styles.accuracyBarFill,
+                {
+                  width: `${Math.min(accuracy, 100)}%`,
+                  backgroundColor: accuracy >= 70 ? Colors.bloomProgress : Colors.error,
+                  borderBottomWidth: 4,
+                  borderBottomColor: accuracy >= 70 ? '#004d1d' : '#8a1111',
+                },
+              ]}
+            />
+          </View>
+        </View>
+
+        {/* Actions */}
+        <View style={styles.actions}>
+          <BulkyButton 
+            title="🗺️   BACK TO JOURNEY" 
+            onPress={() => router.back()} 
+            theme={theme}
+          />
+          
+          {accuracy < 70 && (
+            <BulkyButton 
+              title="🔄  TRY AGAIN" 
+              type="secondary"
+              onPress={() => router.back()}
+              theme={theme}
+            />
+          )}
         </View>
       </View>
-
-      {/* Actions */}
-      <View style={styles.actions}>
-        <TouchableOpacity
-          style={[styles.primaryButton, { backgroundColor: colors.primary }]}
-          onPress={() => router.back()}
-          activeOpacity={0.85}
-        >
-          <Text style={styles.primaryButtonText}>🗺️  Back to Journey</Text>
-        </TouchableOpacity>
-
-        {accuracy < 70 && (
-          <TouchableOpacity
-            style={[styles.secondaryButton, { borderColor: colors.primary }]}
-            onPress={() => router.back()}
-            activeOpacity={0.85}
-          >
-            <Text style={[styles.secondaryButtonText, { color: colors.secondary }]}>
-              🔄  Try Again
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  content: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: SCREEN_WIDTH * 0.07,
-    paddingVertical: 32,
-    gap: 24,
+    paddingHorizontal: 24,
+    gap: 32,
   },
   heroSection: {
     alignItems: 'center',
     gap: 8,
   },
   victoryEmoji: {
-    fontSize: SCREEN_HEIGHT * 0.13,
-    lineHeight: SCREEN_HEIGHT * 0.14,
+    fontSize: 84,
+    marginBottom: 8,
   },
   victoryTitle: {
-    fontFamily: 'Lexend-Bold',
-    fontSize: SCREEN_HEIGHT * 0.038,
+    fontFamily: 'Lexend-Black',
+    fontSize: 34,
     textAlign: 'center',
+    textTransform: 'uppercase',
   },
   victoryMessage: {
-    fontFamily: 'PlusJakartaSans-Regular',
-    fontSize: SCREEN_HEIGHT * 0.018,
+    fontFamily: 'PlusJakartaSans-Medium',
+    fontSize: 16,
     color: Colors.onSurfaceVariant,
     textAlign: 'center',
-    maxWidth: SCREEN_WIDTH * 0.75,
+    maxWidth: SCREEN_WIDTH * 0.8,
   },
   statsCard: {
     width: '100%',
-    borderRadius: 20,
+    borderRadius: 24,
     borderWidth: 2,
-    backgroundColor: '#FFFFFF',
-    padding: 20,
+    borderBottomWidth: 8,
+    padding: 24,
+    position: 'relative',
+    overflow: 'hidden',
   },
   statRow: {
     flexDirection: 'row',
@@ -179,69 +236,68 @@ const styles = StyleSheet.create({
   },
   statItem: {
     alignItems: 'center',
-    gap: 4,
     flex: 1,
   },
   statValue: {
-    fontFamily: 'Lexend-Bold',
-    fontSize: SCREEN_HEIGHT * 0.036,
+    fontFamily: 'Lexend-Black',
+    fontSize: 32,
   },
   statLabel: {
-    fontFamily: 'PlusJakartaSans-Regular',
-    fontSize: SCREEN_HEIGHT * 0.014,
+    fontFamily: 'PlusJakartaSans-Bold',
+    fontSize: 12,
     color: Colors.onSurfaceVariant,
-    textAlign: 'center',
+    textTransform: 'uppercase',
+    marginTop: -4,
   },
   statDivider: {
-    width: 1,
+    width: 2,
     height: 40,
-    opacity: 0.3,
+    backgroundColor: Colors.outlineVariant,
+    opacity: 0.5,
   },
   accuracyBarWrapper: {
     width: '100%',
-    gap: 6,
+    gap: 10,
   },
   accuracyBarLabel: {
-    fontFamily: 'PlusJakartaSans-SemiBold',
-    fontSize: SCREEN_HEIGHT * 0.015,
+    fontFamily: 'Lexend-Bold',
+    fontSize: 14,
     color: Colors.onSurfaceVariant,
+    letterSpacing: 1,
   },
   accuracyBarTrack: {
-    height: 10,
+    height: 24,
     backgroundColor: Colors.surfaceContainerHighest,
-    borderRadius: 99,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: Colors.outlineVariant,
     overflow: 'hidden',
   },
   accuracyBarFill: {
     height: '100%',
-    borderRadius: 99,
+    borderRadius: 8,
   },
   actions: {
     width: '100%',
-    gap: 12,
-    alignItems: 'center',
+    gap: 16,
   },
-  primaryButton: {
+  buttonWrapper: {
     width: '100%',
-    paddingVertical: 16,
-    borderRadius: 16,
-    alignItems: 'center',
   },
-  primaryButtonText: {
-    fontFamily: 'Lexend-Bold',
-    fontSize: SCREEN_HEIGHT * 0.02,
-    color: '#FFFFFF',
+  button: {
+    width: '100%',
+    height: 64,
+    borderRadius: 20,
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   secondaryButton: {
-    width: '100%',
-    paddingVertical: 14,
-    borderRadius: 16,
-    alignItems: 'center',
-    borderWidth: 2,
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.surfaceContainerLowest,
+    borderColor: Colors.outlineVariant,
   },
-  secondaryButtonText: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: SCREEN_HEIGHT * 0.018,
+  buttonText: {
+    fontSize: 18,
+    letterSpacing: 1.2,
   },
 });
