@@ -94,21 +94,22 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: Colors.surfaceContainerLow,
     borderRadius: 24,
-    paddingVertical: 14,
+    paddingVertical: 18,
     paddingHorizontal: 16,
-    borderWidth: 1,
+    borderWidth: 2,
+    borderBottomWidth: 6,
     borderColor: Colors.outlineVariant,
-    marginBottom: 16,
+    marginBottom: 20,
   },
   title: {
     fontFamily: 'Lexend-Bold',
-    fontSize: 24,
+    fontSize: 28,
     color: Colors.onSurface,
   },
   subtitle: {
     marginTop: 4,
-    fontFamily: 'PlusJakartaSans-Medium',
-    fontSize: 13,
+    fontFamily: 'PlusJakartaSans-Bold',
+    fontSize: 14,
     color: Colors.onSurfaceVariant,
   },
   grid: {

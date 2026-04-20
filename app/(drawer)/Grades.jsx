@@ -30,10 +30,6 @@ const gradeData = [
     desc: 'Count, match, and build confidence with playful first missions.',
     icon: 'seedling',
     progressLabel: 'Start here',
-    colors: ['#7ee081', '#58cc02'],
-    borderColor: '#3c9f18',
-    badgeColor: '#dff7cf',
-    iconTint: '#1f6d12',
   },
   {
     id: 'G2',
@@ -42,10 +38,6 @@ const gradeData = [
     desc: 'Train your speed with patterns, place value, and sharper number sense.',
     icon: 'rocket-launch',
     progressLabel: 'Ready',
-    colors: ['#7dd8ff', '#1cb0f6'],
-    borderColor: '#1185be',
-    badgeColor: '#d8f4ff',
-    iconTint: '#0d5f89',
   },
   {
     id: 'G3',
@@ -54,10 +46,6 @@ const gradeData = [
     desc: 'Mix logic and rhythm as multiplication and problem solving level up.',
     icon: 'sword-cross',
     progressLabel: 'Challenge',
-    colors: ['#ffc76b', '#ff9600'],
-    borderColor: '#cc6f00',
-    badgeColor: '#ffedd1',
-    iconTint: '#8a4f00',
   },
   {
     id: 'G4',
@@ -66,10 +54,6 @@ const gradeData = [
     desc: 'Tackle bigger numbers, deeper thinking, and more confident decision making.',
     icon: 'castle',
     progressLabel: 'Advance',
-    colors: ['#ff9aa2', '#ff4b4b'],
-    borderColor: '#c93333',
-    badgeColor: '#ffe1e3',
-    iconTint: '#8c2222',
   },
   {
     id: 'G5',
@@ -78,10 +62,6 @@ const gradeData = [
     desc: 'Push into precision, planning, and stronger multi-step reasoning.',
     icon: 'lightning-bolt',
     progressLabel: 'Elite',
-    colors: ['#c5a7ff', '#9069ff'],
-    borderColor: '#6d4cd1',
-    badgeColor: '#ece2ff',
-    iconTint: '#4f35a4',
   },
   {
     id: 'G6',
@@ -90,10 +70,6 @@ const gradeData = [
     desc: 'Finish strong with advanced missions built for confident math explorers.',
     icon: 'crown',
     progressLabel: 'Boss level',
-    colors: ['#9ee4b6', '#2bb673'],
-    borderColor: '#198656',
-    badgeColor: '#def7e8',
-    iconTint: '#115f3e',
   },
 ];
 
@@ -110,19 +86,13 @@ function GradeCard({ grade, isActive, isLocked, onPress }) {
   }));
 
   const handlePressIn = () => {
-    if (isLocked) {
-      return;
-    }
-
+    if (isLocked) return;
     pressOffset.value = withTiming(4, { duration: 100 });
-    hapticLight();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   const handlePressOut = () => {
-    if (isLocked) {
-      return;
-    }
-
+    if (isLocked) return;
     pressOffset.value = withTiming(0, { duration: 140 });
   };
 
@@ -134,92 +104,74 @@ function GradeCard({ grade, isActive, isLocked, onPress }) {
       onPressOut={handlePressOut}
       style={styles.cardPressable}
     >
-      {({ pressed }) => (
-        <Animated.View
-          style={[
-            styles.cardShell,
-            animatedCardStyle,
-            { borderColor: grade.borderColor, backgroundColor: grade.borderColor },
-            isLocked && styles.lockedCardShell,
-          ]}
-        >
-          <LinearGradient
-            colors={isLocked ? [Colors.surfaceContainerHigh, Colors.surfaceContainer] : grade.colors}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={[
-              styles.cardSurface,
-              isActive && styles.activeCardSurface,
-              pressed && !isLocked && styles.cardSurfacePressed,
-            ]}
-          >
-            <View style={styles.cardTopRow}>
-              <View style={[styles.stageBadge, { backgroundColor: grade.badgeColor }]}>
-                <Text style={[styles.stageBadgeText, { color: grade.iconTint }]}>{grade.progressLabel}</Text>
-              </View>
-
-              {isLocked ? (
-                <View style={styles.lockBadge}>
-                  <MaterialIcons name="lock" size={18} color={Colors.onSurfaceVariant} />
-                </View>
-              ) : isActive ? (
-                <View style={styles.currentBadge}>
-                  <MaterialIcons name="star" size={16} color="#ffffff" />
-                  <Text style={styles.currentBadgeText}>CURRENT</Text>
-                </View>
-              ) : (
-                <View style={styles.availableBadge}>
-                  <Text style={styles.availableBadgeText}>OPEN</Text>
-                </View>
-              )}
+      <Animated.View
+        style={[
+          styles.cardShell,
+          animatedCardStyle,
+          isLocked ? styles.lockedCardShell : styles.cardShellActive,
+        ]}
+      >
+        <View style={[
+          styles.cardSurface,
+          isActive && styles.activeCardSurface,
+          isLocked && styles.lockedCardSurface
+        ]}>
+          <View style={styles.cardTopRow}>
+            <View style={styles.stageBadge}>
+              <Text style={styles.stageBadgeText}>{grade.progressLabel}</Text>
             </View>
 
-            <View style={styles.cardBody}>
-              <View style={styles.cardTextBlock}>
-                <Text style={styles.cardEyebrow}>{grade.label}</Text>
-                <Text style={styles.cardTitle}>{grade.title}</Text>
-                <Text style={styles.cardDesc}>{grade.desc}</Text>
+            {isLocked ? (
+              <View style={styles.lockBadge}>
+                <MaterialIcons name="lock" size={18} color={Colors.onSurfaceVariant} />
               </View>
+            ) : isActive ? (
+              <View style={styles.currentBadge}>
+                <MaterialIcons name="star" size={16} color={Colors.primary} />
+                <Text style={styles.currentBadgeText}>CURRENT</Text>
+              </View>
+            ) : (
+              <View style={styles.availableBadge}>
+                <Text style={styles.availableBadgeText}>OPEN</Text>
+              </View>
+            )}
+          </View>
 
-              <View style={[styles.iconBubble, { backgroundColor: grade.badgeColor }]}>
-                <MaterialCommunityIcons
-                  name={grade.icon}
-                  size={38}
-                  color={isLocked ? Colors.onSurfaceVariant : grade.iconTint}
-                />
-              </View>
+          <View style={styles.cardBody}>
+            <View style={styles.cardTextBlock}>
+              <Text style={styles.cardEyebrow}>{grade.label}</Text>
+              <Text style={styles.cardTitle}>{grade.title}</Text>
+              <Text style={styles.cardDesc}>{grade.desc}</Text>
             </View>
 
-            <View style={styles.cardFooter}>
-              {/* <View style={styles.lessonTrack}>
-                <View style={[styles.lessonNode, styles.lessonNodeDone]} />
-                <View style={[styles.lessonNode, isActive && styles.lessonNodeCurrent]} />
-                <View style={[styles.lessonNode, !isLocked && !isActive && styles.lessonNodeOpen]} />
-              </View> */}
+            <View style={[styles.iconBubble, isLocked && styles.iconBubbleLocked]}>
+              <MaterialCommunityIcons
+                name={grade.icon}
+                size={38}
+                color={isLocked ? Colors.onSurfaceVariant : Colors.primary}
+              />
+            </View>
+          </View>
 
-              <View
+          <View style={styles.cardFooter}>
+            <View
+              style={[
+                styles.actionPill,
+                isLocked ? styles.actionPillLocked : isActive ? styles.actionPillCurrent : styles.actionPillOpen,
+              ]}
+            >
+              <Text
                 style={[
-                  styles.actionPill,
-                  isLocked ? styles.actionPillLocked : isActive ? styles.actionPillCurrent : styles.actionPillOpen,
+                  styles.actionPillText,
+                  isLocked ? styles.actionPillTextLocked : isActive ? styles.actionPillTextCurrent : styles.actionPillTextOpen,
                 ]}
               >
-                <Text
-                  style={[
-                    styles.actionPillText,
-                    isLocked
-                      ? styles.actionPillTextLocked
-                      : isActive
-                        ? styles.actionPillTextCurrent
-                        : styles.actionPillTextOpen,
-                  ]}
-                >
-                  {isLocked ? 'LOCKED' : isActive ? 'CONTINUE' : 'START'}
-                </Text>
-              </View>
+                {isLocked ? 'LOCKED' : isActive ? 'CONTINUE' : 'START'}
+              </Text>
             </View>
-          </LinearGradient>
-        </Animated.View>
-      )}
+          </View>
+        </View>
+      </Animated.View>
     </Pressable>
   );
 }
@@ -285,148 +237,38 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 56,
   },
-  heroCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 28,
-    borderWidth: 2,
-    borderBottomWidth: 8,
-    borderColor: '#cbeab8',
-    padding: 22,
-    marginBottom: 24,
-  },
-  heroTopRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: 12,
-    marginBottom: 18,
-  },
-  heroBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: '#58cc02',
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  heroBadgeText: {
-    color: '#ffffff',
-    fontFamily: 'PlusJakartaSans-ExtraBold',
-    fontSize: 11,
-    letterSpacing: 1,
-  },
-  heroGradeChip: {
-    backgroundColor: '#fff4d9',
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  heroGradeChipText: {
-    color: '#9f4200',
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 12,
-  },
-  heroTitle: {
-    fontFamily: 'Lexend-Black',
-    fontSize: 32,
-    lineHeight: 38,
-    color: '#20311c',
-    maxWidth: '88%',
-  },
-  heroSubtitle: {
-    fontFamily: 'PlusJakartaSans-Medium',
-    fontSize: 15,
-    lineHeight: 23,
-    color: Colors.onSurfaceVariant,
-    marginTop: 12,
-  },
-  heroStatsRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    gap: 12,
-    marginTop: 22,
-  },
-  heroStatCard: {
-    flex: 1,
-    backgroundColor: '#f6fbef',
-    borderRadius: 20,
-    borderWidth: 2,
-    borderBottomWidth: 6,
-    borderColor: '#d7eebe',
-    paddingVertical: 14,
-    paddingHorizontal: 14,
-  },
-  heroStatValue: {
-    fontFamily: 'Lexend-Black',
-    fontSize: 28,
-    color: '#20311c',
-  },
-  heroStatLabel: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 12,
-    color: Colors.onSurfaceVariant,
-    textTransform: 'uppercase',
-    letterSpacing: 0.8,
-    marginTop: 4,
-  },
-  heroMascot: {
-    width: 84,
-    alignItems: 'center',
-  },
-  heroMascotFace: {
-    width: 84,
-    height: 84,
-    borderRadius: 24,
-    backgroundColor: '#dff7cf',
-    borderWidth: 2,
-    borderBottomWidth: 8,
-    borderColor: '#a9db86',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  sectionHeader: {
-    marginBottom: 16,
-    paddingHorizontal: 4,
-  },
-  sectionTitle: {
-    fontFamily: 'Lexend-Bold',
-    fontSize: 24,
-    color: '#20311c',
-  },
-  sectionCaption: {
-    fontFamily: 'PlusJakartaSans-Medium',
-    fontSize: 14,
-    lineHeight: 21,
-    color: Colors.onSurfaceVariant,
-    marginTop: 6,
-  },
   cardStack: {
-    gap: 18,
+    gap: 20,
   },
   cardPressable: {
     width: '100%',
   },
   cardShell: {
-    borderRadius: 30,
+    borderRadius: 24,
     borderWidth: 2,
-    overflow: 'hidden',
+    backgroundColor: Colors.outlineVariant,
+    borderColor: Colors.outlineVariant,
+  },
+  cardShellActive: {
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
   },
   lockedCardShell: {
-    borderColor: '#d3c7b8',
-    backgroundColor: '#d3c7b8',
+    backgroundColor: Colors.surfaceContainerHigh,
+    borderColor: Colors.surfaceContainerHigh,
+    opacity: 0.8,
   },
   cardSurface: {
-    borderRadius: 28,
-    padding: 18,
-    minHeight: 188,
+    borderRadius: 22,
+    padding: 20,
+    minHeight: 180,
+    backgroundColor: Colors.surfaceContainerLowest,
+  },
+  lockedCardSurface: {
+    backgroundColor: Colors.surfaceContainerLow,
   },
   activeCardSurface: {
-    borderWidth: 3,
-    borderColor: '#ffffff',
-  },
-  cardSurfacePressed: {
-    opacity: 0.96,
+    // Optional: add a subtle indicator if needed
   },
   cardTopRow: {
     flexDirection: 'row',
@@ -437,48 +279,58 @@ const styles = StyleSheet.create({
   stageBadge: {
     borderRadius: 999,
     paddingHorizontal: 12,
-    paddingVertical: 7,
+    paddingVertical: 6,
+    backgroundColor: Colors.surfaceContainerHigh,
+    borderWidth: 1.5,
+    borderColor: Colors.outlineVariant,
   },
   stageBadgeText: {
     fontFamily: 'PlusJakartaSans-ExtraBold',
-    fontSize: 11,
-    letterSpacing: 0.9,
+    fontSize: 10,
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
+    color: Colors.onSurfaceVariant,
   },
   lockBadge: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: 'rgba(255,255,255,0.9)',
+    backgroundColor: Colors.surfaceContainerLowest,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: Colors.outlineVariant,
   },
   currentBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
-    backgroundColor: '#20311c',
+    backgroundColor: Colors.primaryContainer,
     borderRadius: 999,
     paddingHorizontal: 11,
-    paddingVertical: 8,
+    paddingVertical: 7,
+    borderWidth: 1.5,
+    borderColor: Colors.primary,
   },
   currentBadgeText: {
     fontFamily: 'PlusJakartaSans-ExtraBold',
-    fontSize: 11,
-    letterSpacing: 0.9,
-    color: '#ffffff',
+    fontSize: 10,
+    letterSpacing: 0.8,
+    color: Colors.primary,
   },
   availableBadge: {
-    backgroundColor: 'rgba(255,255,255,0.9)',
+    backgroundColor: Colors.surfaceContainerLowest,
     borderRadius: 999,
     paddingHorizontal: 11,
-    paddingVertical: 8,
+    paddingVertical: 7,
+    borderWidth: 1.5,
+    borderColor: Colors.outlineVariant,
   },
   availableBadgeText: {
     fontFamily: 'PlusJakartaSans-ExtraBold',
-    fontSize: 11,
-    letterSpacing: 0.9,
-    color: '#20311c',
+    fontSize: 10,
+    letterSpacing: 0.8,
+    color: Colors.onSurface,
   },
   cardBody: {
     flexDirection: 'row',
@@ -494,78 +346,61 @@ const styles = StyleSheet.create({
     fontSize: 12,
     letterSpacing: 1,
     textTransform: 'uppercase',
-    color: 'rgba(35,26,13,0.72)',
-    marginBottom: 8,
+    color: Colors.onSurfaceVariant,
+    marginBottom: 4,
   },
   cardTitle: {
     fontFamily: 'Lexend-Black',
-    fontSize: 30,
-    lineHeight: 34,
-    color: '#ffffff',
+    fontSize: 28,
+    lineHeight: 32,
+    color: Colors.onSurface,
   },
   cardDesc: {
     fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 14,
-    lineHeight: 21,
-    color: 'rgba(255,255,255,0.9)',
-    marginTop: 10,
+    fontSize: 13,
+    lineHeight: 18,
+    color: Colors.onSurfaceVariant,
+    marginTop: 8,
   },
   iconBubble: {
-    width: 82,
-    height: 82,
-    borderRadius: 24,
+    width: 76,
+    height: 76,
+    borderRadius: 20,
     borderWidth: 2,
-    borderBottomWidth: 6,
-    borderColor: 'rgba(255,255,255,0.6)',
+    borderBottomWidth: 5,
+    borderColor: Colors.outlineVariant,
+    backgroundColor: Colors.primaryContainer,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  iconBubbleLocked: {
+    backgroundColor: Colors.surfaceContainerHigh,
+    borderColor: Colors.outlineVariant,
+  },
   cardFooter: {
     flexDirection: 'row',
-    alignItems: 'end',
-    justifyContent: 'flex-end',
-    gap: 12,
-    marginTop: 20,
-  },
-  lessonTrack: {
-    flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-  },
-  lessonNode: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: 'rgba(255,255,255,0.4)',
-  },
-  lessonNodeDone: {
-    backgroundColor: '#ffffff',
-  },
-  lessonNodeCurrent: {
-    width: 32,
-    backgroundColor: '#20311c',
-  },
-  lessonNodeOpen: {
-    width: 20,
-    backgroundColor: '#fff6b5',
+    justifyContent: 'flex-end',
+    marginTop: 20,
   },
   actionPill: {
     borderRadius: 999,
-    paddingHorizontal: 16,
-    paddingVertical: 11,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderWidth: 2,
+    borderBottomWidth: 4,
   },
   actionPillCurrent: {
-    backgroundColor: '#ffffff',
-    borderColor: '#dff7cf',
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary, // The shell handle the bottom color if we wanted, but here we do it localized
   },
   actionPillOpen: {
-    backgroundColor: '#20311c',
-    borderColor: '#20311c',
+    backgroundColor: Colors.surfaceContainerLowest,
+    borderColor: Colors.outlineVariant,
   },
   actionPillLocked: {
-    backgroundColor: '#f7f0e7',
-    borderColor: '#e4d8c8',
+    backgroundColor: Colors.surfaceContainerLow,
+    borderColor: Colors.outlineVariant,
   },
   actionPillText: {
     fontFamily: 'PlusJakartaSans-ExtraBold',
@@ -573,10 +408,10 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   actionPillTextCurrent: {
-    color: '#20311c',
+    color: '#ffffff',
   },
   actionPillTextOpen: {
-    color: '#ffffff',
+    color: Colors.onSurface,
   },
   actionPillTextLocked: {
     color: Colors.onSurfaceVariant,
