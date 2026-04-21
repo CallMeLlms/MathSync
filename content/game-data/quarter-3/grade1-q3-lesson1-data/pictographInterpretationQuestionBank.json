@@ -50,7 +50,13 @@
             "type": "NUMPAD",
             "difficulty": "Hard",
             "question": "A pictograph shows 8 red balloons and 5 blue balloons. How many balloons are there in total?",
+            "equation": {
+                "left": "8 + 5",
+                "operator": "=",
+                "blank": "right"
+            },
             "answer": 13,
+            "maxDigits": 2,
             "assetType": "text",
             "metadata": {}
         }

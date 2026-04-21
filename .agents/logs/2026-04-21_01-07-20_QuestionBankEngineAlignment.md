@@ -8,6 +8,8 @@
 
 Reversed a project-wide regression where narrative-based questions were incorrectly routed to the `NUMPAD` engine, leading to rendering failures. Standardized the `NUMPAD` schema by injecting missing `equation` objects and implemented a strict `N/A` placeholder policy for story-driven content.
 
+Building on the initial alignment, performed an in-depth refactor of the `NUMPAD` engine data constraints across the Grade 1 curriculum. Specifically, ensured that any question typed as `NUMPAD` contains the `equation` object (with `left`, `operator`, `blank` fields) and a `maxDigits` property.
+
 ---
 
 ## 🛠 What Changed?
@@ -15,9 +17,11 @@ Reversed a project-wide regression where narrative-based questions were incorrec
 ### 1. Engine Type Refactoring
 - **Retyped 20+ Questions to `N/A`**: Shifted non-mathematical prompts away from the `NUMPAD` type. This includes date logic (Calendar), chronological sequences (Time), and story-driven word problems (Money Problems).
 - **Consolidated `NUMPAD` Usage**: Strictly reserved the `NUMPAD` type for pure arithmetic expressions.
+- **Conceptual Place Value Update**: The conceptual question `na_2_pv_007` (asking for the place value of a digit in 84) was successfully re-categorized from `NUMPAD` to `N/A` to prevent it from failing in the `NumpadEngine`.
 
 ### 2. Schema Standardization
-- **Injected `equation` Objects**: For all valid `NUMPAD` questions, I added the required `{ left, operator, blank }` schema. This allows the `NumpadEngine` to correctly map question data to physical UI slots.
+- **Injected `equation` Objects**: For all valid `NUMPAD` questions, added the required `{ left, operator, blank }` schema. This allows the `NumpadEngine` to correctly map question data to physical UI slots.
+- **Injected `maxDigits`**: Added the `maxDigits` property to ensure the engine correctly limits expected inputs.
 - **Example Implementation**:
 ```json
 {
@@ -26,11 +30,17 @@ Reversed a project-wide regression where narrative-based questions were incorrec
     "left": "72 + 14",
     "operator": "=",
     "blank": "right"
-  }
+  },
+  "maxDigits": 2
 }
 ```
 
-### 3. Comprehensive Audit Log
+### 3. Detailed Files Updated
+- `content/game-data/quarter-2/grade1-q2-lesson3-place-value/placeValueQuestionBank.json` (Retyped `na_2_pv_007` to `N/A`)
+- `content/game-data/quarter-3/grade1-q3-lesson1-data/pictographInterpretationQuestionBank.json` (Injected `equation` and `maxDigits` for `dp_3_int_007`)
+- `content/game-data/quarter-3/grade1-q3-lesson2-subtraction-to-20/basicSubtractionTo20QuestionBank.json` (Injected `equation` and `maxDigits` for `na_3_sub20_007`)
+
+### 4. Comprehensive Audit Log
 - Created a persistent tracking table in `implementation_plan.md` that maps every `N/A` question to its intended future engine type.
 
 ---

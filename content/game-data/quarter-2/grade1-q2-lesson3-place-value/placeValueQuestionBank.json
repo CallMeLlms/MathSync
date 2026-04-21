@@ -41,10 +41,11 @@
             "competency": "NA.2.6",
             "topic": "Place Value",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "N/A",
             "difficulty": "Hard",
             "question": "In the number 84, what is the value of the digit 8?",
             "answer": 80,
+            "maxDigits": 2,
             "assetType": "text",
             "metadata": {}
         }

@@ -37,6 +37,13 @@ This document serves as the permanent chronological record of the Grade 1 curric
     - Audited and enforced standard `@/` path aliasing across the codebase.
     - Synchronized `SignUp.jsx` and `SignIn.jsx` with the global design system.
 
+### 🛠 Phase 7: Question Bank Schema Alignment (April 21, 2026)
+- **Objective**: Standardize engine properties for `NUMPAD` and conceptual/narrative content.
+- **Outcome**: 
+    - Enforced the `equation` and `maxDigits` constraints across all `NUMPAD` typed questions to ensure Zero-Crash UI rendering.
+    - Standardized `N/A` placeholder policy for conceptual and narrative questions to properly skip unhandled UI modes.
+    - Merged logs to document technical alignment of engine properties.
+
 ---
 
 ## 🛠 Architectural Integrity Check
@@ -45,5 +52,5 @@ This document serves as the permanent chronological record of the Grade 1 curric
 - **Media**: All assets resolved via `@assets` alias and `AssetMap.js` registry.
 
 ---
-**Last Updated**: 2026-04-15
-**Status**: Authentication Flow Stable / Final UI Polish Ongoing
+**Last Updated**: 2026-04-21
+**Status**: Schema Alignment Complete / Question Banks Validated

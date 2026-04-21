@@ -45,7 +45,22 @@
       "target": 8,
       "chips": [2, 3, 4, 5, 6],
       "mode": "compose"
+    },
+    {
+      "id": "lab-wordproblem-8",
+      "type": "WORD_PROBLEM",
+      "question": "Juan has 3 toy cars. Maria gives him 2 more. How many toy cars does Juan have now?",
+      "assetId": "icon_toy_car",
+      "answer": 5,
+      "maxDigits": 1
+    },
+    {
+      "id": "lab-wordproblem-9",
+      "type": "WORD_PROBLEM",
+      "question": "There are 7 mangoes in a basket. You ate 3. How many mangoes are left? 7 + 3",
+      "assetId": "icon_mango",
+      "answer": 4,
+      "maxDigits": 1
     }
-
   ]
 }

@@ -44,7 +44,13 @@
             "type": "NUMPAD",
             "difficulty": "Easy",
             "question": "What is 10 minus 4?",
+            "equation": {
+                "left": "10 - 4",
+                "operator": "=",
+                "blank": "right"
+            },
             "answer": 6,
+            "maxDigits": 1,
             "assetType": "text",
             "metadata": {}
         }
