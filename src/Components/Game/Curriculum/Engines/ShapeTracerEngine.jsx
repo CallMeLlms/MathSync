@@ -11,24 +11,19 @@
  *   semi_guided — faint outline, no label (pictorial)
  *   freeform   — corner dots only, no guide lines (abstract)
  *
- * Shadow-Free Design System compliant.
- *
  * Props Contract: { data, onResult } (standard Orchestrator API)
  *
  * JSON question shape:
- *   { shape: "triangle"|"square"|"rectangle", traceMode: "guided"|"semi_guided"|"freeform", answer: "Triangle" }
- *
- * Required Assets (future):
- *   - g1_q1_shape_triangle, g1_q1_shape_square, g1_q1_shape_rectangle
- *   - g1_q1_shape_circle (if extended)
+ *   { shape: "triangle"|"square"|"rectangle", traceMode: "guided"|"semi_guided"|"freeform", answer: "triangle" }
  */
 
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import Animated, {
-  ZoomIn,
-  ZoomOut,
   FadeIn,
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
   runOnJS,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -38,10 +33,10 @@ import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const CANVAS_HEIGHT = SCREEN_HEIGHT * 0.40;
 const TRACE_TOLERANCE = 35;
-const COVERAGE_THRESHOLD = 0.75;
+const COVERAGE_THRESHOLD = 0.80;
 const SEGMENT_LENGTH = 15;
 const TRACE_THROTTLE_MS = 16; // ~1 frame — limits runOnJS bridge hops during pan
 
@@ -132,6 +127,56 @@ function findNearestSegment(px, py, segments) {
   return { segIndex: minIdx, distance: minDist };
 }
 
+// ─── TactileFooterButton — Duolingo-style sinking press button ───
+const TactileFooterButton = ({
+  onPress, label, iconName,
+  bgColor, borderColor, textColor = Colors.onPrimary,
+  fullWidth = false, disabled = false,
+}) => {
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
+  }));
+
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = () => {
+    translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+  };
+
+  return (
+    <Pressable
+      onPress={disabled ? null : onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      disabled={disabled}
+      style={fullWidth ? { width: '100%' } : undefined}
+    >
+      <Animated.View
+        style={[
+          styles.tactileButton,
+          fullWidth && styles.tactileButtonFull,
+          { backgroundColor: bgColor, borderColor },
+          disabled && styles.tactileButtonDisabled,
+          animatedStyle,
+        ]}
+      >
+        {iconName && <Ionicons name={iconName} size={20} color={textColor} />}
+        <Text style={[styles.tactileButtonText, { color: textColor }]}>{label}</Text>
+      </Animated.View>
+    </Pressable>
+  );
+};
+
 // ─── ShapeTracerEngine: main engine component ───
 const ShapeTracerEngine = ({ data, onResult }) => {
   const { shape = 'triangle', traceMode = 'guided', question: instructionText } = data;
@@ -170,7 +215,7 @@ const ShapeTracerEngine = ({ data, onResult }) => {
   // Compute screen-space vertices from normalized coordinates
   const vertices = useMemo(() => {
     if (canvasSize.width === 0) return [];
-    const raw = SHAPE_PATHS[shape] || SHAPE_PATHS.triangle;
+    const raw = SHAPE_PATHS[shape.toLowerCase()] || SHAPE_PATHS.triangle;
     return raw.map(v => ({
       ...v,
       sx: v.x * canvasSize.width,
@@ -188,7 +233,7 @@ const ShapeTracerEngine = ({ data, onResult }) => {
   const tracedCount = tracedSet.size;
   const coverage = totalSegments > 0 ? tracedCount / totalSegments : 0;
   const coveragePct = Math.round(coverage * 100);
-  const canCheck = coverage >= COVERAGE_THRESHOLD && !answered;
+  const canCheck = tracedCount > 0 && !answered;
 
   // Generate SVG edges for the guide path
   const edges = useMemo(() => {
@@ -214,14 +259,12 @@ const ShapeTracerEngine = ({ data, onResult }) => {
   const handleTraceUpdate = useCallback((relX, relY) => {
     if (segments.length === 0) return;
 
-    // Append to user path (throttle: only add if moved enough)
     const lastPt = userPathRef.current[userPathRef.current.length - 1];
     if (!lastPt || Math.abs(relX - lastPt.x) > 3 || Math.abs(relY - lastPt.y) > 3) {
       userPathRef.current = [...userPathRef.current, { x: relX, y: relY }];
       setUserPath(userPathRef.current);
     }
 
-    // Find nearest segment
     const { segIndex, distance } = findNearestSegment(relX, relY, segments);
     if (distance < TRACE_TOLERANCE && !tracedSetRef.current.has(segIndex)) {
       const newSet = new Set(tracedSetRef.current);
@@ -236,8 +279,7 @@ const ShapeTracerEngine = ({ data, onResult }) => {
     setUserPath(userPathRef.current);
   }, []);
 
-  // Throttled bridge call — fires at most once per TRACE_THROTTLE_MS.
-  // Avoids a runOnJS bridge hop on every frame of the pan gesture (anti-pattern per guidelines).
+  // Throttled bridge call — fires at most once per TRACE_THROTTLE_MS
   const handleTraceUpdateThrottled = useCallback((x, y) => {
     const now = Date.now();
     if (now - lastTraceCallRef.current < TRACE_THROTTLE_MS) return;
@@ -255,14 +297,11 @@ const ShapeTracerEngine = ({ data, onResult }) => {
     })
     .onUpdate((event) => {
       runOnJS(handleTraceUpdateThrottled)(event.x, event.y);
-    })
-    .onEnd(() => {
-      // Keep path visible after lifting finger
     });
 
   // Check Answer
   const handleCheckAnswer = useCallback(() => {
-    if (answered) return;
+    if (answered || !canCheck) return;
     setAnswered(true);
 
     if (coverage >= COVERAGE_THRESHOLD) {
@@ -274,53 +313,42 @@ const ShapeTracerEngine = ({ data, onResult }) => {
       speechManager.speakFeedback('Try tracing more carefully.', false);
       setTimeout(() => onResult(false, [shape]), 700);
     }
-  }, [answered, coverage, onResult, shape]);
+  }, [answered, canCheck, coverage, onResult, shape]);
 
-  // Reset tracing
+  // Clear all tracing
   const handleReset = useCallback(() => {
     tracedSetRef.current = new Set();
     userPathRef.current = [];
     setTracedSet(new Set());
     setUserPath([]);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   }, []);
 
-  // Capitalize shape name for label display
-  const shapeLabel = shape.charAt(0).toUpperCase() + shape.slice(1);
+  const shapeLabel = shape.charAt(0).toUpperCase() + shape.slice(1).toLowerCase();
 
-  // Dynamic instruction text
   const getInstruction = () => {
-    if (answered) return '✅ Great job!';
+    if (answered) return 'Great job!';
     if (canCheck) return 'Looking good! Check your answer.';
     return `Trace the ${shapeLabel} — ${coveragePct}% done`;
   };
 
-  // Check tap gesture
-  const checkTap = Gesture.Tap()
-    .onEnd(() => runOnJS(handleCheckAnswer)())
-    .enabled(canCheck);
-
-  // Reset tap gesture
-  const resetTap = Gesture.Tap()
-    .onEnd(() => runOnJS(handleReset)())
-    .enabled(!answered && tracedCount > 0);
-
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+    >
       {/* Instruction Hint */}
       <Animated.View entering={FadeIn.delay(100)} style={styles.hintContainer}>
         <Ionicons name="finger-print" size={16} color={Colors.onSurfaceVariant} />
-        <Text style={styles.hintText}>
-          {getInstruction()}
-        </Text>
+        <Text style={styles.hintText}>{getInstruction()}</Text>
       </Animated.View>
 
       {/* SVG Canvas */}
       <View
         onLayout={handleCanvasLayout}
-        style={[
-          styles.canvas,
-          answered && styles.canvasCorrect,
-        ]}
+        style={styles.canvas}
       >
         <GestureDetector gesture={pan}>
           <Animated.View style={styles.canvasInner}>
@@ -410,38 +438,42 @@ const ShapeTracerEngine = ({ data, onResult }) => {
 
       {/* Progress indicator */}
       <View style={styles.progressContainer}>
-        <Text style={styles.progressText}>
-          {coveragePct}% traced
-        </Text>
+        <Text style={styles.progressText}>{coveragePct}% traced</Text>
       </View>
 
-      {/* Footer: Check Answer + Reset */}
+      {/* Footer — always visible, disabled state controls availability */}
       <View style={styles.footer}>
-        {canCheck && (
-          <GestureDetector gesture={checkTap}>
-            <Animated.View entering={ZoomIn.springify()} exiting={ZoomOut} style={styles.checkButton}>
-              <Ionicons name="checkmark-circle" size={22} color="#FFF" />
-              <Text style={styles.checkButtonText}>Check Answer</Text>
-            </Animated.View>
-          </GestureDetector>
-        )}
-
-        {!answered && tracedCount > 0 && (
-          <GestureDetector gesture={resetTap}>
-            <Animated.View entering={FadeIn.duration(200)} style={styles.resetButton}>
-              <Ionicons name="refresh" size={16} color={Colors.onSurfaceVariant} />
-              <Text style={styles.resetText}>Reset</Text>
-            </Animated.View>
-          </GestureDetector>
-        )}
+        <View style={styles.secondaryActions}>
+          <TactileFooterButton
+            label="Clear"
+            iconName="refresh"
+            onPress={handleReset}
+            bgColor={Colors.surfaceContainerHigh}
+            borderColor={Colors.outlineVariant}
+            textColor={Colors.onSurfaceVariant}
+            disabled={tracedCount === 0 || answered}
+          />
+        </View>
+        <TactileFooterButton
+          label="Check Answer"
+          iconName="checkmark-circle"
+          onPress={handleCheckAnswer}
+          bgColor={Colors.success}
+          borderColor="#1b5e20"
+          fullWidth
+          disabled={!canCheck}
+        />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
+    width: '100%',
+  },
+  container: {
     alignItems: 'center',
     width: '100%',
     paddingHorizontal: 16,
@@ -496,45 +528,42 @@ const styles = StyleSheet.create({
     color: Colors.onSurfaceVariant,
   },
   footer: {
-    minHeight: 60,
-    justifyContent: 'center',
+    width: '100%',
     alignItems: 'center',
-    marginTop: 4,
-    gap: 10,
-  },
-  checkButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.success,
-    paddingHorizontal: 28,
-    paddingVertical: 14,
-    borderRadius: 20,
-    minHeight: 44,
-    minWidth: 44,
     gap: 8,
+    paddingBottom: 4,
   },
-  checkButtonText: {
-    fontFamily: 'Lexend-Bold',
-    color: Colors.onPrimary,
-    fontSize: SCREEN_HEIGHT * 0.019,
+  secondaryActions: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  resetButton: {
+  tactileButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 12,
-    borderWidth: 1.5,
-    borderColor: Colors.outlineVariant,
-    backgroundColor: Colors.surfaceContainerLow,
-    minHeight: 44,
-    minWidth: 44,
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 13,
+    paddingHorizontal: 20,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderBottomWidth: 6,
   },
-  resetText: {
-    fontFamily: 'PlusJakartaSans-SemiBold',
-    fontSize: SCREEN_HEIGHT * 0.014,
-    color: Colors.onSurfaceVariant,
+  tactileButtonFull: {
+    width: '100%',
+    paddingVertical: 15,
+    paddingHorizontal: 28,
+    borderRadius: 20,
+    minHeight: 56,
+  },
+  tactileButtonDisabled: {
+    opacity: 0.4,
+  },
+  tactileButtonText: {
+    fontFamily: 'Lexend-Bold',
+    fontSize: SCREEN_HEIGHT * 0.019,
+    letterSpacing: 0.5,
   },
 });
 

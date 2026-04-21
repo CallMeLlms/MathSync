@@ -47,6 +47,30 @@
       "answer": "Rectangle"
     },
     {
+      "id": "lab-shapetracer-1",
+      "type": "SHAPETRACER",
+      "question": "Trace the triangle with your finger!",
+      "shape": "triangle",
+      "traceMode": "guided",
+      "answer": "triangle"
+    },
+    {
+      "id": "lab-shapetracer-2",
+      "type": "SHAPETRACER",
+      "question": "Trace the square with your finger!",
+      "shape": "square",
+      "traceMode": "guided",
+      "answer": "square"
+    },
+    {
+      "id": "lab-shapetracer-3",
+      "type": "SHAPETRACER",
+      "question": "Trace the rectangle with your finger!",
+      "shape": "rectangle",
+      "traceMode": "guided",
+      "answer": "rectangle"
+    },
+    {
       "id": "lab-clocksetter-6",
       "type": "CLOCKSETTER",
       "question": "Set the clock to 5:45!",
