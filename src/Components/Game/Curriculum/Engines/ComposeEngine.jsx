@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import Animated, {
   useSharedValue,
@@ -7,7 +7,6 @@ import Animated, {
   withSequence,
   withTiming,
   withRepeat,
-  withDelay,
   ZoomIn,
   FadeIn,
   FadeInDown,
@@ -21,52 +20,55 @@ import Colors from '@/constants/colors';
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const CHIP_COLORS = [
-  { bg: '#FF7043', border: '#E64A19', glow: 'rgba(255,112,67,0.15)' },
-  { bg: '#42A5F5', border: '#1565C0', glow: 'rgba(66,165,245,0.15)' },
-  { bg: '#66BB6A', border: '#2E7D32', glow: 'rgba(102,187,106,0.15)' },
-  { bg: '#AB47BC', border: '#7B1FA2', glow: 'rgba(171,71,188,0.15)' },
-  { bg: '#FFA726', border: '#EF6C00', glow: 'rgba(255,167,38,0.15)' },
-  { bg: '#26C6DA', border: '#00838F', glow: 'rgba(38,198,218,0.15)' },
+  { bg: Colors.secondary,        border: '#003d8f' },
+  { bg: Colors.primary,          border: '#7a3000' },
+  { bg: Colors.tertiary,         border: '#00531e' },
+  { bg: Colors.onSurfaceVariant, border: '#3a2d18' },
+  { bg: '#EF6C00',               border: '#b34e00' },
+  { bg: '#6A1B9A',               border: '#4a148c' },
 ];
 
 // ─── NumberChip: a tappable number in the chip tray ───
 const NumberChip = ({ value, color, onPress, disabled, index }) => {
-  const scale = useSharedValue(1);
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
   }));
 
-  const tap = Gesture.Tap()
-    .onBegin(() => {
-      scale.value = withSpring(0.85, { damping: 8, stiffness: 400 });
-    })
-    .onEnd(() => {
-      runOnJS(onPress)(value);
-    })
-    .onFinalize(() => {
-      scale.value = withSpring(1, { damping: 10, stiffness: 300 });
-    })
-    .enabled(!disabled);
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = () => {
+    translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+  };
 
   return (
     <Animated.View entering={ZoomIn.springify().delay(index * 60)}>
-      <Animated.View style={animatedStyle}>
-        <GestureDetector gesture={tap}>
-          <Animated.View
-            style={[
-              styles.chip,
-              {
-                backgroundColor: color.bg,
-                borderColor: color.border,
-              },
-              disabled && { opacity: 0.3 },
-            ]}
-          >
-            <Text style={styles.chipText}>{value}</Text>
-          </Animated.View>
-        </GestureDetector>
-      </Animated.View>
+      <Pressable
+        onPress={disabled ? undefined : () => onPress(value)}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={disabled}
+      >
+        <Animated.View
+          style={[
+            styles.chip,
+            { backgroundColor: color.bg, borderColor: color.border },
+            animatedStyle,
+            disabled && styles.chipDisabled,
+          ]}
+        >
+          <Text style={styles.chipText}>{value}</Text>
+        </Animated.View>
+      </Pressable>
     </Animated.View>
   );
 };
@@ -110,10 +112,15 @@ const DropSlot = ({ value, label, isWrong, isCorrect, onPress, disabled }) => {
         : Colors.outlineVariant;
 
   const borderStyle = value !== null || isCorrect || isWrong ? 'solid' : 'dashed';
+  const borderBottomWidth = value !== null || isCorrect || isWrong ? 5 : 2;
 
   return (
     <GestureDetector gesture={tap}>
-      <Animated.View style={[animatedStyle, styles.slot, { backgroundColor: bgColor, borderColor, borderStyle }]}>
+      <Animated.View style={[
+        animatedStyle,
+        styles.slot,
+        { backgroundColor: bgColor, borderColor, borderStyle, borderBottomWidth },
+      ]}>
         {value !== null ? (
           <Animated.View entering={ZoomIn.springify()}>
             <Text style={[
@@ -129,6 +136,60 @@ const DropSlot = ({ value, label, isWrong, isCorrect, onPress, disabled }) => {
         )}
       </Animated.View>
     </GestureDetector>
+  );
+};
+
+// ─── TactileFooterButton ───────────────────────────────────────────────────────
+const TactileFooterButton = ({
+  onPress,
+  label,
+  iconName,
+  bgColor,
+  borderColor,
+  fullWidth = false,
+  disabled = false,
+}) => {
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
+  }));
+
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = () => {
+    translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+  };
+
+  return (
+    <Pressable
+      onPress={disabled ? undefined : onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      disabled={disabled}
+      style={fullWidth ? { width: '100%' } : undefined}
+    >
+      <Animated.View
+        style={[
+          styles.tactileButton,
+          fullWidth && styles.tactileButtonFull,
+          { backgroundColor: bgColor, borderColor },
+          animatedStyle,
+          disabled && styles.tactileButtonDisabled,
+        ]}
+      >
+        {iconName && <Ionicons name={iconName} size={18} color="#FFF" />}
+        <Text style={styles.tactileButtonText}>{label}</Text>
+      </Animated.View>
+    </Pressable>
   );
 };
 
@@ -228,7 +289,6 @@ const ComposerEngine = ({ data, onResult }) => {
         withSpring(1.15, { damping: 8, stiffness: 200 }),
         withSpring(1.0, { damping: 12, stiffness: 200 })
       );
-      // Only call onResult — the Orchestrator handles advancement via ResultModal
       setTimeout(() => onResult(true, [slotA.toString(), slotB.toString()]), 600);
     } else {
       setIsWrong(true);
@@ -246,7 +306,6 @@ const ComposerEngine = ({ data, onResult }) => {
 
   const isReadyToCheck = slotA !== null && slotB !== null;
 
-  // Dynamic instruction text
   const getInstruction = () => {
     if (answered) return '✅ Great job!';
     if (isWrong) return 'Not quite — try again!';
@@ -254,11 +313,6 @@ const ComposerEngine = ({ data, onResult }) => {
     if (slotA !== null) return 'Pick a second number.';
     return 'Tap a number chip below.';
   };
-
-  // Equation label based on mode
-  const equationDisplay = mode === 'compose'
-    ? `___ + ___ = ${target}`
-    : `${target} = ___ + ___`;
 
   return (
     <View style={styles.container}>
@@ -319,17 +373,6 @@ const ComposerEngine = ({ data, onResult }) => {
             disabled={answered || isWrong}
           />
         </View>
-
-        {/* Equation Display */}
-        <Animated.Text
-          entering={FadeIn.delay(300)}
-          style={[styles.equationText, answered && { color: Colors.success }]}
-        >
-          {isReadyToCheck
-            ? `${mode === 'compose' ? `${slotA} + ${slotB} = ${target}` : `${target} = ${slotA} + ${slotB}`}`
-            : equationDisplay
-          }
-        </Animated.Text>
       </Animated.View>
 
       {/* Chip Tray */}
@@ -351,36 +394,28 @@ const ComposerEngine = ({ data, onResult }) => {
         </View>
       </Animated.View>
 
-      {/* Footer Actions */}
-      {!answered && (
-        <Animated.View entering={FadeIn.duration(400)} style={styles.footer}>
-          {usedIndices.length > 0 && !isWrong && (
-            <GestureDetector
-              gesture={Gesture.Tap()
-                .onEnd(() => runOnJS(handleReset)())
-              }
-            >
-              <Animated.View entering={FadeIn.duration(200)} style={styles.resetButton}>
-                <Ionicons name="refresh" size={20} color="#FFFFFF" />
-                <Text style={styles.resetButtonText}>Reset</Text>
-              </Animated.View>
-            </GestureDetector>
-          )}
-
-          {isReadyToCheck && !isWrong && (
-            <GestureDetector
-              gesture={Gesture.Tap()
-                .onEnd(() => runOnJS(handleCheckAnswer)())
-              }
-            >
-              <Animated.View entering={ZoomIn.springify()} style={styles.checkButton}>
-                <Ionicons name="checkmark-circle" size={22} color="#FFF" />
-                <Text style={styles.checkButtonText}>Check Answer</Text>
-              </Animated.View>
-            </GestureDetector>
-          )}
-        </Animated.View>
-      )}
+      {/* Footer Actions — always rendered, disabled state controls interactivity */}
+      <View style={styles.footer}>
+        <View style={styles.secondaryActions}>
+          <TactileFooterButton
+            onPress={handleReset}
+            label="Reset"
+            iconName="refresh"
+            bgColor={Colors.secondary}
+            borderColor="#003d8f"
+            disabled={usedIndices.length === 0 || isWrong || answered}
+          />
+        </View>
+        <TactileFooterButton
+          onPress={handleCheckAnswer}
+          label="Check Answer"
+          iconName="checkmark-circle"
+          bgColor={Colors.success}
+          borderColor="#1b5e20"
+          fullWidth
+          disabled={!isReadyToCheck || isWrong || answered}
+        />
+      </View>
     </View>
   );
 };
@@ -400,7 +435,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.surfaceContainerLowest,
-    borderWidth: 3,
+    borderWidth: 2,
+    borderBottomWidth: 6,
     borderColor: Colors.primary,
     borderRadius: 28,
     paddingVertical: 16,
@@ -455,8 +491,8 @@ const styles = StyleSheet.create({
   slot: {
     width: SLOT_SIZE,
     height: SLOT_SIZE,
-    borderRadius: 22,
-    borderWidth: 3,
+    borderRadius: 18,
+    borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -485,12 +521,6 @@ const styles = StyleSheet.create({
     fontSize: SCREEN_HEIGHT * 0.025,
     color: Colors.onSurfaceVariant,
   },
-  equationText: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: SCREEN_HEIGHT * 0.02,
-    color: Colors.onSurfaceVariant,
-    marginTop: 8,
-  },
   chipTray: {
     width: '100%',
     backgroundColor: Colors.surfaceContainerLow,
@@ -509,11 +539,14 @@ const styles = StyleSheet.create({
     minWidth: Math.max((SCREEN_WIDTH - 120) / 4, 44),
     height: SCREEN_HEIGHT * 0.065,
     minHeight: 44,
-    borderRadius: 18,
-    borderWidth: 3,
+    borderRadius: 16,
+    borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 14,
+  },
+  chipDisabled: {
+    opacity: 0.3,
   },
   chipText: {
     fontFamily: 'Lexend-Black',
@@ -521,44 +554,43 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   footer: {
-    marginTop: 4,
     width: '100%',
+    alignItems: 'center',
+    gap: 8,
+    paddingBottom: 4,
+  },
+  secondaryActions: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tactileButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 12,
+    gap: 6,
+    paddingVertical: 13,
+    paddingHorizontal: 20,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderBottomWidth: 6,
   },
-  resetButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.secondary,
-    paddingHorizontal: 22,
-    paddingVertical: 14,
-    minHeight: 44,
-    minWidth: 44,
-    borderRadius: 20,
-    gap: 8,
-  },
-  resetButtonText: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    color: '#FFFFFF',
-    fontSize: SCREEN_HEIGHT * 0.017,
-  },
-  checkButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.success,
+  tactileButtonFull: {
+    width: '100%',
+    paddingVertical: 15,
     paddingHorizontal: 28,
-    paddingVertical: 14,
-    minHeight: 44,
-    minWidth: 44,
     borderRadius: 20,
-    gap: 8,
+    minHeight: 56,
   },
-  checkButtonText: {
-    fontFamily: 'Lexend-Bold',
-    color: '#FFF',
-    fontSize: SCREEN_HEIGHT * 0.019,
+  tactileButtonDisabled: {
+    opacity: 0.4,
+  },
+  tactileButtonText: {
+    fontFamily: 'PlusJakartaSans-Bold',
+    fontSize: 14,
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
   },
 });
 
