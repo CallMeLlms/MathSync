@@ -15,9 +15,12 @@
  *   }
  *
  * Props: { data, onResult } — standard Orchestrator API
+ *
+ * Design: Tactile Bulky / Duolingo-style — no shadows, Tonal Layering,
+ *         mechanical sinking buttons via translateY + borderBottomWidth.
  */
 
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
 import Animated, {
   useSharedValue,
@@ -38,16 +41,16 @@ import speechManager from '@/utils/speechManager';
 
 const GRID_COLS = 5;
 const GRID_ROWS = 5;
-const DOT_HIT_SIZE = 44;    // touchable area (larger than visual for child UX)
-const DOT_VISUAL_SIZE = 18; // rendered circle diameter
-const CANVAS_PADDING = 30;  // distance from canvas edge to outermost dot centres
+const DOT_HIT_SIZE = 48;    // touchable area (larger than visual for child UX)
+const DOT_VISUAL_SIZE = 20; // rendered circle diameter
+const CANVAS_PADDING = 32;  // distance from canvas edge to outermost dot centres
 
 // ─── Shape configuration ─────────────────────────────────────────────────────
 
 const SHAPE_CONFIG = {
-  triangle:  { requiredDots: 3, label: 'Triangle',  accentColor: '#5C6BC0' },
-  square:    { requiredDots: 4, label: 'Square',    accentColor: '#EF6C00' },
-  rectangle: { requiredDots: 4, label: 'Rectangle', accentColor: '#2E7D32' },
+  triangle:  { requiredDots: 3, label: 'Triangle',  emoji: '▲', accentColor: Colors.secondary,  accentBorder: '#003d8f' },
+  square:    { requiredDots: 4, label: 'Square',    emoji: '■', accentColor: '#EF6C00',          accentBorder: '#b34e00' },
+  rectangle: { requiredDots: 4, label: 'Rectangle', emoji: '▬', accentColor: Colors.tertiary,   accentBorder: '#00531e' },
 };
 
 // Guided-mode hint — a pre-defined valid example for each shape (col, row)
@@ -59,14 +62,11 @@ const HINT_VERTICES = {
 
 // ─── Geometry helpers (all arithmetic on integers — no floating-point errors) ─
 
-// Squared Euclidean distance between two grid dots
 const lenSq = (a, b) => (b.col - a.col) ** 2 + (b.row - a.row) ** 2;
 
-// 2D cross product of vectors AB and AC — non-zero means A, B, C are not collinear
 const cross2D = (A, B, C) =>
   (B.col - A.col) * (C.row - A.row) - (B.row - A.row) * (C.col - A.col);
 
-// Sort 4 vertices counter-clockwise by angle from their centroid
 const orderVertices = (dots) => {
   const cx = (dots[0].col + dots[1].col + dots[2].col + dots[3].col) / 4;
   const cy = (dots[0].row + dots[1].row + dots[2].row + dots[3].row) / 4;
@@ -75,28 +75,23 @@ const orderVertices = (dots) => {
   );
 };
 
-// Returns true when the selected dots form the target shape
 const validateShape = (dots, targetShape) => {
   const config = SHAPE_CONFIG[targetShape];
   if (!config || dots.length !== config.requiredDots) return false;
 
   switch (targetShape) {
     case 'triangle':
-      // Three dots that are NOT collinear
       return cross2D(dots[0], dots[1], dots[2]) !== 0;
 
     case 'rectangle':
     case 'square': {
-      // Order vertices, then verify all 4 interior angles are exactly 90°
-      // (dot product of consecutive edge vectors equals zero for perpendicular vectors)
       const ord = orderVertices(dots);
       for (let i = 0; i < 4; i++) {
-        const A = ord[i],         B = ord[(i + 1) % 4], C = ord[(i + 2) % 4];
+        const A = ord[i], B = ord[(i + 1) % 4], C = ord[(i + 2) % 4];
         const ABx = B.col - A.col, ABy = B.row - A.row;
         const BCx = C.col - B.col, BCy = C.row - B.row;
         if (ABx * BCx + ABy * BCy !== 0) return false;
       }
-      // For square: additionally require all four sides to be equal
       if (targetShape === 'square') {
         const sides = ord.map((v, i) => lenSq(v, ord[(i + 1) % 4]));
         if (!sides.every(s => s === sides[0])) return false;
@@ -108,32 +103,127 @@ const validateShape = (dots, targetShape) => {
   }
 };
 
+// ─── TactileFooterButton ──────────────────────────────────────────────────────
+
+/**
+ * Reusable Tactile Bulky button following the MathSync sinking mechanic.
+ * Idle:   translateY=0, borderBottomWidth=6
+ * Pressed: translateY=4, borderBottomWidth=2
+ */
+const TactileFooterButton = ({
+  onPress,
+  label,
+  iconName,
+  bgColor,
+  borderColor,
+  fullWidth = false,
+  disabled = false,
+}) => {
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
+  }));
+
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = () => {
+    translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+  };
+
+  return (
+    <Pressable
+      onPress={disabled ? undefined : onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      disabled={disabled}
+      style={fullWidth ? { width: '100%' } : undefined}
+    >
+      <Animated.View
+        style={[
+          styles.tactileButton,
+          fullWidth && styles.tactileButtonFull,
+          { backgroundColor: bgColor, borderColor },
+          animatedStyle,
+          disabled && styles.tactileButtonDisabled,
+        ]}
+      >
+        {iconName && <Ionicons name={iconName} size={18} color={Colors.onPrimary} />}
+        <Text style={[
+          styles.tactileButtonText,
+          fullWidth && styles.tactileButtonTextFull,
+        ]}>
+          {label}
+        </Text>
+      </Animated.View>
+    </Pressable>
+  );
+};
+
+// ─── DotProgressBar ───────────────────────────────────────────────────────────
+
+/** Visual dot-count tracker — filled circles for placed, outlined for remaining. */
+const DotProgressBar = ({ placed, required, accentColor }) => {
+  return (
+    <View style={styles.progressBar}>
+      {Array.from({ length: required }, (_, i) => {
+        const isFilled = i < placed;
+        return (
+          <Animated.View
+            key={i}
+            entering={isFilled ? ZoomIn.springify().damping(14) : undefined}
+            style={[
+              styles.progressDot,
+              isFilled
+                ? { backgroundColor: accentColor, borderColor: accentColor }
+                : { backgroundColor: 'transparent', borderColor: Colors.outlineVariant },
+            ]}
+          />
+        );
+      })}
+    </View>
+  );
+};
+
 // ─── DotNode ──────────────────────────────────────────────────────────────────
 
 // 'idle' | 'first' | 'selected'
-const DOT_COLORS = {
-  idle:     Colors.surfaceContainerHighest,
+const DOT_BG = {
+  idle:     Colors.surfaceContainerHigh,
   first:    Colors.primary,
-  selected: '#AB47BC',
+  selected: Colors.secondary,
+};
+const DOT_BORDER = {
+  idle:     Colors.outlineVariant,
+  first:    Colors.onPrimaryContainer,
+  selected: Colors.onSecondaryContainer,
 };
 
 const DotNode = ({ col, row, dotState, orderNum, position, onPress, disabled }) => {
   const scale = useSharedValue(1);
 
-  // IMPORTANT: no `entering` prop on this Animated.View — it already carries
-  // animatedStyle with a transform, and mixing both causes a Reanimated conflict.
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
   }));
 
   const tap = Gesture.Tap()
-    .onBegin(() => { scale.value = withSpring(0.72, { damping: 8, stiffness: 450 }); })
+    .onBegin(() => { scale.value = withSpring(0.70, { damping: 8, stiffness: 450 }); })
     .onEnd(() => { runOnJS(onPress)(col, row); })
     .onFinalize(() => { scale.value = withSpring(1, { damping: 10, stiffness: 320 }); })
     .enabled(!disabled);
 
   const isActive = dotState !== 'idle';
-  const bgColor = DOT_COLORS[dotState] ?? DOT_COLORS.idle;
+  const bgColor = DOT_BG[dotState] ?? DOT_BG.idle;
+  const borderColor = DOT_BORDER[dotState] ?? DOT_BORDER.idle;
+  const visualSize = isActive ? DOT_VISUAL_SIZE + 8 : DOT_VISUAL_SIZE;
 
   return (
     <GestureDetector gesture={tap}>
@@ -151,8 +241,14 @@ const DotNode = ({ col, row, dotState, orderNum, position, onPress, disabled }) 
         <View
           style={[
             styles.dot,
-            { backgroundColor: bgColor },
-            isActive && styles.dotActive,
+            {
+              width: visualSize,
+              height: visualSize,
+              borderRadius: visualSize / 2,
+              backgroundColor: bgColor,
+              borderColor,
+              borderWidth: isActive ? 2.5 : 1.5,
+            },
           ]}
         >
           {orderNum !== null && (
@@ -169,7 +265,7 @@ const DotNode = ({ col, row, dotState, orderNum, position, onPress, disabled }) 
 const GeoboardEngine = ({ data, onResult }) => {
   const { question: questionText, shape = 'triangle', traceMode = 'free' } = data;
   const config = SHAPE_CONFIG[shape] ?? SHAPE_CONFIG.triangle;
-  const { requiredDots, label, accentColor } = config;
+  const { requiredDots, label, emoji, accentColor, accentBorder } = config;
   const hintVerts = traceMode === 'guided' ? (HINT_VERTICES[shape] ?? null) : null;
 
   const [selectedDots, setSelectedDots] = useState([]);  // { col, row }[]
@@ -216,14 +312,12 @@ const GeoboardEngine = ({ data, onResult }) => {
     setSelectedDots(next);
 
     if (next.length === requiredDots) {
-      // Brief pause so the student can see the last dot placed, then auto-close
       setTimeout(() => setIsClosed(true), 180);
     }
   };
 
   const handleUndo = () => {
     if (answered || isClosed || selectedDots.length === 0) return;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setSelectedDots(prev => prev.slice(0, -1));
   };
 
@@ -260,24 +354,9 @@ const GeoboardEngine = ({ data, onResult }) => {
   const getInstruction = () => {
     if (answered && isCorrectResult)  return '✅ Correct!';
     if (answered && !isCorrectResult) return 'Not quite — try again!';
-    if (isClosed)                     return 'Tap "Check Shape" when ready!';
     if (selectedDots.length > 0)      return `${selectedDots.length} of ${requiredDots} dots placed.`;
     return `Tap ${requiredDots} dots to form a ${label.toLowerCase()}.`;
   };
-
-  // ── Gesture objects ────────────────────────────────────────────────────────
-
-  const undoTap = Gesture.Tap()
-    .enabled(!answered && !isClosed && selectedDots.length > 0)
-    .onEnd(() => runOnJS(handleUndo)());
-
-  const resetTap = Gesture.Tap()
-    .enabled(!answered && selectedDots.length > 0)
-    .onEnd(() => runOnJS(handleReset)());
-
-  const checkTap = Gesture.Tap()
-    .enabled(isClosed && !answered)
-    .onEnd(() => runOnJS(handleCheck)());
 
   // ── SVG data derivation ────────────────────────────────────────────────────
 
@@ -285,7 +364,6 @@ const GeoboardEngine = ({ data, onResult }) => {
     ? (isCorrectResult ? Colors.success : Colors.error)
     : accentColor;
 
-  // Segment lines between consecutive selected dots
   const lineSegments = selectedDots.length >= 2
     ? selectedDots.slice(1).map((dot, i) => ({
         from: getDotPos(selectedDots[i].col, selectedDots[i].row),
@@ -293,7 +371,6 @@ const GeoboardEngine = ({ data, onResult }) => {
       }))
     : [];
 
-  // Closing line from last selected dot back to first
   const closingLine = isClosed && selectedDots.length >= 3
     ? {
         from: getDotPos(
@@ -304,12 +381,10 @@ const GeoboardEngine = ({ data, onResult }) => {
       }
     : null;
 
-  // Filled result polygon (shown after Check is tapped)
   const fillPolyPoints = answered && isClosed && selectedDots.length >= 3
     ? selectedDots.map(d => { const p = getDotPos(d.col, d.row); return `${p.x},${p.y}`; }).join(' ')
     : null;
 
-  // Guided-mode hint polygon
   const hintPolyPoints = hintVerts
     ? hintVerts.map(v => { const p = getDotPos(v.col, v.row); return `${p.x},${p.y}`; }).join(' ')
     : null;
@@ -317,18 +392,33 @@ const GeoboardEngine = ({ data, onResult }) => {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={{ flex: 1, width: '100%' }}
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+    >
 
       {/* Goal badge */}
       <Animated.View entering={FadeIn.delay(100)} style={styles.goalBadge}>
+        <Text style={[styles.goalBadgeEmoji]}>{emoji}</Text>
         <Text style={[styles.goalBadgeText, { color: accentColor }]}>
-          Draw a {label}  ({requiredDots} dots)
+          Draw a {label}
         </Text>
+      </Animated.View>
+
+      {/* Dot-count progress bar */}
+      <Animated.View entering={FadeIn.delay(150)}>
+        <DotProgressBar
+          placed={selectedDots.length}
+          required={requiredDots}
+          accentColor={accentColor}
+        />
       </Animated.View>
 
       {/* Dynamic instruction */}
       <Animated.Text
-        entering={FadeIn.delay(180)}
+        entering={FadeIn.delay(200)}
         style={[
           styles.instructionText,
           answered && isCorrectResult  && { color: Colors.success },
@@ -358,7 +448,7 @@ const GeoboardEngine = ({ data, onResult }) => {
                     points={hintPolyPoints}
                     fill="none"
                     stroke={accentColor}
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     strokeDasharray="8 5"
                     opacity={0.28}
                   />
@@ -371,7 +461,7 @@ const GeoboardEngine = ({ data, onResult }) => {
                     x1={seg.from.x} y1={seg.from.y}
                     x2={seg.to.x}   y2={seg.to.y}
                     stroke={lineColor}
-                    strokeWidth={3.5}
+                    strokeWidth={4.5}
                     strokeLinecap="round"
                   />
                 ))}
@@ -382,7 +472,7 @@ const GeoboardEngine = ({ data, onResult }) => {
                     x1={closingLine.from.x} y1={closingLine.from.y}
                     x2={closingLine.to.x}   y2={closingLine.to.y}
                     stroke={lineColor}
-                    strokeWidth={3.5}
+                    strokeWidth={4.5}
                     strokeLinecap="round"
                   />
                 )}
@@ -395,7 +485,7 @@ const GeoboardEngine = ({ data, onResult }) => {
                       ? 'rgba(76,175,80,0.22)'
                       : 'rgba(211,47,47,0.18)'}
                     stroke={isCorrectResult ? Colors.success : Colors.error}
-                    strokeWidth={3.5}
+                    strokeWidth={4.5}
                     strokeLinejoin="round"
                   />
                 )}
@@ -429,41 +519,42 @@ const GeoboardEngine = ({ data, onResult }) => {
         )}
       </View>
 
-      {/* ── Footer controls ── */}
+      {/* ── Footer controls ── always rendered to prevent canvas resize ── */}
       <View style={styles.footer}>
 
-        {/* Undo — visible while shape is open and ≥1 dot placed */}
-        {!isClosed && selectedDots.length > 0 && !answered && (
-          <GestureDetector gesture={undoTap}>
-            <Animated.View entering={FadeIn} style={styles.undoButton}>
-              <Ionicons name="arrow-undo" size={18} color="#FFF" />
-              <Text style={styles.footerBtnText}>Undo</Text>
-            </Animated.View>
-          </GestureDetector>
-        )}
+        {/* Undo & Reset — always visible, disabled when not applicable */}
+        <View style={styles.secondaryActions}>
+          <TactileFooterButton
+            onPress={handleUndo}
+            label="Undo"
+            iconName="arrow-undo"
+            bgColor={Colors.secondary}
+            borderColor="#003d8f"
+            disabled={answered || isClosed || selectedDots.length === 0}
+          />
+          <TactileFooterButton
+            onPress={handleReset}
+            label="Reset"
+            iconName="refresh"
+            bgColor="#546E7A"
+            borderColor="#37474F"
+            disabled={answered || selectedDots.length === 0}
+          />
+        </View>
 
-        {/* Reset — visible while ≥1 dot placed and not yet answered */}
-        {selectedDots.length > 0 && !answered && (
-          <GestureDetector gesture={resetTap}>
-            <Animated.View entering={FadeIn} style={styles.resetButton}>
-              <Ionicons name="refresh" size={18} color="#FFF" />
-              <Text style={styles.footerBtnText}>Reset</Text>
-            </Animated.View>
-          </GestureDetector>
-        )}
-
-        {/* Check Shape — appears when the shape auto-closes */}
-        {isClosed && !answered && (
-          <GestureDetector gesture={checkTap}>
-            <Animated.View entering={ZoomIn.springify()} style={styles.checkButton}>
-              <Ionicons name="checkmark-circle" size={22} color="#FFF" />
-              <Text style={styles.checkBtnText}>Check Shape</Text>
-            </Animated.View>
-          </GestureDetector>
-        )}
+        {/* Check Shape — always visible, disabled until shape is closed */}
+        <TactileFooterButton
+          onPress={handleCheck}
+          label="CHECK SHAPE"
+          iconName="checkmark-circle"
+          bgColor={Colors.success}
+          borderColor="#1b5e20"
+          fullWidth
+          disabled={!isClosed || answered}
+        />
 
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -478,34 +569,65 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     gap: 8,
   },
+
+  // ── Goal Badge ──
   goalBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
     backgroundColor: Colors.surfaceContainerLow,
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderWidth: 1,
+    borderRadius: 24,
+    paddingHorizontal: 18,
+    paddingVertical: 9,
+    borderWidth: 2,
+    borderBottomWidth: 4,
     borderColor: Colors.outlineVariant,
+    alignSelf: 'center',
+  },
+  goalBadgeEmoji: {
+    fontSize: 16,
   },
   goalBadgeText: {
     fontFamily: 'Lexend-Bold',
     fontSize: 15,
   },
+
+  // ── Progress Bar ──
+  progressBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    alignSelf: 'center',
+  },
+  progressDot: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    borderWidth: 2,
+  },
+
+  // ── Instruction Text ──
   instructionText: {
     fontFamily: 'PlusJakartaSans-SemiBold',
     fontSize: 13,
     color: Colors.onSurfaceVariant,
     textAlign: 'center',
   },
+
+  // ── Canvas ──
   canvas: {
     flex: 1,
     width: '100%',
-    backgroundColor: Colors.surfaceContainerLowest,
+    backgroundColor: Colors.surfaceContainer,
     borderRadius: 20,
     borderWidth: 2,
+    borderBottomWidth: 6,
     borderColor: Colors.outlineVariant,
     position: 'relative',
     overflow: 'hidden',
   },
+
+  // ── Dot Nodes ──
   dotHitArea: {
     width: DOT_HIT_SIZE,
     height: DOT_HIT_SIZE,
@@ -513,72 +635,62 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dot: {
-    width: DOT_VISUAL_SIZE,
-    height: DOT_VISUAL_SIZE,
-    borderRadius: DOT_VISUAL_SIZE / 2,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  dotActive: {
-    width: DOT_VISUAL_SIZE + 6,
-    height: DOT_VISUAL_SIZE + 6,
-    borderRadius: (DOT_VISUAL_SIZE + 6) / 2,
-    borderWidth: 2,
-    borderColor: '#FFFFFF',
   },
   dotLabel: {
     fontFamily: 'PlusJakartaSans-Bold',
     fontSize: 9,
-    color: '#FFFFFF',
+    color: Colors.onPrimary,
     lineHeight: 11,
   },
+
+  // ── Footer ──
   footer: {
+    width: '100%',
+    alignItems: 'center',
+    gap: 8,
+    minHeight: 54,
+    paddingBottom: 4,
+  },
+  secondaryActions: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  // ── Tactile Buttons ──
+  tactileButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 10,
-    minHeight: 54,
-    paddingBottom: 4,
+    gap: 6,
+    paddingVertical: 13,
+    paddingHorizontal: 20,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderBottomWidth: 6,   // overridden by Animated style at runtime
+  },
+  tactileButtonFull: {
     width: '100%',
-  },
-  undoButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingVertical: 12,
-    paddingHorizontal: 18,
-    borderRadius: 16,
-    backgroundColor: Colors.secondary,
-  },
-  resetButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingVertical: 12,
-    paddingHorizontal: 18,
-    borderRadius: 16,
-    backgroundColor: '#78909C',
-  },
-  checkButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    paddingVertical: 14,
-    paddingHorizontal: 26,
+    paddingVertical: 15,
+    paddingHorizontal: 28,
     borderRadius: 20,
-    backgroundColor: Colors.success,
-    minHeight: 44,
-    minWidth: 44,
+    minHeight: 56,
   },
-  footerBtnText: {
+  tactileButtonDisabled: {
+    opacity: 0.4,
+  },
+  tactileButtonText: {
     fontFamily: 'PlusJakartaSans-Bold',
     fontSize: 14,
-    color: '#FFFFFF',
+    color: Colors.onPrimary,
   },
-  checkBtnText: {
+  tactileButtonTextFull: {
     fontFamily: 'Lexend-Bold',
-    fontSize: 15,
-    color: '#FFFFFF',
+    fontSize: 16,
+    letterSpacing: 1.1,
   },
 });
 

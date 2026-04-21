@@ -31,6 +31,22 @@
       "answer": "triangle"
     },
     {
+      "id": "lab-geoboard-4",
+      "type": "GEOBOARD",
+      "question": "Follow the hint and draw a Square!",
+      "shape": "Square",
+      "traceMode": "guided",
+      "answer": "Square"
+    },
+    {
+      "id": "lab-geoboard-4",
+      "type": "GEOBOARD",
+      "question": "Follow the hint and draw a Rectangle!",
+      "shape": "Rectangle",
+      "traceMode": "guided",
+      "answer": "Rectangle"
+    },
+    {
       "id": "lab-clocksetter-6",
       "type": "CLOCKSETTER",
       "question": "Set the clock to 5:45!",
