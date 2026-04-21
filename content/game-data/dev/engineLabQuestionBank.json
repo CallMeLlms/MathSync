@@ -23,7 +23,7 @@
       "maxDigits": 2
     },
      {
-      "id": "lab-geoboard-4",
+      "id": "lab-geoboard-1",
       "type": "GEOBOARD",
       "question": "Follow the hint and draw a triangle!",
       "shape": "triangle",
@@ -31,20 +31,20 @@
       "answer": "triangle"
     },
     {
-      "id": "lab-geoboard-4",
+      "id": "lab-geoboard-2",
       "type": "GEOBOARD",
-      "question": "Follow the hint and draw a Square!",
-      "shape": "Square",
+      "question": "Now, can you draw a square?",
+      "shape": "square",
       "traceMode": "guided",
-      "answer": "Square"
+      "answer": "square"
     },
     {
-      "id": "lab-geoboard-4",
+      "id": "lab-geoboard-3",
       "type": "GEOBOARD",
-      "question": "Follow the hint and draw a Rectangle!",
-      "shape": "Rectangle",
+      "question": "Can you form a rectangle on the board?",
+      "shape": "rectangle",
       "traceMode": "guided",
-      "answer": "Rectangle"
+      "answer": "rectangle"
     },
     {
       "id": "lab-shapetracer-1",

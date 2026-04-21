@@ -39,8 +39,8 @@ import speechManager from '@/utils/speechManager';
 
 // ─── Grid constants ──────────────────────────────────────────────────────────
 
-const GRID_COLS = 5;
-const GRID_ROWS = 5;
+const GRID_COLS = 3;
+const GRID_ROWS = 3;
 const DOT_HIT_SIZE = 48;    // touchable area (larger than visual for child UX)
 const DOT_VISUAL_SIZE = 20; // rendered circle diameter
 const CANVAS_PADDING = 32;  // distance from canvas edge to outermost dot centres
@@ -55,9 +55,9 @@ const SHAPE_CONFIG = {
 
 // Guided-mode hint — a pre-defined valid example for each shape (col, row)
 const HINT_VERTICES = {
-  triangle:  [{ col: 2, row: 0 }, { col: 4, row: 4 }, { col: 0, row: 4 }],
-  square:    [{ col: 1, row: 1 }, { col: 3, row: 1 }, { col: 3, row: 3 }, { col: 1, row: 3 }],
-  rectangle: [{ col: 0, row: 1 }, { col: 4, row: 1 }, { col: 4, row: 3 }, { col: 0, row: 3 }],
+  triangle:  [{ col: 1, row: 0 }, { col: 2, row: 2 }, { col: 0, row: 2 }],
+  square:    [{ col: 0, row: 0 }, { col: 2, row: 0 }, { col: 2, row: 2 }, { col: 0, row: 2 }],
+  rectangle: [{ col: 0, row: 0 }, { col: 2, row: 0 }, { col: 2, row: 1 }, { col: 0, row: 1 }],
 };
 
 // ─── Geometry helpers (all arithmetic on integers — no floating-point errors) ─
@@ -67,15 +67,29 @@ const lenSq = (a, b) => (b.col - a.col) ** 2 + (b.row - a.row) ** 2;
 const cross2D = (A, B, C) =>
   (B.col - A.col) * (C.row - A.row) - (B.row - A.row) * (C.col - A.col);
 
+/** Remove colinear "redundant" intermediate dots from the closed loop. */
+const simplifyPath = (dots) => {
+  if (dots.length < 3) return dots;
+  const simplified = [];
+  for (let i = 0; i < dots.length; i++) {
+    const prev = dots[(i - 1 + dots.length) % dots.length];
+    const curr = dots[i];
+    const next = dots[(i + 1) % dots.length];
+    if (cross2D(prev, curr, next) !== 0) simplified.push(curr);
+  }
+  return simplified;
+};
+
 const orderVertices = (dots) => {
-  const cx = (dots[0].col + dots[1].col + dots[2].col + dots[3].col) / 4;
-  const cy = (dots[0].row + dots[1].row + dots[2].row + dots[3].row) / 4;
+  const cx = dots.reduce((s, d) => s + d.col, 0) / dots.length;
+  const cy = dots.reduce((s, d) => s + d.row, 0) / dots.length;
   return [...dots].sort(
     (a, b) => Math.atan2(a.row - cy, a.col - cx) - Math.atan2(b.row - cy, b.col - cx)
   );
 };
 
-const validateShape = (dots, targetShape) => {
+const validateShape = (rawDots, targetShape) => {
+  const dots = simplifyPath(rawDots);
   const config = SHAPE_CONFIG[targetShape];
   if (!config || dots.length !== config.requiredDots) return false;
 
