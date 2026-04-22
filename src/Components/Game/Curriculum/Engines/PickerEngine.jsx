@@ -208,20 +208,18 @@ const PickerEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.optionsList}>
-          {shuffledOptions.map((opt, idx) => (
-            <OptionButton
-              key={`${idx}-${opt}`}
-              label={opt}
-              index={idx}
-              isSelected={selectedOption === opt}
-              evaluation={selectedOption === opt ? evaluation : null}
-              disabled={resolved || evaluation === 'wrong'}
-              onPress={setSelectedOption}
-            />
-          ))}
-        </View>
+      <View style={styles.optionsList}>
+        {shuffledOptions.map((opt, idx) => (
+          <OptionButton
+            key={`${idx}-${opt}`}
+            label={opt}
+            index={idx}
+            isSelected={selectedOption === opt}
+            evaluation={selectedOption === opt ? evaluation : null}
+            disabled={resolved || evaluation === 'wrong'}
+            onPress={setSelectedOption}
+          />
+        ))}
       </View>
 
       <CheckButton
@@ -235,14 +233,11 @@ const PickerEngine = ({ data, onResult }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     width: '100%',
-    paddingBottom: 24,
-  },
-  content: {
-    flex: 1,
     paddingHorizontal: 20,
     paddingTop: 20,
+    paddingBottom: 24,
+    gap: 32, // Space between options list and check button
   },
   questionContainer: {
     marginBottom: 32,
@@ -280,7 +275,6 @@ const styles = StyleSheet.create({
     right: 16,
   },
   checkButtonContainer: {
-    paddingHorizontal: 20,
     width: '100%',
   },
   checkButton: {

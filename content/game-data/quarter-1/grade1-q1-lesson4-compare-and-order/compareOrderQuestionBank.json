@@ -35,12 +35,13 @@
             "level": "pictorial",
             "type": "PICKER",
             "difficulty": "Medium",
-            "question": "Look at the baskets of mangoes. Which basket has more?",
-            "answer": "basket_18",
+            "answer": "18",
             "assetType": "illustration",
             "metadata": {
-                "basket_a": 14,
-                "basket_b": 18
+                "options": [
+                    "14",
+                    "18"
+                ]
             },
             "assetId": "icon_mango"
         },
@@ -49,13 +50,18 @@
             "competency": "NA.1.7",
             "topic": "Compare Numbers",
             "level": "abstract",
-            "type": "N/A",
+            "type": "PICKER",
             "difficulty": "Hard",
-            "question": "Which number is larger: 14 or 19? Type the bigger number.",
-            "answer": 19,
-            "maxDigits": 2,
+            "question": "Which number is larger: 14 or 19?",
+            "answer": "19 is larger than 14",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": [
+                    "14 is larger than 19",
+                    "19 is larger than 14",
+                    "They are equal"
+                ]
+            }
         }
     ]
 }

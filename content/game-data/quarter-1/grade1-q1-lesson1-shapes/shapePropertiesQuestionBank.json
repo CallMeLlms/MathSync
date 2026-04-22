@@ -36,7 +36,7 @@
             "competency": "MG.1.2",
             "topic": "Shape Properties",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "PICKER",
             "difficulty": "Medium",
             "question": "Look at the drawing. How many corners does the TV screen have?",
             "answer": 4,

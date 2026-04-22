@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -38,7 +38,7 @@ const CURRICULUM_MAP = {
 const LevelStartOverlay = ({ node, onStart, onCancel, isLocked }) => {
   if (!node) return null;
 
-  const emoji = isLocked ? '🔒' : node.type === 'boss' ? '⭐' : '🌿';
+  const icon = isLocked ? 'lock' : node.type === 'boss' ? 'star' : 'sprout';
   const title = isLocked ? 'Path Still Growing' : node.title;
   const subtitle = isLocked
     ? 'Complete the previous lessons to unlock this path!'
@@ -47,7 +47,9 @@ const LevelStartOverlay = ({ node, onStart, onCancel, isLocked }) => {
   return (
     <View style={[StyleSheet.absoluteFillObject, styles.overlayBackdrop]}>
       <Animated.View entering={ZoomIn.springify()} style={styles.overlayCard}>
-        <Text style={styles.overlayEmoji}>{emoji}</Text>
+        <View style={styles.overlayIconContainer}>
+          <MaterialCommunityIcons name={icon} size={48} color={isLocked ? Colors.onSurfaceVariant : Colors.primary} />
+        </View>
         <Text style={styles.overlayTitle}>{title}</Text>
         <Text style={styles.overlaySubtitle}>{subtitle}</Text>
 
@@ -248,9 +250,17 @@ const styles = StyleSheet.create({
     padding: 32,
     alignItems: 'center',
   },
-  overlayEmoji: {
-    fontSize: 56,
-    marginBottom: 12,
+  overlayIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 24,
+    backgroundColor: Colors.primaryContainer,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
+    borderWidth: 2,
+    borderBottomWidth: 5,
+    borderColor: 'rgba(0,0,0,0.1)',
   },
   overlayTitle: {
     fontFamily: 'Lexend-Bold',

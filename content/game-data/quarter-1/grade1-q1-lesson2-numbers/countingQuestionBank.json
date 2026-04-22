@@ -48,13 +48,18 @@
             "competency": "NA.1.4",
             "topic": "Counting to 100",
             "level": "abstract",
-            "type": "WORD_PROBLEM",
+            "type": "PICKER",
             "difficulty": "Hard",
             "question": "What number comes just after 49?",
             "answer": 50,
-            "maxDigits": 2,
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": [
+                    48,
+                    50,
+                    51
+                ]
+            }
         }
     ]
 }

@@ -28,7 +28,7 @@ const gradeData = [
     title: 'Grade 1',
     label: 'Warm-up World',
     desc: 'Count, match, and build confidence with playful first missions.',
-    icon: 'seedling',
+    icon: 'sprout',
     progressLabel: 'Start here',
   },
   {

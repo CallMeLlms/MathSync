@@ -18,13 +18,18 @@
             "competency": "NA.1.12",
             "topic": "Addition Properties",
             "level": "concrete",
-            "type": "N/A",
+            "type": "PICKER",
             "difficulty": "Easy",
             "question": "You have 5 blocks. I give you 0 more blocks. How many blocks do you have?",
             "answer": 5,
             "assetId": "na_1_addprop_001",
             "assetType": "manipulatives",
             "metadata": {
+                "options": [
+                    0,
+                    5,
+                    10
+                ],
                 "property": "zero_identity"
             }
         },
@@ -33,14 +38,18 @@
             "competency": "NA.1.12",
             "topic": "Addition Properties",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "PICKER",
             "difficulty": "Medium",
             "question": "4 birds plus 3 birds is the same as 3 birds plus __ birds. What number goes in the blank?",
             "answer": 4,
-            "maxDigits": 1,
             "assetId": "na_1_addprop_004",
             "assetType": "illustration",
             "metadata": {
+                "options": [
+                    3,
+                    4,
+                    7
+                ],
                 "property": "commutative"
             }
         },
@@ -49,12 +58,17 @@
             "competency": "NA.1.12",
             "topic": "Addition Properties",
             "level": "abstract",
-            "type": "N/A",
+            "type": "PICKER",
             "difficulty": "Hard",
             "question": "What is 15 + 0?",
             "answer": 15,
             "assetType": "text",
             "metadata": {
+                "options": [
+                    0,
+                    15,
+                    20
+                ],
                 "property": "zero_identity"
             }
         }
