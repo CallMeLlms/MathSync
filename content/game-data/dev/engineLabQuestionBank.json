@@ -4,103 +4,27 @@
     "engines_covered": ["picker", "numpad", "matcher", "composer", "dragdrop", "sort", "shape_hunt", "ordinal_sequence", "connectdots", "shapetracer", "clocksetter"]
   },
   "questions": [
-     {
-      "id": "lab-picker-2",
-      "type": "PICKER",
-      "question": "What is 3 + 4?",
-      "answer": "7",
+    {
+      "id": "lab-visual-picker-1",
+      "type": "VISUAL_PICKER",
+      "question": "Look at the picture. 2 birds are on the branch. 4 more birds fly in. How many birds are there now?",
+      "answer": 6,
+      "assetId": "icon_boy",
       "metadata": {
+        "addends": [2, 4],
         "options": ["5", "6", "7"]
       }
     },
-
     {
-      "id": "lab-numpad-1",
-      "type": "NUMPAD",
-      "question": "What is 5 + 3?",
-      "equation": { "left": "5 + 3", "operator": "=", "blank": "right" },
+      "id": "lab-visual-picker-2",
+      "type": "VISUAL_PICKER",
+      "question": "Lily has 5 apples. She buys 3 more. How many apples does she have in total?",
       "answer": 8,
-      "maxDigits": 2
-    },
-     {
-      "id": "lab-geoboard-1",
-      "type": "GEOBOARD",
-      "question": "Follow the hint and draw a triangle!",
-      "shape": "triangle",
-      "traceMode": "guided",
-      "answer": "triangle"
-    },
-    {
-      "id": "lab-geoboard-2",
-      "type": "GEOBOARD",
-      "question": "Now, can you draw a square?",
-      "shape": "square",
-      "traceMode": "guided",
-      "answer": "square"
-    },
-    {
-      "id": "lab-geoboard-3",
-      "type": "GEOBOARD",
-      "question": "Can you form a rectangle on the board?",
-      "shape": "rectangle",
-      "traceMode": "guided",
-      "answer": "rectangle"
-    },
-    {
-      "id": "lab-shapetracer-1",
-      "type": "SHAPETRACER",
-      "question": "Trace the triangle with your finger!",
-      "shape": "triangle",
-      "traceMode": "guided",
-      "answer": "triangle"
-    },
-    {
-      "id": "lab-shapetracer-2",
-      "type": "SHAPETRACER",
-      "question": "Trace the square with your finger!",
-      "shape": "square",
-      "traceMode": "guided",
-      "answer": "square"
-    },
-    {
-      "id": "lab-shapetracer-3",
-      "type": "SHAPETRACER",
-      "question": "Trace the rectangle with your finger!",
-      "shape": "rectangle",
-      "traceMode": "guided",
-      "answer": "rectangle"
-    },
-    {
-      "id": "lab-clocksetter-6",
-      "type": "CLOCKSETTER",
-      "question": "Set the clock to 5:45!",
-      "targetTime": { "hour": 5, "minute": 45 },
-      "initialTime": { "hour": 12, "minute": 0 },
-      "mode": "quarter-hour"
-    },
-    {
-      "id": "lab-composer-7",
-      "type": "COMPOSER",
-      "question": "Find two numbers that make 8!",
-      "target": 8,
-      "chips": [2, 3, 4, 5, 6],
-      "mode": "compose"
-    },
-    {
-      "id": "lab-wordproblem-8",
-      "type": "WORD_PROBLEM",
-      "question": "Juan has 3 toy cars. Maria gives him 2 more. How many toy cars does Juan have now?",
-      "assetId": "icon_toy_car",
-      "answer": 5,
-      "maxDigits": 1
-    },
-    {
-      "id": "lab-wordproblem-9",
-      "type": "WORD_PROBLEM",
-      "question": "There are 7 mangoes in a basket. You ate 3. How many mangoes are left? 7 + 3",
-      "assetId": "icon_mango",
-      "answer": 4,
-      "maxDigits": 1
+      "assetId": "icon_girl",
+      "metadata": {
+        "addends": [5, 3],
+        "options": ["7", "8", "9"]
+      }
     }
   ]
 }

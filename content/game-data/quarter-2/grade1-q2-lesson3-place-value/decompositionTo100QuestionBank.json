@@ -22,10 +22,7 @@
             "question": "Split 25 into tens and ones.",
             "mode": "decompose",
             "target": 25,
-            "chips": [
-                {"value": 10, "count": 2},
-                {"value": 1, "count": 5}
-            ],
+            "chips": [20, 10, 5, 15],
             "assetType": "manipulatives"
         },
         {

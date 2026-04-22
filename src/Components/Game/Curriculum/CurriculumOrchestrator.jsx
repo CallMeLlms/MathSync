@@ -27,6 +27,7 @@ import GeoboardEngine from './Engines/GeoboardEngine';
 import ClockSetterEngine from './Engines/ClockSetterEngine';
 import VisualNumpadEngine from './Engines/VisualNumpadEngine';
 import WordProblemEngine from './Engines/WordProblemEngine';
+import VisualPickerEngine from './Engines/VisualPickerEngine';
 // Gesture-heavy engines must render inside a plain View — a ScrollView would
 // intercept their touch responder and break drag/draw interactions.
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
@@ -162,6 +163,7 @@ export default function CurriculumOrchestrator({
       // case 'picker': return <PickerEngine {...props} />;
       // case 'counter': return <CounterEngine {...props} />;
       case 'picker': return <PickerEngine key={currentQuestionIndex} {...props} />;
+      case 'visual_picker': return <VisualPickerEngine key={currentQuestionIndex} {...props} />;
       case 'composer': return <ComposeEngine {...props} />;
       case 'numpad': return <NumpadEngine key={currentQuestionIndex} {...props} />;
       case 'visual_numpad': return <VisualNumpadEngine key={currentQuestionIndex} {...props} />;
@@ -198,7 +200,7 @@ export default function CurriculumOrchestrator({
       </View>
 
       {/* Question Header */}
-      {questionText ? (
+      {questionText && engineType !== 'visual_picker' ? (
         <View style={styles.questionHeader}>
           <Text style={styles.questionHeaderText}>{questionText}</Text>
         </View>
@@ -210,7 +212,8 @@ export default function CurriculumOrchestrator({
       {currentQuestion?.assetId
         && currentQuestion?.assetType !== 'text'
         && engineType !== 'visual_numpad'
-        && engineType !== 'word_problem' ? (
+        && engineType !== 'word_problem'
+        && engineType !== 'visual_picker' ? (
         <View style={styles.questionAssetContainer}>
           <AssetDisplay
             assetId={currentQuestion.assetId}

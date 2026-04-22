@@ -151,8 +151,8 @@ export const AssetMap = {
   'icon_arrow_right':   'emoji:➡️',
 
   // ─── Emoji Registry: People & Positions ─────────────────────────
-  'icon_boy':           'emoji:👦',
-  'icon_girl':          'emoji:👧',
+  'icon_boy':           require('@assets/games/shared/characters/Boy-Character.webp'),
+  'icon_girl':          require('@assets/games/shared/characters/Girl-Character.webp'),
   'icon_teacher':       'emoji:🧑‍🏫',
   'icon_student':       'emoji:🧑‍🎓',
   'icon_face_happy':    'emoji:😊',
