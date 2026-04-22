@@ -229,15 +229,16 @@ const PickerEngine = ({ data, onResult }) => {
       />
     </View>
   );
+
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    flex: 1,
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 24,
-    gap: 32, // Space between options list and check button
+    justifyContent: 'space-between',
   },
   questionContainer: {
     marginBottom: 32,
