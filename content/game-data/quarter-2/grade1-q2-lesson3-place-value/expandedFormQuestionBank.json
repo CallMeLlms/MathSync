@@ -19,8 +19,9 @@
             "level": "concrete",
             "type": "NUMPAD",
             "difficulty": "Easy",
-            "question": "Add the blocks. (20 + 3) + 5. What is the total?",
+            "question": "What is the sum of 2 tens, 3 ones, and 5 ones?",
             "answer": 28,
+            "maxDigits": 2,
             "equation": { "left": "(20 + 3) + 5", "operator": "=", "blank": "right" },
             "assetType": "manipulatives",
             "metadata": {}
@@ -32,8 +33,9 @@
             "level": "pictorial",
             "type": "NUMPAD",
             "difficulty": "Medium",
-            "question": "Look at the expanded form: 10 + 5 + 4. What is the sum?",
+            "question": "What is the sum of 1 ten, 5 ones, and 4 ones?",
             "answer": 19,
+            "maxDigits": 2,
             "equation": { "left": "10 + 5 + 4", "operator": "=", "blank": "right" },
             "assetType": "illustration",
             "metadata": {}
@@ -45,8 +47,9 @@
             "level": "abstract",
             "type": "NUMPAD",
             "difficulty": "Hard",
-            "question": "What is the result of 60 + 5 + 20 + 3?",
+            "question": "What is the total of 60 + 5 + 20 + 3?",
             "answer": 88,
+            "maxDigits": 2,
             "equation": { "left": "60 + 5 + 20 + 3", "operator": "=", "blank": "right" },
             "assetType": "text",
             "metadata": {}

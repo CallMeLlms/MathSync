@@ -178,9 +178,16 @@ const VisualPickerEngine = ({ data, onResult }) => {
   };
 
   const equationLabel = useMemo(() => {
-    if (!Array.isArray(addends) || addends.length < 2) return null;
-    return `${addends[0]} ${operator} ${addends[1]} = ?`;
-  }, [addends, operator]);
+    // Priority 1: Manual override (e.g. "37 is 30 and ?")
+    if (metadata.customLabel) return metadata.customLabel;
+
+    // Fallback: Build standard equation ONLY if addends exist
+    if (Array.isArray(addends) && addends.length >= 2) {
+      return `${addends[0]} ${operator} ${addends[1]} = ?`;
+    }
+
+    return null;
+  }, [addends, operator, metadata.customLabel]);
 
   const wordTokens = useMemo(() => {
     if (!Array.isArray(addends) || addends.length < 2) return null;

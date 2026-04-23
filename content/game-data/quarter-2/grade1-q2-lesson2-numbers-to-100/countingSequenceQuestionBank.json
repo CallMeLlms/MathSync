@@ -43,12 +43,14 @@
             "competency": "NA.2.4",
             "topic": "Sequences",
             "level": "abstract",
-            "type": "N/A",
+            "type": "PICKER",
             "difficulty": "Hard",
             "question": "What number is 10 more than 40?",
             "answer": 50,
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": [30, 50, 60]
+            }
         }
     ]
 }

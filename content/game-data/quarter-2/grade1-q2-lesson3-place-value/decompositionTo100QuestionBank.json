@@ -8,7 +8,8 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "COMPOSER": "Used for decomposing into tens and ones"
+            "COMPOSER": "Used for decomposing into tens and ones",
+            "VISUAL_PICKER": "Story-based picker for word problems and decomposition"
         }
     },
     "questions": [
@@ -30,24 +31,32 @@
             "competency": "NA.2.7",
             "topic": "Decomposition",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Medium",
-            "question": "Look at the picture of 37 stars. 37 is 30 and __.",
+            "question": "I have 37 star stickers. 30 are on my notebook and the rest are on my bag. How many stars are on my bag?",
             "answer": 7,
+            "assetId": "icon_girl",
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": {
+                "customLabel": "37 is 30 and 7",
+                "options": ["7", "17", "27"]
+            }
         },
         {
             "id": "na_2_decomp_007",
             "competency": "NA.2.7",
             "topic": "Decomposition",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "VISUAL_PICKER",
             "difficulty": "Hard",
-            "question": "49 is equal to 40 plus what number?",
+            "question": "Aki collected 49 marbles. He puts 40 in a jar and holds the rest in his hand. How many marbles is he holding?",
             "answer": 9,
-            "assetType": "text",
-            "metadata": {}
+            "assetId": "icon_boy",
+            "assetType": "illustration",
+            "metadata": {
+                "customLabel": "49 is 40 and 9",
+                "options": ["9", "19", "29"]
+            }
         }
     ]
 }

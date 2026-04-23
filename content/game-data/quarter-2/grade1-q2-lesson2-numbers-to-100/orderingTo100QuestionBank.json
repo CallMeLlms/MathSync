@@ -54,12 +54,18 @@
             "competency": "NA.2.4",
             "topic": "Ordering to 100",
             "level": "abstract",
-            "type": "SORT",
+            "type": "PICKER",
             "difficulty": "Hard",
             "question": "Complete the sequence: 45, 46, 47, __, __.",
             "answer": "48, 49",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": [
+                    "48, 49",
+                    "47, 48",
+                    "49, 50"
+                ]
+            }
         }
     ]
 }
