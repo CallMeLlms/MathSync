@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "COMPARE_PICKER": "Primary comparison engine"
         }
     },
     "questions": [
@@ -17,13 +17,16 @@
             "competency": "MG.2.1",
             "topic": "Measurement",
             "level": "concrete",
-            "type": "N/A",
+            "type": "COMPARE_PICKER",
             "difficulty": "Easy",
-            "question": "Use the blocks provided. How many blocks long is your pencil?",
-            "answer": 5,
+            "question": "Which is longer: the pencil or the crayon?",
+            "answer": "pile_a",
             "assetType": "manipulatives",
             "metadata": {
-                "unit": "blocks"
+                "pile_a": 5,
+                "pile_b": 3,
+                "emoji_a": "✏️",
+                "emoji_b": "🖍️"
             }
         },
         {
@@ -31,14 +34,16 @@
             "competency": "MG.2.1",
             "topic": "Measurement",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "COMPARE_PICKER",
             "difficulty": "Medium",
-            "question": "Look at the picture. How many paperclips long is the pen?",
-            "answer": 4,
+            "question": "Which is shorter: the pen or the marker?",
+            "answer": "pile_a",
             "assetType": "illustration",
             "metadata": {
-                "scenario": "pen_with_paperclips",
-                "count": 4
+                "pile_a": 4,
+                "pile_b": 7,
+                "emoji_a": "🖊️",
+                "emoji_b": "🖍️"
             }
         },
         {
@@ -46,17 +51,17 @@
             "competency": "MG.2.1",
             "topic": "Measurement",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "COMPARE_PICKER",
             "difficulty": "Hard",
-            "question": "If a ruler is 12 inches long and a pencil is 7 inches, which one is longer?",
-            "answer": "ruler",
+            "question": "Which is longer: the ruler or the pencil?",
+            "answer": "pile_a",
             "assetType": "text",
             "metadata": {
-                "options": [
-                    "ruler",
-                    "pencil"
-                ]
+                "pile_a": 12,
+                "pile_b": 7,
+                "emoji_a": "📏",
+                "emoji_b": "✏️"
             }
         }
     ]
-}
+}
