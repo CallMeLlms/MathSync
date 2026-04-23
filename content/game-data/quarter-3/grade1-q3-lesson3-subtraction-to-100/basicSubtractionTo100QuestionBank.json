@@ -8,7 +8,8 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "NUMPAD": "Used where numerical input is expected",
+            "VISUAL_PICKER": "Story-based choice with narrative context"
         }
     },
     "questions": [
@@ -30,12 +31,16 @@
             "competency": "NA.3.9",
             "topic": "Subtraction to 100",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Medium",
-            "question": "Look at the picture. There are 56 fish in the pond. 12 fish swim away. How many fish stay?",
+            "question": "Lia is at the pond. She counts 56 fish. If 12 fish swim away, how many stay?",
             "answer": 44,
+            "assetId": "icon_girl",
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": {
+                "options": ["44", "46", "42"],
+                "customLabel": "56 fish and 12 swim away: 56 - 12"
+            }
         },
         {
             "id": "na_3_sub100_007",

@@ -17,7 +17,7 @@
             "competency": "NA.3.7",
             "topic": "Equivalent Expressions",
             "level": "concrete",
-            "type": "MATCHER",
+            "type": "N/A",
             "difficulty": "Easy",
             "question": "Match the groups of blocks that have the same total.",
             "pairs": [
@@ -31,7 +31,7 @@
             "competency": "NA.3.7",
             "topic": "Equivalent Expressions",
             "level": "pictorial",
-            "type": "MATCHER",
+            "type": "N/A",
             "difficulty": "Medium",
             "question": "Match the picture equations with the same result.",
             "pairs": [
@@ -45,7 +45,7 @@
             "competency": "NA.3.7",
             "topic": "Equivalent Expressions",
             "level": "abstract",
-            "type": "MATCHER",
+            "type": "N/A",
             "difficulty": "Hard",
             "question": "Match the equivalent number expressions.",
             "pairs": [

@@ -2,13 +2,13 @@
     "meta": {
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
-        "topic": "Subtraction Word Problems up to 100",
+        "topic": "Subtraction Word Problems",
         "competency": "NA.3.8",
-        "performanceStandard": "Perform subtraction of numbers with differences up to 100.",
+        "performanceStandard": "Perform subtraction of numbers up to 100.",
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "VISUAL_PICKER": "Story-based choice with narrative context"
         }
     },
     "questions": [
@@ -17,36 +17,48 @@
             "competency": "NA.3.8",
             "topic": "Subtraction Word Problems",
             "level": "concrete",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
-            "question": "Use the blocks: You have 18 candies and give 5 to your sister. How many candies do you have now?",
+            "question": "Lia has 18 candies. She gives 5 to her sister. How many candies does Lia have now?",
             "answer": 13,
+            "assetId": "icon_girl",
             "assetType": "manipulatives",
-            "metadata": {}
+            "metadata": {
+                "options": ["13", "12", "14"],
+                "customLabel": "18 candies and 5 given: 18 - 5"
+            }
         },
         {
             "id": "na_3_wordsub_004",
             "competency": "NA.3.8",
             "topic": "Subtraction Word Problems",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
-            "question": "Look at the picture. There are 12 cars in the parking lot. 4 drive away. How many cars are left?",
+            "question": "Ben sees 12 cars in the parking lot. 4 cars drive away. How many cars are left?",
             "answer": 8,
+            "assetId": "icon_boy",
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": {
+                "options": ["8", "7", "9"],
+                "customLabel": "12 cars and 4 drive away: 12 - 4"
+            }
         },
         {
             "id": "na_3_wordsub_007",
             "competency": "NA.3.8",
             "topic": "Subtraction Word Problems",
             "level": "abstract",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
-            "question": "Ben had 19 stickers. He lost 7. How many stickers does Ben have now?",
+            "question": "Ben had 19 stickers. He lost 7 on his way home. How many stickers does Ben have now?",
             "answer": 12,
+            "assetId": "icon_boy",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": ["12", "11", "13"],
+                "customLabel": "19 stickers and 7 lost: 19 - 7"
+            }
         }
     ]
 }

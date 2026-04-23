@@ -301,7 +301,14 @@ const NumpadEngine = ({ data, onResult }) => {
     if (blank === 'right') {
       return (
         <View style={styles.equationRow}>
-          <Text style={styles.equationText}>{left}</Text>
+          <Text 
+            style={styles.equationText}
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            minimumFontScale={0.5}
+          >
+            {left}
+          </Text>
           <Text style={styles.equationOperator}>{operator}</Text>
           {answerBox}
         </View>
@@ -313,7 +320,14 @@ const NumpadEngine = ({ data, onResult }) => {
       <View style={styles.equationRow}>
         {answerBox}
         <Text style={styles.equationOperator}>{operator}</Text>
-        <Text style={styles.equationText}>{left}</Text>
+        <Text 
+          style={styles.equationText}
+          adjustsFontSizeToFit
+          numberOfLines={1}
+          minimumFontScale={0.5}
+        >
+          {left}
+        </Text>
       </View>
     );
   };
@@ -403,6 +417,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Lexend-Black',
     fontSize: 36,
     color: Colors.onSurface,
+    flexShrink: 1,
   },
   equationOperator: {
     fontFamily: 'PlusJakartaSans-Bold',

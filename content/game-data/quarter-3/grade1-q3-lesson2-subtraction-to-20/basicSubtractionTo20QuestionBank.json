@@ -17,10 +17,16 @@
             "competency": "NA.3.5",
             "topic": "Subtraction Logic",
             "level": "concrete",
-            "type": "N/A",
+            "type": "NUMPAD",
             "difficulty": "Easy",
             "question": "You have 8 cookies. You eat 3 cookies. How many cookies are left?",
+            "equation": {
+                "left": "8 - 3",
+                "operator": "=",
+                "blank": "right"
+            },
             "answer": 5,
+            "maxDigits": 1,
             "assetType": "manipulatives",
             "metadata": {}
         },
@@ -29,10 +35,16 @@
             "competency": "NA.3.5",
             "topic": "Subtraction Logic",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "NUMPAD",
             "difficulty": "Easy",
             "question": "Look at the picture. There are 9 birds on the tree. 4 birds fly away. How many birds are still on the tree?",
+            "equation": {
+                "left": "9 - 4",
+                "operator": "=",
+                "blank": "right"
+            },
             "answer": 5,
+            "maxDigits": 1,
             "assetType": "illustration",
             "metadata": {}
         },

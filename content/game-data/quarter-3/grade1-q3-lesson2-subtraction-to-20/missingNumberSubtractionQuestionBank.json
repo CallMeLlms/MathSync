@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "VISUAL_PICKER": "Story-based choice with narrative context"
         }
     },
     "questions": [
@@ -17,36 +17,48 @@
             "competency": "NA.3.6",
             "topic": "Missing Numbers",
             "level": "concrete",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
-            "question": "You have 5 blocks. How many more blocks do you need to make 10 in total?",
+            "question": "Ben has 5 blocks. He wants to have 10 blocks in total. How many more blocks does he need?",
             "answer": 5,
+            "assetId": "icon_boy",
             "assetType": "manipulatives",
-            "metadata": {}
+            "metadata": {
+                "options": ["5", "4", "6"],
+                "customLabel": "5 blocks + __ = 10 blocks"
+            }
         },
         {
             "id": "na_3_missing_004",
             "competency": "NA.3.6",
             "topic": "Missing Numbers",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
-            "question": "Look at the picture: 8 + __ = 12. How many more stars are needed?",
+            "question": "Lia has 8 stars. She needs 12 stars for her collection. How many more stars should she find?",
             "answer": 4,
+            "assetId": "icon_girl",
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": {
+                "options": ["4", "3", "5"],
+                "customLabel": "8 stars + __ = 12 stars"
+            }
         },
         {
             "id": "na_3_missing_007",
             "competency": "NA.3.6",
             "topic": "Missing Numbers",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
-            "question": "Solve for the missing number: 6 + ? = 14",
+            "question": "Aki has 6 stickers. He wants to have 14 stickers. How many more stickers does he need?",
             "answer": 8,
+            "assetId": "icon_boy",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": ["8", "7", "9"],
+                "customLabel": "6 stickers + __ = 14"
+            }
         }
     ]
 }
