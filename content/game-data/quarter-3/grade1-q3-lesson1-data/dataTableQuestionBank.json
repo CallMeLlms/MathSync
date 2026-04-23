@@ -4,11 +4,13 @@
         "language": "English",
         "topic": "Data Tables",
         "competency": "DP.3.4",
-        "performanceStandard": "Represent and interpret data in a pictograph without a scale.",
+        "performanceStandard": "Read and interpret data tables.",
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "MATCHER": "Used for matching graph data to table values"
+            "MATCHER": "Matching pairs",
+            "VISUAL_PICKER": "Story-based choice",
+            "VISUAL_NUMPAD": "Visual input with character narration"
         }
     },
     "questions": [
@@ -19,10 +21,10 @@
             "level": "concrete",
             "type": "MATCHER",
             "difficulty": "Easy",
-            "question": "Match the pile of 3 blocks to the number 3 on the table.",
+            "question": "Match the pile of blocks to the correct number on the table.",
             "pairs": [
-                {"left": "pile_3", "right": 3},
-                {"left": "pile_5", "right": 5}
+                {"left": "3 blocks", "right": "3"},
+                {"left": "5 blocks", "right": "5"}
             ],
             "assetType": "manipulatives"
         },

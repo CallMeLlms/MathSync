@@ -4,11 +4,11 @@
         "language": "English",
         "topic": "Pictograph Interpretation",
         "competency": "DP.3.3",
-        "performanceStandard": "Represent and interpret data in a pictograph without a scale.",
+        "performanceStandard": "Read and interpret pictographs without a scale.",
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "COMPARE_PICKER": "Visual pile comparison interactive"
         }
     },
     "questions": [
@@ -17,16 +17,15 @@
             "competency": "DP.3.3",
             "topic": "Data Interpretation",
             "level": "concrete",
-            "type": "N/A",
+            "type": "COMPARE_PICKER",
             "difficulty": "Easy",
-            "question": "Look at the objects: Which group has 4 items? Tap the group.",
-            "answer": "group_b",
+            "question": "Which group has 4 items?",
+            "answer": "pile_b",
             "assetType": "manipulatives",
             "metadata": {
-                "options": [
-                    "group_a",
-                    "group_b"
-                ]
+                "pile_a": 2,
+                "pile_b": 4,
+                "emoji": "🍎"
             }
         },
         {
