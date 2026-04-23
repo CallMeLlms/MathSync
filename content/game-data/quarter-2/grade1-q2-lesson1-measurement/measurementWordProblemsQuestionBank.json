@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "VISUAL_PICKER": "Story-based picker for word problems"
         }
     },
     "questions": [
@@ -17,36 +17,46 @@
             "competency": "MG.2.3",
             "topic": "Measurement Problems",
             "level": "concrete",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
             "question": "Ana used 3 hand-spans to measure a book. Pedro used 4. How many hand-spans did they use altogether?",
             "answer": 7,
-            "assetType": "manipulatives",
-            "metadata": {}
+            "assetId": "icon_boy",
+            "metadata": {
+                "addends": [3, 4],
+                "options": ["5", "7", "8"]
+            }
         },
         {
             "id": "mg_2_prob_004",
             "competency": "MG.2.3",
             "topic": "Measurement Problems",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Medium",
             "question": "Look at the picture. The blue ribbon is 5 blocks long. The red ribbon is 2 blocks longer. How long is the red ribbon?",
             "answer": 7,
-            "assetType": "illustration",
-            "metadata": {}
+            "assetId": "icon_girl",
+            "metadata": {
+                "addends": [5, 2],
+                "options": ["3", "7", "8"]
+            }
         },
         {
             "id": "mg_2_prob_007",
             "competency": "MG.2.3",
             "topic": "Measurement Problems",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "VISUAL_PICKER",
             "difficulty": "Hard",
             "question": "Liza has a rope that is 20 hand-spans long. She cuts off 7 hand-spans. How long is the rope now?",
             "answer": 13,
-            "assetType": "text",
-            "metadata": {}
+            "assetId": "icon_girl",
+            "metadata": {
+                "addends": [20, 7],
+                "operator": "-",
+                "options": ["13", "17", "27"]
+            }
         }
     ]
 }

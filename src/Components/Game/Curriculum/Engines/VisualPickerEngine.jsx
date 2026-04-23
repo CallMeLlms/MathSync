@@ -131,6 +131,7 @@ const VisualPickerEngine = ({ data, onResult }) => {
   const { question: questionText, answer, assetId, metadata = {} } = data;
   const options = metadata.options || [];
   const addends = metadata.addends;
+  const operator = metadata.operator || '+';
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [evaluation, setEvaluation] = useState(null);
@@ -178,13 +179,13 @@ const VisualPickerEngine = ({ data, onResult }) => {
 
   const equationLabel = useMemo(() => {
     if (!Array.isArray(addends) || addends.length < 2) return null;
-    return `${addends[0]} + ${addends[1]} = ?`;
-  }, [addends]);
+    return `${addends[0]} ${operator} ${addends[1]} = ?`;
+  }, [addends, operator]);
 
   const wordTokens = useMemo(() => {
     if (!Array.isArray(addends) || addends.length < 2) return null;
-    return [String(addends[0]), '+', String(addends[1])];
-  }, [addends]);
+    return [String(addends[0]), operator, String(addends[1])];
+  }, [addends, operator]);
 
   return (
     <View style={styles.container}>
