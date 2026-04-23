@@ -148,7 +148,10 @@ const ComparePickerEngine = ({ data, onResult }) => {
   const { question: questionText, answer, metadata = {} } = data;
   const pileA = metadata.pile_a ?? 0;
   const pileB = metadata.pile_b ?? 0;
-  const emoji = metadata.emoji ?? '🍎';
+  
+  // Support distinct emojis for each pile, fallback to generic emoji if missing
+  const emojiA = metadata.emoji_a ?? metadata.emoji ?? '🍎';
+  const emojiB = metadata.emoji_b ?? metadata.emoji ?? '🍎';
 
   const [selectedTile, setSelectedTile] = useState(null);
   const [evaluation, setEvaluation] = useState(null);
@@ -194,7 +197,7 @@ const ComparePickerEngine = ({ data, onResult }) => {
           <TileCard
             pileKey="pile_a"
             count={pileA}
-            emoji={emoji}
+            emoji={emojiA}
             isSelected={selectedTile === 'pile_a'}
             evaluation={selectedTile === 'pile_a' ? evaluation : null}
             disabled={resolved}
@@ -204,7 +207,7 @@ const ComparePickerEngine = ({ data, onResult }) => {
           <TileCard
             pileKey="pile_b"
             count={pileB}
-            emoji={emoji}
+            emoji={emojiB}
             isSelected={selectedTile === 'pile_b'}
             evaluation={selectedTile === 'pile_b' ? evaluation : null}
             disabled={resolved}

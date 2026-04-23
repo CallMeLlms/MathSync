@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "N/A": "Placeholder for Picker or DragDrop engine"
+            "COMPARE_PICKER": "Primary engine for length comparison"
         }
     },
     "questions": [
@@ -17,13 +17,16 @@
             "competency": "MG.2.2",
             "topic": "Measurement Comparison",
             "level": "concrete",
-            "type": "PICKER",
+            "type": "COMPARE_PICKER",
             "difficulty": "Easy",
             "question": "Which of these two sticks is longer? Tap the longer stick.",
-            "answer": "stick_a",
+            "answer": "pile_a",
             "assetType": "manipulatives",
             "metadata": {
-                "options": ["stick_a", "stick_b"]
+                "pile_a": 8,
+                "pile_b": 5,
+                "emoji_a": "📏",
+                "emoji_b": "📏"
             }
         },
         {
@@ -31,13 +34,16 @@
             "competency": "MG.2.2",
             "topic": "Measurement Comparison",
             "level": "pictorial",
-            "type": "PICKER",
+            "type": "COMPARE_PICKER",
             "difficulty": "Medium",
             "question": "Look at the drawing. Which animal is taller: the giraffe or the elephant?",
-            "answer": "giraffe",
+            "answer": "pile_a",
             "assetType": "illustration",
             "metadata": {
-                "options": ["giraffe", "elephant"]
+                "pile_a": 10,
+                "pile_b": 6,
+                "emoji_a": "🦒",
+                "emoji_b": "🐘"
             }
         },
         {
@@ -45,13 +51,16 @@
             "competency": "MG.2.2",
             "topic": "Measurement Comparison",
             "level": "abstract",
-            "type": "PICKER",
+            "type": "COMPARE_PICKER",
             "difficulty": "Hard",
             "question": "If a banana is 4 blocks long and a carrot is 6 blocks long, which one is shorter?",
-            "answer": "banana",
+            "answer": "pile_a",
             "assetType": "text",
             "metadata": {
-                "options": ["banana", "carrot"]
+                "pile_a": 4,
+                "pile_b": 6,
+                "emoji_a": "🍌",
+                "emoji_b": "🥕"
             }
         }
     ]
