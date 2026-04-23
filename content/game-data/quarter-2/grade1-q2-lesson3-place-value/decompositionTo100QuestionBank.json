@@ -38,7 +38,7 @@
             "assetId": "icon_girl",
             "assetType": "illustration",
             "metadata": {
-                "customLabel": "37 is 30 and 7",
+                "customLabel": "30, in notebook and 7, on bag",
                 "options": ["7", "17", "27"]
             }
         },
@@ -54,7 +54,7 @@
             "assetId": "icon_boy",
             "assetType": "illustration",
             "metadata": {
-                "customLabel": "49 is 40 and 9",
+                "customLabel": "40, in jar and 9, in hand",
                 "options": ["9", "19", "29"]
             }
         }
