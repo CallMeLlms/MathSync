@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "DEV ONLY — Engine Lab test bank. One or two questions per engine type to validate rendering and interaction. Remove or exclude from production builds.",
-    "engines_covered": ["picker", "numpad", "matcher", "composer", "dragdrop", "sort", "shape_hunt", "ordinal_sequence", "connectdots", "shapetracer", "clocksetter"]
+    "engines_covered": ["picker", "numpad", "matcher", "composer", "dragdrop", "sort", "shape_hunt", "ordinal_sequence", "connectdots", "shapetracer", "clocksetter", "compare_picker"]
   },
   "questions": [
     {
@@ -24,6 +24,28 @@
       "metadata": {
         "addends": [5, 3],
         "options": ["7", "8", "9"]
+      }
+    },
+    {
+      "id": "lab-compare-picker-1",
+      "type": "COMPARE_PICKER",
+      "question": "Which pile of apples is bigger? Tap the bigger pile.",
+      "answer": "pile_b",
+      "metadata": {
+        "emoji": "🍎",
+        "pile_a": 3,
+        "pile_b": 7
+      }
+    },
+    {
+      "id": "lab-compare-picker-2",
+      "type": "COMPARE_PICKER",
+      "question": "Which group of stars is more? Tap the bigger group.",
+      "answer": "pile_a",
+      "metadata": {
+        "emoji": "⭐",
+        "pile_a": 9,
+        "pile_b": 4
       }
     }
   ]

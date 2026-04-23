@@ -28,6 +28,7 @@ import ClockSetterEngine from './Engines/ClockSetterEngine';
 import VisualNumpadEngine from './Engines/VisualNumpadEngine';
 import WordProblemEngine from './Engines/WordProblemEngine';
 import VisualPickerEngine from './Engines/VisualPickerEngine';
+import ComparePickerEngine from './Engines/ComparePickerEngine';
 // Gesture-heavy engines must render inside a plain View — a ScrollView would
 // intercept their touch responder and break drag/draw interactions.
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
@@ -164,6 +165,7 @@ export default function CurriculumOrchestrator({
       // case 'counter': return <CounterEngine {...props} />;
       case 'picker': return <PickerEngine key={currentQuestionIndex} {...props} />;
       case 'visual_picker': return <VisualPickerEngine key={currentQuestionIndex} {...props} />;
+      case 'compare_picker': return <ComparePickerEngine key={currentQuestionIndex} {...props} />;
       case 'composer': return <ComposeEngine {...props} />;
       case 'numpad': return <NumpadEngine key={currentQuestionIndex} {...props} />;
       case 'visual_numpad': return <VisualNumpadEngine key={currentQuestionIndex} {...props} />;
