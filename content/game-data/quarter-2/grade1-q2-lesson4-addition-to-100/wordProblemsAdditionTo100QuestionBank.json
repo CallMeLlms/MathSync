@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "VISUAL_PICKER": "Story-based picker for word problems"
         }
     },
     "questions": [
@@ -17,36 +17,48 @@
             "competency": "NA.2.10",
             "topic": "Addition Word Problems",
             "level": "concrete",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
-            "question": "Use the blocks: A shop sold 24 blue pens and 13 red pens. How many pens were sold in total?",
+            "question": "A shop sold 24 blue pens and 13 red pens. How many pens were sold in total?",
             "answer": 37,
+            "assetId": "icon_girl",
             "assetType": "manipulatives",
-            "metadata": {}
+            "metadata": {
+                "options": ["37", "47", "27"],
+                "customLabel": "24 blue and 13 red pens: 24 + 13"
+            }
         },
         {
             "id": "na_2_wordadd_004",
             "competency": "NA.2.10",
             "topic": "Addition Word Problems",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
-            "question": "Look at the picture. There are 45 students in the hall. 12 more walk in. How many students are there in the hall?",
+            "question": "There are 45 students in the hall. 12 more walk in. How many students are there in total?",
             "answer": 57,
+            "assetId": "icon_boy",
             "assetType": "illustration",
-            "metadata": {}
+            "metadata": {
+                "options": ["57", "67", "47"],
+                "customLabel": "45 students and 12 more: 45 + 12"
+            }
         },
         {
             "id": "na_2_wordadd_007",
             "competency": "NA.2.10",
             "topic": "Addition Word Problems",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "VISUAL_PICKER",
             "difficulty": "Easy",
-            "question": "Ben collected 54 stickers. Sarah gave him 10 more. How many stickers does Ben have now?",
+            "question": "Ben collected 54 stickers. Sarah gave him 10 more. How many stickers does he have now?",
             "answer": 64,
+            "assetId": "icon_girl",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": ["64", "74", "54"],
+                "customLabel": "54 stickers and 10 more: 54 + 10"
+            }
         }
     ]
 }

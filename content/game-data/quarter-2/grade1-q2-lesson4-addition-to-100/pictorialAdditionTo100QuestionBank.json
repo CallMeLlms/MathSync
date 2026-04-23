@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "VISUAL_PICKER": "Story-based picker for pictorial and abstract addition"
         }
     },
     "questions": [
@@ -43,12 +43,16 @@
             "competency": "NA.2.9",
             "topic": "Pictorial Addition",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "VISUAL_PICKER",
             "difficulty": "Hard",
-            "question": "5 tens and 4 ones plus 2 tens and 3 ones equals how many tens and ones?",
+            "question": "Ben has 5 tens and 4 ones. Lia gives him 2 tens and 3 ones. How many tens and ones does Ben have now?",
             "answer": 77,
+            "assetId": "icon_boy",
             "assetType": "text",
-            "metadata": {}
+            "metadata": {
+                "options": ["77", "67", "57"],
+                "customLabel": "5 tens 4 ones and 2 tens 3 ones: 54 + 23"
+            }
         }
     ]
 }
