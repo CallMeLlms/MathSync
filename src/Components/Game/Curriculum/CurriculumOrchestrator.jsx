@@ -29,6 +29,13 @@ import VisualNumpadEngine from './Engines/VisualNumpadEngine';
 import WordProblemEngine from './Engines/WordProblemEngine';
 import VisualPickerEngine from './Engines/VisualPickerEngine';
 import ComparePickerEngine from './Engines/ComparePickerEngine';
+import FractionShapeEngine from './Engines/FractionShapeEngine';
+import CalendarPageEngine from './Engines/CalendarPageEngine';
+import TurnCompassEngine from './Engines/TurnCompassEngine';
+import PictographReaderEngine from './Engines/PictographReaderEngine';
+import DataTableReaderEngine from './Engines/DataTableReaderEngine';
+import FruitStandEngine from './Engines/FruitStandEngine';
+import PatternSequenceEngine from './Engines/PatternSequenceEngine';
 // Gesture-heavy engines must render inside a plain View — a ScrollView would
 // intercept their touch responder and break drag/draw interactions.
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
@@ -179,6 +186,13 @@ export default function CurriculumOrchestrator({
       case 'sort': return <SortEngine key={currentQuestionIndex} {...props} />;
       case 'geoboard': return <GeoboardEngine key={currentQuestionIndex} {...props} />;
       case 'clocksetter': return <ClockSetterEngine key={currentQuestionIndex} {...props} />;
+      case 'fraction_shape': return <FractionShapeEngine key={currentQuestionIndex} {...props} />;
+      case 'calendar_page': return <CalendarPageEngine key={currentQuestionIndex} {...props} />;
+      case 'turn_compass': return <TurnCompassEngine key={currentQuestionIndex} {...props} />;
+      case 'pictograph_reader': return <PictographReaderEngine key={currentQuestionIndex} {...props} />;
+      case 'data_table_reader': return <DataTableReaderEngine key={currentQuestionIndex} {...props} />;
+      case 'fruit_stand': return <FruitStandEngine key={currentQuestionIndex} {...props} />;
+      case 'pattern_sequence': return <PatternSequenceEngine key={currentQuestionIndex} {...props} />;
       // MatcherEngine uses a different prop contract (question/onAnswer) than the
       // standard Orchestrator API (data/onResult). Bridge inline to avoid touching the engine.
       case 'matcher': return (

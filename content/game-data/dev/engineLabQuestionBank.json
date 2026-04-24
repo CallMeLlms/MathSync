@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "DEV ONLY — Engine Lab test bank. One or two questions per engine type to validate rendering and interaction. Remove or exclude from production builds.",
-    "engines_covered": ["picker", "numpad", "matcher", "composer", "dragdrop", "sort", "shape_hunt", "ordinal_sequence", "connectdots", "shapetracer", "clocksetter", "compare_picker"]
+    "engines_covered": ["picker", "numpad", "matcher", "composer", "dragdrop", "sort", "shape_hunt", "ordinal_sequence", "connectdots", "shapetracer", "clocksetter", "compare_picker", "fraction_shape", "calendar_page", "turn_compass", "pictograph_reader", "data_table_reader", "fruit_stand", "pattern_sequence"]
   },
   "questions": [
     {
@@ -47,6 +47,182 @@
         "pile_a": 9,
         "pile_b": 4
       }
+    },
+    {
+      "id": "lab-fraction-shape-1",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the circle is shaded?",
+      "answer": "one-half",
+      "metadata": {
+        "shape": "circle",
+        "fraction": "1/2",
+        "options": ["one-whole", "one-half", "one-fourth"]
+      }
+    },
+    {
+      "id": "lab-fraction-shape-2",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the circle is shaded?",
+      "answer": "one-fourth",
+      "metadata": {
+        "shape": "circle",
+        "fraction": "1/4",
+        "options": ["one-whole", "one-half", "one-fourth"]
+      }
+    },
+    {
+      "id": "lab-fraction-shape-3",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the square is shaded?",
+      "answer": "one-half",
+      "metadata": {
+        "shape": "square",
+        "fraction": "1/2",
+        "options": ["one-whole", "one-half", "one-fourth"]
+      }
+    },
+    {
+      "id": "lab-fraction-shape-4",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the square is shaded?",
+      "answer": "one-fourth",
+      "metadata": {
+        "shape": "square",
+        "fraction": "1/4",
+        "options": ["one-whole", "one-half", "one-fourth"]
+      }
+    },
+    {
+      "id": "lab-fraction-shape-5",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the bar is shaded?",
+      "answer": "one-fourth",
+      "metadata": {
+        "shape": "rectangle",
+        "fraction": "1/4",
+        "options": ["one-whole", "one-half", "one-fourth"]
+      }
+    },
+
+    {
+      "id": "lab-calendar-page-1",
+      "type": "CALENDAR_PAGE",
+      "question": "What day comes after Wednesday?",
+      "answer": "Thursday",
+      "assetType": "text",
+      "metadata": {
+        "options": ["Tuesday", "Wednesday", "Thursday", "Friday"]
+      }
+    },
+    {
+      "id": "lab-calendar-page-2",
+      "type": "CALENDAR_PAGE",
+      "question": "Which month is the 5th month of the year?",
+      "answer": "May",
+      "assetType": "text",
+      "metadata": {
+        "options": ["April", "May", "June", "July"]
+      }
+    },
+
+    {
+      "id": "lab-turn-compass-1",
+      "type": "TURN_COMPASS",
+      "question": "Look at the arrow. If it makes a quarter-turn clockwise, where will it point?",
+      "answer": "East",
+      "assetType": "text",
+      "metadata": {
+        "initialDirection": "North",
+        "turnType": "quarter",
+        "turnDirection": "clockwise",
+        "options": ["North", "East", "South", "West"]
+      }
+    },
+    {
+      "id": "lab-turn-compass-2",
+      "type": "TURN_COMPASS",
+      "question": "The arrow points South. It makes a half-turn. Where does it point now?",
+      "answer": "North",
+      "assetType": "text",
+      "metadata": {
+        "initialDirection": "South",
+        "turnType": "half",
+        "turnDirection": "clockwise",
+        "options": ["North", "East", "South", "West"]
+      }
+    },
+
+    {
+      "id": "lab-pictograph-reader-1",
+      "type": "PICTOGRAPH_READER",
+      "question": "Look at the pictograph. How many mangoes were picked on Friday?",
+      "answer": 4,
+      "assetType": "text",
+      "pictograph": {
+        "title": "Harvested Mangoes",
+        "targetRow": "Friday",
+        "rows": [
+          { "label": "Monday",    "count": 3, "emoji": "🥭" },
+          { "label": "Tuesday",   "count": 5, "emoji": "🥭" },
+          { "label": "Wednesday", "count": 2, "emoji": "🥭" },
+          { "label": "Thursday",  "count": 6, "emoji": "🥭" },
+          { "label": "Friday",    "count": 4, "emoji": "🥭" }
+        ]
+      }
+    },
+
+    {
+      "id": "lab-data-table-reader-1",
+      "type": "DATA_TABLE_READER",
+      "question": "Look at the pictograph. What number should go in the Milk row of the table?",
+      "answer": 8,
+      "assetType": "text",
+      "pictograph": {
+        "title": "Favorite Drinks",
+        "rows": [
+          { "label": "Water", "count": 5, "emoji": "💧" },
+          { "label": "Juice", "count": 3, "emoji": "🧃" },
+          { "label": "Milk",  "count": 8, "emoji": "🥛" }
+        ]
+      },
+      "table": {
+        "headers": ["Drink", "Number of Votes"],
+        "targetRow": "Milk",
+        "rows": [
+          { "label": "Water", "value": 5 },
+          { "label": "Juice", "value": 3 },
+          { "label": "Milk",  "value": null }
+        ]
+      }
+    },
+
+    {
+      "id": "lab-fruit-stand-1",
+      "type": "FRUIT_STAND",
+      "question": "Place 4 apples and 2 bananas in the fruit stand. How many apples did you place?",
+      "answer": 4,
+      "assetType": "text",
+      "fruits": [
+        { "label": "Apple",  "emoji": "🍎", "target": 4, "isAnswer": true },
+        { "label": "Banana", "emoji": "🍌", "target": 2, "isAnswer": false }
+      ]
+    },
+
+    {
+      "id": "lab-pattern-sequence-1",
+      "type": "PATTERN_SEQUENCE",
+      "question": "What comes next in the pattern?",
+      "sequence": ["🐱", "🐶", "🐱", "🐶", "?"],
+      "answer": "🐱",
+      "options": ["🐱", "🐶", "🐸", "🐰"]
+    },
+    {
+      "id": "lab-pattern-sequence-2",
+      "type": "PATTERN_SEQUENCE",
+      "question": "What is the missing piece in the pattern?",
+      "sequence": ["⭐", "🔶", "🔵", "⭐", "🔶", "?"],
+      "answer": "🔵",
+      "options": ["⭐", "🔶", "🔵", "🟢"]
     }
   ]
 }
