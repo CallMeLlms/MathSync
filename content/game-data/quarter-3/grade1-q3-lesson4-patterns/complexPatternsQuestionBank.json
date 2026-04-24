@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "MATCHER": "Used for complex pattern identification"
+            "PATTERN_SEQUENCE": "Visual answer choosing for complex repeating patterns"
         }
     },
     "questions": [
@@ -17,32 +17,25 @@
             "competency": "NA.3.11",
             "topic": "Mixed Patterns",
             "level": "concrete",
-            "type": "MATCHER",
+            "type": "PATTERN_SEQUENCE",
             "difficulty": "Easy",
-            "question": "Look at the pattern: Small circle, Large circle, Small circle. What comes next?",
-            "pairs": [
-                {
-                    "left": "pattern_next",
-                    "right": "large_circle"
-                }
-            ],
-            "assetType": "manipulatives",
-            "assetId": "shape_circle"
+            "question": "Look at the shape pattern. What comes next?",
+            "answer": "⚪",
+            "sequence": ["⚫", "⚪", "⚫", "⚪", "?"],
+            "options": ["⚫", "⚪", "🟦", "🔺"],
+            "assetType": "manipulatives"
         },
         {
             "id": "na_3_comp_004",
             "competency": "NA.3.11",
             "topic": "Mixed Patterns",
             "level": "pictorial",
-            "type": "MATCHER",
+            "type": "PATTERN_SEQUENCE",
             "difficulty": "Medium",
-            "question": "In the picture: Happy face, Sad face, Happy face, Sad face. What comes next?",
-            "pairs": [
-                {
-                    "left": "pattern_next",
-                    "right": "happy_face"
-                }
-            ],
+            "question": "Look at the face pattern. What comes next?",
+            "answer": "😊",
+            "sequence": ["😊", "😢", "😊", "😢", "?"],
+            "options": ["😊", "😢", "😎", "🤔"],
             "assetType": "illustration"
         },
         {
@@ -50,14 +43,13 @@
             "competency": "NA.3.11",
             "topic": "Mixed Patterns",
             "level": "abstract",
-            "type": "PICKER",
+            "type": "PATTERN_SEQUENCE",
             "difficulty": "Hard",
-            "question": "What are the next three letters: X, Y, Z, X, Y, Z, __, __, __?",
-            "answer": "X, Y, Z",
-            "assetType": "text",
-            "metadata": {
-                "options": ["X, Y, Z", "Z, Y, X", "X, X, Z", "Y, Z, X"]
-            }
+            "question": "What is the next letter in the pattern: X, Y, Z, X, Y, Z, ...?",
+            "answer": "X",
+            "sequence": ["X", "Y", "Z", "X", "Y", "Z", "?"],
+            "options": ["X", "Y", "Z", "A"],
+            "assetType": "text"
         }
     ]
-}
+}

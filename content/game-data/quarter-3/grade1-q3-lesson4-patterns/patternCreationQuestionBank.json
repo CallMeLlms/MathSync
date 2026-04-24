@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "MATCHER": "Used for choosing items to build a pattern"
+            "PATTERN_SEQUENCE": "Visual answer choosing for pattern rule identification"
         }
     },
     "questions": [
@@ -17,12 +17,12 @@
             "competency": "NA.3.12",
             "topic": "Pattern Rules",
             "level": "concrete",
-            "type": "MATCHER",
+            "type": "PATTERN_SEQUENCE",
             "difficulty": "Easy",
-            "question": "Which of these shows an 'ABAB' pattern with blocks?",
-            "pairs": [
-                {"left": "option_1", "right": "red-blue-red-blue"}
-            ],
+            "question": "Which block comes next in this ABAB pattern?",
+            "answer": "🟥",
+            "sequence": ["🟥", "🟦", "🟥", "🟦", "?"],
+            "options": ["🟥", "🟦", "🟩", "🟨"],
             "assetType": "manipulatives"
         },
         {
@@ -30,12 +30,12 @@
             "competency": "NA.3.12",
             "topic": "Pattern Rules",
             "level": "pictorial",
-            "type": "MATCHER",
+            "type": "PATTERN_SEQUENCE",
             "difficulty": "Medium",
-            "question": "Find the picture that follows the rule: Sun, Moon, Sun, Moon.",
-            "pairs": [
-                {"left": "image_target", "right": "correct_sequence"}
-            ],
+            "question": "Follow the rule: Sun, Moon, Sun, Moon. What is next?",
+            "answer": "☀️",
+            "sequence": ["☀️", "🌙", "☀️", "🌙", "?"],
+            "options": ["☀️", "🌙", "⭐", "☁️"],
             "assetType": "illustration"
         },
         {
@@ -43,12 +43,13 @@
             "competency": "NA.3.12",
             "topic": "Pattern Rules",
             "level": "abstract",
-            "type": "N/A",
+            "type": "PATTERN_SEQUENCE",
             "difficulty": "Hard",
             "question": "If the pattern rule is +5, what number comes after 10, 15, 20?",
-            "answer": 25,
-            "assetType": "text",
-            "metadata": {}
+            "answer": "25",
+            "sequence": ["10", "15", "20", "?"],
+            "options": ["25", "30", "21", "24"],
+            "assetType": "text"
         }
     ]
 }

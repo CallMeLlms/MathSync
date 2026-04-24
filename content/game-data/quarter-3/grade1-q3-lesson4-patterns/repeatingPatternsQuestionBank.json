@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "MATCHER": "Used for choosing the next item in a pattern"
+            "PATTERN_SEQUENCE": "Visual answer choosing for repeating patterns"
         }
     },
     "questions": [
@@ -17,12 +17,12 @@
             "competency": "NA.3.11",
             "topic": "Identification of Next Terms",
             "level": "concrete",
-            "type": "MATCHER",
+            "type": "PATTERN_SEQUENCE",
             "difficulty": "Easy",
-            "question": "Look at the pattern of blocks: Red, Blue, Red, Blue. What block comes next?",
-            "pairs": [
-                {"left": "pattern_next", "right": "red_block"}
-            ],
+            "question": "Look at the pattern of blocks. What block comes next?",
+            "answer": "🟥",
+            "sequence": ["🟥", "🟦", "🟥", "🟦", "?"],
+            "options": ["🟥", "🟦", "🟩", "🟨"],
             "assetType": "manipulatives"
         },
         {
@@ -30,12 +30,12 @@
             "competency": "NA.3.11",
             "topic": "Identification of Next Terms",
             "level": "pictorial",
-            "type": "MATCHER",
+            "type": "PATTERN_SEQUENCE",
             "difficulty": "Medium",
-            "question": "Look at the picture: Apple, Banana, Cherry, Apple, Banana, ... What is next?",
-            "pairs": [
-                {"left": "pattern_next", "right": "cherry_icon"}
-            ],
+            "question": "Look at the picture pattern. What is next?",
+            "answer": "🍒",
+            "sequence": ["🍎", "🍌", "🍒", "🍎", "🍌", "?"],
+            "options": ["🍎", "🍌", "🍒", "🍇"],
             "assetType": "illustration"
         },
         {
@@ -43,14 +43,13 @@
             "competency": "NA.3.11",
             "topic": "Identification of Next Terms",
             "level": "abstract",
-            "type": "PICKER",
+            "type": "PATTERN_SEQUENCE",
             "difficulty": "Hard",
-            "question": "Identify the next two numbers in the sequence: 2, 4, 2, 4, __, __.",
-            "answer": "2, 4",
-            "assetType": "text",
-            "metadata": {
-                "options": ["2, 4", "4, 2", "2, 2", "4, 4"]
-            }
+            "question": "Identify the next term in the sequence: 2, 4, 2, 4, ...",
+            "answer": "2",
+            "sequence": ["2", "4", "2", "4", "?"],
+            "options": ["2", "4", "6", "8"],
+            "assetType": "text"
         }
     ]
 }
