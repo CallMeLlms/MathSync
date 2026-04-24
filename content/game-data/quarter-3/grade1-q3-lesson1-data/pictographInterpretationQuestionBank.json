@@ -8,7 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "COMPARE_PICKER": "Visual pile comparison interactive"
+            "PICTOGRAPH_READER": "Visual counting engine for pictograph rows"
         }
     },
     "questions": [
@@ -17,15 +17,18 @@
             "competency": "DP.3.3",
             "topic": "Data Interpretation",
             "level": "concrete",
-            "type": "COMPARE_PICKER",
+            "type": "PICTOGRAPH_READER",
             "difficulty": "Easy",
-            "question": "Which group has 4 items?",
-            "answer": "pile_b",
+            "question": "Look at the pictograph. How many items are in Group B?",
+            "answer": 4,
             "assetType": "manipulatives",
-            "metadata": {
-                "pile_a": 2,
-                "pile_b": 4,
-                "emoji": "🍎"
+            "pictograph": {
+                "title": "Group Items",
+                "targetRow": "Group B",
+                "rows": [
+                    { "label": "Group A", "count": 2, "emoji": "🍎" },
+                    { "label": "Group B", "count": 4, "emoji": "🍎" }
+                ]
             }
         },
         {
@@ -33,31 +36,42 @@
             "competency": "DP.3.3",
             "topic": "Data Interpretation",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "PICTOGRAPH_READER",
             "difficulty": "Medium",
             "question": "Look at the pictograph of 'Harvested Mangoes'. How many mangoes were picked on Friday?",
             "answer": 4,
             "assetType": "illustration",
-            "assetId": "icon_mango",
-            "metadata": {}
+            "pictograph": {
+                "title": "Harvested Mangoes",
+                "targetRow": "Friday",
+                "rows": [
+                    { "label": "Monday",    "count": 3, "emoji": "🥭" },
+                    { "label": "Tuesday",   "count": 5, "emoji": "🥭" },
+                    { "label": "Wednesday", "count": 2, "emoji": "🥭" },
+                    { "label": "Thursday",  "count": 6, "emoji": "🥭" },
+                    { "label": "Friday",    "count": 4, "emoji": "🥭" }
+                ]
+            }
         },
         {
             "id": "dp_3_int_007",
             "competency": "DP.3.3",
             "topic": "Data Interpretation",
             "level": "abstract",
-            "type": "N/A",
+            "type": "PICTOGRAPH_READER",
             "difficulty": "Hard",
             "question": "A pictograph shows 8 red balloons and 5 blue balloons. How many balloons are there in total?",
-            "equation": {
-                "left": "8 + 5",
-                "operator": "=",
-                "blank": "right"
-            },
             "answer": 13,
-            "maxDigits": 2,
             "assetType": "text",
-            "metadata": {}
+            "pictograph": {
+                "title": "Balloons",
+                "targetRow": "Total",
+                "rows": [
+                    { "label": "Red",   "count": 8, "emoji": "🎈" },
+                    { "label": "Blue",  "count": 5, "emoji": "🎈" },
+                    { "label": "Total", "count": 13, "emoji": "🎈" }
+                ]
+            }
         }
     ]
-}
+}

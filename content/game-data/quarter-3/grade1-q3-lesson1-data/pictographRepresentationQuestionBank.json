@@ -8,7 +8,8 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "N/A": "Placeholder for Picker or DragDrop engine"
+            "FRUIT_STAND": "Concrete fruit placement interaction",
+            "PICTOGRAPH_READER": "Visual counting engine for pictograph rows"
         }
     },
     "questions": [
@@ -17,25 +18,34 @@
             "competency": "DP.3.2",
             "topic": "Data Representation",
             "level": "concrete",
-            "type": "N/A",
+            "type": "FRUIT_STAND",
             "difficulty": "Easy",
-            "question": "Use the real fruit: Place 4 apples and 2 bananas in the fruit stand. How many apples did you place?",
+            "question": "Place 4 apples and 2 bananas in the fruit stand. How many apples did you place?",
             "answer": 4,
             "assetType": "manipulatives",
-            "metadata": {}
+            "fruits": [
+                { "label": "Apple",  "emoji": "🍎", "target": 4, "isAnswer": true },
+                { "label": "Banana", "emoji": "🍌", "target": 2, "isAnswer": false }
+            ]
         },
         {
             "id": "dp_3_rep_004",
             "competency": "DP.3.2",
             "topic": "Data Representation",
             "level": "pictorial",
-            "type": "PICKER",
+            "type": "PICTOGRAPH_READER",
             "difficulty": "Medium",
-            "question": "Look at the picture. Which fruit has the most symbols in the pictograph?",
-            "answer": "mango",
+            "question": "How many mangoes are in the pictograph?",
+            "answer": 6,
             "assetType": "illustration",
-            "metadata": {
-                "options": ["apple", "mango", "banana"]
+            "pictograph": {
+                "title": "Favorite Fruits",
+                "targetRow": "Mango",
+                "rows": [
+                    { "label": "Apple",  "count": 3, "emoji": "🍎" },
+                    { "label": "Mango",  "count": 6, "emoji": "🥭" },
+                    { "label": "Banana", "count": 2, "emoji": "🍌" }
+                ]
             }
         },
         {
@@ -43,12 +53,19 @@
             "competency": "DP.3.2",
             "topic": "Data Representation",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "PICTOGRAPH_READER",
             "difficulty": "Hard",
             "question": "If 1 heart symbol means 1 person, how many symbols do you need for 8 people?",
             "answer": 8,
             "assetType": "text",
-            "metadata": {}
+            "pictograph": {
+                "title": "People Symbols",
+                "targetRow": "Symbols Needed",
+                "rows": [
+                    { "label": "People",         "count": 8, "emoji": "❤️" },
+                    { "label": "Symbols Needed", "count": 8, "emoji": "❤️" }
+                ]
+            }
         }
     ]
 }

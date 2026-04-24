@@ -8,9 +8,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "MATCHER": "Matching pairs",
-            "VISUAL_PICKER": "Story-based choice",
-            "VISUAL_NUMPAD": "Visual input with character narration"
+            "DATA_TABLE_READER": "Interactive pictograph-to-table data entry"
         }
     },
     "questions": [
@@ -19,38 +17,78 @@
             "competency": "DP.3.4",
             "topic": "Data Tables",
             "level": "concrete",
-            "type": "MATCHER",
+            "type": "DATA_TABLE_READER",
             "difficulty": "Easy",
             "question": "Match the pile of blocks to the correct number on the table.",
-            "pairs": [
-                {"left": "3 blocks", "right": "3"},
-                {"left": "5 blocks", "right": "5"}
-            ],
-            "assetType": "manipulatives"
+            "answer": 5,
+            "assetType": "manipulatives",
+            "pictograph": {
+                "title": "Block Piles",
+                "rows": [
+                    { "label": "Red", "count": 3, "emoji": "🟥" },
+                    { "label": "Blue", "count": 5, "emoji": "🟦" }
+                ]
+            },
+            "table": {
+                "headers": ["Color", "Count"],
+                "targetRow": "Blue",
+                "rows": [
+                    { "label": "Red", "value": 3 },
+                    { "label": "Blue", "value": null }
+                ]
+            }
         },
         {
             "id": "dp_3_table_004",
             "competency": "DP.3.4",
             "topic": "Data Tables",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "DATA_TABLE_READER",
             "difficulty": "Medium",
             "question": "Look at the pictograph. Now look at the table. What number should go in the 'Milk' row?",
             "answer": 8,
             "assetType": "illustration",
-            "metadata": {}
+            "pictograph": {
+                "title": "Favorite Drinks",
+                "rows": [
+                    { "label": "Water", "count": 5, "emoji": "💧" },
+                    { "label": "Juice", "count": 3, "emoji": "🧃" },
+                    { "label": "Milk",  "count": 8, "emoji": "🥛" }
+                ]
+            },
+            "table": {
+                "headers": ["Drink", "Number of Votes"],
+                "targetRow": "Milk",
+                "rows": [
+                    { "label": "Water", "value": 5 },
+                    { "label": "Juice", "value": 3 },
+                    { "label": "Milk",  "value": null }
+                ]
+            }
         },
         {
             "id": "dp_3_table_007",
             "competency": "DP.3.4",
             "topic": "Data Tables",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "DATA_TABLE_READER",
             "difficulty": "Hard",
             "question": "If a graph row has 9 symbols, what number should be written in the table for that row?",
             "answer": 9,
             "assetType": "text",
-            "metadata": {}
+            "pictograph": {
+                "title": "People in Groups",
+                "rows": [
+                    { "label": "Group A", "count": 9, "emoji": "⭐" }
+                ]
+            },
+            "table": {
+                "headers": ["Group", "People"],
+                "targetRow": "Group A",
+                "rows": [
+                    { "label": "Group A", "value": null }
+                ]
+            }
         }
     ]
 }
