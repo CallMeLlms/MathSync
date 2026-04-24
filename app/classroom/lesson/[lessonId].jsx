@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import lessonService from '@services/lessonService';
 import RichTextRenderer from '@/Components/LessonComponents/RichTextRenderer';
 import OfflineVideoPlayer from '@/Components/LessonComponents/OfflineVideoPlayer';
+import { resolveGameLesson } from '@/constants/classroomLessonMap';
 
 export default function LessonDetail() {
-  const { lessonId } = useLocalSearchParams();
+  const { lessonId, grade, quarter } = useLocalSearchParams();
+  const router = useRouter();
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,6 +57,10 @@ export default function LessonDetail() {
       </View>
     );
   }
+
+  const gameLessonId = grade === 'G1'
+    ? resolveGameLesson(lesson?.title, quarter ? parseInt(quarter, 10) : null)
+    : null;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -132,6 +138,19 @@ export default function LessonDetail() {
              <View style={styles.richTextContainer}>
                 <RichTextRenderer content={lesson.lessonContent} />
              </View>
+          </View>
+        )}
+
+        {gameLessonId !== null && (
+          <View style={styles.playSection}>
+            <TouchableOpacity
+              style={styles.playButton}
+              activeOpacity={0.85}
+              onPress={() => router.push(`/game/${gameLessonId}?grade=G1`)}
+            >
+              <Feather name="zap" size={22} color="#FFFFFF" />
+              <Text style={styles.playButtonText}>Play Lesson</Text>
+            </TouchableOpacity>
           </View>
         )}
 
@@ -265,5 +284,23 @@ const styles = StyleSheet.create({
   },
   richTextContainer: {
     marginTop: 8,
-  }
+  },
+  playSection: {
+    marginTop: 8,
+    marginBottom: 16,
+  },
+  playButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary,
+    paddingVertical: 18,
+    borderRadius: 14,
+  },
+  playButtonText: {
+    fontFamily: 'Lexend-Bold',
+    fontSize: 18,
+    color: '#FFFFFF',
+    marginLeft: 10,
+  },
 });

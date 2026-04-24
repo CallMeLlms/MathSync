@@ -111,7 +111,10 @@ export default function ClassroomDetail() {
                         key={lesson._id}
                         style={styles.lessonCard}
                         activeOpacity={0.8}
-                        onPress={() => router.push(`/classroom/lesson/${lesson._id}?sectionId=${sectionId}`)}
+                        onPress={() => {
+                          const gradeKey = classDetails?.name?.replace('GRADE ', 'G').replace(' ', '') ?? '';
+                          router.push(`/classroom/lesson/${lesson._id}?sectionId=${sectionId}&grade=${gradeKey}&quarter=${quarterData.quarter}`);
+                        }}
                       >
                         <View style={styles.lessonIconBox}>
                           <MaterialIcons name="play-lesson" size={24} color={Colors.primary} />
