@@ -213,8 +213,13 @@ const CheckButton = ({ onPress, disabled, label = 'CHECK' }) => {
 // ─── FractionShapeEngine ─────────────────────────────────────────────────────
 
 const FractionShapeEngine = ({ data, onResult }) => {
-  const { question: questionText, answer, metadata = {} } = data;
-  const { shape = 'circle', fraction = '1/2', options = [] } = metadata;
+  const { 
+    question: questionText, 
+    answer, 
+    shape = 'circle', 
+    fraction = '1/2', 
+    options = [] 
+  } = data;
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [evaluation, setEvaluation] = useState(null);

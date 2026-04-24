@@ -17,12 +17,14 @@
             "competency": "NA.4.1",
             "topic": "Fractions ID",
             "level": "concrete",
-            "type": "PICKER",
+            "type": "FRACTION_SHAPE",
             "difficulty": "Easy",
-            "question": "Use the paper circle. Fold it into two equal parts. What is one part called?",
+            "question": "What is one part called?",
             "answer": "one-half",
             "assetType": "manipulatives",
-            "metadata": { "options": ["one-whole", "one-half", "one-fourth"] },
+            "shape": "circle",
+            "fraction": "1/2",
+            "options": ["one-whole", "one-half", "one-fourth"],
             "assetId": "shape_circle"
         },
         {
@@ -30,32 +32,29 @@
             "competency": "NA.4.1",
             "topic": "Fractions ID",
             "level": "pictorial",
-            "type": "PICKER",
+            "type": "FRACTION_SHAPE",
             "difficulty": "Medium",
-            "question": "Look at the picture of the bread. Which piece shows one-fourth (1/4)?",
-            "answer": "slice_c",
+            "question": "Which square shows one-fourth (1/4)?",
+            "answer": "one-fourth",
             "assetType": "illustration",
-            "assetId": "icon_bread",
-            "metadata": {
-                "options": [
-                    "slice_a",
-                    "slice_b",
-                    "slice_c"
-                ]
-            }
+            "shape": "square",
+            "fraction": "1/4",
+            "options": ["one-half", "one-fourth", "three-fourths"],
+            "assetId": "shape_square"
         },
         {
             "id": "na_4_fracid_007",
             "competency": "NA.4.1",
             "topic": "Fractions ID",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "FRACTION_SHAPE",
             "difficulty": "Hard",
-            "question": "What is 1/2 of 10?",
-            "answer": 5,
-            "equation": { "left": "1/2 of 10", "operator": "=", "blank": "right" },
-            "assetType": "text",
-            "metadata": {}
+            "question": "What is 1/2 of the whole?",
+            "answer": "one-half",
+            "shape": "rectangle",
+            "fraction": "1/2",
+            "options": ["one-whole", "one-half", "one-fourth"],
+            "assetType": "text"
         }
     ]
 }

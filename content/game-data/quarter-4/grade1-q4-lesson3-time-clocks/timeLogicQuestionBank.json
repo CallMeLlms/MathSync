@@ -17,36 +17,41 @@
             "competency": "MG.4.12",
             "topic": "Time Logic",
             "level": "concrete",
-            "type": "N/A",
+            "type": "CLOCKSETTER",
             "difficulty": "Easy",
-            "question": "If it is 2 o'clock now, what time will it be in 1 hour?",
+            "question": "If it is 2 o'clock now, what time will it be in 1 hour? Show it on the clock!",
             "answer": 3,
             "assetType": "manipulatives",
-            "metadata": {}
+            "initialTime": { "hour": 2, "minute": 0 },
+            "targetTime": { "hour": 3, "minute": 0 },
+            "mode": "quarter-hour"
         },
         {
             "id": "mg_4_logic_004",
             "competency": "MG.4.12",
             "topic": "Time Logic",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "CLOCKSETTER",
             "difficulty": "Medium",
-            "question": "Look at the clocks in the picture. Clock A shows 7:00 and Clock B shows 9:00. How many hours passed between them?",
+            "question": "If you started at 7:00 and worked for 2 hours, what time is it now? Show it on the clock!",
             "answer": 2,
             "assetType": "illustration",
-            "metadata": {}
+            "initialTime": { "hour": 7, "minute": 0 },
+            "targetTime": { "hour": 9, "minute": 0 },
+            "mode": "quarter-hour"
         },
         {
             "id": "mg_4_logic_007",
             "competency": "MG.4.12",
             "topic": "Time Logic",
             "level": "abstract",
-            "type": "N/A",
+            "type": "CLOCKSETTER",
             "difficulty": "Hard",
-            "question": "What is 2 hours BEFORE 10:00?",
+            "question": "Show the time that is 2 hours BEFORE 10:00!",
             "answer": 8,
             "assetType": "text",
-            "metadata": {}
+            "targetTime": { "hour": 8, "minute": 0 },
+            "mode": "quarter-hour"
         }
     ]
 }

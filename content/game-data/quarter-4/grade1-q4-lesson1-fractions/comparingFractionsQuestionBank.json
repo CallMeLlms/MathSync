@@ -17,12 +17,14 @@
             "competency": "NA.4.2",
             "topic": "Fraction Comparison",
             "level": "concrete",
-            "type": "PICKER",
+            "type": "FRACTION_SHAPE",
             "difficulty": "Easy",
-            "question": "Take two equal squares of paper. Fold one into 1/2 and one into 1/4. Which piece is bigger?",
-            "answer": "1/2",
+            "question": "Is this 1/2 piece bigger or smaller than a 1/4 piece?",
+            "answer": "bigger",
             "assetType": "manipulatives",
-            "metadata": { "options": ["1/4", "1/2", "They are equal"] },
+            "shape": "square",
+            "fraction": "1/2",
+            "options": ["bigger", "smaller", "equal"],
             "assetId": "shape_square"
         },
         {
@@ -30,12 +32,14 @@
             "competency": "NA.4.2",
             "topic": "Fraction Comparison",
             "level": "pictorial",
-            "type": "PICKER",
+            "type": "FRACTION_SHAPE",
             "difficulty": "Easy",
-            "question": "Look at the circles. Which circle has the LARGER shaded area: the one showing 1/2 or the one showing 1/4?",
-            "answer": "1/2 circle",
+            "question": "Which shaded area is Larger: 1/2 or 1/4?",
+            "answer": "1/2",
             "assetType": "illustration",
-            "metadata": { "options": ["1/4 circle", "1/2 circle", "They are the same"] },
+            "shape": "circle",
+            "fraction": "1/2",
+            "options": ["1/4", "1/2", "Equal"],
             "assetId": "shape_circle"
         },
         {
@@ -43,17 +47,14 @@
             "competency": "NA.4.2",
             "topic": "Fraction Comparison",
             "level": "abstract",
-            "type": "PICKER",
+            "type": "FRACTION_SHAPE",
             "difficulty": "Hard",
             "question": "Which fraction is bigger: 1/2 or 1/4?",
             "answer": "1/2",
             "assetType": "text",
-            "metadata": {
-                "options": [
-                    "1/2",
-                    "1/4"
-                ]
-            }
+            "shape": "rectangle",
+            "fraction": "1/4",
+            "options": ["1/2", "1/4"]
         }
     ]
 }

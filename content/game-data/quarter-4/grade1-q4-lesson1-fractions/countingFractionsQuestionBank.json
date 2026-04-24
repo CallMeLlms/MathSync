@@ -17,12 +17,14 @@
             "competency": "NA.4.3",
             "topic": "Fraction Counting",
             "level": "concrete",
-            "type": "N/A",
+            "type": "FRACTION_SHAPE",
             "difficulty": "Easy",
-            "question": "How many halves make one whole circle?",
-            "answer": 2,
+            "question": "How many of these halves make one whole circle?",
+            "answer": "two",
             "assetType": "manipulatives",
-            "metadata": {},
+            "shape": "circle",
+            "fraction": "1/2",
+            "options": ["one", "two", "three"],
             "assetId": "shape_circle"
         },
         {
@@ -30,24 +32,29 @@
             "competency": "NA.4.3",
             "topic": "Fraction Counting",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "FRACTION_SHAPE",
             "difficulty": "Medium",
-            "question": "Look at the picture. There are 3 whole pies. If each is cut into quarters, how many slices are there?",
-            "answer": 12,
+            "question": "If a whole pie is cut like this, how many slices make the whole?",
+            "answer": "four",
             "assetType": "illustration",
-            "metadata": {}
+            "shape": "circle",
+            "fraction": "1/4",
+            "options": ["two", "four", "eight"],
+            "assetId": "shape_circle"
         },
         {
             "id": "na_4_fraccount_007",
             "competency": "NA.4.3",
             "topic": "Fraction Counting",
             "level": "abstract",
-            "type": "N/A",
+            "type": "FRACTION_SHAPE",
             "difficulty": "Hard",
-            "question": "How many halves are in 4 wholes?",
-            "answer": 8,
+            "question": "How many halves are in this whole?",
+            "answer": "two",
             "assetType": "text",
-            "metadata": {}
+            "shape": "rectangle",
+            "fraction": "1/2",
+            "options": ["one-half", "two", "four"]
         }
     ]
 }

@@ -17,41 +17,39 @@
             "competency": "MG.4.9",
             "topic": "Clock Reading",
             "level": "concrete",
-            "type": "N/A",
+            "type": "CLOCKSETTER",
             "difficulty": "Easy",
-            "question": "Move the hands of the clock to show 3 o'clock. What number is the long hand pointing to?",
+            "question": "Show 3 o'clock on the clock!",
             "answer": 12,
             "assetId": "clock_face_3_00",
-            "metadata": {
-                "targetTime": "3:00"
-            }
+            "targetTime": { "hour": 3, "minute": 0 },
+            "mode": "quarter-hour"
         },
         {
             "id": "mg_4_clock_004",
             "competency": "MG.4.9",
             "topic": "Clock Reading",
             "level": "pictorial",
-            "type": "PICKER",
+            "type": "CLOCKSETTER",
             "difficulty": "Easy",
-            "question": "Look at the picture. What time is shown on the clock?",
+            "question": "Set the clock to 10:00!",
             "answer": "10:00",
             "assetId": "clock_face_10_00",
-            "metadata": {
-                "reading": "10:00",
-                "options": ["9:00", "10:00", "10:30", "11:00"]
-            }
+            "targetTime": { "hour": 10, "minute": 0 },
+            "mode": "quarter-hour"
         },
         {
             "id": "mg_4_clock_007",
             "competency": "MG.4.9",
             "topic": "Clock Reading",
             "level": "abstract",
-            "type": "N/A",
+            "type": "CLOCKSETTER",
             "difficulty": "Hard",
-            "question": "If the minute hand points to 6, how many minutes past the hour is it?",
+            "question": "The minute hand points to 6. Set the clock to half-past the hour (any hour)!",
             "answer": 30,
             "assetType": "text",
-            "metadata": {}
+            "targetTime": { "hour": 12, "minute": 30 },
+            "mode": "quarter-hour"
         }
     ]
 }

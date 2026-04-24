@@ -17,42 +17,40 @@
             "competency": "MG.4.9",
             "topic": "Clock Matching",
             "level": "concrete",
-            "type": "MATCHER",
+            "type": "CLOCKSETTER",
             "difficulty": "Easy",
-            "question": "Match the clock showing 12:00 to the word 'Noon'.",
-            "pairs": [
-                {"left": "clock_12", "right": "Noon"}
-            ],
-            "assetType": "manipulatives"
+            "question": "Noon is 12:00. Set the clock to Noon!",
+            "answer": "12:00",
+            "assetType": "manipulatives",
+            "targetTime": { "hour": 12, "minute": 0 },
+            "mode": "quarter-hour"
         },
         {
             "id": "mg_4_match_004",
             "competency": "MG.4.9",
             "topic": "Clock Matching",
             "level": "pictorial",
-            "type": "MATCHER",
+            "type": "CLOCKSETTER",
             "difficulty": "Medium",
-            "question": "Match the drawing of the clock to its digital numbers.",
-            "pairs": [
-                {"left": "drawing_7:00", "right": "7:00"},
-                {"left": "drawing_7:30", "right": "7:30"}
-            ],
+            "question": "Show 7:30 on the clock!",
+            "answer": "7:30",
             "assetId": "clock_face_7_30",
-            "assetType": "illustration"
+            "assetType": "illustration",
+            "targetTime": { "hour": 7, "minute": 30 },
+            "mode": "quarter-hour"
         },
         {
             "id": "na_4_match_007",
             "competency": "MG.4.9",
             "topic": "Clock Matching",
             "level": "abstract",
-            "type": "PICKER",
+            "type": "CLOCKSETTER",
             "difficulty": "Hard",
-            "question": "Is 'Quarter-to 5' the same as '4:45'?",
-            "answer": "Yes",
+            "question": "Show 'Quarter-to 5' (4:45) on the clock!",
+            "answer": "4:45",
             "assetType": "text",
-            "metadata": {
-                "options": ["Yes", "No"]
-            }
+            "targetTime": { "hour": 4, "minute": 45 },
+            "mode": "quarter-hour"
         }
     ]
 }

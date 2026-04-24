@@ -17,13 +17,16 @@
             "competency": "MG.4.8",
             "topic": "Rotations",
             "level": "concrete",
-            "type": "N/A",
+            "type": "TURN_COMPASS",
             "difficulty": "Easy",
-            "question": "Hold a toy car facing forward. Turn it half a turn. Which way is it facing now?",
-            "answer": "backward",
+            "question": "The car faces North. It makes a half-turn. Which way is it facing now?",
+            "answer": "South",
             "assetType": "manipulatives",
             "metadata": {
-                "spriteAction": "Initial: North, Turn: Half"
+                "initialDirection": "North",
+                "turnType": "half",
+                "turnDirection": "clockwise",
+                "options": ["North", "East", "South", "West"]
             }
         },
         {
@@ -31,13 +34,16 @@
             "competency": "MG.4.8",
             "topic": "Rotations",
             "level": "pictorial",
-            "type": "PICKER",
+            "type": "TURN_COMPASS",
             "difficulty": "Medium",
-            "question": "Look at the arrow in the picture. If it makes a quarter-turn clockwise, where will it point?",
+            "question": "Look at the arrow. If it makes a quarter-turn clockwise, where will it point?",
             "answer": "East",
             "assetType": "illustration",
             "metadata": {
-                "spriteAction": "Initial: North, Turn: Quarter Clockwise"
+                "initialDirection": "North",
+                "turnType": "quarter",
+                "turnDirection": "clockwise",
+                "options": ["North", "East", "South", "West"]
             }
         },
         {
@@ -45,9 +51,9 @@
             "competency": "MG.4.8",
             "topic": "Rotations",
             "level": "abstract",
-            "type": "N/A",
+            "type": "NUMPAD",
             "difficulty": "Hard",
-            "question": "A quarter-turn is the same as how many degrees on a clock (minutes)?",
+            "question": "A quarter-turn is the same as how many minutes on a clock?",
             "answer": 15,
             "assetType": "text",
             "metadata": {}

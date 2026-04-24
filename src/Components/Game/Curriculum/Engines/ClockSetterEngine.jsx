@@ -273,11 +273,6 @@ export default function ClockSetterEngine({ data, onResult }) {
   // ── Render ─────────────────────────────────────────────────────
   return (
     <View style={styles.container}>
-      {/* Prompt */}
-      <Animated.Text entering={FadeIn.delay(80)} style={styles.promptText}>
-        {data.question ?? `Set the clock to ${targetTime.hour}:00`}
-      </Animated.Text>
-
       {/* Instruction */}
       <Animated.Text
         entering={FadeIn.delay(150)}

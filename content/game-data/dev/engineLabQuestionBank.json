@@ -53,33 +53,27 @@
       "type": "FRACTION_SHAPE",
       "question": "What fraction of the circle is shaded?",
       "answer": "one-half",
-      "metadata": {
-        "shape": "circle",
-        "fraction": "1/2",
-        "options": ["one-whole", "one-half", "one-fourth"]
-      }
+      "shape": "circle",
+      "fraction": "1/2",
+      "options": ["one-whole", "one-half", "one-fourth"]
     },
     {
       "id": "lab-fraction-shape-2",
       "type": "FRACTION_SHAPE",
       "question": "What fraction of the circle is shaded?",
       "answer": "one-fourth",
-      "metadata": {
-        "shape": "circle",
-        "fraction": "1/4",
-        "options": ["one-whole", "one-half", "one-fourth"]
-      }
+      "shape": "circle",
+      "fraction": "1/4",
+      "options": ["one-whole", "one-half", "one-fourth"]
     },
     {
       "id": "lab-fraction-shape-3",
       "type": "FRACTION_SHAPE",
       "question": "What fraction of the square is shaded?",
       "answer": "one-half",
-      "metadata": {
-        "shape": "square",
-        "fraction": "1/2",
-        "options": ["one-whole", "one-half", "one-fourth"]
-      }
+      "shape": "square",
+      "fraction": "1/2",
+      "options": ["one-whole", "one-half", "one-fourth"]
     },
     {
       "id": "lab-fraction-shape-4",
@@ -223,6 +217,14 @@
       "sequence": ["⭐", "🔶", "🔵", "⭐", "🔶", "?"],
       "answer": "🔵",
       "options": ["⭐", "🔶", "🔵", "🟢"]
+    },
+    {
+      "id": "lab-clocksetter-6",
+      "type": "CLOCKSETTER",
+      "question": "Set the clock to 5:45!",
+      "targetTime": { "hour": 5, "minute": 45 },
+      "initialTime": { "hour": 12, "minute": 0 },
+      "mode": "quarter-hour"
     }
   ]
 }
