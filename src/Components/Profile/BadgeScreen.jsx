@@ -2,53 +2,15 @@ import React from 'react';
 import { SafeAreaView, ScrollView, View, Text, StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 import BadgeItem from '@/Components/Profile/BadgeItem';
-
-const BADGES = [
-  {
-    id: 'first_lesson',
-    title: 'First Lesson',
-    subtitle: 'Complete your first game',
-    assetId: 'icon_runner_1st',
-    earned: true,
-  },
-  {
-    id: 'streak_three',
-    title: 'Streak Spark',
-    subtitle: '3 lessons in a row',
-    assetId: 'icon_star',
-    earned: true,
-  },
-  {
-    id: 'shape_scout',
-    title: 'Shape Scout',
-    subtitle: 'Master shape hunt',
-    assetId: 'icon_diamond',
-    earned: true,
-  },
-  {
-    id: 'time_keeper',
-    title: 'Time Keeper',
-    subtitle: 'Finish under 2 minutes',
-    assetId: 'icon_clock_3',
-    earned: false,
-  },
-  {
-    id: 'calendar_champ',
-    title: 'Calendar Champ',
-    subtitle: 'Perfect weekly attendance',
-    assetId: 'icon_calendar',
-    earned: false,
-  },
-  {
-    id: 'number_navigator',
-    title: 'Number Navigator',
-    subtitle: 'Reach 100 solved problems',
-    assetId: 'icon_number_line',
-    earned: false,
-  },
-];
+import { useUserStore } from '@/stores/user-stores/useUserStore';
+import badgeBank from '@content/badges/badgeBank.json';
 
 export default function BadgeScreen() {
+  const earnedBadges = useUserStore((s) => s.earnedBadges);
+
+  const badges = badgeBank.map((b) => ({ ...b, earned: earnedBadges.includes(b.id) }));
+  const earnedCount = badges.filter((b) => b.earned).length;
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -58,11 +20,13 @@ export default function BadgeScreen() {
       >
         <View style={styles.header}>
           <Text style={styles.title}>Badges</Text>
-          <Text style={styles.subtitle}>Track your progress and unlock learning milestones.</Text>
+          <Text style={styles.subtitle}>
+            {earnedCount} of {badges.length} earned — keep learning to unlock more!
+          </Text>
         </View>
 
         <View style={styles.grid}>
-          {BADGES.map((badge) => (
+          {badges.map((badge) => (
             <View key={badge.id} style={styles.gridItem}>
               <BadgeItem
                 title={badge.title}
@@ -93,7 +57,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: Colors.surfaceContainerLow,
-    borderRadius: 24,
+    borderRadius: 16,
     paddingVertical: 18,
     paddingHorizontal: 16,
     borderWidth: 2,

@@ -1,10 +1,9 @@
 import React from 'react';
-import { Text, StyleSheet, Pressable } from 'react-native';
-import Animated, { 
-  useSharedValue, 
-  useAnimatedStyle, 
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
   withSpring,
-  runOnJS
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -21,111 +20,141 @@ export default function BadgeItem({ title, subtitle, assetId, earned = false }) 
   }));
 
   const handlePressIn = () => {
-    translateY.value = withSpring(4);
-    borderBottomWidth.value = withSpring(2);
+    translateY.value = withSpring(4, { damping: 15 });
+    borderBottomWidth.value = withSpring(2, { damping: 15 });
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   const handlePressOut = () => {
-    translateY.value = withSpring(0);
-    borderBottomWidth.value = withSpring(6);
+    translateY.value = withSpring(0, { damping: 15 });
+    borderBottomWidth.value = withSpring(6, { damping: 15 });
   };
 
-  const CardContent = (
-    <>
-      <Animated.View style={[styles.iconShell, earned ? styles.iconEarned : styles.iconLocked]}>
-        <AssetDisplay assetId={assetId} style={styles.iconAsset} emojiSize={36} />
-      </Animated.View>
+  const card = (
+    <Animated.View style={[styles.card, animatedStyle, earned ? styles.cardEarned : styles.cardLocked]}>
+      {earned ? (
+        <LinearGradient
+          colors={[Colors.primaryContainer, Colors.surfaceContainerLow]}
+          style={StyleSheet.absoluteFill}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          borderRadius={16}
+        />
+      ) : null}
 
-      <Text style={[styles.title, !earned && styles.lockedText]} numberOfLines={2}>
+      {/* Icon ring */}
+      <View style={[styles.iconRing, earned ? styles.iconRingEarned : styles.iconRingLocked]}>
+        {earned ? (
+          <AssetDisplay assetId={assetId} style={styles.iconAsset} emojiSize={34} />
+        ) : (
+          <Text style={styles.lockEmoji}>🔒</Text>
+        )}
+      </View>
+
+      {/* Earned stamp */}
+      {earned ? (
+        <View style={styles.earnedStamp}>
+          <Text style={styles.earnedStampText}>EARNED</Text>
+        </View>
+      ) : null}
+
+      <Text style={[styles.title, !earned && styles.textMuted]} numberOfLines={2}>
         {title}
       </Text>
 
       {subtitle ? (
-        <Text style={[styles.subtitle, !earned && styles.lockedText]} numberOfLines={2}>
+        <Text style={[styles.subtitle, !earned && styles.textMuted]} numberOfLines={2}>
           {subtitle}
         </Text>
       ) : null}
-    </>
+    </Animated.View>
   );
 
+  if (!earned) {
+    return <View style={styles.lockedWrapper}>{card}</View>;
+  }
+
   return (
-    <Pressable 
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-    >
-      <Animated.View style={[
-        styles.card, 
-        earned ? styles.cardEarned : styles.cardLocked,
-        animatedStyle
-      ]}>
-        {earned ? (
-          <LinearGradient
-            colors={[Colors.surfaceContainerLowest, Colors.surfaceContainerLow]}
-            style={StyleSheet.absoluteFill}
-            borderRadius={20}
-          />
-        ) : null}
-        {CardContent}
-      </Animated.View>
+    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut}>
+      {card}
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
+  lockedWrapper: {
+    opacity: 0.45,
+  },
   card: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 2,
-    paddingHorizontal: 12,
-    paddingVertical: 14,
-    alignItems: 'center',
-    minHeight: 168,
-    overflow: 'hidden',
     borderColor: Colors.outlineVariant,
+    paddingHorizontal: 12,
+    paddingTop: 16,
+    paddingBottom: 14,
+    alignItems: 'center',
+    overflow: 'hidden',
+    backgroundColor: Colors.surfaceContainerLow,
   },
   cardEarned: {
-    backgroundColor: Colors.surfaceContainerLowest,
+    borderColor: Colors.outlineVariant,
   },
   cardLocked: {
-    backgroundColor: Colors.surfaceContainerLow,
     borderColor: Colors.outlineVariant,
-    opacity: 0.8,
   },
-  iconShell: {
-    width: 68,
-    height: 68,
-    borderRadius: 34,
+  iconRing: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
     borderWidth: 2,
+  },
+  iconRingEarned: {
+    backgroundColor: Colors.primaryContainer,
+    borderColor: Colors.onPrimaryContainer,
+  },
+  iconRingLocked: {
+    backgroundColor: Colors.surfaceContainerHighest,
     borderColor: Colors.outlineVariant,
   },
-  iconEarned: {
-    backgroundColor: Colors.primaryContainer,
-  },
-  iconLocked: {
-    backgroundColor: Colors.surfaceContainerHighest,
-  },
   iconAsset: {
-    width: 48,
-    height: 48,
+    width: 44,
+    height: 44,
+  },
+  lockEmoji: {
+    fontSize: 28,
+  },
+  earnedStamp: {
+    backgroundColor: Colors.tertiary,
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    marginBottom: 8,
+  },
+  earnedStampText: {
+    fontFamily: 'Lexend-Bold',
+    fontSize: 9,
+    color: Colors.onTertiary,
+    letterSpacing: 1.2,
   },
   title: {
     fontFamily: 'Lexend-Bold',
-    fontSize: 15,
+    fontSize: 14,
     color: Colors.onSurface,
     textAlign: 'center',
+    marginTop: 2,
   },
   subtitle: {
     marginTop: 4,
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'PlusJakartaSans-Regular',
     fontSize: 11,
     color: Colors.onSurfaceVariant,
     textAlign: 'center',
-    lineHeight: 14,
+    lineHeight: 15,
   },
-  lockedText: {
+  textMuted: {
     color: Colors.onSurfaceVariant,
   },
 });
