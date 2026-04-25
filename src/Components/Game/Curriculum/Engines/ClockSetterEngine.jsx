@@ -3,11 +3,13 @@
 // Stage 2 (mode: 'half-hour'):    both hands; minute snaps to 0° or 180° (0 or 30 min).
 // Stage 3 (mode: 'quarter-hour'): both hands; minute snaps to 0°, 90°, 180°, 270° (0/15/30/45 min).
 
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  useDerivedValue,
+  useAnimatedProps,
   withSpring,
   withTiming,
   ZoomIn,
@@ -53,6 +55,8 @@ const snapToAllowed = (angle, allowed) => {
   return best;
 };
 
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+
 // ── ClockSetterEngine ─────────────────────────────────────────────
 export default function ClockSetterEngine({ data, onResult }) {
   const { targetTime, initialTime = { hour: 12, minute: 0 } } = data;
@@ -76,6 +80,30 @@ export default function ClockSetterEngine({ data, onResult }) {
   const btnBorderBottom = useSharedValue(6);
 
   const clockRef = useRef(null);
+
+  // ── Derived time display (UI thread, updates live with hand drag) ──
+  const derivedHour = useDerivedValue(() => {
+    'worklet';
+    return Math.round(((hourAngle.value % 360) + 360) % 360 / 30) % 12 || 12;
+  });
+
+  const derivedMinute = useDerivedValue(() => {
+    'worklet';
+    if (!isMinuteActive) return 0;
+    const snapped = snapToAllowed(minuteAngle.value, allowedMinuteAngles);
+    return snapped === 0 ? 0 : snapped === 90 ? 15 : snapped === 180 ? 30 : 45;
+  });
+
+  const derivedTimeText = useDerivedValue(() => {
+    'worklet';
+    const m = String(derivedMinute.value).padStart(2, '0');
+    return `${derivedHour.value}:${m}`;
+  });
+
+  const animatedTimeProps = useAnimatedProps(() => ({
+    text: derivedTimeText.value,
+    defaultValue: derivedTimeText.value,
+  }));
 
   // ── Reset on new question ──────────────────────────────────────
   useEffect(() => {
@@ -323,6 +351,16 @@ export default function ClockSetterEngine({ data, onResult }) {
         </GestureDetector>
       </Animated.View>
 
+      {/* Live time readout */}
+      <Animated.View entering={FadeIn.delay(200)} style={styles.timeBadge}>
+        <AnimatedTextInput
+          animatedProps={animatedTimeProps}
+          editable={false}
+          style={styles.timeBadgeText}
+          underlineColorAndroid="transparent"
+        />
+      </Animated.View>
+
       {/* Check button */}
       <View style={styles.footer}>
         <GestureDetector gesture={checkTap}>
@@ -428,6 +466,28 @@ const styles = StyleSheet.create({
     top: CLOCK_RADIUS - CENTER_DOT_SIZE / 2,
     left: CLOCK_RADIUS - CENTER_DOT_SIZE / 2,
     zIndex: 10,
+  },
+  timeBadge: {
+    alignSelf: 'center',
+    backgroundColor: Colors.surfaceContainerLow,
+    borderWidth: 2,
+    borderBottomWidth: 5,
+    borderColor: Colors.outlineVariant,
+    borderRadius: 20,
+    paddingHorizontal: 28,
+    paddingVertical: 6,
+    marginVertical: 8,
+    minWidth: 140,
+  },
+  timeBadgeText: {
+    fontFamily: 'Lexend-Bold',
+    fontSize: 32,
+    color: Colors.onSurface,
+    textAlign: 'center',
+    letterSpacing: 2,
+    borderWidth: 0,
+    backgroundColor: 'transparent',
+    padding: 0,
   },
   footer: {
     width: '100%',
