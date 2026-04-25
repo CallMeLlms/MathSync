@@ -24,8 +24,7 @@
             "assetType": "manipulatives",
             "shape": "square",
             "fraction": "1/2",
-            "options": ["bigger", "smaller", "equal"],
-            "assetId": "shape_square"
+            "options": ["bigger", "smaller", "equal"]
         },
         {
             "id": "na_4_fraccomp_004",
@@ -39,8 +38,7 @@
             "assetType": "illustration",
             "shape": "circle",
             "fraction": "1/2",
-            "options": ["1/4", "1/2", "Equal"],
-            "assetId": "shape_circle"
+            "options": ["1/4", "1/2", "Equal"]
         },
         {
             "id": "na_4_fraccomp_007",

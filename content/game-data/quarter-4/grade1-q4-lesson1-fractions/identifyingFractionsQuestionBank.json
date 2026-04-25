@@ -24,8 +24,7 @@
             "assetType": "manipulatives",
             "shape": "circle",
             "fraction": "1/2",
-            "options": ["one-whole", "one-half", "one-fourth"],
-            "assetId": "shape_circle"
+            "options": ["one-whole", "one-half", "one-fourth"]
         },
         {
             "id": "na_4_fracid_004",
@@ -39,8 +38,7 @@
             "assetType": "illustration",
             "shape": "square",
             "fraction": "1/4",
-            "options": ["one-half", "one-fourth", "three-fourths"],
-            "assetId": "shape_square"
+            "options": ["one-half", "one-fourth", "three-fourths"]
         },
         {
             "id": "na_4_fracid_007",
