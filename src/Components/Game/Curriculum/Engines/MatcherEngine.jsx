@@ -1,12 +1,12 @@
-import { View, Text, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
-  withSequence,
   ZoomIn,
   FadeIn,
+  Layout,
 } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
@@ -14,7 +14,7 @@ import Colors from '@/constants/colors';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-// ─── MatchItem: A tappable item in either column ───
+// ─── MatchItem: A tactile "Bulky" tappable item ───
 const MatchItem = ({
   label,
   isSelected,
@@ -23,87 +23,175 @@ const MatchItem = ({
   isWrong,
   onPress,
   disabled,
+  index,
+  side, // 'left' | 'right'
 }) => {
-  const pulseScale = useSharedValue(1);
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
 
-  useEffect(() => {
-    if (isSelected) {
-      pulseScale.value = withSequence(
-        withSpring(1.06, { damping: 8, stiffness: 200 }),
-        withSpring(1.0, { damping: 12, stiffness: 200 })
-      );
-    }
-  }, [isSelected]);
+  // Interaction State: correct > wrong > selected > linked > idle
+  const state = isCorrect 
+    ? 'correct' 
+    : isWrong 
+      ? 'wrong' 
+      : isSelected 
+        ? 'selected' 
+        : isLinked 
+          ? 'linked' 
+          : 'idle';
 
-  const pulseStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: pulseScale.value }],
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
   }));
 
-  // Visual states: Correct > Wrong > Linked (locked grey) > Selected > Idle
-  const bgColor = isCorrect
-    ? 'rgba(76,175,80,0.12)'
-    : isWrong
-      ? 'rgba(211,47,47,0.08)'
-      : isLinked
-        ? Colors.surfaceContainerLow
-        : isSelected
-          ? Colors.primaryContainer
-          : Colors.surface;
+  const handlePressIn = () => {
+    if (disabled || isCorrect) return;
+    translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
 
-  const borderColor = isCorrect
-    ? Colors.success
-    : isWrong
-      ? Colors.error
-      : isLinked
-        ? Colors.outlineVariant
-        : isSelected
-          ? Colors.primary
-          : Colors.outlineVariant;
+  const handlePressOut = () => {
+    if (disabled || isCorrect) return;
+    translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+  };
 
-  const textColor = isCorrect
-    ? Colors.success
-    : isWrong
-      ? Colors.error
-      : isLinked
-        ? Colors.onSurfaceVariant
-        : isSelected
-          ? Colors.primary
-          : Colors.onSurface;
+  const colors = {
+    idle: {
+      border: Colors.outlineVariant,
+      bg: Colors.surfaceContainerLowest,
+      text: Colors.onSurface,
+    },
+    linked: {
+      border: Colors.outlineVariant,
+      bg: Colors.surfaceContainerLow,
+      text: Colors.onSurfaceVariant,
+    },
+    selected: {
+      border: Colors.secondary,
+      bg: Colors.secondaryContainer,
+      text: Colors.onSecondaryContainer,
+    },
+    correct: {
+      border: Colors.success,
+      bg: '#e8f5e9', // Light success tint
+      text: Colors.success,
+    },
+    wrong: {
+      border: Colors.error,
+      bg: '#ffebee', // Light error tint
+      text: Colors.error,
+    },
+  }[state];
 
   return (
-    <Animated.View style={pulseStyle}>
-      <TouchableOpacity
-        style={[
-          styles.matchItem,
-          {
-            backgroundColor: bgColor,
-            borderColor: borderColor,
-            borderWidth: isSelected || isWrong ? 3 : 2,
-          },
-        ]}
+    <Animated.View 
+      entering={ZoomIn.springify().delay(index * 50)}
+      layout={Layout.springify()}
+      style={styles.matchItemWrapper}
+    >
+      <Pressable
         onPress={onPress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
         disabled={disabled || isCorrect}
-        activeOpacity={0.7}
       >
-        {isCorrect && (
-          <View style={styles.matchedCheck}>
-            <Ionicons name="checkmark-circle" size={18} color={Colors.success} />
-          </View>
-        )}
-        {isWrong && (
-          <View style={styles.matchedCheck}>
-            <Ionicons name="close-circle" size={18} color={Colors.error} />
-          </View>
-        )}
-        <Text
-          style={[styles.matchItemText, { color: textColor }]}
-          numberOfLines={2}
-          adjustsFontSizeToFit
+        <Animated.View
+          style={[
+            styles.matchItem,
+            animatedStyle,
+            {
+              backgroundColor: colors.bg,
+              borderColor: colors.border,
+            },
+          ]}
         >
-          {String(label)}
-        </Text>
-      </TouchableOpacity>
+          {isCorrect && (
+            <View style={styles.badge}>
+              <Ionicons name="checkmark-circle" size={20} color={Colors.success} />
+            </View>
+          )}
+          {isWrong && (
+            <View style={styles.badge}>
+              <Ionicons name="close-circle" size={20} color={Colors.error} />
+            </View>
+          )}
+          <Text
+            style={[styles.matchItemText, { color: colors.text }]}
+            numberOfLines={2}
+            adjustsFontSizeToFit
+          >
+            {String(label)}
+          </Text>
+        </Animated.View>
+      </Pressable>
     </Animated.View>
+  );
+};
+
+// ─── BulkyButton: Custom internal button component ───
+const BulkyButton = ({ label, icon, onPress, disabled, type = 'secondary', style }) => {
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(4);
+
+  const colors = {
+    primary: {
+      bg: Colors.tertiary,
+      border: '#004d1e',
+      text: '#fff',
+    },
+    secondary: {
+      bg: Colors.surface,
+      border: Colors.outlineVariant,
+      text: Colors.onSurface,
+    },
+  }[type];
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
+  }));
+
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(2);
+    bottomWidth.value = withSpring(2);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  };
+
+  const handlePressOut = () => {
+    translateY.value = withSpring(0);
+    bottomWidth.value = withSpring(4);
+  };
+
+  return (
+    <Pressable
+      onPress={onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      disabled={disabled}
+      style={[{ flex: 1 }, style]}
+    >
+      <Animated.View
+        style={[
+          styles.bulkyBtn,
+          animatedStyle,
+          { backgroundColor: colors.bg, borderColor: colors.border },
+          disabled && styles.disabledBtn
+        ]}
+      >
+        {icon && <Ionicons name={icon} size={20} color={disabled ? Colors.onSurfaceVariant : colors.text} />}
+        <Text style={[
+          styles.bulkyBtnText, 
+          { color: colors.text },
+          disabled && { color: Colors.onSurfaceVariant, opacity: 0.5 }
+        ]}>
+          {label}
+        </Text>
+      </Animated.View>
+    </Pressable>
   );
 };
 
@@ -129,13 +217,11 @@ const MatcherEngine = ({ question, onAnswer }) => {
 
   const handleLeftTap = useCallback((pairIndex) => {
     if (answered || showErrors) return;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setSelectedLeft(prev => prev === pairIndex ? null : pairIndex);
   }, [answered, showErrors]);
 
   const handleRightTap = useCallback((rightPairIndex) => {
     if (answered || selectedLeft === null || showErrors) return;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
     setUserMatches(prev => {
       const next = { ...prev };
@@ -186,18 +272,14 @@ const MatcherEngine = ({ question, onAnswer }) => {
   const matchedCount = Object.keys(userMatches).length;
   const isReadyToCheck = matchedCount === pairs.length;
 
-  // Dynamic instruction text — mirrors OrderingEngine's contextual hint
+  // Dynamic instruction text
   const instructionHint = answered
     ? '✅ All matched!'
     : showErrors
-      ? '❌ Some matches are wrong. Try again!'
+      ? '❌ Try again!'
       : selectedLeft !== null
-        ? 'Now tap its match on the right →'
-        : matchedCount > 0 && !isReadyToCheck
-          ? `${matchedCount} of ${pairs.length} matched — keep going!`
-          : isReadyToCheck
-            ? "All paired! Tap 'Check Match' when ready."
-            : 'Tap a tile on the left to begin';
+        ? 'Now tap its match →'
+        : 'Tap a tile on the left to begin';
 
   return (
     <View style={styles.container}>
@@ -207,17 +289,11 @@ const MatcherEngine = ({ question, onAnswer }) => {
         <Text style={styles.instructionHint}>{instructionHint}</Text>
       </Animated.View>
 
-      {/* ── Column Headers ── */}
-      <View style={styles.columnHeaders}>
-        <Text style={styles.columnLabel}>Match</Text>
-        <Text style={styles.columnLabel}>With</Text>
-      </View>
-
       {/* ── Match Columns ── */}
       <View style={styles.columnsContainer}>
         {/* Left Column */}
         <View style={styles.column}>
-          {leftItems.map((item) => {
+          {leftItems.map((item, idx) => {
             const rightId = userMatches[item.pairIndex];
             const isLinked = rightId !== undefined;
             const isCorrect = answered && isLinked && item.pairIndex === rightId;
@@ -228,6 +304,8 @@ const MatcherEngine = ({ question, onAnswer }) => {
               <MatchItem
                 key={`left-${item.pairIndex}`}
                 label={item.left}
+                index={idx}
+                side="left"
                 isSelected={isSelected}
                 isLinked={isLinked && !isCorrect && !isWrong}
                 isCorrect={isCorrect}
@@ -241,7 +319,7 @@ const MatcherEngine = ({ question, onAnswer }) => {
 
         {/* Right Column */}
         <View style={styles.column}>
-          {rightItems.map((item) => {
+          {rightItems.map((item, idx) => {
             const leftId = Object.keys(userMatches).find(key => userMatches[key] === item.pairIndex);
             const isLinked = leftId !== undefined;
             const isCorrect = answered && isLinked && parseInt(leftId) === item.pairIndex;
@@ -251,6 +329,8 @@ const MatcherEngine = ({ question, onAnswer }) => {
               <MatchItem
                 key={`right-${item.pairIndex}`}
                 label={item.right}
+                index={idx}
+                side="right"
                 isSelected={false}
                 isLinked={isLinked && !isCorrect && !isWrong}
                 isCorrect={isCorrect}
@@ -265,38 +345,22 @@ const MatcherEngine = ({ question, onAnswer }) => {
 
       {/* ── Footer Controls ── */}
       {!answered && (
-        <Animated.View entering={FadeIn.duration(400)} style={styles.controlsContainer}>
-          <TouchableOpacity
-            style={[
-              styles.controlBtn,
-              styles.resetBtn,
-              { opacity: matchedCount > 0 && !showErrors ? 1 : 0.35 }
-            ]}
+        <Animated.View entering={FadeIn.delay(300)} style={styles.controlsContainer}>
+          <BulkyButton
+            label="Reset"
+            icon="refresh"
+            type="secondary"
             onPress={handleReset}
             disabled={matchedCount === 0 || showErrors}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="refresh" size={18} color={Colors.onSurface} />
-            <Text style={styles.resetBtnText}>Reset</Text>
-          </TouchableOpacity>
+          />
 
-          <TouchableOpacity
-            style={[
-              styles.controlBtn,
-              styles.checkBtn,
-              { backgroundColor: isReadyToCheck ? Colors.primary : Colors.surfaceVariant }
-            ]}
+          <BulkyButton
+            label="Check Match"
+            type="primary"
             onPress={handleCheckAnswer}
             disabled={!isReadyToCheck || showErrors}
-            activeOpacity={0.8}
-          >
-            <Text style={[
-              styles.checkBtnText,
-              { color: isReadyToCheck ? '#FFF' : Colors.onSurfaceVariant }
-            ]}>
-              Check Match
-            </Text>
-          </TouchableOpacity>
+            style={{ flex: 1.5 }}
+          />
         </Animated.View>
       )}
     </View>
@@ -307,53 +371,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingTop: 24,
+    paddingBottom: 24,
   },
 
   // ─── Dynamic Hint ───
   hintContainer: {
     alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingBottom: 12,
+    paddingVertical: 16,
   },
   instructionHint: {
-    fontFamily: 'PlusJakartaSans-Medium',
-    fontSize: 14,
-    color: Colors.onSurfaceVariant,
-    textAlign: 'center',
-  },
-
-  // ─── Column Headers ───
-  columnHeaders: {
-    flexDirection: 'row',
-    width: '100%',
-    marginBottom: 10,
-    paddingHorizontal: 4,
-  },
-  columnLabel: {
-    flex: 1,
     fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 12,
+    fontSize: 15,
     color: Colors.onSurfaceVariant,
     textAlign: 'center',
-    textTransform: 'uppercase',
-    letterSpacing: 1.2,
   },
 
   // ─── Match Grid ───
   columnsContainer: {
     flex: 1,
     flexDirection: 'row',
-    width: '100%',
-    gap: 14,
+    gap: 12,
   },
   column: {
     flex: 1,
-    gap: 10,
+    gap: 12,
+  },
+  matchItemWrapper: {
+    width: '100%',
   },
   matchItem: {
-    minHeight: SCREEN_HEIGHT * 0.075,
+    minHeight: SCREEN_HEIGHT * 0.08,
     borderRadius: 16,
+    borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
@@ -361,49 +410,47 @@ const styles = StyleSheet.create({
   },
   matchItemText: {
     fontFamily: 'Lexend-Bold',
-    fontSize: SCREEN_HEIGHT * 0.021,
+    fontSize: SCREEN_HEIGHT * 0.02,
     textAlign: 'center',
   },
-  matchedCheck: {
+  badge: {
     position: 'absolute',
-    top: -7,
-    right: -7,
+    top: -8,
+    right: -8,
     backgroundColor: Colors.surface,
-    borderRadius: 10,
-    zIndex: 1,
+    borderRadius: 12,
+    zIndex: 2,
+    borderWidth: 1,
+    borderColor: Colors.outlineVariant,
   },
 
   // ─── Footer Controls ───
   controlsContainer: {
-    flexDirection: 'row',
-    gap: 14,
-    paddingBottom: 32,
-    paddingTop: 16,
+    flexDirection: 'column',
+    gap: 12,
+    paddingTop: 24,
+    paddingBottom: 16,
   },
-  controlBtn: {
-    flex: 1,
-    height: 56,
-    borderRadius: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
+
+  bulkyBtn: {
+    height: 60,
+    borderRadius: 16,
+    borderWidth: 2,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: 8,
   },
-  resetBtn: {
-    backgroundColor: Colors.surface,
-    borderWidth: 2,
-    borderColor: Colors.outlineVariant,
-  },
-  resetBtnText: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 16,
-    color: Colors.onSurface,
-  },
-  checkBtn: {},
-  checkBtnText: {
+  bulkyBtnText: {
     fontFamily: 'Lexend-Bold',
     fontSize: 16,
+    letterSpacing: 0.5,
+  },
+  disabledBtn: {
+    backgroundColor: Colors.surfaceContainerHighest,
+    borderColor: Colors.outlineVariant,
   },
 });
 
 export default MatcherEngine;
+

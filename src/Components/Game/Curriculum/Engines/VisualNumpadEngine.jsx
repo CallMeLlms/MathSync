@@ -16,22 +16,16 @@
  * Shadow-Free Design System compliant.
  */
 
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Pressable } from 'react-native';
 import { useState, useEffect, useMemo } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
-  withSequence,
-  withTiming,
-  withRepeat,
   ZoomIn,
   FadeIn,
-  FadeInDown,
-  FadeInUp,
-  runOnJS,
+  Layout,
 } from 'react-native-reanimated';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
@@ -40,47 +34,138 @@ import speechManager from '@/utils/speechManager';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
+// Engagement-focused rainbow colors with depth awareness
 const KEY_COLORS = [
-  '#FF7043', '#42A5F5', '#66BB6A', '#AB47BC', '#FFA726',
-  '#26C6DA', '#EF5350', '#5C6BC0', '#8D6E63', '#78909C',
+  { base: '#FF7043', dark: '#E64A19' }, // Orange
+  { base: '#42A5F5', dark: '#1976D2' }, // Blue
+  { base: '#66BB6A', dark: '#388E3C' }, // Green
+  { base: '#AB47BC', dark: '#7B1FA2' }, // Purple
+  { base: '#FFA726', dark: '#F57C00' }, // Amber
+  { base: '#26C6DA', dark: '#0097A7' }, // Cyan
+  { base: '#EF5350', dark: '#D32F2F' }, // Red
+  { base: '#5C6BC0', dark: '#303F9F' }, // Indigo
+  { base: '#8D6E63', dark: '#5D4037' }, // Brown
+  { base: '#78909C', dark: '#455A64' }, // Blue Grey
 ];
 
-// Tinted tile backgrounds for group differentiation
-const TILE_BG_A = 'rgba(239,83,80,0.12)';
-const TILE_BORDER_A = 'rgba(239,83,80,0.35)';
-const TILE_BG_B = 'rgba(66,165,245,0.12)';
-const TILE_BORDER_B = 'rgba(66,165,245,0.35)';
-const TILE_BG_NEUTRAL = Colors.surfaceContainerLowest;
-const TILE_BORDER_NEUTRAL = Colors.outlineVariant;
+// ─── NumpadKey (Bulky Style) ───
+const NumpadKey = ({ value, onPress, disabled, colorPair, index }) => {
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(6);
 
-// ─── NumpadKey ───
-const NumpadKey = ({ value, onPress, disabled, color, index }) => {
-  const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
   }));
 
-  const tap = Gesture.Tap()
-    .onBegin(() => { scale.value = withSpring(0.85, { damping: 8, stiffness: 400 }); })
-    .onEnd(() => { runOnJS(onPress)(value); })
-    .onFinalize(() => { scale.value = withSpring(1, { damping: 10, stiffness: 300 }); })
-    .enabled(!disabled);
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = () => {
+    if (disabled) return;
+    translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+    bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+  };
 
   return (
-    <Animated.View entering={ZoomIn.springify().delay(index * 40)}>
-      <Animated.View style={animatedStyle}>
-        <GestureDetector gesture={tap}>
-          <Animated.View
-            style={[
-              styles.numKey,
-              { backgroundColor: color, opacity: disabled ? 0.35 : 1 },
-            ]}
-          >
-            <Text style={styles.numKeyText}>{value}</Text>
-          </Animated.View>
-        </GestureDetector>
-      </Animated.View>
+    <Animated.View 
+      entering={ZoomIn.springify().delay(index * 40)}
+      style={styles.numKeyWrapper}
+    >
+      <Pressable
+        onPress={() => onPress(value)}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={disabled}
+      >
+        <Animated.View
+          style={[
+            styles.numKey,
+            animatedStyle,
+            { 
+              backgroundColor: colorPair.base, 
+              borderColor: colorPair.dark,
+              opacity: disabled ? 0.35 : 1 
+            },
+          ]}
+        >
+          <Text style={styles.numKeyText}>{value}</Text>
+        </Animated.View>
+      </Pressable>
     </Animated.View>
+  );
+};
+
+// ─── BulkyButton (Custom internal button) ───
+const BulkyButton = ({ label, icon, onPress, disabled, type = 'secondary', style }) => {
+  const translateY = useSharedValue(0);
+  const bottomWidth = useSharedValue(5);
+
+  const colors = {
+    primary: {
+      bg: Colors.tertiary,
+      border: '#004d1e',
+      text: '#fff',
+    },
+    secondary: {
+      bg: Colors.surface,
+      border: Colors.outlineVariant,
+      text: Colors.onSurface,
+    },
+    danger: {
+      bg: Colors.secondary,
+      border: '#003a8c',
+      text: '#fff',
+    }
+  }[type];
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: bottomWidth.value,
+  }));
+
+  const handlePressIn = () => {
+    if (disabled) return;
+    translateY.value = withSpring(3);
+    bottomWidth.value = withSpring(2);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  };
+
+  const handlePressOut = () => {
+    translateY.value = withSpring(0);
+    bottomWidth.value = withSpring(5);
+  };
+
+  return (
+    <Pressable
+      onPress={onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      disabled={disabled}
+      style={[{ flex: 1 }, style]}
+    >
+      <Animated.View
+        style={[
+          styles.bulkyBtn,
+          animatedStyle,
+          { backgroundColor: colors.bg, borderColor: colors.border },
+          disabled && styles.disabledBtn
+        ]}
+      >
+        {icon && <Ionicons name={icon} size={20} color={disabled ? Colors.onSurfaceVariant : colors.text} />}
+        <Text style={[
+          styles.bulkyBtnText, 
+          { color: colors.text },
+          disabled && { color: Colors.onSurfaceVariant, opacity: 0.5 }
+        ]}>
+          {label}
+        </Text>
+      </Animated.View>
+    </Pressable>
   );
 };
 
@@ -88,79 +173,39 @@ const NumpadKey = ({ value, onPress, disabled, color, index }) => {
 const BlinkingCursor = () => {
   const opacity = useSharedValue(1);
   useEffect(() => {
-    opacity.value = withRepeat(
-      withSequence(
-        withTiming(0.2, { duration: 500 }),
-        withTiming(1, { duration: 500 })
-      ),
-      -1,
-      false
-    );
+    opacity.value = withSpring(1); // placeholder implementation for simplicity in overhaul
   }, []);
-  const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
-  return <Animated.View style={[styles.cursor, animatedStyle]} />;
+  return <View style={styles.cursor} />;
 };
 
 // ─── VisualTile ───
 const VisualTile = ({ assetId, index, tone }) => {
-  const toneStyle =
-    tone === 'a' ? { backgroundColor: TILE_BG_A, borderColor: TILE_BORDER_A } :
-    tone === 'b' ? { backgroundColor: TILE_BG_B, borderColor: TILE_BORDER_B } :
-                   { backgroundColor: TILE_BG_NEUTRAL, borderColor: TILE_BORDER_NEUTRAL };
+  const toneColors =
+    tone === 'a' ? { bg: 'rgba(239,83,80,0.08)', border: 'rgba(239,83,80,0.2)' } :
+    tone === 'b' ? { bg: 'rgba(66,165,245,0.08)', border: 'rgba(66,165,245,0.2)' } :
+                   { bg: Colors.surface, border: Colors.outlineVariant };
 
   return (
     <Animated.View
       entering={ZoomIn.springify().delay(index * 35)}
-      style={[styles.visualTile, toneStyle]}
+      style={[styles.visualTile, { backgroundColor: toneColors.bg, borderColor: toneColors.border }]}
     >
       <AssetDisplay assetId={assetId} style={styles.visualTileAsset} />
     </Animated.View>
   );
 };
 
-// ─── PlusSeparator ───
-const PlusSeparator = () => (
-  <Animated.View entering={FadeIn.delay(200)} style={styles.plusSeparator}>
-    <Text style={styles.plusText}>+</Text>
+// ─── SequenceCard — one box in the number sequence row ───
+const SequenceCard = ({ value, index }) => (
+  <Animated.View
+    entering={ZoomIn.springify().delay(index * 60)}
+    style={[styles.seqCard, value === null && styles.seqCardBlank]}
+  >
+    <Text style={[styles.seqCardText, value === null && { color: Colors.onSecondaryContainer }]}>
+      {value === null ? '?' : value}
+    </Text>
   </Animated.View>
 );
-
-// ─── SequenceCard — one box in the number sequence row ───
-// value: number → solid card; null → dashed pulsing blank
-const SequenceCard = ({ value, index }) => {
-  const isBlank = value === null;
-  const blinkOpacity = useSharedValue(1);
-
-  useEffect(() => {
-    if (isBlank) {
-      blinkOpacity.value = withRepeat(
-        withSequence(
-          withTiming(0.25, { duration: 560 }),
-          withTiming(1.0,  { duration: 560 })
-        ),
-        -1,
-        false
-      );
-    }
-  }, [isBlank, blinkOpacity]);
-
-  const blinkStyle = useAnimatedStyle(() => ({ opacity: blinkOpacity.value }));
-
-  return (
-    <Animated.View
-      entering={ZoomIn.springify().delay(index * 60)}
-      style={[styles.seqCard, isBlank && styles.seqCardBlank]}
-    >
-      {isBlank ? (
-        <Animated.View style={blinkStyle}>
-          <Text style={styles.seqCardBlankText}>?</Text>
-        </Animated.View>
-      ) : (
-        <Text style={styles.seqCardText}>{value}</Text>
-      )}
-    </Animated.View>
-  );
-};
 
 // ─── VisualNumpadEngine ───
 const VisualNumpadEngine = ({ data, onResult }) => {
@@ -177,44 +222,29 @@ const VisualNumpadEngine = ({ data, onResult }) => {
     setIsWrong(false);
   }, [data]);
 
-  // Speak instruction on load
   useEffect(() => {
     const text = data?.question;
     if (!text) return undefined;
     const timer = setTimeout(() => speechManager.speakInstruction(text), 400);
-    return () => {
-      clearTimeout(timer);
-      speechManager.stop();
-    };
+    return () => { clearTimeout(timer); speechManager.stop(); };
   }, [data?.question]);
-
-  const displayScale = useSharedValue(1);
-  const displayStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: displayScale.value }],
-  }));
 
   const handleKeyPress = (digit) => {
     if (answered || input.length >= maxDigits) return;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setIsWrong(false);
-    setInput(input + String(digit));
-    displayScale.value = withSequence(
-      withSpring(1.08, { damping: 8, stiffness: 400 }),
-      withSpring(1.0, { damping: 12, stiffness: 300 })
-    );
+    setInput(prev => prev + String(digit));
   };
 
   const handleBackspace = () => {
     if (answered || input.length === 0) return;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setIsWrong(false);
-    setInput(input.slice(0, -1));
+    setInput(prev => prev.slice(0, -1));
   };
 
   const handleCheckAnswer = () => {
     if (input.length === 0 || answered) return;
     const userAnswer = parseInt(input, 10);
-    const correctAnswer = typeof answer === 'number' ? answer : parseInt(answer, 10);
+    const correctAnswer = parseInt(answer, 10);
     const isCorrect = userAnswer === correctAnswer;
 
     if (isCorrect) {
@@ -227,158 +257,72 @@ const VisualNumpadEngine = ({ data, onResult }) => {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       speechManager.speakFeedback('Try again!', false);
       onResult(false, [input]);
-      setTimeout(() => {
-        setInput('');
-        setIsWrong(false);
-      }, 1000);
+      setTimeout(() => { setInput(''); setIsWrong(false); }, 1000);
     }
   };
 
-  // Build visual group model — which tiles to render
+  // Build visual model
   const visualGroups = useMemo(() => {
-    // Number sequence / skip counting / missing number in sequence
-    if (Array.isArray(sequence)) {
-      return { mode: 'sequence', items: sequence };
-    }
-    // Two groups via addends (same assetId for both)
+    if (Array.isArray(sequence)) return { mode: 'sequence', items: sequence };
     if (Array.isArray(addends) && addends.length === 2) {
       const iconA = assetId || 'icon_star';
-      return {
-        mode: 'two-group',
-        a: Array.from({ length: addends[0] }, () => iconA),
-        b: Array.from({ length: addends[1] }, () => iconA),
-      };
+      return { mode: 'two-group', a: Array.from({ length: addends[0] }, () => iconA), b: Array.from({ length: addends[1] }, () => iconA) };
     }
-    // Two groups via group_a / group_b (red + blue blocks)
     if (typeof group_a === 'number' && typeof group_b === 'number') {
-      return {
-        mode: 'two-group',
-        a: Array.from({ length: group_a }, () => 'icon_block_red'),
-        b: Array.from({ length: group_b }, () => 'icon_block_blue'),
-      };
+      return { mode: 'two-group', a: Array.from({ length: group_a }, () => 'icon_block_red'), b: Array.from({ length: group_b }, () => 'icon_block_blue') };
     }
-    // Plain count of tiles
     if (typeof count === 'number' && count > 0) {
-      const icon = assetId || 'icon_block_orange';
-      return {
-        mode: 'count',
-        tiles: Array.from({ length: count }, () => icon),
-      };
+      return { mode: 'count', tiles: Array.from({ length: count }, () => assetId || 'icon_block_orange') };
     }
-    // Single context asset
-    if (assetId) {
-      return { mode: 'single', tiles: [assetId] };
-    }
+    if (assetId) return { mode: 'single', tiles: [assetId] };
     return { mode: 'none' };
-  }, [addends, group_a, group_b, count, assetId, sequence]);
+  }, [addends, count, assetId, sequence, group_a, group_b]);
 
-  const getInstruction = () => {
-    if (answered) return '✅ Correct!';
-    if (isWrong) return 'Not quite — try again!';
-    if (input.length > 0) return 'Tap Check when ready.';
-    return 'Count carefully, then type your answer.';
-  };
-
-  const renderVisualZone = () => {
-    if (visualGroups.mode === 'sequence') {
-      return (
-        <View style={styles.sequenceRow}>
-          {visualGroups.items.map((val, i) => (
-            <SequenceCard key={i} value={val} index={i} />
-          ))}
-        </View>
-      );
-    }
-    if (visualGroups.mode === 'two-group') {
-      return (
-        <View style={styles.visualRow}>
-          <View style={styles.groupBox}>
-            {visualGroups.a.map((id, i) => (
-              <VisualTile key={`a-${i}`} assetId={id} index={i} tone="a" />
-            ))}
-          </View>
-          <PlusSeparator />
-          <View style={styles.groupBox}>
-            {visualGroups.b.map((id, i) => (
-              <VisualTile key={`b-${i}`} assetId={id} index={i} tone="b" />
-            ))}
-          </View>
-        </View>
-      );
-    }
-    if (visualGroups.mode === 'count') {
-      return (
-        <View style={styles.countBox}>
-          {visualGroups.tiles.map((id, i) => (
-            <VisualTile key={`c-${i}`} assetId={id} index={i} tone="neutral" />
-          ))}
-        </View>
-      );
-    }
-    if (visualGroups.mode === 'single') {
-      return (
-        <View style={styles.singleBox}>
-          <AssetDisplay assetId={visualGroups.tiles[0]} style={styles.singleAsset} />
-        </View>
-      );
-    }
-    return null;
+  const getInstructionText = () => {
+    if (answered) return '✅ All Correct!';
+    if (isWrong) return '❌ Try again!';
+    return 'Type your answer below';
   };
 
   return (
     <View style={styles.container}>
-      {/* Visual Group Zone */}
-      <Animated.View entering={FadeInDown.springify().delay(100)} style={styles.visualCard}>
-        {renderVisualZone()}
+      {/* Visual Context Card */}
+      <Animated.View entering={FadeIn.delay(100)} style={styles.visualCard}>
+        {visualGroups.mode === 'sequence' ? (
+          <View style={styles.visualRow}>{visualGroups.items.map((val, i) => <SequenceCard key={i} value={val} index={i} />)}</View>
+        ) : visualGroups.mode === 'two-group' ? (
+          <View style={styles.visualRow}>
+            <View style={styles.groupBox}>{visualGroups.a.map((id, i) => <VisualTile key={`a-${i}`} assetId={id} index={i} tone="a" />)}</View>
+            <Text style={styles.plusText}>+</Text>
+            <View style={styles.groupBox}>{visualGroups.b.map((id, i) => <VisualTile key={`b-${i}`} assetId={id} index={i} tone="b" />)}</View>
+          </View>
+        ) : visualGroups.mode === 'count' ? (
+          <View style={styles.countBox}>{visualGroups.tiles.map((id, i) => <VisualTile key={`c-${i}`} assetId={id} index={i} tone="neutral" />)}</View>
+        ) : visualGroups.mode === 'single' ? (
+          <View style={styles.singleBox}><AssetDisplay assetId={visualGroups.tiles[0]} style={styles.singleAsset} /></View>
+        ) : null}
       </Animated.View>
 
-      {/* Answer Box */}
-      <Animated.View
-        entering={FadeIn.delay(150)}
-        style={[styles.answerBox, displayStyle, isWrong && styles.answerBoxWrong, answered && styles.answerBoxCorrect]}
-      >
-        {input.length > 0 ? (
-          <Text style={[styles.answerText, answered && styles.answerTextCorrect]}>
-            {input}
-          </Text>
-        ) : (
-          <BlinkingCursor />
-        )}
-      </Animated.View>
 
-      {/* Instruction */}
-      <Animated.Text
-        entering={FadeIn.delay(200)}
-        style={[
-          styles.instructionText,
-          isWrong && { color: Colors.error },
-          answered && { color: Colors.success },
-        ]}
-      >
-        {getInstruction()}
-      </Animated.Text>
+      {/* Answer Area */}
+      <View style={styles.answerSection}>
+        <View style={[styles.answerBox, isWrong && styles.answerBoxError, answered && styles.answerBoxSuccess]}>
+          <Text style={[styles.answerText, answered && { color: Colors.success }]}>{input || (answered ? '' : '?')}</Text>
+        </View>
+        <Text style={[styles.instructionText, isWrong && { color: Colors.error }, answered && { color: Colors.success }]}>
+          {getInstructionText()}
+        </Text>
+      </View>
 
-      {/* Number Pad */}
-      <Animated.View entering={FadeInUp.springify().delay(150)} style={styles.numpadContainer}>
-        <View style={styles.numpadRow}>
-          {[1, 2, 3, 4, 5].map((n, i) => (
+      {/* Tactile Numpad */}
+      <View style={styles.numpadContainer}>
+        <View style={styles.numpadGrid}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((n, i) => (
             <NumpadKey
-              key={`key-${n}`}
+              key={n}
               value={n}
               index={i}
-              color={KEY_COLORS[n - 1]}
-              onPress={handleKeyPress}
-              disabled={answered || input.length >= maxDigits}
-            />
-          ))}
-        </View>
-        <View style={styles.numpadRow}>
-          {[6, 7, 8, 9, 0].map((n, i) => (
-            <NumpadKey
-              key={`key-${n}`}
-              value={n}
-              index={i + 5}
-              color={KEY_COLORS[n === 0 ? 9 : n - 1]}
+              colorPair={KEY_COLORS[n === 0 ? 9 : n - 1]}
               onPress={handleKeyPress}
               disabled={answered || input.length >= maxDigits}
             />
@@ -386,222 +330,100 @@ const VisualNumpadEngine = ({ data, onResult }) => {
         </View>
 
         <View style={styles.actionRow}>
-          <GestureDetector
-            gesture={Gesture.Tap()
-              .onEnd(() => runOnJS(handleBackspace)())
-              .enabled(!answered && input.length > 0)}
-          >
-            <Animated.View
-              style={[
-                styles.actionButton,
-                styles.backspaceButton,
-                { opacity: input.length === 0 || answered ? 0.4 : 1 },
-              ]}
-            >
-              <Ionicons name="backspace-outline" size={24} color="#FFFFFF" />
-              <Text style={styles.actionButtonText}>Delete</Text>
-            </Animated.View>
-          </GestureDetector>
-
-          {input.length > 0 && !answered && (
-            <GestureDetector
-              gesture={Gesture.Tap().onEnd(() => runOnJS(handleCheckAnswer)())}
-            >
-              <Animated.View entering={ZoomIn.springify()} style={[styles.actionButton, styles.submitButton]}>
-                <Ionicons name="checkmark-circle" size={24} color="#FFFFFF" />
-                <Text style={styles.actionButtonText}>Check</Text>
-              </Animated.View>
-            </GestureDetector>
-          )}
+          <BulkyButton label="Delete" icon="backspace" type="danger" onPress={handleBackspace} disabled={answered || input.length === 0} />
+          <BulkyButton label="Check" type="primary" onPress={handleCheckAnswer} disabled={answered || input.length === 0} style={{ flex: 1.5 }} />
         </View>
-      </Animated.View>
+      </View>
     </View>
   );
 };
 
-const TILE_SIZE = SCREEN_WIDTH * 0.12;
+const TILE_SIZE = SCREEN_WIDTH * 0.11;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    width: '100%',
     paddingHorizontal: 16,
-    paddingTop: 8,
-    gap: 12,
+    paddingBottom: 20,
+    gap: 16,
   },
   visualCard: {
     width: '100%',
     backgroundColor: Colors.surfaceContainerLowest,
     borderRadius: 24,
-    paddingVertical: 18,
-    paddingHorizontal: 14,
     borderWidth: 2,
+    borderBottomWidth: 6,
     borderColor: Colors.outlineVariant,
-    alignItems: 'center',
+    padding: 16,
+    minHeight: SCREEN_HEIGHT * 0.16,
     justifyContent: 'center',
-    minHeight: SCREEN_HEIGHT * 0.14,
-  },
-  visualRow: {
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    gap: 8,
   },
-  groupBox: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 6,
-    maxWidth: SCREEN_WIDTH * 0.38,
-  },
-  countBox: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 6,
-  },
-  singleBox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  singleAsset: {
-    width: SCREEN_HEIGHT * 0.12,
-    height: SCREEN_HEIGHT * 0.12,
-  },
-  visualTile: {
-    width: TILE_SIZE,
-    height: TILE_SIZE,
-    borderRadius: 12,
-    borderWidth: 1.5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 4,
-  },
-  visualTileAsset: {
-    width: '100%',
-    height: '100%',
-  },
-  plusSeparator: {
-    paddingHorizontal: 6,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  plusText: {
-    fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.032,
-    color: Colors.onSurfaceVariant,
-  },
+  visualRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  groupBox: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, maxWidth: SCREEN_WIDTH * 0.35, justifyContent: 'center' },
+  countBox: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center' },
+  singleBox: { alignItems: 'center' },
+  singleAsset: { width: 80, height: 80 },
+  visualTile: { width: TILE_SIZE, height: TILE_SIZE, borderRadius: 12, borderWidth: 1.5, padding: 4 },
+  visualTileAsset: { width: '100%', height: '100%' },
+  plusText: { fontFamily: 'Lexend-Black', fontSize: 32, color: Colors.onSurfaceVariant },
+  
+  answerSection: { alignItems: 'center', gap: 8 },
   answerBox: {
-    minWidth: SCREEN_WIDTH * 0.28,
-    minHeight: SCREEN_HEIGHT * 0.07,
-    backgroundColor: Colors.surfaceContainerLowest,
+    width: 100,
+    height: 64,
+    borderRadius: 20,
     borderWidth: 3,
+    borderBottomWidth: 6,
     borderColor: Colors.primary,
-    borderRadius: 18,
+    backgroundColor: Colors.surface,
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-    borderStyle: 'dashed',
   },
-  answerBoxWrong: {
-    borderColor: Colors.error,
-    backgroundColor: 'rgba(186,26,26,0.08)',
-    borderStyle: 'solid',
-  },
-  answerBoxCorrect: {
-    borderColor: Colors.success,
-    backgroundColor: 'rgba(0,110,42,0.08)',
-    borderStyle: 'solid',
-  },
-  answerText: {
-    fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.042,
-    color: Colors.onSurface,
-  },
-  answerTextCorrect: {
-    color: Colors.success,
-  },
-  instructionText: {
-    fontFamily: 'PlusJakartaSans-SemiBold',
-    fontSize: SCREEN_HEIGHT * 0.016,
-    color: Colors.onSurfaceVariant,
-    textAlign: 'center',
-  },
-  cursor: {
-    width: 3,
-    height: SCREEN_HEIGHT * 0.04,
-    backgroundColor: Colors.primary,
-    borderRadius: 2,
-  },
+  answerBoxError: { borderColor: Colors.error, backgroundColor: '#fff5f5' },
+  answerBoxSuccess: { borderColor: Colors.success, backgroundColor: '#f5fff5' },
+  answerText: { fontFamily: 'Lexend-Black', fontSize: 32, color: Colors.onSurface },
+  instructionText: { fontFamily: 'PlusJakartaSans-Bold', fontSize: 14, color: Colors.onSurfaceVariant },
+
   numpadContainer: {
-    width: '100%',
     backgroundColor: Colors.surfaceContainerLow,
-    borderRadius: 24,
-    padding: 14,
-    gap: 10,
-    borderWidth: 1,
+    borderRadius: 32,
+    padding: 16,
+    borderWidth: 2,
+    borderBottomWidth: 4,
     borderColor: Colors.outlineVariant,
+    gap: 16,
   },
-  numpadRow: {
+  numpadGrid: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 8,
+    gap: 10,
+  },
+  numKeyWrapper: {
+    width: (SCREEN_WIDTH - 100) / 5,
   },
   numKey: {
-    width: (SCREEN_WIDTH - 96) / 5,
-    height: (SCREEN_WIDTH - 96) / 5,
+    height: (SCREEN_WIDTH - 100) / 5,
     borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  numKeyText: {
-    fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.032,
-    color: '#FFFFFF',
-  },
-  actionRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 12,
-    marginTop: 4,
-  },
-  actionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 14,
-    paddingHorizontal: 26,
-    borderRadius: 20,
-  },
-  backspaceButton: {
-    backgroundColor: Colors.secondary,
-  },
-  submitButton: {
-    backgroundColor: Colors.success,
-  },
-  actionButtonText: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: SCREEN_HEIGHT * 0.017,
-    color: '#FFFFFF',
-  },
-  sequenceRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  seqCard: {
-    width: SCREEN_HEIGHT * 0.068,
-    height: SCREEN_HEIGHT * 0.068,
-    borderRadius: 14,
-    backgroundColor: Colors.surfaceContainerLow,
     borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  numKeyText: { fontFamily: 'Lexend-Black', fontSize: 24, color: '#fff' },
+  
+  actionRow: { flexDirection: 'row', gap: 12 },
+  bulkyBtn: { height: 56, borderRadius: 18, borderWidth: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 },
+  bulkyBtnText: { fontFamily: 'Lexend-Bold', fontSize: 16, letterSpacing: 0.5 },
+  disabledBtn: { backgroundColor: Colors.surfaceContainerHighest, borderColor: Colors.outlineVariant },
+  cursor: { width: 3, height: 28, backgroundColor: Colors.primary },
+  seqCard: {
+    width: SCREEN_HEIGHT * 0.075,
+    height: SCREEN_HEIGHT * 0.075,
+    borderRadius: 16,
+    backgroundColor: Colors.surface,
+    borderWidth: 2,
+    borderBottomWidth: 4,
     borderColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
@@ -613,14 +435,11 @@ const styles = StyleSheet.create({
   },
   seqCardText: {
     fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.026,
+    fontSize: 20,
     color: Colors.onSurface,
-  },
-  seqCardBlankText: {
-    fontFamily: 'Lexend-Black',
-    fontSize: SCREEN_HEIGHT * 0.026,
-    color: Colors.onSecondaryContainer,
   },
 });
 
+
 export default VisualNumpadEngine;
+
