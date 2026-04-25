@@ -18,14 +18,16 @@
             "competency": "NA.1.7",
             "topic": "Compare Numbers",
             "level": "concrete",
-            "type": "SORT",
+            "type": "COMPARE_PICKER",
             "difficulty": "Easy",
             "question": "Look at these two piles of sticks. Which pile has more sticks?",
             "answer": "pile_b",
             "assetType": "manipulatives",
             "metadata": {
                 "pile_a": 8,
-                "pile_b": 12
+                "pile_b": 12,
+                "tensAsset": "stick_bundle_10",
+                "onesAsset": "stick_single"
             }
         },
         {
@@ -33,15 +35,16 @@
             "competency": "NA.1.7",
             "topic": "Compare Numbers",
             "level": "pictorial",
-            "type": "PICKER",
+            "type": "COMPARE_ORDER",
             "difficulty": "Medium",
-            "answer": "18",
+            "question": "Look at the baskets of mangoes. Which basket has more?",
+            "answer": "pile_b",
             "assetType": "illustration",
             "metadata": {
-                "options": [
-                    "14",
-                    "18"
-                ]
+                "pile_a": 14,
+                "pile_b": 18,
+                "label_a": "Basket A",
+                "label_b": "Basket B"
             },
             "assetId": "icon_mango"
         },

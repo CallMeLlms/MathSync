@@ -13,19 +13,41 @@ import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
 
 // ─── PileDisplay — renders emoji repeated N times in a wrap grid ───
-const PileDisplay = ({ assetId, count }) => {
-  const items = Array.from({ length: Math.min(count, 10) });
+const PileDisplay = ({ count, tensAsset, onesAsset, defaultAssetId }) => {
+  const tens = Math.floor(count / 10);
+  const ones = count % 10;
+  
+  const renderItems = () => {
+    // If we have mixed assets (tens/ones), render them
+    if (tensAsset && onesAsset) {
+      return (
+        <>
+          {Array.from({ length: tens }).map((_, i) => (
+            <AssetDisplay key={`ten-${i}`} assetId={tensAsset} style={styles.pileAssetTen} />
+          ))}
+          {Array.from({ length: ones }).map((_, i) => (
+            <AssetDisplay key={`one-${i}`} assetId={onesAsset} style={styles.pileAsset} />
+          ))}
+        </>
+      );
+    }
+    
+    // Otherwise, legacy behavior (repeat defaultAssetId up to 10)
+    const items = Array.from({ length: Math.min(count, 10) });
+    return items.map((_, i) => (
+      <AssetDisplay key={i} assetId={defaultAssetId} style={styles.pileAsset} />
+    ));
+  };
+
   return (
     <View style={styles.pileGrid}>
-      {items.map((_, i) => (
-        <AssetDisplay key={i} assetId={assetId} style={styles.pileAsset} />
-      ))}
+      {renderItems()}
     </View>
   );
 };
 
 // ─── TileCard — bulky tactile selection tile ───
-const TileCard = ({ pileKey, count, assetId, isSelected, evaluation, disabled, onPress, index }) => {
+const TileCard = ({ pileKey, count, tensAsset, onesAsset, assetId, isSelected, evaluation, disabled, onPress, index }) => {
   const translateY = useSharedValue(0);
   const bottomWidth = useSharedValue(6);
 
@@ -87,7 +109,7 @@ const TileCard = ({ pileKey, count, assetId, isSelected, evaluation, disabled, o
           )}
 
           {/* Asset pile */}
-          <PileDisplay assetId={assetId} count={count} />
+          <PileDisplay count={count} tensAsset={tensAsset} onesAsset={onesAsset} defaultAssetId={assetId} />
 
           {/* Count label */}
           <Text style={[styles.countLabel, { color: colors.text }]}>{count}</Text>
@@ -160,8 +182,14 @@ const ComparePickerEngine = ({ data, onResult }) => {
     return rawValue;
   };
 
-  const assetIdA = resolveAsset(metadata.assetId_a, 'emoji_a');
-  const assetIdB = resolveAsset(metadata.assetId_b, 'emoji_b');
+  const assetIdA = resolveAsset(null, 'emoji_a');
+  const assetIdB = resolveAsset(null, 'emoji_b');
+
+  // Resolve Composite Assets
+  const tensAssetA = metadata.tensAsset_a ?? metadata.tensAsset;
+  const onesAssetA = metadata.onesAsset_a ?? metadata.onesAsset;
+  const tensAssetB = metadata.tensAsset_b ?? metadata.tensAsset;
+  const onesAssetB = metadata.onesAsset_b ?? metadata.onesAsset;
 
   const [selectedTile, setSelectedTile] = useState(null);
   const [evaluation, setEvaluation] = useState(null);
@@ -207,6 +235,8 @@ const ComparePickerEngine = ({ data, onResult }) => {
           <TileCard
             pileKey="pile_a"
             count={pileA}
+            tensAsset={tensAssetA}
+            onesAsset={onesAssetA}
             assetId={assetIdA}
             isSelected={selectedTile === 'pile_a'}
             evaluation={selectedTile === 'pile_a' ? evaluation : null}
@@ -217,6 +247,8 @@ const ComparePickerEngine = ({ data, onResult }) => {
           <TileCard
             pileKey="pile_b"
             count={pileB}
+            tensAsset={tensAssetB}
+            onesAsset={onesAssetB}
             assetId={assetIdB}
             isSelected={selectedTile === 'pile_b'}
             evaluation={selectedTile === 'pile_b' ? evaluation : null}
@@ -278,6 +310,10 @@ const styles = StyleSheet.create({
   pileAsset: {
     width: 32,
     height: 32,
+  },
+  pileAssetTen: {
+    width: 42,
+    height: 48,
   },
   countLabel: {
     fontFamily: 'Lexend-Black',

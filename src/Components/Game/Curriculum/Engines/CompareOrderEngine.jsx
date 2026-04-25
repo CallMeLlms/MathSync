@@ -41,7 +41,7 @@ const AssetGrid = ({ assetId, count, compact }) => (
 );
 
 // ─── CompareCard ──────────────────────────────────────────────────────────────
-const CompareCard = ({ cardKey, count, assetId, compact, isSelected, evaluation, disabled, onPress, index }) => {
+const CompareCard = ({ cardKey, count, label, assetId, compact, isSelected, evaluation, disabled, onPress, index }) => {
   const translateY  = useSharedValue(0);
   const bottomWidth = useSharedValue(6);
   const opacity     = useSharedValue(1);
@@ -116,6 +116,11 @@ const CompareCard = ({ cardKey, count, assetId, compact, isSelected, evaluation,
             <View style={styles.badge}>
               <Ionicons name="close-circle" size={28} color={Colors.error} />
             </View>
+          )}
+          {label && (
+            <Text style={[styles.cardLabel, compact && styles.cardLabelCompact, { color: c.text }]}>
+              {label}
+            </Text>
           )}
           <AssetGrid assetId={assetId} count={count} compact={compact} />
           <Text style={[styles.countLabel, compact && styles.countLabelCompact, { color: c.text }]}>
@@ -407,10 +412,14 @@ export default function CompareOrderEngine({ data, onResult }) {
   const cards = mode === 'multi_compare'
     ? ['plate_a', 'plate_b', 'plate_c']
         .filter(k => metadata[k] !== undefined)
-        .map(k => ({ key: k, count: metadata[k] }))
+        .map(k => ({ 
+          key: k, 
+          count: metadata[k], 
+          label: metadata[`label_${k.split('_')[1]}`] 
+        }))
     : [
-        { key: 'pile_a', count: metadata.pile_a ?? 0 },
-        { key: 'pile_b', count: metadata.pile_b ?? 0 },
+        { key: 'pile_a', count: metadata.pile_a ?? 0, label: metadata.label_a },
+        { key: 'pile_b', count: metadata.pile_b ?? 0, label: metadata.label_b },
       ];
 
   return (
@@ -421,6 +430,7 @@ export default function CompareOrderEngine({ data, onResult }) {
             key={card.key}
             cardKey={card.key}
             count={card.count}
+            label={card.label}
             assetId={resolvedAssetId}
             compact={isCompact}
             isSelected={selectedKey === card.key}
@@ -495,6 +505,16 @@ const styles = StyleSheet.create({
   },
   countLabelCompact: {
     fontSize: 24,
+  },
+  cardLabel: {
+    fontFamily: 'PlusJakartaSans-Bold',
+    fontSize: 14,
+    opacity: 0.8,
+    textAlign: 'center',
+    marginBottom: -4,
+  },
+  cardLabelCompact: {
+    fontSize: 12,
   },
   // ── Check button ──────────────────────────────────────────────────────────
   checkBtnContainer: {
