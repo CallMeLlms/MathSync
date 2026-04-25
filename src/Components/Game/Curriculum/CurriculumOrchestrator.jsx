@@ -31,6 +31,7 @@ import VisualPickerEngine from './Engines/VisualPickerEngine';
 import ComparePickerEngine from './Engines/ComparePickerEngine';
 import FractionShapeEngine from './Engines/FractionShapeEngine';
 import CalendarPageEngine from './Engines/CalendarPageEngine';
+import CalendarGridEngine from './Engines/CalendarGridEngine';
 import TurnCompassEngine from './Engines/TurnCompassEngine';
 import PictographReaderEngine from './Engines/PictographReaderEngine';
 import DataTableReaderEngine from './Engines/DataTableReaderEngine';
@@ -190,6 +191,7 @@ export default function CurriculumOrchestrator({
       case 'clocksetter': return <ClockSetterEngine key={currentQuestionIndex} {...props} />;
       case 'fraction_shape': return <FractionShapeEngine key={currentQuestionIndex} {...props} />;
       case 'calendar_page': return <CalendarPageEngine key={currentQuestionIndex} {...props} />;
+      case 'calendar_grid': return <CalendarGridEngine key={currentQuestionIndex} {...props} />;
       case 'turn_compass': return <TurnCompassEngine key={currentQuestionIndex} {...props} />;
       case 'pictograph_reader': return <PictographReaderEngine key={currentQuestionIndex} {...props} />;
       case 'data_table_reader': return <DataTableReaderEngine key={currentQuestionIndex} {...props} />;

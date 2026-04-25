@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "DEV ONLY — Engine Lab test bank. One or two questions per engine type to validate rendering and interaction. Remove or exclude from production builds.",
-    "engines_covered": ["picker", "numpad", "matcher", "composer", "dragdrop", "sort", "shape_hunt", "ordinal_sequence", "connectdots", "shapetracer", "clocksetter", "compare_picker", "fraction_shape", "calendar_page", "turn_compass", "pictograph_reader", "data_table_reader", "fruit_stand", "pattern_sequence", "money_engine"]
+    "engines_covered": ["picker", "numpad", "matcher", "composer", "dragdrop", "sort", "shape_hunt", "ordinal_sequence", "connectdots", "shapetracer", "clocksetter", "compare_picker", "fraction_shape", "calendar_page", "calendar_grid", "turn_compass", "pictograph_reader", "data_table_reader", "fruit_stand", "pattern_sequence", "money_engine"]
   },
   "questions": [
     {
@@ -67,6 +67,46 @@
       "assetType": "text",
       "metadata": {
         "options": ["April", "May", "June", "July"]
+      }
+    },
+
+    {
+      "id": "lab-calendar-grid-1",
+      "type": "CALENDAR_GRID",
+      "question": "Tap the FIRST MONDAY of March 2025.",
+      "answer": 3,
+      "assetType": "text",
+      "metadata": {
+        "month": "March",
+        "year": 2025,
+        "startDay": 6,
+        "totalDays": 31
+      }
+    },
+    {
+      "id": "lab-calendar-grid-2",
+      "type": "CALENDAR_GRID",
+      "question": "Tap the THIRD FRIDAY of April 2025.",
+      "answer": 18,
+      "assetType": "text",
+      "metadata": {
+        "month": "April",
+        "year": 2025,
+        "startDay": 2,
+        "totalDays": 30
+      }
+    },
+    {
+      "id": "lab-calendar-grid-3",
+      "type": "CALENDAR_GRID",
+      "question": "Tap the LAST DAY of February 2025.",
+      "answer": 28,
+      "assetType": "text",
+      "metadata": {
+        "month": "February",
+        "year": 2025,
+        "startDay": 6,
+        "totalDays": 28
       }
     },
 

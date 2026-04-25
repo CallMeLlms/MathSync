@@ -19,7 +19,7 @@
             "level": "concrete",
             "type": "COMPOSE_DRAG",
             "difficulty": "Easy",
-            "prompt": "Make a square!",
+            "prompt": "N/A",
             "audio": "shape_compose_square.mp3",
             "palette": ["triangle", "triangle", "circle"],
             "target": "square",
