@@ -37,8 +37,8 @@
             "difficulty": "Easy",
             "question": "Look at the picture. 2 birds are on the branch. 4 more birds fly in. How many birds are there now?",
             "answer": 6,
-            "assetType": "illustration",
-            "assetId": "na_1_basicadd_004",
+            "assetType": "emoji",
+            "assetId": "icon_bird",
             "metadata": {
                 "addends": [2, 4]
             }

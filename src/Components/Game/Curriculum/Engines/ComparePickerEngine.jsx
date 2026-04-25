@@ -9,22 +9,23 @@ import Animated, {
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
+import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
 
 // ─── PileDisplay — renders emoji repeated N times in a wrap grid ───
-const PileDisplay = ({ emoji, count }) => {
+const PileDisplay = ({ assetId, count }) => {
   const items = Array.from({ length: Math.min(count, 10) });
   return (
     <View style={styles.pileGrid}>
       {items.map((_, i) => (
-        <Text key={i} style={styles.pileEmoji}>{emoji}</Text>
+        <AssetDisplay key={i} assetId={assetId} style={styles.pileAsset} />
       ))}
     </View>
   );
 };
 
 // ─── TileCard — bulky tactile selection tile ───
-const TileCard = ({ pileKey, count, emoji, isSelected, evaluation, disabled, onPress, index }) => {
+const TileCard = ({ pileKey, count, assetId, isSelected, evaluation, disabled, onPress, index }) => {
   const translateY = useSharedValue(0);
   const bottomWidth = useSharedValue(6);
 
@@ -85,8 +86,8 @@ const TileCard = ({ pileKey, count, emoji, isSelected, evaluation, disabled, onP
             </View>
           )}
 
-          {/* Emoji pile */}
-          <PileDisplay emoji={emoji} count={count} />
+          {/* Asset pile */}
+          <PileDisplay assetId={assetId} count={count} />
 
           {/* Count label */}
           <Text style={[styles.countLabel, { color: colors.text }]}>{count}</Text>
@@ -149,9 +150,18 @@ const ComparePickerEngine = ({ data, onResult }) => {
   const pileA = metadata.pile_a ?? 0;
   const pileB = metadata.pile_b ?? 0;
   
-  // Support distinct emojis for each pile, fallback to generic emoji if missing
-  const emojiA = metadata.emoji_a ?? metadata.emoji ?? '🍎';
-  const emojiB = metadata.emoji_b ?? metadata.emoji ?? '🍎';
+  // Support distinct assets for each pile, fallback to generic assetId or emoji
+  const resolveAsset = (id, metaKey) => {
+    const rawValue = metadata[metaKey] ?? metadata.emoji ?? metadata.assetId ?? data.assetId ?? 'icon_star';
+    // If it's a raw emoji string not in standard format, wrap it
+    if (typeof rawValue === 'string' && rawValue.length <= 2 && !rawValue.startsWith('emoji:')) {
+      return `emoji:${rawValue}`;
+    }
+    return rawValue;
+  };
+
+  const assetIdA = resolveAsset(metadata.assetId_a, 'emoji_a');
+  const assetIdB = resolveAsset(metadata.assetId_b, 'emoji_b');
 
   const [selectedTile, setSelectedTile] = useState(null);
   const [evaluation, setEvaluation] = useState(null);
@@ -197,7 +207,7 @@ const ComparePickerEngine = ({ data, onResult }) => {
           <TileCard
             pileKey="pile_a"
             count={pileA}
-            emoji={emojiA}
+            assetId={assetIdA}
             isSelected={selectedTile === 'pile_a'}
             evaluation={selectedTile === 'pile_a' ? evaluation : null}
             disabled={resolved}
@@ -207,7 +217,7 @@ const ComparePickerEngine = ({ data, onResult }) => {
           <TileCard
             pileKey="pile_b"
             count={pileB}
-            emoji={emojiB}
+            assetId={assetIdB}
             isSelected={selectedTile === 'pile_b'}
             evaluation={selectedTile === 'pile_b' ? evaluation : null}
             disabled={resolved}
@@ -265,8 +275,9 @@ const styles = StyleSheet.create({
     gap: 4,
     maxWidth: '100%',
   },
-  pileEmoji: {
-    fontSize: 28,
+  pileAsset: {
+    width: 32,
+    height: 32,
   },
   countLabel: {
     fontFamily: 'Lexend-Black',

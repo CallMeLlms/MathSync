@@ -12,20 +12,8 @@ import Animated, {
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
+import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
-
-// ─── Asset → emoji map ────────────────────────────────────────────────────────
-const ASSET_EMOJI = {
-  icon_calamansi: '🍋',
-  icon_mango:     '🥭',
-  icon_cookie:    '🍪',
-  icon_apple:     '🍎',
-  icon_star:      '⭐',
-  icon_banana:    '🍌',
-  icon_candy:     '🍬',
-  icon_flower:    '🌸',
-};
-const resolveEmoji = (assetId) => ASSET_EMOJI[assetId] ?? '●';
 
 // ─── Sub-mode detection ───────────────────────────────────────────────────────
 // pile_compare  → metadata has pile_a / pile_b
@@ -38,19 +26,22 @@ const resolveMode = (metadata) => {
   return 'pile_compare';
 };
 
-// ─── EmojiGrid ────────────────────────────────────────────────────────────────
-const EmojiGrid = ({ emoji, count, compact }) => (
-  <View style={styles.emojiGrid}>
+// ─── AssetGrid ────────────────────────────────────────────────────────────────
+const AssetGrid = ({ assetId, count, compact }) => (
+  <View style={styles.assetGrid}>
     {Array.from({ length: Math.min(count, 20) }).map((_, i) => (
-      <Text key={i} style={[styles.emojiItem, compact && styles.emojiItemCompact]}>
-        {emoji}
-      </Text>
+      <AssetDisplay
+        key={i}
+        assetId={assetId}
+        style={[styles.gridAsset, compact && styles.gridAssetCompact]}
+        emojiSize={compact ? 24 : 32}
+      />
     ))}
   </View>
 );
 
 // ─── CompareCard ──────────────────────────────────────────────────────────────
-const CompareCard = ({ cardKey, count, emoji, compact, isSelected, evaluation, disabled, onPress, index }) => {
+const CompareCard = ({ cardKey, count, assetId, compact, isSelected, evaluation, disabled, onPress, index }) => {
   const translateY  = useSharedValue(0);
   const bottomWidth = useSharedValue(6);
   const opacity     = useSharedValue(1);
@@ -126,7 +117,7 @@ const CompareCard = ({ cardKey, count, emoji, compact, isSelected, evaluation, d
               <Ionicons name="close-circle" size={28} color={Colors.error} />
             </View>
           )}
-          <EmojiGrid emoji={emoji} count={count} compact={compact} />
+          <AssetGrid assetId={assetId} count={count} compact={compact} />
           <Text style={[styles.countLabel, compact && styles.countLabelCompact, { color: c.text }]}>
             {count}
           </Text>
@@ -264,7 +255,20 @@ const SequenceTile = ({ number, isTapped, onPress, index }) => {
 export default function CompareOrderEngine({ data, onResult }) {
   const { answer, metadata = {}, assetId } = data;
   const mode     = resolveMode(metadata);
-  const emoji    = resolveEmoji(assetId);
+
+  // Robust asset resolution
+  const resolveAsset = () => {
+    // Priority: metadata.emoji -> metadata.assetId -> data.assetId -> fallback
+    const rawValue = metadata.emoji ?? metadata.assetId_a ?? metadata.assetId ?? assetId ?? 'icon_star';
+    
+    // If it's a raw emoji string not in standard format, wrap it
+    if (typeof rawValue === 'string' && rawValue.length <= 2 && !rawValue.startsWith('emoji:')) {
+      return `emoji:${rawValue}`;
+    }
+    return rawValue;
+  };
+
+  const resolvedAssetId = resolveAsset();
   const isCompact = mode === 'multi_compare';
 
   // Compare state (pile_compare & multi_compare)
@@ -417,7 +421,7 @@ export default function CompareOrderEngine({ data, onResult }) {
             key={card.key}
             cardKey={card.key}
             count={card.count}
-            emoji={emoji}
+            assetId={resolvedAssetId}
             compact={isCompact}
             isSelected={selectedKey === card.key}
             evaluation={selectedKey === card.key ? evaluation : null}
@@ -470,18 +474,20 @@ const styles = StyleSheet.create({
     top: 8,
     right: 8,
   },
-  emojiGrid: {
+  assetGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
     gap: 3,
     maxWidth: '100%',
   },
-  emojiItem: {
-    fontSize: 22,
+  gridAsset: {
+    width: 32,
+    height: 32,
   },
-  emojiItemCompact: {
-    fontSize: 16,
+  gridAssetCompact: {
+    width: 24,
+    height: 24,
   },
   countLabel: {
     fontFamily: 'Lexend-Black',

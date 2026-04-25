@@ -32,7 +32,7 @@
       "question": "Which pile of apples is bigger? Tap the bigger pile.",
       "answer": "pile_b",
       "metadata": {
-        "emoji": "🍎",
+        "emoji": "emoji:🍎",
         "pile_a": 3,
         "pile_b": 7
       }
@@ -43,7 +43,7 @@
       "question": "Which group of stars is more? Tap the bigger group.",
       "answer": "pile_a",
       "metadata": {
-        "emoji": "⭐",
+        "emoji": "emoji:⭐",
         "pile_a": 9,
         "pile_b": 4
       }

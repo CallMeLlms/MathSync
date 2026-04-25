@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
   countBox: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center' },
   singleBox: { alignItems: 'center' },
   singleAsset: { width: 80, height: 80 },
-  visualTile: { width: TILE_SIZE, height: TILE_SIZE, borderRadius: 12, borderWidth: 1.5, padding: 4 },
+  visualTile: { width: TILE_SIZE, height: TILE_SIZE, borderRadius: 12, borderWidth: 1.5, padding: 4, justifyContent: 'center', alignItems: 'center' },
   visualTileAsset: { width: '100%', height: '100%' },
   plusText: { fontFamily: 'Lexend-Black', fontSize: 32, color: Colors.onSurfaceVariant },
   

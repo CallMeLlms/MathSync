@@ -25,8 +25,8 @@
             "metadata": {
                 "pile_a": 8,
                 "pile_b": 5,
-                "emoji_a": "📏",
-                "emoji_b": "📏"
+                "assetId_a": "icon_ruler",
+                "assetId_b": "icon_ruler"
             }
         },
         {
@@ -42,8 +42,8 @@
             "metadata": {
                 "pile_a": 10,
                 "pile_b": 6,
-                "emoji_a": "🦒",
-                "emoji_b": "🐘"
+                "assetId_a": "icon_giraffe",
+                "assetId_b": "icon_elephant"
             }
         },
         {
@@ -59,8 +59,8 @@
             "metadata": {
                 "pile_a": 4,
                 "pile_b": 6,
-                "emoji_a": "🍌",
-                "emoji_b": "🥕"
+                "assetId_a": "icon_banana",
+                "assetId_b": "icon_carrot"
             }
         }
     ]
