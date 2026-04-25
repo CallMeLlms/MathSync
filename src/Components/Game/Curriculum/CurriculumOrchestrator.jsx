@@ -36,6 +36,8 @@ import PictographReaderEngine from './Engines/PictographReaderEngine';
 import DataTableReaderEngine from './Engines/DataTableReaderEngine';
 import FruitStandEngine from './Engines/FruitStandEngine';
 import PatternSequenceEngine from './Engines/PatternSequenceEngine';
+import CompareOrderEngine from './Engines/CompareOrderEngine';
+import MoneyEngine from './Engines/MoneyEngine';
 // Gesture-heavy engines must render inside a plain View — a ScrollView would
 // intercept their touch responder and break drag/draw interactions.
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
@@ -193,6 +195,8 @@ export default function CurriculumOrchestrator({
       case 'data_table_reader': return <DataTableReaderEngine key={currentQuestionIndex} {...props} />;
       case 'fruit_stand': return <FruitStandEngine key={currentQuestionIndex} {...props} />;
       case 'pattern_sequence': return <PatternSequenceEngine key={currentQuestionIndex} {...props} />;
+      case 'compare_order': return <CompareOrderEngine key={currentQuestionIndex} {...props} />;
+      case 'money_engine': return <MoneyEngine key={currentQuestionIndex} {...props} />;
       // MatcherEngine uses a different prop contract (question/onAnswer) than the
       // standard Orchestrator API (data/onResult). Bridge inline to avoid touching the engine.
       case 'matcher': return (
@@ -216,7 +220,7 @@ export default function CurriculumOrchestrator({
       </View>
 
       {/* Question Header */}
-      {questionText && engineType !== 'visual_picker' ? (
+      {questionText && engineType !== 'visual_picker' && engineType !== 'money_engine' ? (
         <View style={styles.questionHeader}>
           <Text style={styles.questionHeaderText}>{questionText}</Text>
         </View>
@@ -229,7 +233,8 @@ export default function CurriculumOrchestrator({
         && currentQuestion?.assetType !== 'text'
         && engineType !== 'visual_numpad'
         && engineType !== 'word_problem'
-        && engineType !== 'visual_picker' ? (
+        && engineType !== 'visual_picker'
+        && engineType !== 'money_engine' ? (
         <View style={styles.questionAssetContainer}>
           <AssetDisplay
             assetId={currentQuestion.assetId}

@@ -346,3 +346,52 @@
       "chips": [2, 3, 4, 5, 6],
       "mode": "compose"
     },
+       {
+      "id": "lab-fraction-shape-1",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the circle is shaded?",
+      "answer": "one-half",
+      "shape": "circle",
+      "fraction": "1/2",
+      "options": ["one-whole", "one-half", "one-fourth"]
+    },
+    {
+      "id": "lab-fraction-shape-2",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the circle is shaded?",
+      "answer": "one-fourth",
+      "shape": "circle",
+      "fraction": "1/4",
+      "options": ["one-whole", "one-half", "one-fourth"]
+    },
+    {
+      "id": "lab-fraction-shape-3",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the square is shaded?",
+      "answer": "one-half",
+      "shape": "square",
+      "fraction": "1/2",
+      "options": ["one-whole", "one-half", "one-fourth"]
+    },
+    {
+      "id": "lab-fraction-shape-4",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the square is shaded?",
+      "answer": "one-fourth",
+      "metadata": {
+        "shape": "square",
+        "fraction": "1/4",
+        "options": ["one-whole", "one-half", "one-fourth"]
+      }
+    },
+    {
+      "id": "lab-fraction-shape-5",
+      "type": "FRACTION_SHAPE",
+      "question": "What fraction of the bar is shaded?",
+      "answer": "one-fourth",
+      "metadata": {
+        "shape": "rectangle",
+        "fraction": "1/4",
+        "options": ["one-whole", "one-half", "one-fourth"]
+      }
+    },
