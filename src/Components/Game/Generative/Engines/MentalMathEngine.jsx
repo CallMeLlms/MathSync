@@ -53,9 +53,11 @@ function ChoiceButton({ value, disabled, onPress, theme }) {
           },
         ]}
       >
-        <Text style={[styles.choiceText, { fontFamily: theme.fontFamily.accent, color: theme.primaryColor }]}>
-          {value}
-        </Text>
+        <View style={styles.choiceTextWrapper}>
+          <Text style={[styles.choiceText, { fontFamily: theme.fontFamily.accent, color: theme.primaryColor }]}>
+            {value}
+          </Text>
+        </View>
       </Animated.View>
     </GestureDetector>
   );
@@ -193,10 +195,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     maxWidth: 200,
+    paddingTop: 4, // Visual balance for thick bottom border
+  },
+  choiceTextWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
   choiceText: {
     fontSize: 24,
     letterSpacing: 0.5,
     textAlign: 'center',
+    textAlignVertical: 'center',
+    includeFontPadding: false,
   },
 });
