@@ -6,10 +6,13 @@ import useGameEngine from '@/stores/game-stores/useGameEngine';
 import { getExamById } from '@/services/examService';
 import { submitExam } from '@/services/examSubmissionService';
 
-// Engines — same pool as CurriculumOrchestrator
+// Dedicated exam engines — no feedback, no auto-advance, clean separation
+import ExamNumpadEngine from './Engines/ExamNumpadEngine';
+import ExamVisualPickerEngine from './Engines/ExamVisualPickerEngine';
+
+// Curriculum engines — used for types without a dedicated exam variant yet
 import PickerEngine from '@/Components/Game/Curriculum/Engines/PickerEngine';
 import ComposeEngine from '@/Components/Game/Curriculum/Engines/ComposeEngine';
-import NumpadEngine from '@/Components/Game/Curriculum/Engines/NumpadEngine';
 import MatcherEngine from '@/Components/Game/Curriculum/Engines/MatcherEngine';
 import DragDropEngine from '@/Components/Game/Curriculum/Engines/DragAndDropEngine';
 import ConnectDotsEngine from '@/Components/Game/Curriculum/Engines/ConnectTheDotsEngine';
@@ -22,7 +25,6 @@ import GeoboardEngine from '@/Components/Game/Curriculum/Engines/GeoboardEngine'
 import ClockSetterEngine from '@/Components/Game/Curriculum/Engines/ClockSetterEngine';
 import VisualNumpadEngine from '@/Components/Game/Curriculum/Engines/VisualNumpadEngine';
 import WordProblemEngine from '@/Components/Game/Curriculum/Engines/WordProblemEngine';
-import VisualPickerEngine from '@/Components/Game/Curriculum/Engines/VisualPickerEngine';
 import ComparePickerEngine from '@/Components/Game/Curriculum/Engines/ComparePickerEngine';
 import FractionShapeEngine from '@/Components/Game/Curriculum/Engines/FractionShapeEngine';
 import CalendarPageEngine from '@/Components/Game/Curriculum/Engines/CalendarPageEngine';
@@ -181,10 +183,10 @@ export default function ExamOrchestrator({ examId, classroomId, sectionId, mockD
 
     switch (engineType) {
       case 'picker':             return <PickerEngine            key={currentIndex} {...props} />;
-      case 'visual_picker':      return <VisualPickerEngine      key={currentIndex} {...props} />;
+      case 'visual_picker':      return <ExamVisualPickerEngine  key={currentIndex} {...props} />;
       case 'compare_picker':     return <ComparePickerEngine     key={currentIndex} {...props} />;
       case 'composer':           return <ComposeEngine           key={currentIndex} {...props} />;
-      case 'numpad':             return <NumpadEngine            key={currentIndex} {...props} />;
+      case 'numpad':             return <ExamNumpadEngine         key={currentIndex} {...props} />;
       case 'visual_numpad':      return <VisualNumpadEngine      key={currentIndex} {...props} />;
       case 'word_problem':       return <WordProblemEngine       key={currentIndex} {...props} />;
       case 'dragdrop':           return <DragDropEngine          key={currentIndex} {...props} />;

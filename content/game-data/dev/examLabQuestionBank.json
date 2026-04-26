@@ -1,24 +1,14 @@
 {
   "meta": {
-    "description": "DEV ONLY — Exam Lab test bank. Simulates a backend exam payload for ExamOrchestrator development and engine compatibility spike. Remove or exclude from production builds.",
+    "description": "DEV ONLY — Exam Lab test bank. Focused on ExamNumpadEngine and ExamVisualPickerEngine for Phase 1.5 dev spike. Remove or exclude from production builds.",
     "examId": "dev-exam-001",
-    "title": "Dev Exam — Mixed Engine Types",
+    "title": "Dev Exam — Numpad & Visual Picker",
     "timeLimit": null,
-    "totalItems": 8
+    "totalItems": 4
   },
   "questions": [
     {
       "_id": "exam-q-001",
-      "type": "PICKER",
-      "question": "What is 6 + 3?",
-      "answer": "9",
-      "learningOutcomeId": null,
-      "metadata": {
-        "options": ["7", "8", "9", "10"]
-      }
-    },
-    {
-      "_id": "exam-q-002",
       "type": "NUMPAD",
       "question": "Fill in the blank: 5 + ___ = 12",
       "answer": "7",
@@ -27,7 +17,7 @@
       "maxDigits": 2
     },
     {
-      "_id": "exam-q-003",
+      "_id": "exam-q-002",
       "type": "VISUAL_PICKER",
       "question": "3 birds are on a branch. 5 more fly in. How many birds are there now?",
       "answer": 8,
@@ -39,57 +29,24 @@
       }
     },
     {
-      "_id": "exam-q-004",
-      "type": "COMPARE_PICKER",
-      "question": "Which group has more? Tap the bigger group.",
-      "answer": "pile_a",
-      "learningOutcomeId": null,
-      "metadata": {
-        "emoji": "emoji:⭐",
-        "pile_a": 9,
-        "pile_b": 4
-      }
-    },
-    {
-      "_id": "exam-q-005",
-      "type": "COMPARE_ORDER",
-      "question": "Tap the numbers from smallest to largest.",
-      "answer": "1, 2, 3",
-      "learningOutcomeId": null,
-      "metadata": {
-        "items": [3, 1, 2]
-      }
-    },
-    {
-      "_id": "exam-q-006",
-      "type": "WORD_PROBLEM",
-      "question": "Ana has 10 mangoes. She gives 4 to her friend. How many does she have left?",
-      "answer": "6",
-      "learningOutcomeId": null,
-      "assetId": "icon_girl",
-      "assetType": "illustration",
-      "metadata": {
-        "options": ["4", "5", "6", "7"]
-      }
-    },
-    {
-      "_id": "exam-q-007",
-      "type": "PICKER",
-      "question": "Which number comes after 19?",
-      "answer": "20",
-      "learningOutcomeId": null,
-      "metadata": {
-        "options": ["18", "19", "20", "21"]
-      }
-    },
-    {
-      "_id": "exam-q-008",
+      "_id": "exam-q-003",
       "type": "NUMPAD",
       "question": "Fill in the blank: 15 − ___ = 8",
       "answer": "7",
       "learningOutcomeId": null,
       "equation": { "left": "15 − ", "operator": "=", "blank": "right" },
       "maxDigits": 2
+    },
+    {
+      "_id": "exam-q-004",
+      "type": "VISUAL_PICKER",
+      "question": "Ana has 10 mangoes. She gives 4 to her friend. How many does she have left?",
+      "answer": "6",
+      "assetId": "icon_girl",
+      "learningOutcomeId": null,
+      "metadata": {
+        "options": ["4", "5", "6", "7"]
+      }
     }
   ]
 }
