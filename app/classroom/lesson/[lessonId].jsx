@@ -9,7 +9,7 @@ import OfflineVideoPlayer from '@/Components/LessonComponents/OfflineVideoPlayer
 import { resolveGameLesson } from '@/constants/classroomLessonMap';
 
 export default function LessonDetail() {
-  const { lessonId, grade, quarter } = useLocalSearchParams();
+  const { lessonId, grade, quarter, sectionId, classroomId } = useLocalSearchParams();
   const router = useRouter();
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -146,7 +146,13 @@ export default function LessonDetail() {
             <TouchableOpacity
               style={styles.playButton}
               activeOpacity={0.85}
-              onPress={() => router.push(`/game/${gameLessonId}?grade=G1`)}
+              onPress={() => {
+                const base = `/game/${gameLessonId}?grade=G1`;
+                const ctx = (sectionId && classroomId)
+                  ? `&sectionId=${sectionId}&classroomId=${classroomId}&mongoLessonId=${lessonId}`
+                  : '';
+                router.push(base + ctx);
+              }}
             >
               <Feather name="zap" size={22} color="#FFFFFF" />
               <Text style={styles.playButtonText}>Play Lesson</Text>

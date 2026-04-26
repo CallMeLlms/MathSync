@@ -113,7 +113,7 @@ export default function ClassroomDetail() {
                         activeOpacity={0.8}
                         onPress={() => {
                           const gradeKey = classDetails?.name?.replace('GRADE ', 'G').replace(' ', '') ?? '';
-                          router.push(`/classroom/lesson/${lesson._id}?sectionId=${sectionId}&grade=${gradeKey}&quarter=${quarterData.quarter}`);
+                          router.push(`/classroom/lesson/${lesson._id}?sectionId=${sectionId}&classroomId=${id}&grade=${gradeKey}&quarter=${quarterData.quarter}`);
                         }}
                       >
                         <View style={styles.lessonIconBox}>

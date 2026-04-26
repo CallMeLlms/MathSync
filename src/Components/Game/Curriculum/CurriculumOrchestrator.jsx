@@ -43,6 +43,7 @@ import MoneyEngine from './Engines/MoneyEngine';
 // intercept their touch responder and break drag/draw interactions.
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
 
+import { submitGameSession } from '@/services/gameSubmissionService';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
@@ -54,7 +55,10 @@ import ResultModal from '@/Components/Game/Global/ResultModal';
  */
 export default function CurriculumOrchestrator({
   lessonId,
-  gradeKey = 'G1'
+  gradeKey = 'G1',
+  sectionId,
+  classroomId,
+  mongoLessonId,
 }) {
   const router = useRouter();
   const theme = getGameTheme(gradeKey);
@@ -70,12 +74,17 @@ export default function CurriculumOrchestrator({
     correctCount
   } = useGameEngine();
 
+  const answersRef = React.useRef([]);
+  const submittedRef = React.useRef(false);
+
   const [showExitModal, setShowExitModal] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
   const [lastResultData, setLastResultData] = useState({ isCorrect: false, userAnswerItems: [], currentQuestion: null });
 
   // Load Content Data
   useEffect(() => {
+    answersRef.current = [];
+    submittedRef.current = false;
     const content = getBundledLesson(gradeKey, lessonId);
     if (content) {
       setLessonContent(content);
@@ -119,6 +128,13 @@ export default function CurriculumOrchestrator({
 
   const handleResult = (isCorrect, userAnswerItems = []) => {
     recordAnswer(isCorrect);
+
+    answersRef.current.push({
+      question: currentQuestion?.question || currentQuestion?.instruction || currentQuestion?.text || '',
+      learningOutcomeId: null,
+      isCorrect,
+    });
+
     setLastResultData({
       isCorrect,
       userAnswerItems,
@@ -138,17 +154,34 @@ export default function CurriculumOrchestrator({
     if (currentQuestionIndex + 1 < lessonContent.questions.length) {
       nextQuestion();
     } else {
-      // Lesson finished — persist result to store and navigate.
       const questionLength = lessonContent.questions.length;
-      
+
       useUserStore.getState().recordSessionResult(gradeKey, lessonId, {
         correctCount,
         totalQuestions: questionLength,
-        score: totalScore
+        score: totalScore,
       });
 
       endGameSession();
-      
+
+      const sid  = typeof sectionId     === 'string' ? sectionId.trim()     : '';
+      const cid  = typeof classroomId   === 'string' ? classroomId.trim()   : '';
+      const mlid = typeof mongoLessonId === 'string' ? mongoLessonId.trim() : '';
+
+      if (sid && cid && mlid && !submittedRef.current) {
+        submittedRef.current = true;
+        submitGameSession({
+          sectionId:   sid,
+          classroomId: cid,
+          lessonId:    mlid,
+          totalScore,
+          totalItems:  questionLength,
+          answers:     answersRef.current,
+        }).catch((err) => {
+          console.warn('[GameSubmission] Failed to submit session:', err?.message ?? err);
+        });
+      }
+
       router.replace({
         pathname: '/game/result',
         params: { lessonId, gradeKey },

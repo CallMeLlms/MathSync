@@ -11,7 +11,7 @@ import GenerativeOrchestrator from '@/Components/Game/Generative/Orchestrators/G
  */
 export default function GameRoute() {
   const params = useLocalSearchParams();
-  const { lessonId, type, topicId, grade = 'G1' } = params;
+  const { lessonId, type, topicId, grade = 'G1', sectionId, classroomId, mongoLessonId } = params;
 
   console.log('[Router] Path Params:', { lessonId, type, topicId, grade });
 
@@ -39,9 +39,12 @@ export default function GameRoute() {
           gradeKey={grade} 
         />
       ) : (
-        <CurriculumOrchestrator 
-          lessonId={lessonId} 
-          gradeKey={grade} 
+        <CurriculumOrchestrator
+          lessonId={lessonId}
+          gradeKey={grade}
+          sectionId={sectionId}
+          classroomId={classroomId}
+          mongoLessonId={mongoLessonId}
         />
       )}
     </>
