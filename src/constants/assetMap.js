@@ -207,6 +207,13 @@ export const AssetMap = {
  */
 export const getAsset = (assetId) => {
   if (!assetId) return null;
+
+  // If it's already an emoji string (resolved by an orchestrator or in JSON), 
+  // pass it through directly to let AssetDisplay handle the rendering.
+  if (typeof assetId === 'string' && assetId.startsWith('emoji:')) {
+    return assetId;
+  }
+
   const asset = AssetMap[assetId];
   if (!asset) {
     console.warn(`[AssetMap] Warning: Asset "${assetId}" not found in registry.`);

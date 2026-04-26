@@ -65,55 +65,57 @@ const CalendarCard = ({ label, index, isSelected, evaluation, disabled, onPress 
     <Animated.View
       entering={ZoomIn.springify().delay(index * 80)}
       layout={Layout.springify()}
-      style={[styles.cardWrapper, shakeStyle]}
+      style={styles.cardWrapper}
     >
-      <Pressable
-        onPress={() => !disabled && onPress(label)}
-        onPressIn={() => {
-          if (disabled) return;
-          translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
-          bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
-        }}
-        onPressOut={() => {
-          if (disabled) return;
-          translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
-          bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
-        }}
-        disabled={disabled}
-      >
-        <Animated.View
-          style={[
-            styles.card,
-            sinkStyle,
-            { backgroundColor: colors.bg, borderColor: colors.border },
-          ]}
+      <Animated.View style={shakeStyle}>
+        <Pressable
+          onPress={() => !disabled && onPress(label)}
+          onPressIn={() => {
+            if (disabled) return;
+            translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+            bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+          }}
+          onPressOut={() => {
+            if (disabled) return;
+            translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+            bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+          }}
+          disabled={disabled}
         >
-          {/* Torn calendar-page top strip */}
-          <View style={[styles.tornStrip, { backgroundColor: colors.torn }]} />
+          <Animated.View
+            style={[
+              styles.card,
+              sinkStyle,
+              { backgroundColor: colors.bg, borderColor: colors.border },
+            ]}
+          >
+            {/* Torn calendar-page top strip */}
+            <View style={[styles.tornStrip, { backgroundColor: colors.torn }]} />
 
-          {/* Day / month label */}
-          <Text style={[styles.cardLabel, { color: colors.text }]}>{label}</Text>
+            {/* Day / month label */}
+            <Text style={[styles.cardLabel, { color: colors.text }]}>{label}</Text>
 
-          {/* Ruled lines — evoke paper calendar */}
-          <View style={styles.ruledLines}>
-            {[0, 1, 2].map(i => (
-              <View key={i} style={styles.ruledLine} />
-            ))}
-          </View>
+            {/* Ruled lines — evoke paper calendar */}
+            <View style={styles.ruledLines}>
+              {[0, 1, 2].map(i => (
+                <View key={i} style={styles.ruledLine} />
+              ))}
+            </View>
 
-          {/* Result badge */}
-          {state === 'correct' && (
-            <Animated.View entering={ZoomIn.springify()} style={styles.badge}>
-              <Ionicons name="checkmark-circle" size={22} color={Colors.success} />
-            </Animated.View>
-          )}
-          {state === 'wrong' && (
-            <Animated.View entering={ZoomIn.springify()} style={styles.badge}>
-              <Ionicons name="close-circle" size={22} color={Colors.error} />
-            </Animated.View>
-          )}
-        </Animated.View>
-      </Pressable>
+            {/* Result badge */}
+            {state === 'correct' && (
+              <Animated.View entering={ZoomIn.springify()} style={styles.badge}>
+                <Ionicons name="checkmark-circle" size={22} color={Colors.success} />
+              </Animated.View>
+            )}
+            {state === 'wrong' && (
+              <Animated.View entering={ZoomIn.springify()} style={styles.badge}>
+                <Ionicons name="close-circle" size={22} color={Colors.error} />
+              </Animated.View>
+            )}
+          </Animated.View>
+        </Pressable>
+      </Animated.View>
     </Animated.View>
   );
 };

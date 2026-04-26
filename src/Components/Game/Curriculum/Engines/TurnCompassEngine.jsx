@@ -8,6 +8,7 @@ import Animated, {
   withSequence,
   ZoomIn,
   FadeIn,
+  Layout,
   Easing,
 } from 'react-native-reanimated';
 import Svg, { Circle, Line, Polygon, Rect } from 'react-native-svg';
@@ -112,42 +113,45 @@ const DirectionButton = ({ label, index, isSelected, evaluation, disabled, onPre
   return (
     <Animated.View
       entering={ZoomIn.springify().delay(index * 80)}
-      style={[styles.dirBtnWrapper, shakeStyle]}
+      layout={Layout.springify()}
+      style={styles.dirBtnWrapper}
     >
-      <Pressable
-        onPress={() => !disabled && onPress(label)}
-        onPressIn={() => {
-          if (disabled) return;
-          translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
-          bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
-        }}
-        onPressOut={() => {
-          if (disabled) return;
-          translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
-          bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
-        }}
-        disabled={disabled}
-      >
-        <Animated.View
-          style={[
-            styles.dirBtn,
-            sinkStyle,
-            { backgroundColor: colors.bg, borderColor: colors.border },
-          ]}
+      <Animated.View style={shakeStyle}>
+        <Pressable
+          onPress={() => !disabled && onPress(label)}
+          onPressIn={() => {
+            if (disabled) return;
+            translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+            bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
+          }}
+          onPressOut={() => {
+            if (disabled) return;
+            translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+            bottomWidth.value = withSpring(6, { damping: 15, stiffness: 300 });
+          }}
+          disabled={disabled}
         >
-          <Text style={[styles.dirBtnText, { color: colors.text }]}>{label}</Text>
-          {state === 'correct' && (
-            <Animated.View entering={ZoomIn.springify()} style={styles.dirBadge}>
-              <Ionicons name="checkmark-circle" size={18} color={Colors.success} />
-            </Animated.View>
-          )}
-          {state === 'wrong' && (
-            <Animated.View entering={ZoomIn.springify()} style={styles.dirBadge}>
-              <Ionicons name="close-circle" size={18} color={Colors.error} />
-            </Animated.View>
-          )}
-        </Animated.View>
-      </Pressable>
+          <Animated.View
+            style={[
+              styles.dirBtn,
+              sinkStyle,
+              { backgroundColor: colors.bg, borderColor: colors.border },
+            ]}
+          >
+            <Text style={[styles.dirBtnText, { color: colors.text }]}>{label}</Text>
+            {state === 'correct' && (
+              <Animated.View entering={ZoomIn.springify()} style={styles.dirBadge}>
+                <Ionicons name="checkmark-circle" size={18} color={Colors.success} />
+              </Animated.View>
+            )}
+            {state === 'wrong' && (
+              <Animated.View entering={ZoomIn.springify()} style={styles.dirBadge}>
+                <Ionicons name="close-circle" size={18} color={Colors.error} />
+              </Animated.View>
+            )}
+          </Animated.View>
+        </Pressable>
+      </Animated.View>
     </Animated.View>
   );
 };

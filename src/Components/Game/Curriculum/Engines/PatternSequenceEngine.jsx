@@ -9,6 +9,7 @@ import Animated, {
   withRepeat,
   ZoomIn,
   FadeIn,
+  Layout,
 } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
@@ -70,28 +71,31 @@ const SequenceTile = ({ item, isBlank, filledValue, evaluation, index }) => {
   return (
     <Animated.View
       entering={ZoomIn.springify().delay(index * 60)}
-      style={[scaleStyle, styles.sequenceTileWrapper]}
+      layout={Layout.springify()}
+      style={styles.sequenceTileWrapper}
     >
-      <Animated.View
-        style={[
-          styles.sequenceTile,
-          { backgroundColor: tileColor(), borderColor: borderColor() },
-          isBlank && !filledValue && pulseStyle,
-        ]}
-      >
-        <Text style={[styles.sequenceTileText, isBlank && filledValue && styles.filledTileText]}>
-          {displayContent}
-        </Text>
-        {isBlank && evaluation === 'correct' && (
-          <Animated.View entering={ZoomIn.springify()} style={styles.tileBadge}>
-            <Ionicons name="checkmark-circle" size={14} color={Colors.success} />
-          </Animated.View>
-        )}
-        {isBlank && evaluation === 'wrong' && (
-          <Animated.View entering={ZoomIn.springify()} style={styles.tileBadge}>
-            <Ionicons name="close-circle" size={14} color={Colors.error} />
-          </Animated.View>
-        )}
+      <Animated.View style={scaleStyle}>
+        <Animated.View
+          style={[
+            styles.sequenceTile,
+            { backgroundColor: tileColor(), borderColor: borderColor() },
+            isBlank && !filledValue && pulseStyle,
+          ]}
+        >
+          <Text style={[styles.sequenceTileText, isBlank && filledValue && styles.filledTileText]}>
+            {displayContent}
+          </Text>
+          {isBlank && evaluation === 'correct' && (
+            <Animated.View entering={ZoomIn.springify()} style={styles.tileBadge}>
+              <Ionicons name="checkmark-circle" size={14} color={Colors.success} />
+            </Animated.View>
+          )}
+          {isBlank && evaluation === 'wrong' && (
+            <Animated.View entering={ZoomIn.springify()} style={styles.tileBadge}>
+              <Ionicons name="close-circle" size={14} color={Colors.error} />
+            </Animated.View>
+          )}
+        </Animated.View>
       </Animated.View>
     </Animated.View>
   );
@@ -138,33 +142,36 @@ const OptionTile = ({ value, index, isSelected, evaluation, disabled, onPress })
   return (
     <Animated.View
       entering={ZoomIn.springify().delay(index * 70)}
-      style={[styles.optionTileWrapper, shakeStyle]}
+      layout={Layout.springify()}
+      style={styles.optionTileWrapper}
     >
-      <Pressable
-        onPress={() => !disabled && onPress(value)}
-        onPressIn={() => {
-          if (disabled) return;
-          translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
-          bottomWidth.value = withSpring(2, { damping: 15, stiffness: 300 });
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        }}
-        onPressOut={() => {
-          if (disabled) return;
-          translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
-          bottomWidth.value = withSpring(5, { damping: 15, stiffness: 300 });
-        }}
-        disabled={disabled}
-      >
-        <Animated.View
-          style={[
-            styles.optionTile,
-            sinkStyle,
-            { backgroundColor: palette.bg, borderColor: palette.border },
-          ]}
+      <Animated.View style={shakeStyle}>
+        <Pressable
+          onPress={() => !disabled && onPress(value)}
+          onPressIn={() => {
+            if (disabled) return;
+            translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+            bottomWidth.value = withSpring(5, { damping: 15, stiffness: 300 });
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          }}
+          onPressOut={() => {
+            if (disabled) return;
+            translateY.value = withSpring(0, { damping: 15, stiffness: 300 });
+            bottomWidth.value = withSpring(5, { damping: 15, stiffness: 300 });
+          }}
+          disabled={disabled}
         >
-          <Text style={[styles.optionTileText, { color: palette.text }]}>{value}</Text>
-        </Animated.View>
-      </Pressable>
+          <Animated.View
+            style={[
+              styles.optionTile,
+              sinkStyle,
+              { backgroundColor: palette.bg, borderColor: palette.border },
+            ]}
+          >
+            <Text style={[styles.optionTileText, { color: palette.text }]}>{value}</Text>
+          </Animated.View>
+        </Pressable>
+      </Animated.View>
     </Animated.View>
   );
 };
