@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ActivityIndicator, BackHandler } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
@@ -20,6 +21,7 @@ import TimeMoneyEngine from '@/Components/Game/Generative/Engines/TimeMoneyEngin
 import AdvancedFractionsEngine from '@/Components/Game/Generative/Engines/AdvancedFractionsEngine';
 import MeasurementEngine from '@/Components/Game/Generative/Engines/MeasurementEngine';
 import AlgebraEngine from '@/Components/Game/Generative/Engines/AlgebraEngine';
+import MentalMathEngine from '@/Components/Game/Generative/Engines/MentalMathEngine';
 
 const ENGINE_REGISTRY = {
   'ordering-numbers': OrderingEngine,
@@ -31,6 +33,7 @@ const ENGINE_REGISTRY = {
   'advanced-fractions': AdvancedFractionsEngine,
   'measurement': MeasurementEngine,
   'algebra-basics': AlgebraEngine,
+  'mental-math': MentalMathEngine,
 };
 
 /**
@@ -60,10 +63,12 @@ export default function GenerativeOrchestrator({
   // 1. Session Setup
   useEffect(() => {
     if (templateData) {
+      console.log('[GenerativeOrchestrator] session setup — topicId:', templateData.topicId, '| rules:', JSON.stringify(templateData.rules));
       startGameSession(templateData.templateId);
       const tid = templateData.topicId || 'ordering-numbers';
       setTopicId(tid);
       const gen = getGeneratorById(tid);
+      console.log('[GenerativeOrchestrator] generator resolved:', gen ? 'OK' : 'NOT FOUND', 'for', tid);
       setGenerator(() => gen);
     }
   }, [templateData]);
@@ -95,6 +100,7 @@ export default function GenerativeOrchestrator({
   const generateNextProblem = useCallback((currentRules) => {
     if (generator) {
       const newProblem = generator(currentRules || {});
+      console.log('[GenerativeOrchestrator] problem generated — answer:', newProblem?.answer, '| choices:', newProblem?.choices);
       setCurrentProblem(newProblem);
     }
   }, [generator]);
@@ -128,16 +134,16 @@ export default function GenerativeOrchestrator({
 
   // 4. Feedback sequence completes
   const handleFeedbackComplete = useCallback(() => {
+    console.log('[GenerativeOrchestrator] handleFeedbackComplete — wasCorrect:', isLastAnswerCorrect);
     setShowFeedback(false);
-    if (isLastAnswerCorrect) {
-      try {
-        // Synchronously prepare next state to prevent frame lag
-        generateNextProblem(templateData?.rules);
-      } catch (e) {
-        console.error('[GenerativeOrchestrator] Generator error:', e);
-      }
-      setCurrentIndex(prev => prev + 1);
+    try {
+      generateNextProblem(templateData?.rules);
+    } catch (e) {
+      console.error('[GenerativeOrchestrator] Generator error:', e);
     }
+    // Always bump index so the engine remounts and resets its lock state.
+    // On wrong answers this re-presents the same problem with a fresh engine.
+    setCurrentIndex(prev => prev + 1);
   }, [isLastAnswerCorrect, generateNextProblem, templateData]);
 
   if (!currentProblem || !topicId) {
@@ -161,12 +167,12 @@ export default function GenerativeOrchestrator({
       <SafeAreaView style={styles.safeArea}>
         {/* Universal Header */}
         <View style={styles.hud}>
-          <TouchableOpacity 
-            style={styles.exitButton} 
+          <TouchableOpacity
+            style={styles.exitButton}
             onPress={() => setShowExitModal(true)}
             accessibilityLabel="Quit practice"
           >
-            <Text style={[styles.exitText, { fontFamily: theme.fontFamily.accent }]}>End Practice</Text>
+            <AntDesign name="close" size={20} color={Colors.onSurface} />
           </TouchableOpacity>
           <Text style={[styles.scoreText, { color: theme.primaryColor, fontFamily: theme.fontFamily.accent }]}>
             Score: {totalScore}
@@ -176,9 +182,10 @@ export default function GenerativeOrchestrator({
         {/* Dynamic Engine (Transitionless for performance) */}
         <View style={styles.engineContainer}>
           {EngineComponent ? (
-            <View 
+            <View
               key={`engine-${currentIndex}`}
               style={styles.engineWrapper}
+              pointerEvents={showFeedback ? 'none' : 'auto'}
             >
               <EngineComponent 
                 problem={currentProblem}
@@ -230,8 +237,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.outlineVariant,
   },
-  exitButton: { padding: 8 },
-  exitText: { color: Colors.error, fontSize: 14 },
+  exitButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: Colors.surfaceContainerHigh,
+    borderWidth: 1.5,
+    borderColor: Colors.outlineVariant,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   scoreText: { fontSize: 20 },
   engineContainer: { flex: 1, overflow: 'hidden' },
   engineWrapper: { flex: 1 },

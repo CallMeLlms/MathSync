@@ -15,6 +15,7 @@ import * as measurementG4 from './grades/G4/measurementGenerator.js';
 import * as factorsG5 from './grades/G5/factorsMultiplesGenerator.js';
 import * as meanMedianG5 from './grades/G5/meanMedianGenerator.js';
 import * as percentagesG5 from './grades/G5/percentagesGenerator.js';
+import * as mentalMath from './common/mentalMathGenerator.js';
 
 export const GeneratorRegistry = {
   // Grade 2
@@ -39,6 +40,9 @@ export const GeneratorRegistry = {
 
   // Grade 6
   'algebra-basics': algebraG6.generateProblem,
+
+  // Cross-grade
+  'mental-math': mentalMath.generateProblem,
 };
 
 /**

@@ -11,9 +11,9 @@ import GenerativeOrchestrator from '@/Components/Game/Generative/Orchestrators/G
  */
 export default function GameRoute() {
   const params = useLocalSearchParams();
-  const { lessonId, type, topicId, grade = 'G1', sectionId, classroomId, mongoLessonId } = params;
+  const { lessonId, type, topicId, grade = 'G1', sectionId, classroomId, mongoLessonId, rules: rulesParam } = params;
 
-  console.log('[Router] Path Params:', { lessonId, type, topicId, grade });
+  console.log('[GameRoute] params received — lessonId:', lessonId, '| grade:', grade, '| topicId:', topicId, '| rulesParam:', rulesParam);
 
   const computedTopicId = topicId || lessonId;
   const isGenerative = type === 'generative' ||
@@ -23,12 +23,17 @@ export default function GameRoute() {
       'advanced-fractions', 'ordering-decimals', 'measurement',
       'factors-multiples', 'mean-median', 'percentages',
       'algebra-basics',
+      'mental-math',
     ].includes(computedTopicId);
-  
+
+  const parsedRules = rulesParam ? JSON.parse(rulesParam) : undefined;
+
   const templateData = isGenerative ? {
     templateId: lessonId,
     topicId: computedTopicId,
+    rules: parsedRules,
   } : null;
+  console.log('[GameRoute] templateData built — isGenerative:', isGenerative, '| rules:', JSON.stringify(parsedRules));
 
   return (
     <>
