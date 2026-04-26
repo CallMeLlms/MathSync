@@ -1,29 +1,54 @@
-const LESSON_MAP = [
+// Layer 1: Explicit ObjectId → gameLesson map
+// Fill in each _id from the MongoDB classroom lesson documents.
+// Format: '<MongoDB _id string>': <gameLesson number>
+const OBJECT_ID_MAP = {
   // Q1
-  { quarter: 1, keywords: ['shape', 'flat', 'circle', 'square', 'triangle', 'rectangle', 'geometric'], gameLesson: 1 },
-  { quarter: 1, keywords: ['number', 'addition', 'pairing', 'petal', 'counting', 'whole'],             gameLesson: 2 },
-  { quarter: 1, keywords: ['ordinal', 'ranking', 'position', 'first', 'second', 'vine', 'order'],      gameLesson: 3 },
-  { quarter: 1, keywords: ['sort', 'compare', 'seed', 'greater', 'less'],                              gameLesson: 4 },
+  '69d36053d4917097e571d497': null, // TODO: set correct gameLesson (1, 2, 3, or 4)
+  '69d3606ad4917097e571d4f8': null, // TODO
+  '69d8ae56e2515f832fd20ac4': null, // TODO
+  '69cf79031f6f65e4e48e8dde': null, // TODO
   // Q2
-  { quarter: 2, keywords: ['measure', 'length', 'distance', 'meadow', 'non-standard'],                 gameLesson: 6 },
-  { quarter: 2, keywords: ['hundred', 'count to 100', 'skip count', 'vine'],                           gameLesson: 7 },
-  { quarter: 2, keywords: ['place value', 'tens', 'ones', 'pond', 'decompose'],                        gameLesson: 8 },
-  { quarter: 2, keywords: ['addition', 'add', 'grove', 'sum'],                                         gameLesson: 9 },
-  // Q3
-  { quarter: 3, keywords: ['data', 'graph', 'pictograph', 'table', 'garden'],                          gameLesson: 11 },
-  { quarter: 3, keywords: ['subtraction', 'subtract', 'spring', 'minus', 'take away', 'to 20'],        gameLesson: 12 },
-  { quarter: 3, keywords: ['subtraction', 'subtract', 'root', 'to 100'],                               gameLesson: 13 },
-  { quarter: 3, keywords: ['pattern', 'trail', 'repeat', 'sequence'],                                  gameLesson: 14 },
+  '69d254dd2c211e0f5162f156': null, // TODO
+  '69d7b3dd502dbe1c22728648': null, // TODO
+  '69d8c01113b3028a6109fd5f': null, // TODO
+  '69d8c0b013b3028a6109fd74': null, // TODO
+  // Add remaining lesson _ids here as you identify them
+};
+
+// Layer 2: Keyword fallback map (quarter-scoped)
+// Used only when a lesson _id is not in OBJECT_ID_MAP.
+const KEYWORD_MAP = [
+  // Q1
+  { quarter: 1, keywords: ['shape', 'flat', 'circle', 'square', 'triangle', 'rectangle', 'geometric', '2d'], gameLesson: 1 },
+  { quarter: 1, keywords: ['pairing', 'petal', 'number sense', 'whole number', 'counting'], gameLesson: 2 },
+  { quarter: 1, keywords: ['ordinal', 'ranking', 'vine', 'position', 'order', 'first', 'second'], gameLesson: 3 },
+  { quarter: 1, keywords: ['sort', 'compare', 'seed', 'greater', 'less', 'smallest', 'largest'], gameLesson: 4 },
+  // Q2
+  { quarter: 2, keywords: ['measure', 'length', 'distance', 'meadow', 'non-standard', 'longer', 'shorter'], gameLesson: 6 },
+  { quarter: 2, keywords: ['hundred', 'count to 100', 'skip count', 'vine', 'numbers to 100'], gameLesson: 7 },
+  { quarter: 2, keywords: ['place value', 'tens', 'ones', 'pond', 'decompose', 'digit'], gameLesson: 8 },
+  { quarter: 2, keywords: ['addition', 'add', 'grove', 'sum', 'adding'], gameLesson: 9 },
+  // Q3 — Lesson 13 (to 100) BEFORE Lesson 12 (to 20) so the more specific match wins first
+  { quarter: 3, keywords: ['data', 'graph', 'pictograph', 'tally', 'chart', 'garden'], gameLesson: 11 },
+  { quarter: 3, keywords: ['subtraction', 'subtract', 'root', 'to 100', 'two-digit', 'two digit', '100'], gameLesson: 13 },
+  { quarter: 3, keywords: ['subtraction', 'subtract', 'spring', 'minus', 'take away', 'to 20', 'difference'], gameLesson: 12 },
+  { quarter: 3, keywords: ['pattern', 'trail', 'repeat', 'sequence', 'repeating', 'what comes next'], gameLesson: 14 },
   // Q4
-  { quarter: 4, keywords: ['fraction', 'flower', 'half', 'equal part'],                                gameLesson: 16 },
-  { quarter: 4, keywords: ['money', 'peso', 'coin', 'bill', 'market'],                                 gameLesson: 17 },
-  { quarter: 4, keywords: ['clock', 'time', 'hour', 'minute', 'tower'],                                gameLesson: 18 },
-  { quarter: 4, keywords: ['calendar', 'day', 'month', 'compass', 'direction'],                        gameLesson: 19 },
+  { quarter: 4, keywords: ['fraction', 'flower', 'half', 'halves', 'third', 'thirds', 'fourth', 'fourths', 'quarter', 'quarters', 'equal part', 'equal parts', 'sharing'], gameLesson: 16 },
+  { quarter: 4, keywords: ['money', 'peso', 'coin', 'bill', 'market', 'centavo', 'currency'], gameLesson: 17 },
+  { quarter: 4, keywords: ['clock', 'time', 'hour', 'minute', 'tower', 'analog', 'telling time', "o'clock", 'half past'], gameLesson: 18 },
+  { quarter: 4, keywords: ['calendar', 'day', 'month', 'compass', 'direction', 'days of the week', 'rotation', 'turn'], gameLesson: 19 },
 ];
 
-export function resolveGameLesson(title = '', quarter = null) {
+export function resolveGameLesson(lessonId, title = '', quarter = null) {
+  // Layer 1: explicit ObjectId match
+  if (lessonId && lessonId in OBJECT_ID_MAP) {
+    return OBJECT_ID_MAP[lessonId];
+  }
+
+  // Layer 2: keyword fallback
   const lower = title.toLowerCase();
-  const candidates = quarter ? LESSON_MAP.filter(e => e.quarter === quarter) : LESSON_MAP;
+  const candidates = quarter ? KEYWORD_MAP.filter(e => e.quarter === quarter) : KEYWORD_MAP;
   const match = candidates.find(entry => entry.keywords.some(kw => lower.includes(kw)));
   return match ? match.gameLesson : null;
 }

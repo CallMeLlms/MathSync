@@ -59,7 +59,7 @@ export default function LessonDetail() {
   }
 
   const gameLessonId = grade === 'G1'
-    ? resolveGameLesson(lesson?.title, quarter ? parseInt(quarter, 10) : null)
+    ? resolveGameLesson(lessonId, lesson?.title, quarter ? parseInt(quarter, 10) : null)
     : null;
 
   return (
