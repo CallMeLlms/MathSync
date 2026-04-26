@@ -19,6 +19,7 @@ import MatchingEngine from '@/Components/Game/Generative/Engines/MatchingEngine'
 import TimeMoneyEngine from '@/Components/Game/Generative/Engines/TimeMoneyEngine';
 import AdvancedFractionsEngine from '@/Components/Game/Generative/Engines/AdvancedFractionsEngine';
 import MeasurementEngine from '@/Components/Game/Generative/Engines/MeasurementEngine';
+import AlgebraEngine from '@/Components/Game/Generative/Engines/AlgebraEngine';
 
 const ENGINE_REGISTRY = {
   'ordering-numbers': OrderingEngine,
@@ -29,6 +30,7 @@ const ENGINE_REGISTRY = {
   'time-money': TimeMoneyEngine,
   'advanced-fractions': AdvancedFractionsEngine,
   'measurement': MeasurementEngine,
+  'algebra-basics': AlgebraEngine,
 };
 
 /**
