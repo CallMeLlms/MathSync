@@ -39,6 +39,25 @@ export default function LessonDetail() {
     }
   };
 
+  const normalizedGrade = Array.isArray(grade) ? grade[0] : grade;
+  const isG1 = normalizedGrade?.toString().toUpperCase() === 'G1';
+
+  const gameLessonId = isG1
+    ? resolveGameLesson(lessonId, lesson?.title, quarter ? parseInt(quarter, 10) : null)
+    : null;
+
+  // Persistent Debug Logging for Alignment
+  useEffect(() => {
+    if (lesson) {
+      console.log('--- [MathSync Alignment Debug] ---');
+      console.log('MongoDB Lesson ID:', lessonId);
+      console.log('Classroom Grade:', grade);
+      console.log('Is G1 Gate Passed:', isG1 ? 'YES' : 'NO');
+      console.log('Resolved Game ID:', gameLessonId || 'NULL (No Match)');
+      console.log('----------------------------------');
+    }
+  }, [lessonId, grade, isG1, gameLessonId, lesson]);
+
   if (loading) {
     return (
       <View style={styles.centered}>
@@ -58,9 +77,6 @@ export default function LessonDetail() {
     );
   }
 
-  const gameLessonId = grade === 'G1'
-    ? resolveGameLesson(lessonId, lesson?.title, quarter ? parseInt(quarter, 10) : null)
-    : null;
 
   return (
     <SafeAreaView style={styles.container}>

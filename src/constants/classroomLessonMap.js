@@ -3,15 +3,15 @@
 // Format: '<MongoDB _id string>': <gameLesson number>
 const OBJECT_ID_MAP = {
   // Q1
-  '69d36053d4917097e571d497': null, // TODO: set correct gameLesson (1, 2, 3, or 4)
+  '69d36053d4917097e571d497': 3, // Maps to Lesson 3 (Ranking Vines)
   '69d3606ad4917097e571d4f8': null, // TODO
-  '69d8ae56e2515f832fd20ac4': null, // TODO
-  '69cf79031f6f65e4e48e8dde': null, // TODO
+  '69d8ae56e2515f832fd20ac4': 3, // Maps to Lesson 3 (Confirmed via Debug)
+  '69cf79031f6f65e4e48e8dde': 1, // TODO
   // Q2
-  '69d254dd2c211e0f5162f156': null, // TODO
-  '69d7b3dd502dbe1c22728648': null, // TODO
-  '69d8c01113b3028a6109fd5f': null, // TODO
-  '69d8c0b013b3028a6109fd74': null, // TODO
+  '69d254dd2c211e0f5162f156': 1, // TODO
+  '69d7b3dd502dbe1c22728648': 2, // TODO
+  '69d8c01113b3028a6109fd5f': 4, // TODO
+  '69d8c0b013b3028a6109fd74': 2, // TODO
   // Add remaining lesson _ids here as you identify them
 };
 
@@ -42,8 +42,9 @@ const KEYWORD_MAP = [
 
 export function resolveGameLesson(lessonId, title = '', quarter = null) {
   // Layer 1: explicit ObjectId match
-  if (lessonId && lessonId in OBJECT_ID_MAP) {
-    return OBJECT_ID_MAP[lessonId];
+  const idStr = lessonId?.toString().trim();
+  if (idStr && idStr in OBJECT_ID_MAP) {
+    return OBJECT_ID_MAP[idStr];
   }
 
   // Layer 2: keyword fallback
