@@ -1,11 +1,36 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Base API URL configuration
-// export const API_BASE_URL = 'http://192.168.1.101:5500/api/v1';
+import Constants from 'expo-constants';
 
-// ===== FOR OTHER DEVELOPMENT URL ======
-export const API_BASE_URL = 'http://192.168.56.1:5500/api/v1';
+/**
+ * API Base URL Reference (Commented out for quick overrides)
+ * // export const API_BASE_URL = 'http://192.168.1.101:5500/api/v1';
+ * // export const API_BASE_URL = 'http://192.168.56.1:5500/api/v1'; (MumuPlayer)
+ */
+
+/**
+ * Robust API Base URL configuration.
+ * - Production: Uses a static public URL.
+ * - Development: Dynamically resolves the host machine's IP to support real devices and emulators.
+ */
+const getApiBaseUrl = () => {
+    if (!__DEV__) {
+        return 'https://api.mathsync.app/api/v1'; // Placeholder for production
+    }
+
+    // In development, prioritize the host URI from Expo
+    const hostUri = Constants.expoConfig?.hostUri;
+    if (hostUri) {
+        const ip = hostUri.split(':')[0];
+        return `http://${ip}:5500/api/v1`;
+    }
+
+    // Fallback for web or unconfigured environments
+    return 'http://localhost:5500/api/v1';
+};
+
+export const API_BASE_URL = getApiBaseUrl();
 
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
