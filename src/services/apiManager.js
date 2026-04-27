@@ -2,10 +2,10 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Base API URL configuration
-// export const API_BASE_URL = 'http://192.168.1.101:5500/api/v1';
+export const API_BASE_URL = 'http://192.168.100.149:5500/api/v1';
 
 // ===== FOR OTHER DEVELOPMENT URL ======
-export const API_BASE_URL = 'http://192.168.56.1:5500/api/v1';
+//export const API_BASE_URL = 'http://192.168.56.1:5500/api/v1';
 
 const apiClient = axios.create({
     baseURL: API_BASE_URL,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Drawer } from 'expo-router/drawer';
 import { AntDesign, Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CustomDrawerContent from '@/Components/Navigation/CustomDrawerContent';
 import Colors from '@/constants/colors';
 
@@ -49,6 +50,16 @@ const DrawerLayout = () => {
           title: "Grades",
           drawerIcon: ({ color, size }) => (
             <Feather name="book-open" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name="Leaderboard"
+        options={{
+          title: "Leaderboard",
+          drawerIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="trophy-outline" size={size} color={color} />
           ),
         }}
       />

@@ -227,9 +227,6 @@ const renderNode = (node, customStyles = {}, context = {}) => {
             style={defaultStyles.image}
             resizeMode="contain"
           />
-          {attrs?.alt && (
-            <Text style={defaultStyles.imageCaption}>{attrs.alt}</Text>
-          )}
         </View>
       );
 
