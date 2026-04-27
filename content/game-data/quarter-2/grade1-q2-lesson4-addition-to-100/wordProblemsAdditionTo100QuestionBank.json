@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee5",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Addition Word Problems up to 100",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_2_wordadd_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee5",
             "competency": "NA.2.10",
             "topic": "Addition Word Problems",
             "level": "concrete",
@@ -30,6 +32,7 @@
         },
         {
             "id": "na_2_wordadd_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee5",
             "competency": "NA.2.10",
             "topic": "Addition Word Problems",
             "level": "pictorial",
@@ -46,6 +49,7 @@
         },
         {
             "id": "na_2_wordadd_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee5",
             "competency": "NA.2.10",
             "topic": "Addition Word Problems",
             "level": "abstract",

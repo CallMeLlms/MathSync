@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Philippine Money Identification",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_4_monid_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.4",
             "topic": "Money ID",
             "level": "concrete",
@@ -34,6 +36,7 @@
         },
         {
             "id": "na_4_monid_005",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.4",
             "topic": "Money ID",
             "level": "pictorial",
@@ -54,6 +57,7 @@
         },
         {
             "id": "na_4_monid_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.4",
             "topic": "Money ID",
             "level": "abstract",

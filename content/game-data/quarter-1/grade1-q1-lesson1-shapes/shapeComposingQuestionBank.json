@@ -15,6 +15,7 @@
     "questions": [
         {
             "id": "mg_1_comp_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aedf",
             "competency": "MG.1.3",
             "topic": "Composing Shapes",
             "level": "concrete",
@@ -29,6 +30,7 @@
         },
         {
             "id": "mg_1_comp_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aedf",
             "competency": "MG.1.3",
             "topic": "Composing Shapes",
             "level": "pictorial",
@@ -48,6 +50,7 @@
         },
         {
             "id": "mg_1_comp_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aedf",
             "competency": "MG.1.3",
             "topic": "Composing Shapes",
             "level": "abstract",

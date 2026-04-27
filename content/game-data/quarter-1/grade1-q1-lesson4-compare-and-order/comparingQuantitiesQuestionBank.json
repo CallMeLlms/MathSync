@@ -15,6 +15,7 @@
     "questions": [
         {
             "id": "na_1_quant_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.7",
             "topic": "Comparing Quantities",
             "level": "concrete",
@@ -31,6 +32,7 @@
         },
         {
             "id": "na_1_quant_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.7",
             "topic": "Comparing Quantities",
             "level": "pictorial",
@@ -48,6 +50,7 @@
         },
         {
             "id": "na_1_quant_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.7",
             "topic": "Comparing Quantities",
             "level": "abstract",

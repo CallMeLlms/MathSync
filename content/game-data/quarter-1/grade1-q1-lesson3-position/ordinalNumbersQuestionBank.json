@@ -15,6 +15,7 @@
     "questions": [
         {
             "id": "na_1_ordinal_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
             "competency": "NA.1.9",
             "topic": "Ordinal Numbers",
             "level": "concrete",
@@ -31,6 +32,7 @@
         },
         {
             "id": "na_1_ordinal_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
             "competency": "NA.1.9",
             "topic": "Ordinal Numbers",
             "level": "pictorial",
@@ -41,15 +43,12 @@
             "assetType": "illustration",
             "metadata": {
                 "scenario": "canteen_line",
-                "options": [
-                    "juan",
-                    "maria",
-                    "pedro"
-                ]
+                "options": ["juan", "maria", "pedro"]
             }
         },
-    {
+        {
             "id": "na_1_ordinal_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
             "competency": "NA.1.9",
             "topic": "Ordinal Numbers",
             "level": "abstract",
@@ -59,11 +58,7 @@
             "answer": "1st",
             "assetType": "text",
             "metadata": {
-                "options": [
-                    "1st",
-                    "2nd",
-                    "3rd"
-                ]
+                "options": ["1st", "2nd", "3rd"]
             }
         }
     ]

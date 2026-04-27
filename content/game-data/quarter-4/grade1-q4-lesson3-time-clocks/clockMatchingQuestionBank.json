@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Clock Matching",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "mg_4_match_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
             "competency": "MG.4.9",
             "topic": "Clock Matching",
             "level": "concrete",
@@ -27,6 +29,7 @@
         },
         {
             "id": "mg_4_match_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
             "competency": "MG.4.9",
             "topic": "Clock Matching",
             "level": "pictorial",
@@ -41,6 +44,7 @@
         },
         {
             "id": "na_4_match_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
             "competency": "MG.4.9",
             "topic": "Clock Matching",
             "level": "abstract",

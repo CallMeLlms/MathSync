@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Counting Sequences up to 100",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_2_seq_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.4",
             "topic": "Sequences",
             "level": "concrete",
@@ -27,6 +29,7 @@
         },
         {
             "id": "na_2_seq_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.4",
             "topic": "Sequences",
             "level": "pictorial",
@@ -40,6 +43,7 @@
         },
         {
             "id": "na_2_seq_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.4",
             "topic": "Sequences",
             "level": "abstract",

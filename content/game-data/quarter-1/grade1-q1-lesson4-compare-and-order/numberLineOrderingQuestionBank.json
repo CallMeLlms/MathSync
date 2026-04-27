@@ -15,6 +15,7 @@
     "questions": [
         {
             "id": "na_1_seq_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.8",
             "topic": "Ordering Numbers",
             "level": "concrete",
@@ -29,6 +30,7 @@
         },
         {
             "id": "na_1_seq_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.8",
             "topic": "Ordering Numbers",
             "level": "pictorial",
@@ -42,6 +44,7 @@
         },
         {
             "id": "na_1_seq_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.8",
             "topic": "Ordering Numbers",
             "level": "abstract",

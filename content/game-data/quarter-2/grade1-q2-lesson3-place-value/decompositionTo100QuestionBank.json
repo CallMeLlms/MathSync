@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Decomposing 2-Digit Numbers",
@@ -15,6 +16,7 @@
     "questions": [
         {
             "id": "na_2_decomp_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.7",
             "topic": "Decomposition",
             "level": "concrete",
@@ -28,6 +30,7 @@
         },
         {
             "id": "na_2_decomp_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.7",
             "topic": "Decomposition",
             "level": "pictorial",
@@ -44,6 +47,7 @@
         },
         {
             "id": "na_2_decomp_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.7",
             "topic": "Decomposition",
             "level": "abstract",

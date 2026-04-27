@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeec",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Days of the Week and Months of the Year",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "mg_4_calseq_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeec",
             "competency": "MG.4.10",
             "topic": "Calendar Ordering",
             "level": "concrete",
@@ -28,6 +30,7 @@
         },
         {
             "id": "mg_4_calseq_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeec",
             "competency": "MG.4.10",
             "topic": "Calendar Ordering",
             "level": "pictorial",
@@ -42,6 +45,7 @@
         },
         {
             "id": "mg_4_calseq_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeec",
             "competency": "MG.4.10",
             "topic": "Calendar Ordering",
             "level": "abstract",

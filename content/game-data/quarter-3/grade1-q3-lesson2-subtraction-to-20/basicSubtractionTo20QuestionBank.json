@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee7",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Subtraction to 20 (Taking Away)",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_3_sub20_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee7",
             "competency": "NA.3.5",
             "topic": "Subtraction Logic",
             "level": "concrete",
@@ -32,6 +34,7 @@
         },
         {
             "id": "na_3_sub20_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee7",
             "competency": "NA.3.5",
             "topic": "Subtraction Logic",
             "level": "pictorial",
@@ -50,6 +53,7 @@
         },
         {
             "id": "na_3_sub20_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee7",
             "competency": "NA.3.5",
             "topic": "Subtraction Logic",
             "level": "abstract",

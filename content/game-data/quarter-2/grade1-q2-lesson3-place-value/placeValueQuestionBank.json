@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Place Value (Tens and Ones)",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_2_pv_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.6",
             "topic": "Place Value",
             "level": "concrete",
@@ -30,6 +32,7 @@
         },
         {
             "id": "na_2_pv_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.6",
             "topic": "Place Value",
             "level": "pictorial",
@@ -46,6 +49,7 @@
         },
         {
             "id": "na_2_pv_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.6",
             "topic": "Place Value",
             "level": "abstract",

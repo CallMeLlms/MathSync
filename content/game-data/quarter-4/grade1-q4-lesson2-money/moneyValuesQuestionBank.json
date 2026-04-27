@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Total Money Value",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_4_monval_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.5",
             "topic": "Money Value",
             "level": "concrete",
@@ -33,6 +35,7 @@
         },
         {
             "id": "na_4_monval_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.5",
             "topic": "Money Value",
             "level": "pictorial",
@@ -54,6 +57,7 @@
         },
         {
             "id": "na_4_monval_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.5",
             "topic": "Money Value",
             "level": "abstract",

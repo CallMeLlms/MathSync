@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Comparing Lengths and Distances",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "mg_2_comp_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
             "competency": "MG.2.2",
             "topic": "Measurement Comparison",
             "level": "concrete",
@@ -31,6 +33,7 @@
         },
         {
             "id": "mg_2_comp_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
             "competency": "MG.2.2",
             "topic": "Measurement Comparison",
             "level": "pictorial",
@@ -48,6 +51,7 @@
         },
         {
             "id": "mg_2_comp_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
             "competency": "MG.2.2",
             "topic": "Measurement Comparison",
             "level": "abstract",

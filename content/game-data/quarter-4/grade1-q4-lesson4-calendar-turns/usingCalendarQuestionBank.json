@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeec",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Using a Calendar",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "mg_4_caluse_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeec",
             "competency": "MG.4.11",
             "topic": "Calendar Use",
             "level": "concrete",
@@ -26,6 +28,7 @@
         },
         {
             "id": "mg_4_caluse_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeec",
             "competency": "MG.4.11",
             "topic": "Calendar Use",
             "level": "pictorial",
@@ -40,6 +43,7 @@
         },
         {
             "id": "mg_4_caluse_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeec",
             "competency": "MG.4.11",
             "topic": "Calendar Use",
             "level": "abstract",

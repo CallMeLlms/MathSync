@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeeb",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Money Word Problems",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_4_monprob_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeeb",
             "competency": "NA.4.7",
             "topic": "Money Problems",
             "level": "concrete",
@@ -34,6 +36,7 @@
         },
         {
             "id": "na_4_monprob_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeeb",
             "competency": "NA.4.7",
             "topic": "Money Problems",
             "level": "pictorial",
@@ -55,6 +58,7 @@
         },
         {
             "id": "na_4_monprob_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeeb",
             "competency": "NA.4.7",
             "topic": "Money Problems",
             "level": "abstract",

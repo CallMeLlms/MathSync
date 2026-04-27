@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee8",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Repeating Patterns",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_3_pat_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee8",
             "competency": "NA.3.11",
             "topic": "Identification of Next Terms",
             "level": "concrete",
@@ -27,6 +29,7 @@
         },
         {
             "id": "na_3_pat_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee8",
             "competency": "NA.3.11",
             "topic": "Identification of Next Terms",
             "level": "pictorial",
@@ -40,6 +43,7 @@
         },
         {
             "id": "na_3_pat_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee8",
             "competency": "NA.3.11",
             "topic": "Identification of Next Terms",
             "level": "abstract",

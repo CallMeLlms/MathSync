@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Expanding and Adding Numbers",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_2_exp_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.8",
             "topic": "Expanded Form",
             "level": "concrete",
@@ -28,6 +30,7 @@
         },
         {
             "id": "na_2_exp_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.8",
             "topic": "Expanded Form",
             "level": "pictorial",
@@ -42,6 +45,7 @@
         },
         {
             "id": "na_2_exp_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.8",
             "topic": "Expanded Form",
             "level": "abstract",
