@@ -129,9 +129,17 @@ export default function CurriculumOrchestrator({
   const handleResult = (isCorrect, userAnswerItems = []) => {
     recordAnswer(isCorrect);
 
+    // Extract ID from lesson metadata
+    const outcomeId = lessonContent?.meta?.learningOutcomeId || null;
+
+    // Debug Logging: Warn if the ID is missing (useful for dev/UAT)
+    if (!outcomeId) {
+      console.warn(`[MathSync:CurriculumOrchestrator] Missing learningOutcomeId for lesson: ${lessonId}. Analytics may be incomplete.`);
+    }
+
     answersRef.current.push({
       question: currentQuestion?.question || currentQuestion?.instruction || currentQuestion?.text || '',
-      learningOutcomeId: null,
+      learningOutcomeId: outcomeId,
       isCorrect,
     });
 
