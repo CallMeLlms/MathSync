@@ -55,12 +55,16 @@
             "competency": "MG.4.8",
             "topic": "Rotations",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "VISUAL_PICKER",
             "difficulty": "Hard",
             "question": "A quarter-turn is the same as how many minutes on a clock?",
-            "answer": 15,
-            "assetType": "text",
-            "metadata": {}
+            "answer": "15",
+            "assetId": "icon_boy",
+            "assetType": "illustration",
+            "metadata": {
+                "options": ["15", "30", "45"],
+                "customLabel": "1/4 turn = ? minutes"
+            }
         }
     ]
 }

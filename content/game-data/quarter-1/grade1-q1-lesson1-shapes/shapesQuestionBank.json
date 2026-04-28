@@ -19,7 +19,7 @@
             "competency": "MG.1.1",
             "topic": "2D Shapes",
             "level": "concrete",
-            "type": "PICKER",
+            "type": "N/A",
             "difficulty": "Easy",
             "question": "Tap the block that is a triangle.",
             "answer": "triangle",
@@ -97,7 +97,7 @@
             "difficulty": "Medium",
             "question": "Draw a square on the dot board!",
             "shape": "square",
-            "traceMode": "free",
+            "traceMode": "guided",
             "answer": "square",
             "assetType": "interactive",
             "metadata": {}
