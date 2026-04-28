@@ -1,37 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { useRouter } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
 import Colors from '@/constants/colors';
 import useUserStore from '@/stores/user-stores/useUserStore';
-import AuthService from '@/services/authService';
 
 export default function Settings() {
-  const router = useRouter();
   const profile = useUserStore((state) => state.profile);
-  const resetStore = useUserStore((state) => state.resetStore);
-
-  const handleSignOut = () => {
-    Alert.alert(
-      "Sign Out?",
-      "You will be returned to the login screen and local progress will be cleared for your privacy.",
-      [
-        {
-          text: "Cancel",
-          style: "cancel"
-        },
-        {
-          text: "Sign Out",
-          style: "destructive",
-          onPress: async () => {
-            await AuthService.signOut();
-            resetStore();
-            router.replace('/(auth)/SignIn');
-          }
-        }
-      ]
-    );
-  };
 
   const getInitial = (name) => {
     return name ? name.charAt(0).toUpperCase() : 'E';
@@ -55,23 +28,7 @@ export default function Settings() {
           </View>
         </View>
 
-        {/* Danger Zone Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Danger Zone</Text>
-          <TouchableOpacity 
-            style={styles.signOutCard} 
-            activeOpacity={0.7} 
-            onPress={handleSignOut}
-          >
-            <View style={styles.iconContainer}>
-              <Feather name="log-out" size={24} color={Colors.error} />
-            </View>
-            <View style={styles.cardTextContainer}>
-              <Text style={styles.signOutTitle}>Sign Out</Text>
-              <Text style={styles.signOutSubtitle}>Clear device data & return to login</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+
 
       </ScrollView>
     </SafeAreaView>
@@ -126,37 +83,6 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans-Medium',
     fontSize: 14,
     color: Colors.onSurfaceVariant,
-    marginTop: 2,
-  },
-  signOutCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(186, 26, 26, 0.08)', // Light transparent error color
-    padding: 16,
-    borderRadius: 20,
-    gap: 16,
-  },
-  iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: Colors.surface,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cardTextContainer: {
-    flex: 1,
-  },
-  signOutTitle: {
-    fontFamily: 'Lexend-Bold',
-    fontSize: 18,
-    color: Colors.error,
-  },
-  signOutSubtitle: {
-    fontFamily: 'PlusJakartaSans-Regular',
-    fontSize: 13,
-    color: Colors.error,
-    opacity: 0.8,
     marginTop: 2,
   },
 });

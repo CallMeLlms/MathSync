@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { useRouter } from 'expo-router';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
+import AuthService from '@/services/authService';
 
 /**
  * CustomDrawerContent — The Tactile Discovery Garden Aesthetic
@@ -16,6 +17,27 @@ const CustomDrawerContent = (props) => {
   // Find index of the currently active route
   const activeIndex = state.index;
   const activeRouteName = state.routeNames[activeIndex];
+
+  const handleSignOut = () => {
+    Alert.alert(
+      "Sign Out?",
+      "Are you sure you want to sign out?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Sign Out",
+          style: "destructive",
+          onPress: async () => {
+            await AuthService.signOut();
+            router.replace('/(auth)/SignIn');
+          }
+        }
+      ]
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -74,7 +96,7 @@ const CustomDrawerContent = (props) => {
         <View style={styles.footer}>
           <TouchableOpacity
             style={styles.logoutButton}
-            onPress={() => router.replace('/(auth)/SignIn')}
+            onPress={handleSignOut}
           >
             <Feather name="log-out" size={20} color={Colors.error} />
             <Text style={styles.logoutText}>Sign Out</Text>
