@@ -5,7 +5,6 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 
-// Helper to format decimal precision
 const formatDecimalWithPrecision = (valStr, padTo = 0) => {
   if (!padTo) return valStr;
   const num = parseFloat(valStr);
@@ -21,9 +20,7 @@ function AnimatedTile({ number, isSelected, displayPrecision, onSelect, theme })
       scale.value = withSpring(0.92, { damping: 15, stiffness: 200 });
     })
     .onEnd(() => {
-      if (onSelect) {
-        runOnJS(onSelect)(number);
-      }
+      if (onSelect) runOnJS(onSelect)(number);
     })
     .onFinalize(() => {
       scale.value = withSpring(1, { damping: 15, stiffness: 200 });
@@ -43,19 +40,21 @@ function AnimatedTile({ number, isSelected, displayPrecision, onSelect, theme })
         style={[
           styles.choiceTile,
           animatedStyle,
-          { 
+          {
             backgroundColor: isSelected ? theme.primaryColor : Colors.surface,
             borderColor: isSelected ? theme.primaryColor : Colors.outlineVariant,
-          }
+          },
         ]}
       >
-        <Text style={[
-          styles.choiceText, 
-          { 
-            fontFamily: theme.fontFamily.accent, 
-            color: isSelected ? Colors.surface : Colors.onSurface 
-          }
-        ]}>
+        <Text
+          adjustsFontSizeToFit
+          numberOfLines={1}
+          minimumFontScale={0.7}
+          style={[
+            styles.choiceText,
+            { fontFamily: theme.fontFamily.accent, color: isSelected ? Colors.surface : Colors.onSurface },
+          ]}
+        >
           {displayString}
         </Text>
       </Animated.View>
@@ -71,9 +70,7 @@ function AnimatedSlot({ isFilled, number, isSelectedTarget, displayPrecision, on
       scale.value = withSpring(0.92, { damping: 15, stiffness: 200 });
     })
     .onEnd(() => {
-      if (onSelect) {
-        runOnJS(onSelect)();
-      }
+      if (onSelect) runOnJS(onSelect)();
     })
     .onFinalize(() => {
       scale.value = withSpring(1, { damping: 15, stiffness: 200 });
@@ -83,7 +80,7 @@ function AnimatedSlot({ isFilled, number, isSelectedTarget, displayPrecision, on
     transform: [{ scale: scale.value }],
   }));
 
-  const displayString = isFilled ? formatDecimalWithPrecision(number, displayPrecision) : "";
+  const displayString = isFilled ? formatDecimalWithPrecision(number, displayPrecision) : '';
 
   return (
     <GestureDetector gesture={tap}>
@@ -93,14 +90,15 @@ function AnimatedSlot({ isFilled, number, isSelectedTarget, displayPrecision, on
           animatedStyle,
           isFilled ? styles.slotFilled : styles.slotEmpty,
           isSelectedTarget && styles.slotActiveTarget,
-          { 
-            borderColor: isSelectedTarget ? theme.secondaryColor : Colors.outlineVariant,
-          }
+          { borderColor: isSelectedTarget ? theme.secondaryColor : Colors.outlineVariant },
         ]}
       >
         {isFilled && (
-          <Animated.Text 
+          <Animated.Text
             entering={FadeIn.duration(300)}
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            minimumFontScale={0.7}
             style={[styles.slotText, { fontFamily: theme.fontFamily.accent, color: theme.primaryColor }]}
           >
             {displayString}
@@ -111,18 +109,12 @@ function AnimatedSlot({ isFilled, number, isSelectedTarget, displayPrecision, on
   );
 }
 
-/**
- * DecimalOrderingEngine
- * A specialized ordering engine that supports decimal padding/precision helpers.
- */
 export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
   const [availableNumbers, setAvailableNumbers] = useState([]);
   const [placedNumbers, setPlacedNumbers] = useState({});
   const [selectedNumber, setSelectedNumber] = useState(null);
-  const hasAnswered = useRef(false);
-  
-  // Custom Decimal Feature: The Zero Alignment Helper
   const [useAlignmentHelper, setUseAlignmentHelper] = useState(false);
+  const hasAnswered = useRef(false);
 
   const totalSlots = problem?.choices?.length || 0;
 
@@ -137,49 +129,30 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
   }, [problem]);
 
   const handleAvailableNumberTap = (number) => {
-    console.log('[DecimalOrderingEngine] Available number tapped:', number);
-    try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch (e) {
-      console.warn('[DecimalOrderingEngine] Haptics error:', e);
-    }
-    
-    if (selectedNumber === number) {
-      setSelectedNumber(null);
-    } else {
-      setSelectedNumber(number);
-    }
+    try { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch (e) {}
+    setSelectedNumber(prev => prev === number ? null : number);
   };
 
   const handleSlotTap = (slotIndex) => {
-    if (selectedNumber === null) return;
-    if (placedNumbers[slotIndex] !== undefined) return;
-
-    console.log('[DecimalOrderingEngine] Placing number into slot:', slotIndex);
-    try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    } catch (e) {
-      console.warn('[DecimalOrderingEngine] Haptics error:', e);
-    }
-
-    setPlacedNumbers((prev) => ({ ...prev, [slotIndex]: selectedNumber }));
-    setAvailableNumbers((prev) => prev.filter((n) => n !== selectedNumber));
+    if (selectedNumber === null || placedNumbers[slotIndex] !== undefined) return;
+    try { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch (e) {}
+    setPlacedNumbers(prev => ({ ...prev, [slotIndex]: selectedNumber }));
+    setAvailableNumbers(prev => prev.filter(n => n !== selectedNumber));
     setSelectedNumber(null);
   };
 
   const handlePlacedNumberTap = (number, slotIndex) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-    setPlacedNumbers((prev) => {
-      const newPlaced = { ...prev };
-      delete newPlaced[slotIndex];
-      return newPlaced;
+    try { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch (e) {}
+    setPlacedNumbers(prev => {
+      const next = { ...prev };
+      delete next[slotIndex];
+      return next;
     });
-    setAvailableNumbers((prev) => [...prev, number]);
+    setAvailableNumbers(prev => [...prev, number]);
   };
 
   const handleReset = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    try { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch (e) {}
     if (problem?.choices) {
       setAvailableNumbers([...problem.choices]);
       setPlacedNumbers({});
@@ -188,37 +161,26 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
   };
 
   const toggleHelper = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    try { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch (e) {}
     setUseAlignmentHelper(prev => !prev);
-  }
+  };
 
   const handleCheck = () => {
-    console.log('[DecimalOrderingEngine] handleCheck pressed');
     if (hasAnswered.current) return;
     hasAnswered.current = true;
-    
-    try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    } catch (e) {
-      console.warn('[DecimalOrderingEngine] Haptics error:', e);
-    }
-    
+    try { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy); } catch (e) {}
+
     const placedOrder = [];
     for (let i = 0; i < totalSlots; i++) {
-      if (placedNumbers[i] !== undefined) {
-        placedOrder.push(placedNumbers[i]);
-      }
+      if (placedNumbers[i] !== undefined) placedOrder.push(placedNumbers[i]);
     }
-
     const userAnswerStr = placedOrder.join(', ');
     const isCorrect = userAnswerStr === problem.answer;
-    console.log('[DecimalOrderingEngine] Answer evaluation - isCorrect:', isCorrect);
-    
-    // Send standard validation shape back to Orchestrator
+
     try {
       onAnswer(isCorrect, userAnswerStr);
     } catch (e) {
-      console.error('[DecimalOrderingEngine] onAnswer callback crash:', e);
+      console.error('[DecimalOrderingEngine] onAnswer crash:', e);
     }
   };
 
@@ -226,44 +188,42 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
 
   if (!problem) return null;
 
-  // Determine max decimal places in the problem choices to know what to pad to
-  const maxPlaces = Math.max(...(problem.choices || []).map(numStr => {
-    const parts = numStr.split('.');
-    return parts.length > 1 ? parts[1].length : 0;
-  }), 2); // Default to at least hundredths
-
-  // 0 means original string, >0 means parsed and fixed
+  const maxPlaces = Math.max(
+    ...(problem.choices || []).map(numStr => {
+      const parts = numStr.split('.');
+      return parts.length > 1 ? parts[1].length : 0;
+    }),
+    2
+  );
   const displayPadding = useAlignmentHelper ? maxPlaces : 0;
 
   return (
     <View style={styles.container}>
-      {/* Dynamic Header & Helper Toggle */}
-      <View style={styles.headerRow}>
-         <View style={{flex: 1}} />
-         <View style={{flex: 2}}>
-            <Text style={[styles.questionText, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}>
-              {problem.metadata.displayQuestion}
-            </Text>
-         </View>
-         <View style={{flex: 1, alignItems: 'flex-end'}}>
-             <TouchableOpacity 
-               style={[
-                 styles.helperBtn, 
-                 useAlignmentHelper ? { backgroundColor: theme.primaryColor, borderColor: theme.primaryColor } : { borderColor: Colors.outlineVariant }
-               ]}
-               onPress={toggleHelper}
-             >
-                <Text style={[
-                  styles.helperText, 
-                  { 
-                    fontFamily: theme.fontFamily.accent, 
-                    color: useAlignmentHelper ? Colors.surface : Colors.onSurfaceVariant 
-                  }
-                ]}>
-                  Padding = {useAlignmentHelper ? "ON" : "OFF"}
-                </Text>
-             </TouchableOpacity>
-         </View>
+      {/* Question — full width, centered */}
+      <Text style={[styles.questionText, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}>
+        {problem.metadata.displayQuestion}
+      </Text>
+
+      {/* Align Zeros toggle — its own centered row */}
+      <View style={styles.toggleRow}>
+        <TouchableOpacity
+          style={[
+            styles.helperBtn,
+            useAlignmentHelper
+              ? { backgroundColor: theme.primaryColor, borderColor: theme.primaryColor }
+              : { borderColor: Colors.outlineVariant },
+          ]}
+          onPress={toggleHelper}
+        >
+          <Text
+            style={[
+              styles.helperText,
+              { fontFamily: theme.fontFamily.accent, color: useAlignmentHelper ? Colors.surface : Colors.onSurfaceVariant },
+            ]}
+          >
+            {useAlignmentHelper ? 'Align Zeros: ON' : 'Align Zeros: OFF'}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {/* Drop Slots */}
@@ -271,7 +231,6 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
         {Array.from({ length: totalSlots }).map((_, index) => {
           const placedVal = placedNumbers[index];
           const isFilled = placedVal !== undefined;
-
           return (
             <AnimatedSlot
               key={`slot-${index}`}
@@ -289,53 +248,47 @@ export default function DecimalOrderingEngine({ problem, onAnswer, theme }) {
       {/* Available Decimals */}
       <View style={styles.availableContainer}>
         <Text style={[styles.instructionText, { fontFamily: theme.fontFamily.body }]}>
-          {selectedNumber 
-            ? "Tap an empty slot above" 
-            : "Tap a decimal to select"}
+          {selectedNumber ? 'Tap an empty slot above' : 'Tap a decimal to select'}
         </Text>
-        
         <View style={styles.choicesGrid}>
-          {availableNumbers.map((num) => {
-            return (
-              <AnimatedTile
-                key={`avail-${num}`}
-                number={num}
-                isSelected={selectedNumber === num}
-                displayPrecision={displayPadding}
-                theme={theme}
-                onSelect={(n) => handleAvailableNumberTap(n)}
-              />
-            );
-          })}
+          {availableNumbers.map(num => (
+            <AnimatedTile
+              key={`avail-${num}`}
+              number={num}
+              isSelected={selectedNumber === num}
+              displayPrecision={displayPadding}
+              theme={theme}
+              onSelect={handleAvailableNumberTap}
+            />
+          ))}
         </View>
       </View>
 
-      {/* Engine Controls */}
+      {/* Controls */}
       <View style={styles.controlsContainer}>
-        <TouchableOpacity 
-          style={[styles.controlBtn, styles.resetBtn, { borderColor: Colors.outlineVariant }]} 
+        <TouchableOpacity
+          style={[styles.controlBtn, styles.resetBtn, { borderColor: Colors.outlineVariant }]}
           onPress={handleReset}
         >
           <Text style={[styles.resetBtnText, { fontFamily: theme.fontFamily.accent }]}>Reset</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[
-            styles.controlBtn, 
-            styles.checkBtn, 
-            { backgroundColor: isComplete ? theme.primaryColor : Colors.surfaceContainer }
-          ]} 
+            styles.controlBtn,
+            styles.checkBtn,
+            { backgroundColor: isComplete ? theme.primaryColor : Colors.surfaceContainer },
+          ]}
           onPress={handleCheck}
           disabled={!isComplete}
         >
-          <Text style={[
-            styles.checkBtnText, 
-            { 
-              fontFamily: theme.fontFamily.accent, 
-              color: isComplete ? Colors.surface : Colors.onSurfaceVariant 
-            }
-          ]}>
-            Check Match
+          <Text
+            style={[
+              styles.checkBtnText,
+              { fontFamily: theme.fontFamily.accent, color: isComplete ? Colors.surface : Colors.onSurfaceVariant },
+            ]}
+          >
+            Check Order
           </Text>
         </TouchableOpacity>
       </View>
@@ -349,37 +302,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 24,
   },
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 40,
-  },
   questionText: {
-    fontSize: 24,
+    fontSize: 22,
     textAlign: 'center',
+    marginBottom: 12,
+  },
+  toggleRow: {
+    alignItems: 'center',
+    marginBottom: 24,
   },
   helperBtn: {
-     paddingHorizontal: 12,
-     paddingVertical: 8,
-     borderRadius: 16,
-     borderWidth: 2,
-     borderBottomWidth: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderBottomWidth: 4,
   },
   helperText: {
-     fontSize: 12,
+    fontSize: 13,
   },
   slotsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
     gap: 12,
-    marginBottom: 48,
+    marginBottom: 32,
   },
   slot: {
-    width: '18%',
-    aspectRatio: 1,
-    minWidth: 80, // slightly wider for decimals
-    maxWidth: 100,
+    minWidth: 88,
+    height: 68,
+    paddingHorizontal: 8,
     borderRadius: 16,
     borderWidth: 3,
     borderBottomWidth: 5,
@@ -400,14 +352,16 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
   },
   slotText: {
-    fontSize: 24,
+    fontSize: 20,
+    width: '100%',
+    textAlign: 'center',
   },
   availableContainer: {
     flex: 1,
     alignItems: 'center',
   },
   instructionText: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.onSurfaceVariant,
     marginBottom: 16,
   },
@@ -418,8 +372,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   choiceTile: {
-    width: 80, // slightly wider for decimals
-    height: 80,
+    minWidth: 88,
+    height: 68,
+    paddingHorizontal: 12,
     borderRadius: 16,
     borderWidth: 3,
     borderBottomWidth: 6,
@@ -428,7 +383,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   choiceText: {
-    fontSize: 24,
+    fontSize: 22,
   },
   controlsContainer: {
     flexDirection: 'row',
@@ -457,5 +412,5 @@ const styles = StyleSheet.create({
   },
   checkBtnText: {
     fontSize: 16,
-  }
+  },
 });

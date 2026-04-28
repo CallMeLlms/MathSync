@@ -96,7 +96,14 @@ export default function AdvancedFractionsEngine({ problem, onAnswer, theme }) {
     if (type === "identify") {
       return (
         <View style={styles.problemContainer}>
-          <Text style={[styles.identifyText, { fontFamily: theme.fontFamily.title, color: Colors.onSurface }]}>{displayText}</Text>
+          <Text
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            minimumFontScale={0.5}
+            style={[styles.identifyText, { fontFamily: theme.fontFamily.title, color: Colors.onSurface }]}
+          >
+            {displayText}
+          </Text>
           <Text style={[styles.operatorText, { color: theme.primaryColor, fontFamily: theme.fontFamily.title }]}>→</Text>
         </View>
       );
@@ -110,7 +117,12 @@ export default function AdvancedFractionsEngine({ problem, onAnswer, theme }) {
       
       {/* Question Header */}
       <View style={styles.headerContainer}>
-        <Text style={[styles.questionText, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}>
+        <Text
+          adjustsFontSizeToFit
+          numberOfLines={2}
+          minimumFontScale={0.65}
+          style={[styles.questionText, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}
+        >
           {displayQuestion || "Solve the fraction"}
         </Text>
       </View>
@@ -205,12 +217,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     maxWidth: 600,
+    minHeight: 160,
     backgroundColor: Colors.surface,
     paddingVertical: 32,
     paddingHorizontal: 16,
     borderRadius: 24,
     borderWidth: 3,
-    borderBottomWidth: 8, // Tactile depth
+    borderBottomWidth: 8,
     borderColor: Colors.outlineVariant,
     flexWrap: 'wrap',
   },
@@ -219,13 +232,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   operatorText: {
-    fontSize: 48,
+    fontSize: 38,
     marginHorizontal: 12,
   },
   identifyText: {
-    fontSize: 32,
+    fontSize: 26,
     marginRight: 16,
     textAlign: 'center',
+    flexShrink: 1,
   },
   inputContainer: {
     alignItems: 'center',

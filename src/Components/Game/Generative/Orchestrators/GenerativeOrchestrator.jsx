@@ -22,6 +22,10 @@ import AdvancedFractionsEngine from '@/Components/Game/Generative/Engines/Advanc
 import MeasurementEngine from '@/Components/Game/Generative/Engines/MeasurementEngine';
 import AlgebraEngine from '@/Components/Game/Generative/Engines/AlgebraEngine';
 import MentalMathEngine from '@/Components/Game/Generative/Engines/MentalMathEngine';
+import MultiplicationEngine from '@/Components/Game/Generative/Engines/MultiplicationEngine';
+import FactorsMultiplesEngine from '@/Components/Game/Generative/Engines/FactorsMultiplesEngine';
+import MeanMedianEngine from '@/Components/Game/Generative/Engines/MeanMedianEngine';
+import PercentagesEngine from '@/Components/Game/Generative/Engines/PercentagesEngine';
 
 const ENGINE_REGISTRY = {
   'ordering-numbers': OrderingEngine,
@@ -34,6 +38,10 @@ const ENGINE_REGISTRY = {
   'measurement': MeasurementEngine,
   'algebra-basics': AlgebraEngine,
   'mental-math': MentalMathEngine,
+  'multiplication': MultiplicationEngine,
+  'factors-multiples': FactorsMultiplesEngine,
+  'mean-median': MeanMedianEngine,
+  'percentages': PercentagesEngine,
 };
 
 /**

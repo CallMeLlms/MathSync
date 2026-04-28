@@ -7,28 +7,29 @@ import Colors from '@/constants/colors';
 
 import MeasurementVisual from '@/Components/Game/Global/Visualizers/MeasurementVisual';
 
-const { width } = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-/**
- * AnimatedChoiceTile 
- */
-function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, width }) {
-  const scale = useSharedValue(1);
+function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, tileWidth }) {
+  const translateY = useSharedValue(0);
+  const borderBottom = useSharedValue(5);
 
   const tap = Gesture.Tap()
     .enabled(!disabled)
     .onBegin(() => {
-      scale.value = withSpring(0.92, { damping: 15, stiffness: 200 });
+      translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+      borderBottom.value = withSpring(2, { damping: 15, stiffness: 300 });
     })
     .onEnd(() => {
       if (onSelect && !disabled) runOnJS(onSelect)(value);
     })
     .onFinalize(() => {
-      scale.value = withSpring(1, { damping: 15, stiffness: 200 });
+      translateY.value = withSpring(0, { damping: 15, stiffness: 200 });
+      borderBottom.value = withSpring(5, { damping: 15, stiffness: 200 });
     });
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: borderBottom.value,
   }));
 
   const isLongText = String(value).length > 8;
@@ -40,24 +41,24 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, widt
         entering={FadeIn.duration(300)}
         style={[
           styles.choiceTile,
-          { width: width || '45%' }, 
+          { width: tileWidth || '45%' },
           animatedStyle,
-          { 
+          {
             backgroundColor: isSelected ? theme.primaryColor : Colors.surface,
             borderColor: isSelected ? theme.primaryColor : Colors.outlineVariant,
-            borderBottomWidth: isSelected ? 3 : 5, 
-            borderRightWidth: isSelected ? 3 : 4,
-          }
+          },
         ]}
       >
-        <Text style={[
-          styles.choiceText,
-          isLongText && { fontSize: 16 },
-          { 
-            fontFamily: theme.fontFamily.accent, 
-            color: isSelected ? Colors.surface : Colors.onSurface 
-          }
-        ]}>
+        <Text
+          adjustsFontSizeToFit
+          numberOfLines={2}
+          minimumFontScale={0.6}
+          style={[
+            styles.choiceText,
+            isLongText && { fontSize: 16 },
+            { fontFamily: theme.fontFamily.accent, color: isSelected ? Colors.surface : Colors.onSurface },
+          ]}
+        >
           {value}
         </Text>
       </Animated.View>
@@ -65,18 +66,28 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, widt
   );
 }
 
-/**
- * MeasurementEngine
- * Generative engine for length, weight, and capacity problems.
- */
 export default function MeasurementEngine({ problem, onAnswer, theme }) {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const hasAnswered = useRef(false);
+  const answerTimeoutRef = useRef(null);
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
     setSelectedChoice(null);
     hasAnswered.current = false;
+    if (answerTimeoutRef.current) {
+      clearTimeout(answerTimeoutRef.current);
+      answerTimeoutRef.current = null;
+    }
   }, [problem?.answer]);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (answerTimeoutRef.current) clearTimeout(answerTimeoutRef.current);
+    };
+  }, []);
 
   if (!problem || !problem.metadata) return null;
 
@@ -85,119 +96,143 @@ export default function MeasurementEngine({ problem, onAnswer, theme }) {
   const safeChoices = choices ?? [];
 
   const handleChoiceSelect = (value) => {
-    console.log('[MeasurementEngine] Choice selected:', value);
-    try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch (e) {
-      console.warn('[MeasurementEngine] Haptics error:', e);
-    }
-    setSelectedChoice(value);
-  };
-
-  const handleSubmit = () => {
-    console.log('[MeasurementEngine] handleSubmit pressed');
-    if (selectedChoice === null || hasAnswered.current) return;
+    if (selectedChoice !== null || hasAnswered.current) return;
     hasAnswered.current = true;
-    
-    try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    } catch (e) {
-      console.warn('[MeasurementEngine] Haptics error:', e);
-    }
 
-    const isCorrect = String(selectedChoice) === String(answer);
-    console.log('[MeasurementEngine] Answer evaluation - isCorrect:', isCorrect);
-    
-    try {
-      onAnswer(isCorrect, String(selectedChoice));
-    } catch (e) {
-      console.error('[MeasurementEngine] onAnswer callback crash:', e);
-    }
+    try { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch (e) {}
+
+    setSelectedChoice(value);
+    const isCorrect = String(value) === String(answer);
+
+    answerTimeoutRef.current = setTimeout(() => {
+      if (!isMountedRef.current) return;
+      try {
+        onAnswer(isCorrect, String(value));
+      } catch (e) {
+        console.error('[MeasurementEngine] onAnswer crash:', e);
+      }
+    }, 400);
   };
 
-  const isTablet = width > 768;
+  const isTablet = SCREEN_WIDTH > 768;
 
-  // Render specific layout based on generation pattern
+  const getChoiceTileWidth = () => {
+    const isLongText = safeChoices.some(c => String(c).length > 10);
+    if (isLongText || isWordProblem) return isTablet ? '45%' : '100%';
+    return '45%';
+  };
+
+  // ── Comparison layout: two-zone design ──────────────────────────────────────
+  const renderComparisonLayout = () => (
+    <View style={styles.comparisonWrapper}>
+      {/* Zone A: VS comparison cards */}
+      <View style={styles.vsRow}>
+        <View style={styles.vsCard}>
+          <Text style={[styles.vsLabel, { fontFamily: theme.fontFamily.body }]}>Option A</Text>
+          <Text
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            minimumFontScale={0.6}
+            style={[styles.vsValue, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}
+          >
+            {comparison.val1}
+          </Text>
+          <Text style={[styles.vsUnit, { fontFamily: theme.fontFamily.body, color: Colors.onSurfaceVariant }]}>
+            {comparison.unit1}
+          </Text>
+        </View>
+
+        <View style={styles.vsBadge}>
+          <Text style={[styles.vsBadgeText, { fontFamily: theme.fontFamily.accent, color: Colors.onSurfaceVariant }]}>
+            VS
+          </Text>
+        </View>
+
+        <View style={styles.vsCard}>
+          <Text style={[styles.vsLabel, { fontFamily: theme.fontFamily.body }]}>Option B</Text>
+          <Text
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            minimumFontScale={0.6}
+            style={[styles.vsValue, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}
+          >
+            {comparison.val2}
+          </Text>
+          <Text style={[styles.vsUnit, { fontFamily: theme.fontFamily.body, color: Colors.onSurfaceVariant }]}>
+            {comparison.unit2}
+          </Text>
+        </View>
+      </View>
+
+      {/* Zone B: Conversion reference — capped so it never overflows */}
+      <View style={styles.hintCard}>
+        <Text style={[styles.hintLabel, { fontFamily: theme.fontFamily.body }]}>
+          Conversion Reference
+        </Text>
+        <View style={styles.hintVisual}>
+          <MeasurementVisual
+            fromUnit={comparison.unit1}
+            toUnit={comparison.unit2}
+            category={category}
+            categoryIcon={categoryIcon}
+            theme={theme}
+          />
+        </View>
+      </View>
+    </View>
+  );
+
+  // ── Other problem area layouts ───────────────────────────────────────────────
   const renderProblemArea = () => {
+    if (comparison) return renderComparisonLayout();
+
     if (conversion && !isWordProblem) {
-       // Direct Conversion
-       return (
-         <View style={styles.focalContainer}>
-            <MeasurementVisual 
-               fromUnit={conversion.from} 
-               toUnit={conversion.to} 
-               category={category} 
-               categoryIcon={categoryIcon}
-               theme={theme}
-            />
-         </View>
-       );
-    }
-    
-    if (comparison) {
-        // Compare Problem (Which is larger?)
-        return (
-          <View style={styles.focalContainer}>
-             <View style={styles.compareRow}>
-                <Text style={[styles.compareValue, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}>
-                   {comparison.val1} {comparison.unit1}
-                </Text>
-                <Text style={[styles.compareOr, { fontFamily: theme.fontFamily.body, color: Colors.onSurfaceVariant }]}>
-                   or
-                </Text>
-                <Text style={[styles.compareValue, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}>
-                   {comparison.val2} {comparison.unit2}
-                </Text>
-             </View>
-             {/* Show the conversion scale to help them */}
-             <View style={{ marginTop: 24 }}>
-                <MeasurementVisual 
-                  fromUnit={comparison.unit1} 
-                  toUnit={comparison.unit2} 
-                  category={category} 
-                  categoryIcon={categoryIcon}
-                  theme={theme}
-                />
-             </View>
-          </View>
-        );
+      return (
+        <View style={styles.focalContainer}>
+          <MeasurementVisual
+            fromUnit={conversion.from}
+            toUnit={conversion.to}
+            category={category}
+            categoryIcon={categoryIcon}
+            theme={theme}
+          />
+        </View>
+      );
     }
 
     if (isWordProblem) {
-       // Word Problem layout
-       return (
-         <View style={styles.focalContainer}>
-           <Text style={{ fontSize: 64 }}>{categoryIcon}</Text>
-           {/* If conversion metadata is secretly passed for word problems, show the visual */}
-           {conversion && (
-              <View style={{ marginTop: 16 }}>
-                 <MeasurementVisual 
-                   fromUnit={conversion.from} 
-                   toUnit={conversion.to} 
-                   category={category} 
-                   categoryIcon={categoryIcon}
-                   theme={theme}
-                 />
-              </View>
-           )}
-         </View>
-       );
+      return (
+        <View style={styles.focalContainer}>
+          <Text style={styles.wordProblemIcon}>{categoryIcon}</Text>
+          {conversion && (
+            <View style={{ marginTop: 16 }}>
+              <MeasurementVisual
+                fromUnit={conversion.from}
+                toUnit={conversion.to}
+                category={category}
+                categoryIcon={categoryIcon}
+                theme={theme}
+              />
+            </View>
+          )}
+        </View>
+      );
     }
 
     return null;
   };
 
-  // Determine Choice tile layout length
-  const getChoiceTileWidth = () => {
-    const isLongText = safeChoices.some(c => String(c).length > 10);
-    if (isLongText || isWordProblem) return isTablet ? '45%' : '100%'; // Stack vertically on phones if text is long
-    return '45%'; // Standard 2x2 grid
-  };
+  const instructionLabel = selectedChoice !== null ? 'Answer locked in!' : 'Select your answer';
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={[styles.questionText, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}>
+        <Text
+          adjustsFontSizeToFit
+          numberOfLines={2}
+          minimumFontScale={0.65}
+          style={[styles.questionText, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}
+        >
           {displayQuestion}
         </Text>
       </View>
@@ -208,7 +243,7 @@ export default function MeasurementEngine({ problem, onAnswer, theme }) {
 
       <View style={styles.choicesArea}>
         <Text style={[styles.instructionText, { fontFamily: theme.fontFamily.body, color: Colors.onSurfaceVariant }]}>
-          Select your answer
+          {instructionLabel}
         </Text>
         <View style={styles.choicesGrid}>
           {safeChoices.map((choice, index) => (
@@ -218,34 +253,11 @@ export default function MeasurementEngine({ problem, onAnswer, theme }) {
               isSelected={selectedChoice === choice}
               onSelect={handleChoiceSelect}
               theme={theme}
-              width={getChoiceTileWidth()}
+              tileWidth={getChoiceTileWidth()}
+              disabled={selectedChoice !== null}
             />
           ))}
         </View>
-      </View>
-
-      <View style={styles.controlsContainer}>
-        <TouchableOpacity
-          style={[
-            styles.submitButton,
-            { 
-              backgroundColor: selectedChoice !== null ? theme.primaryColor : Colors.surfaceContainer,
-              borderColor: selectedChoice !== null ? theme.primaryColor : Colors.outlineVariant,
-            }
-          ]}
-          onPress={handleSubmit}
-          disabled={selectedChoice === null}
-        >
-          <Text style={[
-            styles.submitButtonText, 
-            { 
-              fontFamily: theme.fontFamily.accent, 
-              color: selectedChoice !== null ? Colors.surface : Colors.onSurfaceVariant 
-            }
-          ]}>
-            Submit
-          </Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -274,33 +286,86 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 16,
   },
+  // ── Standard focal container (conversion / word problem) ────────────────────
   focalContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     maxWidth: 500,
     backgroundColor: Colors.surface,
-    paddingVertical: 32,
+    paddingVertical: 24,
     paddingHorizontal: 16,
     borderRadius: 24,
-    borderWidth: 3,
+    borderWidth: 2,
+    borderBottomWidth: 6,
     borderColor: Colors.outlineVariant,
   },
-  // Compare Styles
-  compareRow: {
+  wordProblemIcon: {
+    fontSize: 64,
+  },
+  // ── Comparison two-zone layout ───────────────────────────────────────────────
+  comparisonWrapper: {
+    width: '100%',
+    maxWidth: 500,
+    gap: 12,
+  },
+  vsRow: {
     flexDirection: 'row',
+    alignItems: 'stretch',
+    gap: 8,
+  },
+  vsCard: {
+    flex: 1,
+    backgroundColor: Colors.surface,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderBottomWidth: 5,
+    borderColor: Colors.outlineVariant,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
     alignItems: 'center',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    gap: 16,
+    gap: 4,
   },
-  compareValue: {
-    fontSize: 36,
+  vsLabel: {
+    fontSize: 12,
+    color: Colors.onSurfaceVariant,
   },
-  compareOr: {
-    fontSize: 24,
+  vsValue: {
+    fontSize: 28,
+    textAlign: 'center',
   },
-  // Choice Area Grid
+  vsUnit: {
+    fontSize: 13,
+  },
+  vsBadge: {
+    width: 36,
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  vsBadgeText: {
+    fontSize: 14,
+  },
+  hintCard: {
+    backgroundColor: Colors.surfaceContainerLow,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: Colors.outlineVariant,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    maxHeight: 150,
+    overflow: 'hidden',
+    alignItems: 'center',
+    gap: 8,
+  },
+  hintLabel: {
+    fontSize: 12,
+    color: Colors.onSurfaceVariant,
+  },
+  hintVisual: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  // ── Choice area ──────────────────────────────────────────────────────────────
   choicesArea: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -322,26 +387,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 16,
-    borderWidth: 3,
+    borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
   choiceText: {
     fontSize: 24,
     textAlign: 'center',
-  },
-  controlsContainer: {
-    paddingTop: 12,
-  },
-  submitButton: {
-    height: 60,
-    borderRadius: 30,
-    borderWidth: 2,
-    borderBottomWidth: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  submitButtonText: {
-    fontSize: 20,
   },
 });

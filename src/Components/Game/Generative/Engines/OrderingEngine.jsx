@@ -320,8 +320,9 @@ const styles = StyleSheet.create({
   slot: {
     width: '18%',
     aspectRatio: 1,
-    minWidth: 60,
+    minWidth: 64,
     maxWidth: 80,
+    alignSelf: 'center',
     borderRadius: 16,
     borderWidth: 3,
     borderBottomWidth: 5,

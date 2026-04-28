@@ -1,35 +1,43 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, LinearTransition, FadeIn } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  LinearTransition,
+  FadeIn,
+  runOnJS,
+} from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 
 import CoinDisplay from '@/Components/Game/Global/Visualizers/CoinDisplay';
 import ClockFace from '@/Components/Game/Global/Visualizers/ClockFace';
 
-const { width } = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-/**
- * AnimatedChoiceTile for Time & Money selection
- */
-function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, width }) {
-  const scale = useSharedValue(1);
+function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, tileWidth }) {
+  const translateY = useSharedValue(0);
+  const borderBottom = useSharedValue(6);
 
   const tap = Gesture.Tap()
     .enabled(!disabled)
     .onBegin(() => {
-      scale.value = withSpring(0.92, { damping: 15, stiffness: 200 });
+      translateY.value = withSpring(4, { damping: 15, stiffness: 300 });
+      borderBottom.value = withSpring(2, { damping: 15, stiffness: 300 });
     })
     .onEnd(() => {
       if (onSelect && !disabled) runOnJS(onSelect)(value);
     })
     .onFinalize(() => {
-      scale.value = withSpring(1, { damping: 15, stiffness: 200 });
+      translateY.value = withSpring(0, { damping: 15, stiffness: 200 });
+      borderBottom.value = withSpring(6, { damping: 15, stiffness: 200 });
     });
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [{ translateY: translateY.value }],
+    borderBottomWidth: borderBottom.value,
   }));
 
   return (
@@ -39,23 +47,23 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, widt
         entering={FadeIn.duration(300)}
         style={[
           styles.choiceTile,
-          { width: width || '45%' },
+          { width: tileWidth || '45%' },
           animatedStyle,
-          { 
+          {
             backgroundColor: isSelected ? theme.primaryColor : Colors.surface,
             borderColor: isSelected ? theme.primaryColor : Colors.outlineVariant,
-            borderBottomWidth: isSelected ? 3 : 5, 
-            borderRightWidth: isSelected ? 3 : 4,
-          }
+          },
         ]}
       >
-        <Text style={[
-          styles.choiceText,
-          { 
-            fontFamily: theme.fontFamily.accent, 
-            color: isSelected ? Colors.surface : Colors.onSurface 
-          }
-        ]}>
+        <Text
+          style={[
+            styles.choiceText,
+            {
+              fontFamily: theme.fontFamily.accent,
+              color: isSelected ? Colors.surface : Colors.onSurface,
+            },
+          ]}
+        >
           {value}
         </Text>
       </Animated.View>
@@ -63,17 +71,12 @@ function AnimatedChoiceTile({ value, isSelected, disabled, onSelect, theme, widt
   );
 }
 
-/**
- * TimeMoneyEngine
- * Generative engine supporting both Coin displays and Clock faces.
- */
 export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const answerTimeoutRef = useRef(null);
   const isMountedRef = useRef(true);
   const hasAnswered = useRef(false);
 
-  // Reset local state and cancel any pending dispatch when a new problem arrives
   useEffect(() => {
     setSelectedChoice(null);
     hasAnswered.current = false;
@@ -83,7 +86,6 @@ export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
     }
   }, [problem?.answer]);
 
-  // Track mount state so deferred onAnswer cannot fire on a dead component
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
@@ -99,22 +101,17 @@ export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
   const safeChoices = choices ?? [];
 
   const handleChoiceSelect = (value) => {
-    console.log('[TimeMoneyEngine] Choice selected:', value);
     if (selectedChoice !== null || hasAnswered.current) return;
     hasAnswered.current = true;
-    
+
     try {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch (e) {
-      console.warn('[TimeMoneyEngine] Haptics error:', e);
-    }
-    
+    } catch (e) {}
+
     setSelectedChoice(value);
 
     const isCorrect = String(value) === String(answer);
-    console.log('[TimeMoneyEngine] Answer evaluation - isCorrect:', isCorrect);
 
-    // Slight delay so the button can animate its selection state before moving on
     answerTimeoutRef.current = setTimeout(() => {
       if (!isMountedRef.current) return;
       try {
@@ -125,39 +122,37 @@ export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
     }, 400);
   };
 
-  // Determine grid layout based on number of choices (usually 4)
-  const isTablet = width > 768;
-  const getChoiceTileWidth = () => {
-    if (safeChoices.length <= 4) return isTablet ? '40%' : '45%'; // 2x2 grid
-    return isTablet ? '30%' : '45%'; // 3x2 grid if more choices
+  const isTablet = SCREEN_WIDTH > 768;
+  const getTileWidth = () => {
+    if (safeChoices.length <= 4) return isTablet ? '40%' : '45%';
+    return isTablet ? '30%' : '45%';
   };
+
+  const instructionLabel = selectedChoice !== null ? 'Answer locked in!' : 'Tap your answer';
 
   return (
     <View style={styles.container}>
-      {/* Header Question */}
       <View style={styles.headerContainer}>
         <Text style={[styles.questionText, { fontFamily: theme.fontFamily.title, color: theme.primaryColor }]}>
           {displayQuestion}
         </Text>
       </View>
 
-      {/* Primary Visual Payload */}
       <View style={styles.focusArea}>
         <View style={styles.visualEnclosure}>
           {coinBreakdown ? (
-             <CoinDisplay coins={coinBreakdown} theme={theme} />
+            <CoinDisplay coins={coinBreakdown} theme={theme} />
           ) : time ? (
-             <ClockFace hour={time.hour} minute={time.minute} theme={theme} />
+            <ClockFace hour={time.hour} minute={time.minute} theme={theme} />
           ) : (
-             <Text style={{ fontFamily: theme.fontFamily.body }}>No visual data provided.</Text>
+            <Text style={{ fontFamily: theme.fontFamily.body }}>No visual data provided.</Text>
           )}
         </View>
       </View>
 
-      {/* Answer Choices Grid */}
       <View style={styles.choicesArea}>
         <Text style={[styles.instructionText, { fontFamily: theme.fontFamily.body, color: Colors.onSurfaceVariant }]}>
-          Tap your answer
+          {instructionLabel}
         </Text>
         <View style={styles.choicesGrid}>
           {safeChoices.map((choice, index) => (
@@ -167,8 +162,8 @@ export default function TimeMoneyEngine({ problem, onAnswer, theme }) {
               isSelected={selectedChoice === choice}
               onSelect={handleChoiceSelect}
               theme={theme}
-              width={getChoiceTileWidth()}
-              disabled={selectedChoice !== null} // Prevent multi-tapping during the timeout
+              tileWidth={getTileWidth()}
+              disabled={selectedChoice !== null}
             />
           ))}
         </View>
@@ -208,10 +203,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
     paddingVertical: 32,
     borderRadius: 24,
-    borderWidth: 3,
+    borderWidth: 2,
+    borderBottomWidth: 6,
     borderColor: Colors.outlineVariant,
   },
-  // Choice Area Grid
   choicesArea: {
     alignItems: 'center',
     justifyContent: 'flex-end',
@@ -230,11 +225,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   choiceTile: {
-    minHeight: 80,
+    minHeight: 72,
+    minWidth: 120,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 16,
-    borderWidth: 3,
+    borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
