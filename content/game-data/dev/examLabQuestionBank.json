@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "description": "DEV ONLY — Exam Lab test bank. Focused on ExamNumpadEngine and ExamVisualPickerEngine for Phase 1.5 dev spike. Remove or exclude from production builds.",
+    "examId": "dev-exam-001",
+    "title": "Dev Exam — Numpad & Visual Picker",
+    "timeLimit": null,
+    "totalItems": 4
+  },
+  "questions": [
+    {
+      "_id": "exam-q-001",
+      "type": "NUMPAD",
+      "question": "Fill in the blank: 5 + ___ = 12",
+      "answer": "7",
+      "learningOutcomeId": null,
+      "equation": { "left": "5 + ", "operator": "=", "blank": "right" },
+      "maxDigits": 2
+    },
+    {
+      "_id": "exam-q-002",
+      "type": "VISUAL_PICKER",
+      "question": "3 birds are on a branch. 5 more fly in. How many birds are there now?",
+      "answer": 8,
+      "assetId": "icon_boy",
+      "learningOutcomeId": null,
+      "metadata": {
+        "addends": [3, 5],
+        "options": ["6", "7", "8"]
+      }
+    },
+    {
+      "_id": "exam-q-003",
+      "type": "NUMPAD",
+      "question": "Fill in the blank: 15 − ___ = 8",
+      "answer": "7",
+      "learningOutcomeId": null,
+      "equation": { "left": "15 − ", "operator": "=", "blank": "right" },
+      "maxDigits": 2
+    },
+    {
+      "_id": "exam-q-004",
+      "type": "VISUAL_PICKER",
+      "question": "Ana has 10 mangoes. She gives 4 to her friend. How many does she have left?",
+      "answer": "6",
+      "assetId": "icon_girl",
+      "learningOutcomeId": null,
+      "metadata": {
+        "options": ["4", "5", "6", "7"]
+      }
+    }
+  ]
+}

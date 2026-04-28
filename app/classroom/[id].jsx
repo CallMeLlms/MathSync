@@ -10,11 +10,15 @@ export default function ClassroomDetail() {
   const router = useRouter();
   const { id, sectionId } = useLocalSearchParams(); // id = classId
 
-  const [activeTab, setActiveTab] = useState('lessons'); // 'lessons' or 'assignments'
+  const [activeTab, setActiveTab] = useState('lessons'); // 'lessons' | 'assignments' | 'exams'
 
   const [classDetails, setClassDetails] = useState(null);
   const [lessonsData, setLessonsData] = useState([]); // This holds quarters
   const [assignments, setAssignments] = useState([]);
+
+  // SHADOW — exam data state; not yet fetched or surfaced in UI (Phase 2 wires this up)
+  const [examsData, setExamsData] = useState([]);
+  const [loadingExams, setLoadingExams] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [expandedQuarters, setExpandedQuarters] = useState({});
@@ -112,8 +116,8 @@ export default function ClassroomDetail() {
                         style={styles.lessonCard}
                         activeOpacity={0.8}
                         onPress={() => {
-                          const gradeKey = classDetails?.name?.replace('GRADE ', 'G').replace(' ', '') ?? '';
-                          router.push(`/classroom/lesson/${lesson._id}?sectionId=${sectionId}&grade=${gradeKey}&quarter=${quarterData.quarter}`);
+                          const gradeKey = (classDetails?.name || '').toUpperCase().replace('GRADE ', 'G').replace(' ', '');
+                          router.push(`/classroom/lesson/${lesson._id}?sectionId=${sectionId}&classroomId=${id}&grade=${gradeKey}&quarter=${quarterData.quarter}`);
                         }}
                       >
                         <View style={styles.lessonIconBox}>
@@ -131,6 +135,49 @@ export default function ClassroomDetail() {
             </View>
           );
         })}
+      </ScrollView>
+    );
+  };
+
+  // SHADOW — not yet rendered in the tab row; unhide by removing `false &&` in the tab bar below.
+  // Phase 2 wires: fetch examsData via examService.getClassroomExams(id) when activeTab === 'exams'.
+  const renderExams = () => {
+    if (loadingExams) {
+      return (
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color={Colors.primary} />
+        </View>
+      );
+    }
+    if (examsData.length === 0) {
+      return (
+        <View style={styles.emptyContainer}>
+          <Feather name="clipboard" size={48} color={Colors.onSurfaceVariant} />
+          <Text style={styles.emptyText}>No exams assigned yet.</Text>
+        </View>
+      );
+    }
+    return (
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        {examsData.map((exam) => (
+          <TouchableOpacity
+            key={exam._id}
+            style={styles.lessonCard}
+            activeOpacity={0.8}
+            onPress={() => router.push(`/exam/${exam._id}?classroomId=${id}&sectionId=${sectionId}`)}
+          >
+            <View style={styles.lessonIconBox}>
+              <Feather name="clipboard" size={24} color={Colors.primary} />
+            </View>
+            <View style={styles.lessonInfo}>
+              <Text style={styles.lessonTitle}>{exam.title}</Text>
+              <Text style={styles.lessonDesc}>
+                {exam.totalItems} questions
+                {exam.dueDate ? ` · Due ${new Date(exam.dueDate).toLocaleDateString()}` : ''}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
     );
   };
@@ -202,6 +249,17 @@ export default function ClassroomDetail() {
         >
           <Text style={[styles.tabText, activeTab === 'assignments' && styles.tabTextActive]}>Assignments</Text>
         </TouchableOpacity>
+
+        {/* SHADOW — remove `false &&` to unhide when backend exam endpoints are ready (Phase 2) */}
+        {false && (
+          <TouchableOpacity
+            style={[styles.tabButton, activeTab === 'exams' && styles.tabButtonActive]}
+            onPress={() => setActiveTab('exams')}
+            activeOpacity={0.8}
+          >
+            <Text style={[styles.tabText, activeTab === 'exams' && styles.tabTextActive]}>Exams</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       {/* Content Area */}
@@ -211,7 +269,7 @@ export default function ClassroomDetail() {
             <ActivityIndicator size="large" color={Colors.primary} />
           </View>
         ) : (
-          activeTab === 'lessons' ? renderLessons() : renderAssignments()
+          activeTab === 'lessons' ? renderLessons() : activeTab === 'exams' ? renderExams() : renderAssignments()
         )}
       </View>
     </SafeAreaView>

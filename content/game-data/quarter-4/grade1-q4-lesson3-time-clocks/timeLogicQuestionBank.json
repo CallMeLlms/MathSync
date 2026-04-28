@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Time Logic and Problems",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "mg_4_logic_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
             "competency": "MG.4.12",
             "topic": "Time Logic",
             "level": "concrete",
@@ -28,6 +30,7 @@
         },
         {
             "id": "mg_4_logic_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
             "competency": "MG.4.12",
             "topic": "Time Logic",
             "level": "pictorial",
@@ -42,6 +45,7 @@
         },
         {
             "id": "mg_4_logic_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
             "competency": "MG.4.12",
             "topic": "Time Logic",
             "level": "abstract",

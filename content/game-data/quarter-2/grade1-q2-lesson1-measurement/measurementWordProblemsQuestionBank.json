@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Measurement Word Problems",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "mg_2_prob_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
             "competency": "MG.2.3",
             "topic": "Measurement Problems",
             "level": "concrete",
@@ -29,6 +31,7 @@
         },
         {
             "id": "mg_2_prob_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
             "competency": "MG.2.3",
             "topic": "Measurement Problems",
             "level": "pictorial",
@@ -44,6 +47,7 @@
         },
         {
             "id": "mg_2_prob_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
             "competency": "MG.2.3",
             "topic": "Measurement Problems",
             "level": "abstract",

@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
   emojiText: {
     fontSize: 48,
     textAlign: 'center',
+    textAlignVertical: 'center',
+    includeFontPadding: false,
   },
   fallbackContainer: {
     justifyContent: 'center',

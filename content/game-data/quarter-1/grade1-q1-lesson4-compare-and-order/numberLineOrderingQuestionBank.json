@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Ordering on a Timeline or Sequence",
@@ -14,12 +15,13 @@
     "questions": [
         {
             "id": "na_1_seq_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.8",
             "topic": "Ordering Numbers",
             "level": "concrete",
-            "type": "SORT",
+            "type": "COMPARE_ORDER",
             "difficulty": "Easy",
-            "question": "Drag the blocks to arrange them from smallest to largest: 3, 1, 2.",
+            "question": "Tap the blocks to arrange them from smallest to largest: 3, 1, 2.",
             "answer": "1, 2, 3",
             "assetType": "manipulatives",
             "metadata": {
@@ -28,6 +30,7 @@
         },
         {
             "id": "na_1_seq_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.8",
             "topic": "Ordering Numbers",
             "level": "pictorial",
@@ -41,6 +44,7 @@
         },
         {
             "id": "na_1_seq_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.8",
             "topic": "Ordering Numbers",
             "level": "abstract",

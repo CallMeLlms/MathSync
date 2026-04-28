@@ -95,6 +95,16 @@ const DrawerLayout = () => {
       />
 
       <Drawer.Screen
+        name="MentalMath"
+        options={{
+          title: "Mental Math",
+          drawerIcon: ({ color, size }) => (
+            <Feather name="zap" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
         name="Calendar"
         options={{
           title: "Calendar",

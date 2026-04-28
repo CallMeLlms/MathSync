@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Properties of Addition",
@@ -15,6 +16,7 @@
     "questions": [
         {
             "id": "na_1_addprop_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.12",
             "topic": "Addition Properties",
             "level": "concrete",
@@ -37,6 +39,7 @@
             "id": "na_1_addprop_004",
             "competency": "NA.1.12",
             "topic": "Addition Properties",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "level": "pictorial",
             "type": "PICKER",
             "difficulty": "Medium",
@@ -57,6 +60,7 @@
             "id": "na_1_addprop_007",
             "competency": "NA.1.12",
             "topic": "Addition Properties",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "level": "abstract",
             "type": "PICKER",
             "difficulty": "Hard",

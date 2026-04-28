@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Comparing Lengths and Distances",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "mg_2_comp_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
             "competency": "MG.2.2",
             "topic": "Measurement Comparison",
             "level": "concrete",
@@ -25,12 +27,13 @@
             "metadata": {
                 "pile_a": 8,
                 "pile_b": 5,
-                "emoji_a": "📏",
-                "emoji_b": "📏"
+                "assetId_a": "icon_ruler",
+                "assetId_b": "icon_ruler"
             }
         },
         {
             "id": "mg_2_comp_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
             "competency": "MG.2.2",
             "topic": "Measurement Comparison",
             "level": "pictorial",
@@ -42,12 +45,13 @@
             "metadata": {
                 "pile_a": 10,
                 "pile_b": 6,
-                "emoji_a": "🦒",
-                "emoji_b": "🐘"
+                "assetId_a": "icon_giraffe",
+                "assetId_b": "icon_elephant"
             }
         },
         {
             "id": "mg_2_comp_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee3",
             "competency": "MG.2.2",
             "topic": "Measurement Comparison",
             "level": "abstract",
@@ -59,8 +63,8 @@
             "metadata": {
                 "pile_a": 4,
                 "pile_b": 6,
-                "emoji_a": "🍌",
-                "emoji_b": "🥕"
+                "assetId_a": "icon_banana",
+                "assetId_b": "icon_carrot"
             }
         }
     ]

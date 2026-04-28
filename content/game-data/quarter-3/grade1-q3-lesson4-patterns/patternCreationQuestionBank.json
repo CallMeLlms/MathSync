@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee8",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Pattern Creation and Rules",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_3_rule_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee8",
             "competency": "NA.3.12",
             "topic": "Pattern Rules",
             "level": "concrete",
@@ -27,6 +29,7 @@
         },
         {
             "id": "na_3_rule_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee8",
             "competency": "NA.3.12",
             "topic": "Pattern Rules",
             "level": "pictorial",
@@ -40,6 +43,7 @@
         },
         {
             "id": "na_3_rule_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee8",
             "competency": "NA.3.12",
             "topic": "Pattern Rules",
             "level": "abstract",

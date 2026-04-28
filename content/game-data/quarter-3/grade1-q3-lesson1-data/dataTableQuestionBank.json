@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee6",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Data Tables",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "dp_3_table_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee6",
             "competency": "DP.3.4",
             "topic": "Data Tables",
             "level": "concrete",
@@ -40,6 +42,7 @@
         },
         {
             "id": "dp_3_table_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee6",
             "competency": "DP.3.4",
             "topic": "Data Tables",
             "level": "pictorial",
@@ -68,6 +71,7 @@
         },
         {
             "id": "dp_3_table_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee6",
             "competency": "DP.3.4",
             "topic": "Data Tables",
             "level": "abstract",

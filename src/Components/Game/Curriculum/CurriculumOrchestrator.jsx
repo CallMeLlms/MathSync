@@ -31,15 +31,19 @@ import VisualPickerEngine from './Engines/VisualPickerEngine';
 import ComparePickerEngine from './Engines/ComparePickerEngine';
 import FractionShapeEngine from './Engines/FractionShapeEngine';
 import CalendarPageEngine from './Engines/CalendarPageEngine';
+import CalendarGridEngine from './Engines/CalendarGridEngine';
 import TurnCompassEngine from './Engines/TurnCompassEngine';
 import PictographReaderEngine from './Engines/PictographReaderEngine';
 import DataTableReaderEngine from './Engines/DataTableReaderEngine';
 import FruitStandEngine from './Engines/FruitStandEngine';
 import PatternSequenceEngine from './Engines/PatternSequenceEngine';
+import CompareOrderEngine from './Engines/CompareOrderEngine';
+import MoneyEngine from './Engines/MoneyEngine';
 // Gesture-heavy engines must render inside a plain View — a ScrollView would
 // intercept their touch responder and break drag/draw interactions.
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
 
+import { submitGameSession } from '@/services/gameSubmissionService';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
@@ -51,7 +55,10 @@ import ResultModal from '@/Components/Game/Global/ResultModal';
  */
 export default function CurriculumOrchestrator({
   lessonId,
-  gradeKey = 'G1'
+  gradeKey = 'G1',
+  sectionId,
+  classroomId,
+  mongoLessonId,
 }) {
   const router = useRouter();
   const theme = getGameTheme(gradeKey);
@@ -67,12 +74,17 @@ export default function CurriculumOrchestrator({
     correctCount
   } = useGameEngine();
 
+  const answersRef = React.useRef([]);
+  const submittedRef = React.useRef(false);
+
   const [showExitModal, setShowExitModal] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
   const [lastResultData, setLastResultData] = useState({ isCorrect: false, userAnswerItems: [], currentQuestion: null });
 
   // Load Content Data
   useEffect(() => {
+    answersRef.current = [];
+    submittedRef.current = false;
     const content = getBundledLesson(gradeKey, lessonId);
     if (content) {
       setLessonContent(content);
@@ -116,6 +128,19 @@ export default function CurriculumOrchestrator({
 
   const handleResult = (isCorrect, userAnswerItems = []) => {
     recordAnswer(isCorrect);
+
+    const outcomeId = currentQuestion?.learningOutcomeId ?? null;
+
+    if (!outcomeId) {
+      console.warn(`[MathSync:CurriculumOrchestrator] Missing learningOutcomeId on question: ${currentQuestion?.id}. Analytics may be incomplete.`);
+    }
+
+    answersRef.current.push({
+      question: currentQuestion?.question || currentQuestion?.instruction || currentQuestion?.text || '',
+      learningOutcomeId: outcomeId,
+      isCorrect,
+    });
+
     setLastResultData({
       isCorrect,
       userAnswerItems,
@@ -135,17 +160,34 @@ export default function CurriculumOrchestrator({
     if (currentQuestionIndex + 1 < lessonContent.questions.length) {
       nextQuestion();
     } else {
-      // Lesson finished — persist result to store and navigate.
       const questionLength = lessonContent.questions.length;
-      
+
       useUserStore.getState().recordSessionResult(gradeKey, lessonId, {
         correctCount,
         totalQuestions: questionLength,
-        score: totalScore
+        score: totalScore,
       });
 
       endGameSession();
-      
+
+      const sid  = typeof sectionId     === 'string' ? sectionId.trim()     : '';
+      const cid  = typeof classroomId   === 'string' ? classroomId.trim()   : '';
+      const mlid = typeof mongoLessonId === 'string' ? mongoLessonId.trim() : '';
+
+      if (sid && cid && mlid && !submittedRef.current) {
+        submittedRef.current = true;
+        submitGameSession({
+          sectionId:   sid,
+          classroomId: cid,
+          lessonId:    mlid,
+          totalScore,
+          totalItems:  questionLength,
+          answers:     answersRef.current,
+        }).catch((err) => {
+          console.warn('[GameSubmission] Failed to submit session:', err?.message ?? err);
+        });
+      }
+
       router.replace({
         pathname: '/game/result',
         params: { lessonId, gradeKey },
@@ -188,11 +230,14 @@ export default function CurriculumOrchestrator({
       case 'clocksetter': return <ClockSetterEngine key={currentQuestionIndex} {...props} />;
       case 'fraction_shape': return <FractionShapeEngine key={currentQuestionIndex} {...props} />;
       case 'calendar_page': return <CalendarPageEngine key={currentQuestionIndex} {...props} />;
+      case 'calendar_grid': return <CalendarGridEngine key={currentQuestionIndex} {...props} />;
       case 'turn_compass': return <TurnCompassEngine key={currentQuestionIndex} {...props} />;
       case 'pictograph_reader': return <PictographReaderEngine key={currentQuestionIndex} {...props} />;
       case 'data_table_reader': return <DataTableReaderEngine key={currentQuestionIndex} {...props} />;
       case 'fruit_stand': return <FruitStandEngine key={currentQuestionIndex} {...props} />;
       case 'pattern_sequence': return <PatternSequenceEngine key={currentQuestionIndex} {...props} />;
+      case 'compare_order': return <CompareOrderEngine key={currentQuestionIndex} {...props} />;
+      case 'money_engine': return <MoneyEngine key={currentQuestionIndex} {...props} />;
       // MatcherEngine uses a different prop contract (question/onAnswer) than the
       // standard Orchestrator API (data/onResult). Bridge inline to avoid touching the engine.
       case 'matcher': return (
@@ -216,7 +261,7 @@ export default function CurriculumOrchestrator({
       </View>
 
       {/* Question Header */}
-      {questionText && engineType !== 'visual_picker' ? (
+      {questionText && engineType !== 'visual_picker' && engineType !== 'money_engine' ? (
         <View style={styles.questionHeader}>
           <Text style={styles.questionHeaderText}>{questionText}</Text>
         </View>
@@ -229,7 +274,8 @@ export default function CurriculumOrchestrator({
         && currentQuestion?.assetType !== 'text'
         && engineType !== 'visual_numpad'
         && engineType !== 'word_problem'
-        && engineType !== 'visual_picker' ? (
+        && engineType !== 'visual_picker'
+        && engineType !== 'money_engine' ? (
         <View style={styles.questionAssetContainer}>
           <AssetDisplay
             assetId={currentQuestion.assetId}

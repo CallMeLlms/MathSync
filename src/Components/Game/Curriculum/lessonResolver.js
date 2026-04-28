@@ -37,7 +37,6 @@ import G1_OrdinalSequence from '@content/game-data/quarter-1/grade1-q1-lesson3-p
 import G1_CompareOrder from '@content/game-data/quarter-1/grade1-q1-lesson4-compare-and-order/compareOrderQuestionBank.json';
 import G1_ComparingQty from '@content/game-data/quarter-1/grade1-q1-lesson4-compare-and-order/comparingQuantitiesQuestionBank.json';
 import G1_NumberLine from '@content/game-data/quarter-1/grade1-q1-lesson4-compare-and-order/numberLineOrderingQuestionBank.json';
-import G1_SortTest from '@content/game-data/quarter-1/grade1-q1-lesson4-compare-and-order/sortEngineTestBank.json';
 
 // ─── Quarter 2, Lesson 1: Measurement (Measuring Meadow) ─────────────────────
 import G1_LengthComparison from '@content/game-data/quarter-2/grade1-q2-lesson1-measurement/lengthComparisonQuestionBank.json';
@@ -194,7 +193,7 @@ const BUNDLED_DATA = {
           competency: 'NA.1.7–1.8',
           description: 'Compare & Order — Smallest to largest',
         },
-        questions: getPlayableQuestions([G1_CompareOrder, G1_ComparingQty, G1_NumberLine, G1_SortTest]),
+        questions: getPlayableQuestions([G1_CompareOrder, G1_ComparingQty, G1_NumberLine]),
       },
 
       // --- Node 5: "The Master Gardener" — Q1 Boss Review ---
@@ -208,7 +207,7 @@ const BUNDLED_DATA = {
           description: 'Quarter 1 Boss — Final review of all Q1 topics',
         },
         questions: getPlayableQuestions([
-          G1_ShapeHunt, G1_NumberMatch, G1_OrdinalSequence, G1_CompareOrder, G1_SortTest,
+          G1_ShapeHunt, G1_NumberMatch, G1_OrdinalSequence, G1_CompareOrder,
         ]),
       },
 
@@ -400,7 +399,7 @@ const BUNDLED_DATA = {
           description: 'Final Boss — Master all 4 Quarters of Grade 1',
         },
         questions: getPlayableQuestions([
-          G1_ShapeHunt, G1_BasicAddition, G1_OrdinalSequence, G1_SortTest,
+          G1_ShapeHunt, G1_BasicAddition, G1_OrdinalSequence,
           G1_PlaceValue, G1_AdditionTo100, G1_BasicSubtraction20, G1_ComplexPatterns,
           G1_IdentifyingFractions, G1_MoneyId, G1_AnalogTime, G1_CalendarSequence,
         ]),

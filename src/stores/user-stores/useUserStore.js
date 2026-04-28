@@ -39,6 +39,8 @@ export const useUserStore = create(
       // Curriculum progress: { gradeKey: { lessonId: { completed, score, accuracy, timestamp } } }
       completedLessons: {},
 
+      earnedBadges: [], // string[] of unlocked badge IDs
+
       activities: [], // Array of { id, type, title, timestamp, points, icon }
 
       /**
@@ -181,6 +183,15 @@ export const useUserStore = create(
         };
       }),
 
+      unlockBadge: (badgeId) => set((state) => {
+        if (state.earnedBadges.includes(badgeId)) return state;
+        const updated = [...state.earnedBadges, badgeId];
+        return {
+          earnedBadges: updated,
+          stats: { ...state.stats, badges: updated.length },
+        };
+      }),
+
       updateStats: (newStats) => set((state) => ({
         stats: { ...state.stats, ...newStats }
       })),
@@ -232,6 +243,7 @@ export const useUserStore = create(
           streak: 0 
         },
         completedLessons: {},
+        earnedBadges: [],
         activities: [],
         recentActivity: [],
         xpSessionLog: [],

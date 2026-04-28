@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Identifying Fractions (1/2 and 1/4)",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_4_fracid_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
             "competency": "NA.4.1",
             "topic": "Fractions ID",
             "level": "concrete",
@@ -24,11 +26,11 @@
             "assetType": "manipulatives",
             "shape": "circle",
             "fraction": "1/2",
-            "options": ["one-whole", "one-half", "one-fourth"],
-            "assetId": "shape_circle"
+            "options": ["one-whole", "one-half", "one-fourth"]
         },
         {
             "id": "na_4_fracid_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
             "competency": "NA.4.1",
             "topic": "Fractions ID",
             "level": "pictorial",
@@ -39,11 +41,11 @@
             "assetType": "illustration",
             "shape": "square",
             "fraction": "1/4",
-            "options": ["one-half", "one-fourth", "three-fourths"],
-            "assetId": "shape_square"
+            "options": ["one-half", "one-fourth", "three-fourths"]
         },
         {
             "id": "na_4_fracid_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
             "competency": "NA.4.1",
             "topic": "Fractions ID",
             "level": "abstract",

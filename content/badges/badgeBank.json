@@ -1,0 +1,82 @@
+[
+  {
+    "id": "first_lesson",
+    "title": "First Step",
+    "subtitle": "Complete your first lesson",
+    "assetId": "icon_runner_1st",
+    "conditionType": "lessonCount",
+    "threshold": 1
+  },
+  {
+    "id": "lesson_trio",
+    "title": "Trio",
+    "subtitle": "Complete 3 lessons",
+    "assetId": "icon_star",
+    "conditionType": "lessonCount",
+    "threshold": 3
+  },
+  {
+    "id": "high_five",
+    "title": "High Five",
+    "subtitle": "Complete 5 lessons",
+    "assetId": "icon_runner_2nd",
+    "conditionType": "lessonCount",
+    "threshold": 5
+  },
+  {
+    "id": "perfect_mark",
+    "title": "Perfect Mark",
+    "subtitle": "Score 100% on any lesson",
+    "assetId": "icon_diamond",
+    "conditionType": "perfectScore",
+    "threshold": 1
+  },
+  {
+    "id": "shape_scout",
+    "title": "Shape Scout",
+    "subtitle": "Complete a shapes lesson",
+    "assetId": "icon_number_line",
+    "conditionType": "topicComplete",
+    "topic": "shapes"
+  },
+  {
+    "id": "fraction_friend",
+    "title": "Fraction Friend",
+    "subtitle": "Complete a fractions lesson",
+    "assetId": "icon_clock_3",
+    "conditionType": "topicComplete",
+    "topic": "fraction"
+  },
+  {
+    "id": "half_century",
+    "title": "Half Century",
+    "subtitle": "Solve 50 problems",
+    "assetId": "icon_runner_3rd",
+    "conditionType": "problemsSolved",
+    "threshold": 50
+  },
+  {
+    "id": "century_club",
+    "title": "Century Club",
+    "subtitle": "Solve 100 problems",
+    "assetId": "icon_heart",
+    "conditionType": "problemsSolved",
+    "threshold": 100
+  },
+  {
+    "id": "streak_spark",
+    "title": "Streak Spark",
+    "subtitle": "Build a 3-day streak",
+    "assetId": "icon_calendar",
+    "conditionType": "streak",
+    "threshold": 3
+  },
+  {
+    "id": "quarter_conqueror",
+    "title": "Q1 Conqueror",
+    "subtitle": "Complete all Q1 lessons",
+    "assetId": "icon_runner_1st",
+    "conditionType": "quarterComplete",
+    "quarter": "quarter-1"
+  }
+]

@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Number Matching",
@@ -12,6 +13,7 @@
     "questions": [
         {
             "id": "na_1.5_match_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
             "competency": "NA.1.5",
             "topic": "Number Matching",
             "level": "concrete",
@@ -21,22 +23,14 @@
             "assetType": "NONE",
             "question": "Match each number to its name.",
             "pairs": [
-                {
-                    "left": "1",
-                    "right": "one"
-                },
-                {
-                    "left": "2",
-                    "right": "two"
-                },
-                {
-                    "left": "3",
-                    "right": "three"
-                }
+                { "left": "1", "right": "one" },
+                { "left": "2", "right": "two" },
+                { "left": "3", "right": "three" }
             ]
         },
         {
             "id": "na_1.5_match_002",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
             "competency": "NA.1.5",
             "topic": "Number Matching",
             "level": "pictorial",
@@ -46,26 +40,15 @@
             "assetType": "NONE",
             "question": "Match each number to its name.",
             "pairs": [
-                {
-                    "left": "5",
-                    "right": "five"
-                },
-                {
-                    "left": "8",
-                    "right": "eight"
-                },
-                {
-                    "left": "4",
-                    "right": "four"
-                },
-                {
-                    "left": "7",
-                    "right": "seven"
-                }
+                { "left": "5", "right": "five" },
+                { "left": "8", "right": "eight" },
+                { "left": "4", "right": "four" },
+                { "left": "7", "right": "seven" }
             ]
         },
         {
             "id": "na_1.5_match_003",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
             "competency": "NA.1.5",
             "topic": "Number Matching",
             "level": "abstract",
@@ -75,26 +58,11 @@
             "assetType": "NONE",
             "question": "Match each number to its name.",
             "pairs": [
-                {
-                    "left": "11",
-                    "right": "eleven"
-                },
-                {
-                    "left": "15",
-                    "right": "fifteen"
-                },
-                {
-                    "left": "13",
-                    "right": "thirteen"
-                },
-                {
-                    "left": "19",
-                    "right": "nineteen"
-                },
-                {
-                    "left": "20",
-                    "right": "twenty"
-                }
+                { "left": "11", "right": "eleven" },
+                { "left": "15", "right": "fifteen" },
+                { "left": "13", "right": "thirteen" },
+                { "left": "19", "right": "nineteen" },
+                { "left": "20", "right": "twenty" }
             ]
         }
     ]

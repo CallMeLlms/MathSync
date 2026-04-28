@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee5",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Addition to 100 (No Regrouping)",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_2_add100_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee5",
             "competency": "NA.2.9",
             "topic": "Addition to 100",
             "level": "concrete",
@@ -27,6 +29,7 @@
         },
         {
             "id": "na_2_add100_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee5",
             "competency": "NA.2.9",
             "topic": "Addition to 100",
             "level": "pictorial",
@@ -39,6 +42,7 @@
         },
         {
             "id": "na_2_add100_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee5",
             "competency": "NA.2.9",
             "topic": "Addition to 100",
             "level": "abstract",

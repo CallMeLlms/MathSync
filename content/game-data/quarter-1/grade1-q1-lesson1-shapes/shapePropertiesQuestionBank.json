@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aedf",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Shape Properties",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "mg_1_props_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aedf",
             "competency": "MG.1.2",
             "topic": "Shape Properties",
             "level": "concrete",
@@ -33,6 +35,7 @@
         },
         {
             "id": "mg_1_props_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aedf",
             "competency": "MG.1.2",
             "topic": "Shape Properties",
             "level": "pictorial",
@@ -52,6 +55,7 @@
         },
         {
             "id": "mg_1_props_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aedf",
             "competency": "MG.1.2",
             "topic": "Shape Properties",
             "level": "abstract",

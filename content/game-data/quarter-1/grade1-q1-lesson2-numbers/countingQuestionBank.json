@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Counting and Recognizing Numbers 1 to 100",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_1_count_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
             "competency": "NA.1.4",
             "topic": "Counting to 100",
             "level": "concrete",
@@ -28,6 +30,7 @@
         },
         {
             "id": "na_1_count_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
             "competency": "NA.1.4",
             "topic": "Counting to 100",
             "level": "pictorial",
@@ -45,6 +48,7 @@
         },
         {
             "id": "na_1_count_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
             "competency": "NA.1.4",
             "topic": "Counting to 100",
             "level": "abstract",
@@ -54,11 +58,7 @@
             "answer": 50,
             "assetType": "text",
             "metadata": {
-                "options": [
-                    48,
-                    50,
-                    51
-                ]
+                "options": [48, 50, 51]
             }
         }
     ]

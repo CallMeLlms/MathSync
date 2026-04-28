@@ -339,6 +339,7 @@ const styles = StyleSheet.create({
   },
   checkButtonContainer: {
     width: '100%',
+    marginTop: 24,
   },
   checkButton: {
     width: '100%',

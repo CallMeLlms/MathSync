@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Ordinal Matching",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_1_ord_match_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
             "competency": "NA.1.9",
             "topic": "Ordinal Matching",
             "level": "concrete",
@@ -29,6 +31,7 @@
         },
         {
             "id": "na_1_ord_match_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
             "competency": "NA.1.9",
             "topic": "Ordinal Matching",
             "level": "pictorial",
@@ -44,6 +47,7 @@
         },
         {
             "id": "na_1_ord_match_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
             "competency": "NA.1.9",
             "topic": "Ordinal Matching",
             "level": "abstract",

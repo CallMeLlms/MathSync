@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Comparing Quantities",
@@ -14,13 +15,14 @@
     "questions": [
         {
             "id": "na_1_quant_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.7",
             "topic": "Comparing Quantities",
             "level": "concrete",
-            "type": "SORT",
+            "type": "COMPARE_PICKER",
             "difficulty": "Easy",
             "question": "Which pile of calamansi is bigger? Tap the bigger pile.",
-            "answer": "pile_10",
+            "answer": "pile_b",
             "assetType": "manipulatives",
             "assetId": "icon_calamansi",
             "metadata": {
@@ -30,14 +32,16 @@
         },
         {
             "id": "na_1_quant_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.7",
             "topic": "Comparing Quantities",
             "level": "pictorial",
-            "type": "SORT",
+            "type": "COMPARE_ORDER",
             "difficulty": "Medium",
             "question": "Look at the plates of cookies. Which plate has the most cookies?",
             "answer": "plate_c",
             "assetType": "illustration",
+            "assetId": "icon_cookie",
             "metadata": {
                 "plate_a": 4,
                 "plate_b": 6,
@@ -46,6 +50,7 @@
         },
         {
             "id": "na_1_quant_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.7",
             "topic": "Comparing Quantities",
             "level": "abstract",

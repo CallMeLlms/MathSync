@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Compose and Decompose Numbers up to 10",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_1_cd_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
             "competency": "NA.1.10",
             "topic": "Compose and Decompose",
             "level": "concrete",
@@ -22,19 +24,13 @@
             "difficulty": "Easy",
             "question": "Break 5 into two parts!",
             "target": 5,
-            "chips": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                0
-            ],
+            "chips": [1, 2, 3, 4, 5, 0],
             "assetType": "NONE",
             "emoji": "🍎"
         },
         {
             "id": "na_1_cd_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
             "competency": "NA.1.10",
             "topic": "Compose and Decompose",
             "level": "pictorial",
@@ -43,19 +39,13 @@
             "difficulty": "Medium",
             "question": "Break 7 into two groups!",
             "target": 7,
-            "chips": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6
-            ],
+            "chips": [1, 2, 3, 4, 5, 6],
             "assetType": "NONE",
             "emoji": "🐟"
         },
         {
             "id": "na_1_cd_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee0",
             "competency": "NA.1.10",
             "topic": "Compose and Decompose",
             "level": "abstract",
@@ -64,17 +54,7 @@
             "difficulty": "Hard",
             "question": "Break 10 into two parts!",
             "target": 10,
-            "chips": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9
-            ],
+            "chips": [1, 2, 3, 4, 5, 6, 7, 8, 9],
             "assetType": "NONE",
             "emoji": "🔢"
         }

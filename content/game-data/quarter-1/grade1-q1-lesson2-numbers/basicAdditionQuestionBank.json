@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Basic Addition up to 20",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_1_basicadd_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.11",
             "topic": "Basic Addition to 20",
             "level": "concrete",
@@ -30,6 +32,7 @@
         },
         {
             "id": "na_1_basicadd_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.11",
             "topic": "Basic Addition to 20",
             "level": "pictorial",
@@ -37,14 +40,15 @@
             "difficulty": "Easy",
             "question": "Look at the picture. 2 birds are on the branch. 4 more birds fly in. How many birds are there now?",
             "answer": 6,
-            "assetType": "illustration",
-            "assetId": "na_1_basicadd_004",
+            "assetType": "emoji",
+            "assetId": "icon_bird",
             "metadata": {
                 "addends": [2, 4]
             }
         },
         {
             "id": "na_1_basicadd_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.11",
             "topic": "Basic Addition to 20",
             "level": "abstract",

@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee7",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Subtraction to 100 (No Regrouping)",
@@ -15,6 +16,7 @@
     "questions": [
         {
             "id": "na_3_sub100_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee7",
             "competency": "NA.3.9",
             "topic": "Subtraction to 100",
             "level": "concrete",
@@ -28,6 +30,7 @@
         },
         {
             "id": "na_3_sub100_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee7",
             "competency": "NA.3.9",
             "topic": "Subtraction to 100",
             "level": "pictorial",
@@ -44,6 +47,7 @@
         },
         {
             "id": "na_3_sub100_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee7",
             "competency": "NA.3.9",
             "topic": "Subtraction to 100",
             "level": "abstract",

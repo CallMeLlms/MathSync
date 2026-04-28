@@ -9,7 +9,7 @@ import OfflineVideoPlayer from '@/Components/LessonComponents/OfflineVideoPlayer
 import { resolveGameLesson } from '@/constants/classroomLessonMap';
 
 export default function LessonDetail() {
-  const { lessonId, grade, quarter } = useLocalSearchParams();
+  const { lessonId, grade, quarter, sectionId, classroomId } = useLocalSearchParams();
   const router = useRouter();
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,6 +39,25 @@ export default function LessonDetail() {
     }
   };
 
+  const normalizedGrade = Array.isArray(grade) ? grade[0] : grade;
+  const isG1 = normalizedGrade?.toString().toUpperCase() === 'G1';
+
+  const gameLessonId = isG1
+    ? resolveGameLesson(lessonId, lesson?.title, quarter ? parseInt(quarter, 10) : null)
+    : null;
+
+  // Persistent Debug Logging for Alignment
+  useEffect(() => {
+    if (lesson) {
+      console.log('--- [MathSync Alignment Debug] ---');
+      console.log('MongoDB Lesson ID:', lessonId);
+      console.log('Classroom Grade:', grade);
+      console.log('Is G1 Gate Passed:', isG1 ? 'YES' : 'NO');
+      console.log('Resolved Game ID:', gameLessonId || 'NULL (No Match)');
+      console.log('----------------------------------');
+    }
+  }, [lessonId, grade, isG1, gameLessonId, lesson]);
+
   if (loading) {
     return (
       <View style={styles.centered}>
@@ -58,9 +77,6 @@ export default function LessonDetail() {
     );
   }
 
-  const gameLessonId = grade === 'G1'
-    ? resolveGameLesson(lesson?.title, quarter ? parseInt(quarter, 10) : null)
-    : null;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -146,7 +162,13 @@ export default function LessonDetail() {
             <TouchableOpacity
               style={styles.playButton}
               activeOpacity={0.85}
-              onPress={() => router.push(`/game/${gameLessonId}?grade=G1`)}
+              onPress={() => {
+                const base = `/game/${gameLessonId}?grade=G1`;
+                const ctx = (sectionId && classroomId)
+                  ? `&sectionId=${sectionId}&classroomId=${classroomId}&mongoLessonId=${lessonId}`
+                  : '';
+                router.push(base + ctx);
+              }}
             >
               <Feather name="zap" size={22} color="#FFFFFF" />
               <Text style={styles.playButtonText}>Play Lesson</Text>

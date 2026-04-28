@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Time (Analog Clocks)",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "mg_4_clock_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
             "competency": "MG.4.9",
             "topic": "Clock Reading",
             "level": "concrete",
@@ -27,6 +29,7 @@
         },
         {
             "id": "mg_4_clock_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
             "competency": "MG.4.9",
             "topic": "Clock Reading",
             "level": "pictorial",
@@ -40,6 +43,7 @@
         },
         {
             "id": "mg_4_clock_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeed",
             "competency": "MG.4.9",
             "topic": "Clock Reading",
             "level": "abstract",

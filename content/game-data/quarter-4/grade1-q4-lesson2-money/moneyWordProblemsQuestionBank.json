@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeeb",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Money Word Problems",
@@ -8,47 +9,76 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "MONEY_ENGINE": "Used for tactile money interaction"
         }
     },
     "questions": [
         {
             "id": "na_4_monprob_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeeb",
             "competency": "NA.4.7",
             "topic": "Money Problems",
             "level": "concrete",
-            "type": "N/A",
+            "type": "MONEY_ENGINE",
             "difficulty": "Easy",
-            "question": "Use the coins: A lollipop costs ₱5. You buy 2 lollipops. How much money do you need?",
+            "question": "A lollipop costs ₱5. You buy 2 lollipops. How much money do you need?",
             "answer": 10,
-            "assetType": "manipulatives",
-            "assetId": "money_coin_5",
-            "metadata": {}
+            "assetType": "illustration",
+            "assetId": "icon_girl",
+            "metadata": {
+                "interactionType": "word_problem",
+                "moneyItems": [
+                    { "assetId": "money_coin_5", "value": 5 },
+                    { "operator": "+" },
+                    { "assetId": "money_coin_5", "value": 5 }
+                ]
+            }
         },
         {
             "id": "na_4_monprob_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeeb",
             "competency": "NA.4.7",
             "topic": "Money Problems",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "MONEY_ENGINE",
             "difficulty": "Medium",
-            "question": "Look at the price list. How much do the apple (₱10) and the bread (₱25) cost in total?",
+            "question": "How much do the apple (₱10) and the bread (₱25) cost in total?",
             "answer": 35,
             "assetType": "illustration",
-            "metadata": {},
-            "assetId": "money_coin_1"
+            "assetId": "icon_boy",
+            "metadata": {
+                "interactionType": "word_problem",
+                "moneyItems": [
+                    { "assetId": "money_coin_10", "value": 10 },
+                    { "operator": "+" },
+                    { "assetId": "money_coin_20", "value": 20 },
+                    { "assetId": "money_coin_5", "value": 5 }
+                ]
+            }
         },
         {
             "id": "na_4_monprob_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeeb",
             "competency": "NA.4.7",
             "topic": "Money Problems",
             "level": "abstract",
-            "type": "N/A",
+            "type": "MONEY_ENGINE",
             "difficulty": "Hard",
-            "question": "Sarah has ₱65. She earns ₱25 more by helping at home. What is her new total?",
+            "question": "Sarah has ₱65. She earns ₱25 more. What is her new total?",
             "answer": 90,
-            "assetType": "text",
-            "metadata": {}
+            "assetType": "illustration",
+            "assetId": "icon_girl",
+            "metadata": {
+                "interactionType": "word_problem",
+                "moneyItems": [
+                    { "assetId": "money_bill_50", "value": 50 },
+                    { "assetId": "money_coin_10", "value": 10 },
+                    { "assetId": "money_coin_5", "value": 5 },
+                    { "operator": "+" },
+                    { "assetId": "money_coin_20", "value": 20 },
+                    { "assetId": "money_coin_5", "value": 5 }
+                ]
+            }
         }
     ]
 }

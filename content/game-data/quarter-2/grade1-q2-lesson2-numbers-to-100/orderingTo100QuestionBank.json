@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Ordering Numbers up to 100",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_2_order_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.4",
             "topic": "Ordering to 100",
             "level": "concrete",
@@ -23,15 +25,12 @@
             "answer": "12, 34, 45",
             "assetType": "manipulatives",
             "metadata": {
-                "items": [
-                    45,
-                    12,
-                    34
-                ]
+                "items": [45, 12, 34]
             }
         },
         {
             "id": "na_2_order_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.4",
             "topic": "Ordering to 100",
             "level": "pictorial",
@@ -41,16 +40,13 @@
             "answer": "₱20, ₱45, ₱65",
             "assetType": "illustration",
             "metadata": {
-                "items": [
-                    45,
-                    20,
-                    65
-                ]
+                "items": [45, 20, 65]
             },
             "assetId": "money_coin_20"
         },
         {
             "id": "na_2_order_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee4",
             "competency": "NA.2.4",
             "topic": "Ordering to 100",
             "level": "abstract",
@@ -60,11 +56,7 @@
             "answer": "48, 49",
             "assetType": "text",
             "metadata": {
-                "options": [
-                    "48, 49",
-                    "47, 48",
-                    "49, 50"
-                ]
+                "options": ["48, 49", "47, 48", "49, 50"]
             }
         }
     ]

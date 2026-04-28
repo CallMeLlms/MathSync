@@ -25,6 +25,28 @@ export const GameThemes = {
       accent: 'Lexend-Bold'
     }
   },
+  // Mental Math — grade-agnostic quick-fire mode
+  MENTAL_MATH: {
+    id: 'mental_math',
+    backgroundColor: Colors.surfaceContainerLow,
+    primaryColor: Colors.primary,
+    secondaryColor: Colors.secondary,
+    loadingText: 'Loading problems...',
+    exitText: 'End Session',
+    scoreLabel: 'Score',
+    finishTitle: 'Session Complete!',
+    finishButtonText: 'Back',
+    touchTarget: {
+      minWidth: 44,
+      minHeight: 44,
+    },
+    fontFamily: {
+      title: 'Lexend-Black',
+      body: 'PlusJakartaSans-Medium',
+      accent: 'Lexend-Bold',
+    },
+  },
+
   // Placeholders for future grades
   G2: {
     id: 'grade2_sky',

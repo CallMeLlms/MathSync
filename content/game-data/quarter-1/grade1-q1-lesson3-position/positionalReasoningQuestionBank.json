@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Positional Reasoning",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_1_pos_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
             "competency": "NA.1.9",
             "topic": "Positional Reasoning",
             "level": "concrete",
@@ -28,6 +30,7 @@
         },
         {
             "id": "na_1_pos_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
             "competency": "NA.1.9",
             "topic": "Positional Reasoning",
             "level": "pictorial",
@@ -42,6 +45,7 @@
         },
         {
             "id": "na_1_pos_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee1",
             "competency": "NA.1.9",
             "topic": "Positional Reasoning",
             "level": "abstract",

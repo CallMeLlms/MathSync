@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import useUserStore from '@/stores/user-stores/useUserStore';
+import badgeBank from '@content/badges/badgeBank.json';
+import { checkAndUnlockBadges } from '@/services/badgeService';
 
 function createSessionId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
@@ -60,6 +62,12 @@ const useGameEngine = create((set, get) => ({
         description: state.activeLessonId
           ? `Played session: ${String(state.activeLessonId)}`
           : 'Played a lesson session',
+      });
+
+      // Badge evaluation — fire-and-forget; swap { useBackend: true } when backend is ready
+      const userState = useUserStore.getState();
+      checkAndUnlockBadges(userState, badgeBank).then((newBadges) => {
+        newBadges.forEach((id) => useUserStore.getState().unlockBadge(id));
       });
     }
     set({

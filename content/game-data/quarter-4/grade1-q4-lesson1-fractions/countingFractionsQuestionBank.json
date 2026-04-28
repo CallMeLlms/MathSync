@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Counting Halves and Quarters",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_4_fraccount_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
             "competency": "NA.4.3",
             "topic": "Fraction Counting",
             "level": "concrete",
@@ -24,11 +26,11 @@
             "assetType": "manipulatives",
             "shape": "circle",
             "fraction": "1/2",
-            "options": ["one", "two", "three"],
-            "assetId": "shape_circle"
+            "options": ["one", "two", "three"]
         },
         {
             "id": "na_4_fraccount_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
             "competency": "NA.4.3",
             "topic": "Fraction Counting",
             "level": "pictorial",
@@ -39,11 +41,11 @@
             "assetType": "illustration",
             "shape": "circle",
             "fraction": "1/4",
-            "options": ["two", "four", "eight"],
-            "assetId": "shape_circle"
+            "options": ["two", "four", "eight"]
         },
         {
             "id": "na_4_fraccount_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
             "competency": "NA.4.3",
             "topic": "Fraction Counting",
             "level": "abstract",

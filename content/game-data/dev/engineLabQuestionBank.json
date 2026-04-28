@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "DEV ONLY — Engine Lab test bank. One or two questions per engine type to validate rendering and interaction. Remove or exclude from production builds.",
-    "engines_covered": ["picker", "numpad", "matcher", "composer", "dragdrop", "sort", "shape_hunt", "ordinal_sequence", "connectdots", "shapetracer", "clocksetter", "compare_picker", "fraction_shape", "calendar_page", "turn_compass", "pictograph_reader", "data_table_reader", "fruit_stand", "pattern_sequence"]
+    "engines_covered": ["picker", "numpad", "matcher", "composer", "dragdrop", "sort", "shape_hunt", "ordinal_sequence", "connectdots", "shapetracer", "clocksetter", "compare_picker", "fraction_shape", "calendar_page", "calendar_grid", "turn_compass", "pictograph_reader", "data_table_reader", "fruit_stand", "pattern_sequence", "money_engine"]
   },
   "questions": [
     {
@@ -32,7 +32,7 @@
       "question": "Which pile of apples is bigger? Tap the bigger pile.",
       "answer": "pile_b",
       "metadata": {
-        "emoji": "🍎",
+        "emoji": "emoji:🍎",
         "pile_a": 3,
         "pile_b": 7
       }
@@ -43,58 +43,9 @@
       "question": "Which group of stars is more? Tap the bigger group.",
       "answer": "pile_a",
       "metadata": {
-        "emoji": "⭐",
+        "emoji": "emoji:⭐",
         "pile_a": 9,
         "pile_b": 4
-      }
-    },
-    {
-      "id": "lab-fraction-shape-1",
-      "type": "FRACTION_SHAPE",
-      "question": "What fraction of the circle is shaded?",
-      "answer": "one-half",
-      "shape": "circle",
-      "fraction": "1/2",
-      "options": ["one-whole", "one-half", "one-fourth"]
-    },
-    {
-      "id": "lab-fraction-shape-2",
-      "type": "FRACTION_SHAPE",
-      "question": "What fraction of the circle is shaded?",
-      "answer": "one-fourth",
-      "shape": "circle",
-      "fraction": "1/4",
-      "options": ["one-whole", "one-half", "one-fourth"]
-    },
-    {
-      "id": "lab-fraction-shape-3",
-      "type": "FRACTION_SHAPE",
-      "question": "What fraction of the square is shaded?",
-      "answer": "one-half",
-      "shape": "square",
-      "fraction": "1/2",
-      "options": ["one-whole", "one-half", "one-fourth"]
-    },
-    {
-      "id": "lab-fraction-shape-4",
-      "type": "FRACTION_SHAPE",
-      "question": "What fraction of the square is shaded?",
-      "answer": "one-fourth",
-      "metadata": {
-        "shape": "square",
-        "fraction": "1/4",
-        "options": ["one-whole", "one-half", "one-fourth"]
-      }
-    },
-    {
-      "id": "lab-fraction-shape-5",
-      "type": "FRACTION_SHAPE",
-      "question": "What fraction of the bar is shaded?",
-      "answer": "one-fourth",
-      "metadata": {
-        "shape": "rectangle",
-        "fraction": "1/4",
-        "options": ["one-whole", "one-half", "one-fourth"]
       }
     },
 
@@ -116,6 +67,46 @@
       "assetType": "text",
       "metadata": {
         "options": ["April", "May", "June", "July"]
+      }
+    },
+
+    {
+      "id": "lab-calendar-grid-1",
+      "type": "CALENDAR_GRID",
+      "question": "Tap the FIRST MONDAY of March 2025.",
+      "answer": 3,
+      "assetType": "text",
+      "metadata": {
+        "month": "March",
+        "year": 2025,
+        "startDay": 6,
+        "totalDays": 31
+      }
+    },
+    {
+      "id": "lab-calendar-grid-2",
+      "type": "CALENDAR_GRID",
+      "question": "Tap the THIRD FRIDAY of April 2025.",
+      "answer": 18,
+      "assetType": "text",
+      "metadata": {
+        "month": "April",
+        "year": 2025,
+        "startDay": 2,
+        "totalDays": 30
+      }
+    },
+    {
+      "id": "lab-calendar-grid-3",
+      "type": "CALENDAR_GRID",
+      "question": "Tap the LAST DAY of February 2025.",
+      "answer": 28,
+      "assetType": "text",
+      "metadata": {
+        "month": "February",
+        "year": 2025,
+        "startDay": 6,
+        "totalDays": 28
       }
     },
 
@@ -225,6 +216,136 @@
       "targetTime": { "hour": 5, "minute": 45 },
       "initialTime": { "hour": 12, "minute": 0 },
       "mode": "quarter-hour"
+    },
+    {
+      "id": "lab-compare-order-pile",
+      "type": "COMPARE_ORDER",
+      "question": "Which pile has more sticks?",
+      "answer": "pile_b",
+      "assetType": "manipulatives",
+      "metadata": {
+        "pile_a": 8,
+        "pile_b": 12
+      }
+    },
+    {
+      "id": "lab-compare-order-multi",
+      "type": "COMPARE_ORDER",
+      "question": "Which plate has the most cookies?",
+      "answer": "plate_c",
+      "assetType": "illustration",
+      "assetId": "icon_cookie",
+      "metadata": {
+        "plate_a": 4,
+        "plate_b": 6,
+        "plate_c": 9
+      }
+    },
+    {
+      "id": "lab-compare-order-sequence",
+      "type": "COMPARE_ORDER",
+      "question": "Tap the numbers from smallest to largest.",
+      "answer": "1, 2, 3",
+      "assetType": "manipulatives",
+      "metadata": {
+        "items": [3, 1, 2]
+      }
+    },
+
+    {
+      "id": "lab-money-engine-id",
+      "type": "MONEY_ENGINE",
+      "question": "Which coin is worth ₱5? Tap the correct coin.",
+      "answer": "money_coin_5",
+      "metadata": {
+        "interactionType": "identification",
+        "moneyItems": [
+          { "assetId": "money_coin_1", "value": 1 },
+          { "assetId": "money_coin_5", "value": 5 },
+          { "assetId": "money_coin_10", "value": 10 }
+        ]
+      }
+    },
+    {
+      "id": "lab-money-engine-value",
+      "type": "MONEY_ENGINE",
+      "question": "Count the coins. What is the total value?",
+      "answer": 30,
+      "assetId": "icon_girl",
+      "metadata": {
+        "interactionType": "value",
+        "moneyItems": [
+          { "assetId": "money_coin_10", "value": 10 },
+          { "assetId": "money_coin_10", "value": 10 },
+          { "assetId": "money_coin_5", "value": 5 },
+          { "assetId": "money_coin_5", "value": 5 }
+        ]
+      }
+    },
+    {
+      "id": "lab-money-engine-word",
+      "type": "MONEY_ENGINE",
+      "question": "Maria has one ₱50 bill. She buys a snack for ₱20. How much money does she have left?",
+      "answer": 30,
+      "assetId": "icon_girl",
+      "metadata": {
+        "interactionType": "word_problem",
+        "moneyItems": [
+          { "assetId": "money_bill_50", "value": 50 },
+          { "operator": "−" },
+          { "assetId": "money_coin_20", "value": 20 }
+        ]
+      }
+    },
+    {
+      "id": "lab-money-engine-id-adv",
+      "type": "MONEY_ENGINE",
+      "question": "Which of these is the ₱1000 bill? Tap the highest value.",
+      "answer": "money_bill_1000",
+      "assetId": "icon_girl",
+      "metadata": {
+        "interactionType": "identification",
+        "moneyItems": [
+          { "assetId": "money_bill_100", "value": 100 },
+          { "assetId": "money_bill_500", "value": 500 },
+          { "assetId": "money_bill_1000", "value": 1000 }
+        ]
+      }
+    },
+    {
+      "id": "lab-money-engine-value-adv",
+      "type": "MONEY_ENGINE",
+      "question": "Wow, look at all this money! What is the total value?",
+      "answer": 681,
+      "assetId": "icon_girl",
+      "metadata": {
+        "interactionType": "value",
+        "moneyItems": [
+          { "assetId": "money_bill_500", "value": 500 },
+          { "assetId": "money_bill_100", "value": 100 },
+          { "assetId": "money_bill_50", "value": 50 },
+          { "assetId": "money_coin_20", "value": 20 },
+          { "assetId": "money_coin_10", "value": 10 },
+          { "assetId": "money_coin_1", "value": 1 }
+        ]
+      }
+    },
+    {
+      "id": "lab-money-engine-word-adv",
+      "type": "MONEY_ENGINE",
+      "question": "You have a ₱500 bill and a ₱100 bill. You buy a toy for ₱50. How much money is left?",
+      "answer": 550,
+      "assetId": "icon_boy",
+      "metadata": {
+        "interactionType": "word_problem",
+        "moneyItems": [
+          { "assetId": "money_bill_500", "value": 500 },
+          { "operator": "+" },
+          { "assetId": "money_bill_100", "value": 100 },
+          { "operator": "−" },
+          { "assetId": "money_bill_50", "value": 50 }
+        ]
+      }
     }
   ]
 }

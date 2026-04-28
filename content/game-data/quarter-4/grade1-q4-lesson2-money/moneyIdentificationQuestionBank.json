@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Philippine Money Identification",
@@ -8,51 +9,72 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "MATCHER": "Used for matching money images to values"
+            "MONEY_ENGINE": "Used for tactile money interaction"
         }
     },
     "questions": [
         {
             "id": "na_4_monid_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.4",
             "topic": "Money ID",
             "level": "concrete",
-            "type": "MATCHER",
+            "type": "MONEY_ENGINE",
             "difficulty": "Easy",
-            "question": "Match the ₱1 coin to its symbol.",
-            "pairs": [
-                {
-                    "left": "coin_1",
-                    "right": "₱1"
-                }
-            ],
-            "assetType": "manipulatives",
-            "assetId": "money_coin_1"
+            "question": "Which of these is the ₱1 coin?",
+            "answer": "money_coin_1",
+            "assetType": "illustration",
+            "assetId": "icon_girl",
+            "metadata": {
+                "interactionType": "identification",
+                "moneyItems": [
+                    { "assetId": "money_coin_1", "value": 1 },
+                    { "assetId": "money_coin_5", "value": 5 },
+                    { "assetId": "money_coin_10", "value": 10 }
+                ]
+            }
         },
         {
             "id": "na_4_monid_005",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.4",
             "topic": "Money ID",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "MONEY_ENGINE",
             "difficulty": "Medium",
-            "question": "Look at the picture. What is the value of the bronze 20 Peso coin?",
-            "answer": 20,
+            "question": "Which of these is the bronze ₱20 coin?",
+            "answer": "money_coin_20",
             "assetType": "illustration",
-            "assetId": "money_coin_20",
-            "metadata": {}
+            "assetId": "icon_boy",
+            "metadata": {
+                "interactionType": "identification",
+                "moneyItems": [
+                    { "assetId": "money_coin_5", "value": 5 },
+                    { "assetId": "money_coin_10", "value": 10 },
+                    { "assetId": "money_coin_20", "value": 20 }
+                ]
+            }
         },
         {
             "id": "na_4_monid_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.4",
             "topic": "Money ID",
             "level": "abstract",
-            "type": "N/A",
+            "type": "MONEY_ENGINE",
             "difficulty": "Hard",
-            "question": "Write the value of a 'Twenty Peso' coin in numbers.",
-            "answer": 20,
-            "assetType": "text",
-            "metadata": {}
+            "question": "Which of these is the ₱50 bill?",
+            "answer": "money_bill_50",
+            "assetType": "illustration",
+            "assetId": "icon_girl",
+            "metadata": {
+                "interactionType": "identification",
+                "moneyItems": [
+                    { "assetId": "money_coin_20", "value": 20 },
+                    { "assetId": "money_bill_50", "value": 50 },
+                    { "assetId": "money_bill_100", "value": 100 }
+                ]
+            }
         }
     ]
 }

@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Total Money Value",
@@ -8,48 +9,74 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "NUMPAD": "Used where numerical input is expected"
+            "MONEY_ENGINE": "Used for tactile money interaction"
         }
     },
     "questions": [
         {
             "id": "na_4_monval_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.5",
             "topic": "Money Value",
             "level": "concrete",
-            "type": "N/A",
+            "type": "MONEY_ENGINE",
             "difficulty": "Easy",
             "question": "You have two ₱10 coins. What is the total value?",
             "answer": 20,
-            "assetType": "manipulatives",
-            "assetId": "money_coin_1",
-            "metadata": {}
+            "assetType": "illustration",
+            "assetId": "icon_boy",
+            "metadata": {
+                "interactionType": "value",
+                "moneyItems": [
+                    { "assetId": "money_coin_10", "value": 10 },
+                    { "assetId": "money_coin_10", "value": 10 }
+                ]
+            }
         },
         {
             "id": "na_4_monval_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.5",
             "topic": "Money Value",
             "level": "pictorial",
-            "type": "N/A",
+            "type": "MONEY_ENGINE",
             "difficulty": "Medium",
-            "question": "Look at the picture. There is one ₱50 bill and three ₱10 coins. Total set value is __?",
+            "question": "There is one ₱50 bill and three ₱10 coins. What is the total value?",
             "answer": 80,
             "assetType": "illustration",
-            "assetId": "money_coin_1",
-            "metadata": {}
+            "assetId": "icon_girl",
+            "metadata": {
+                "interactionType": "value",
+                "moneyItems": [
+                    { "assetId": "money_bill_50", "value": 50 },
+                    { "assetId": "money_coin_10", "value": 10 },
+                    { "assetId": "money_coin_10", "value": 10 },
+                    { "assetId": "money_coin_10", "value": 10 }
+                ]
+            }
         },
         {
             "id": "na_4_monval_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aeea",
             "competency": "NA.4.5",
             "topic": "Money Value",
             "level": "abstract",
-            "type": "NUMPAD",
+            "type": "MONEY_ENGINE",
             "difficulty": "Hard",
             "question": "Add ₱35 and ₱15.",
             "answer": 50,
-            "equation": { "left": "35 + 15", "operator": "=", "blank": "right" },
-            "assetType": "text",
-            "metadata": {}
+            "assetType": "illustration",
+            "assetId": "icon_boy",
+            "metadata": {
+                "interactionType": "value",
+                "moneyItems": [
+                    { "assetId": "money_coin_20", "value": 20 },
+                    { "assetId": "money_coin_10", "value": 10 },
+                    { "assetId": "money_coin_5", "value": 5 },
+                    { "assetId": "money_coin_10", "value": 10 },
+                    { "assetId": "money_coin_5", "value": 5 }
+                ]
+            }
         }
     ]
 }

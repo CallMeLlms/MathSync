@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Comparing Fractions (1/2 and 1/4)",
@@ -14,6 +15,7 @@
     "questions": [
         {
             "id": "na_4_fraccomp_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
             "competency": "NA.4.2",
             "topic": "Fraction Comparison",
             "level": "concrete",
@@ -24,11 +26,11 @@
             "assetType": "manipulatives",
             "shape": "square",
             "fraction": "1/2",
-            "options": ["bigger", "smaller", "equal"],
-            "assetId": "shape_square"
+            "options": ["bigger", "smaller", "equal"]
         },
         {
             "id": "na_4_fraccomp_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
             "competency": "NA.4.2",
             "topic": "Fraction Comparison",
             "level": "pictorial",
@@ -39,11 +41,11 @@
             "assetType": "illustration",
             "shape": "circle",
             "fraction": "1/2",
-            "options": ["1/4", "1/2", "Equal"],
-            "assetId": "shape_circle"
+            "options": ["1/4", "1/2", "Equal"]
         },
         {
             "id": "na_4_fraccomp_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee9",
             "competency": "NA.4.2",
             "topic": "Fraction Comparison",
             "level": "abstract",

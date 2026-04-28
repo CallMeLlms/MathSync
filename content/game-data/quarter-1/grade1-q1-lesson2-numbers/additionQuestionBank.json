@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Addition",
@@ -12,6 +13,7 @@
     "questions": [
         {
             "id": "na_1.11_add_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.11",
             "topic": "Addition",
             "level": "concrete",
@@ -30,6 +32,7 @@
         },
         {
             "id": "na_1.11_add_002",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.11",
             "topic": "Addition",
             "level": "pictorial",
@@ -48,6 +51,7 @@
         },
         {
             "id": "na_1.11_add_003",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee2",
             "competency": "NA.1.11",
             "topic": "Addition",
             "level": "abstract",

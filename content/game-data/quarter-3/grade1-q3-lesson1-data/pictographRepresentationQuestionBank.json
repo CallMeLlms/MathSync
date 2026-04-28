@@ -1,5 +1,6 @@
 {
     "meta": {
+        "learningOutcomeId": "69da6ad0c06b1a0596d0aee6",
         "curriculum": "MATATAG K-10 Grade 1",
         "language": "English",
         "topic": "Pictograph Representation",
@@ -15,6 +16,7 @@
     "questions": [
         {
             "id": "dp_3_rep_001",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee6",
             "competency": "DP.3.2",
             "topic": "Data Representation",
             "level": "concrete",
@@ -30,6 +32,7 @@
         },
         {
             "id": "dp_3_rep_004",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee6",
             "competency": "DP.3.2",
             "topic": "Data Representation",
             "level": "pictorial",
@@ -50,6 +53,7 @@
         },
         {
             "id": "dp_3_rep_007",
+            "learningOutcomeId": "69da6ad0c06b1a0596d0aee6",
             "competency": "DP.3.2",
             "topic": "Data Representation",
             "level": "abstract",

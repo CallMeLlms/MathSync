@@ -2,25 +2,28 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Colors from '@/constants/colors';
 import BadgeItem from '@/Components/Profile/BadgeItem';
-
-const BADGES = [
-  { id: 'first_lesson', title: 'First Lesson', subtitle: 'Completed', assetId: 'icon_runner_1st', earned: true },
-  { id: 'streak_three', title: 'Streak Spark', subtitle: 'Completed', assetId: 'icon_star', earned: true },
-  { id: 'shape_scout', title: 'Shape Scout', subtitle: 'Completed', assetId: 'icon_diamond', earned: true },
-  { id: 'time_keeper', title: 'Time Keeper', subtitle: 'Locked', assetId: 'icon_clock_3', earned: false },
-];
+import { useUserStore } from '@/stores/user-stores/useUserStore';
+import badgeBank from '@content/badges/badgeBank.json';
 
 export default function BadgeSection() {
+  const earnedBadges = useUserStore((s) => s.earnedBadges);
+
+  // Show earned badges first, then locked — cap at 4 for the carousel
+  const badges = badgeBank
+    .map((b) => ({ ...b, earned: earnedBadges.includes(b.id) }))
+    .sort((a, b) => (b.earned ? 1 : 0) - (a.earned ? 1 : 0))
+    .slice(0, 4);
+
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Recent Badges</Text>
-      
-      <ScrollView 
-        horizontal 
+
+      <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {BADGES.map((badge) => (
+        {badges.map((badge) => (
           <View key={badge.id} style={styles.badgeCard}>
             <BadgeItem
               title={badge.title}
@@ -38,7 +41,7 @@ export default function BadgeSection() {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 16,
-    paddingHorizontal: 0, // ScrollView will handle horizontal padding
+    paddingHorizontal: 0,
   },
   sectionTitle: {
     fontFamily: 'Lexend-Bold',
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   scrollContent: {
-    paddingHorizontal: 24, // Padding at edges
+    paddingHorizontal: 24,
     gap: 12,
   },
   badgeCard: {
