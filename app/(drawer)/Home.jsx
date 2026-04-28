@@ -171,14 +171,14 @@ export default function Home() {
         {/* Progress Bloom Section */}
 
         {/* DEV: Engine Lab shortcut — remove before production */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.devLabButton}
           activeOpacity={0.8}
           onPress={() => router.push('/game/99')}
         >
           <MaterialIcons name="science" size={20} color="#FFF" />
           <Text style={styles.devLabText}>🧪 Engine Lab (DEV)</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
       </ScrollView>
     </SafeAreaView>

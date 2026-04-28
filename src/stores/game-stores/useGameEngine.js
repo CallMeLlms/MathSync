@@ -31,7 +31,7 @@ const useGameEngine = create((set, get) => ({
 
   // Record an answer result
   recordAnswer: (isCorrect) => set((state) => ({
-    totalScore: isCorrect ? state.totalScore + 10 : state.totalScore,
+    totalScore: isCorrect ? state.totalScore + 1 : state.totalScore,
     correctCount: isCorrect ? state.correctCount + 1 : state.correctCount,
   })),
 
