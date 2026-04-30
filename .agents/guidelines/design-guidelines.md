@@ -147,7 +147,7 @@ The project is strictly JavaScript-only.
 
 ---
 
-## 🧱. Core Principle: Tactile Depth (The 3D Rule)
+## 🧱 8. Core Principle: Tactile Depth (The 3D Rule)
 
 **Drop shadows (`shadowColor`, `elevation`) remain strictly prohibited.** Depth is achieved through the **Layered Border** technique.
 
@@ -164,7 +164,7 @@ Buttons must not just change opacity; they must **physically sink** when pressed
 
 ---
 
-## 3. Component Specs: The "MathSync Button"
+## 9. Component Specs: The "MathSync Button"
 
 To maintain consistency across the app, use these standard dimensions for interactive components.
 
@@ -176,7 +176,7 @@ To maintain consistency across the app, use these standard dimensions for intera
 
 ---
 
-## 4. Gradients & Layering
+## 10. Gradients & Layering
 
 Gradients should be used **inside** the bulky containers. The `LinearGradient` acts as the "skin" of the button surface.
 
@@ -191,7 +191,7 @@ Gradients should be used **inside** the bulky containers. The `LinearGradient` a
 
 ---
 
-## 5. Typography
+## 11. Typography
 
 **Lexend** is the primary font for all "Bulky" elements. Its geometric nature pairs perfectly with thick borders.
 
@@ -201,7 +201,7 @@ Gradients should be used **inside** the bulky containers. The `LinearGradient` a
 
 ---
 
-## 6. Responsive Logic (MathSync Priority)
+## 12. Responsive Logic (MathSync Priority)
 
 1.  **Flexbox & Aspect Ratio:** Use `flex: 1` combined with `aspectRatio` for grid items (like numpads). This ensures buttons stay "square-ish" and bulky regardless of screen width.
 2.  **Safe Areas:** When using `useWindowDimensions`, always incorporate `useSafeAreaInsets` for the bottom Action Bar to ensure it clears the "Home Indicator" on iOS devices.
@@ -209,7 +209,7 @@ Gradients should be used **inside** the bulky containers. The `LinearGradient` a
 
 ---
 
-## 7. Technical Requirements
+## 13. Technical Requirements
 
 * **Animation Engine:** Use `react-native-reanimated` for all tactile transitions.
 * **Haptics:** Every "Sinking" button press **must** trigger `Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)`.

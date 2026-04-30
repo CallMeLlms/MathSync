@@ -201,8 +201,15 @@ export const AssetMap = {
 };
 
 /**
+ * Returns all require()-based image assets as an array for use with Asset.loadAsync().
+ * Emoji string entries are excluded — they need no preloading.
+ */
+export const getPreloadableAssets = () =>
+  Object.values(AssetMap).filter((v) => typeof v !== 'string');
+
+/**
  * Helper function to retrieve an asset by ID
- * @param {string} assetId 
+ * @param {string} assetId
  * @returns {any} The React Native required asset source
  */
 export const getAsset = (assetId) => {

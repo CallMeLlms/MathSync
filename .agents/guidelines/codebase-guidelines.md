@@ -42,17 +42,17 @@ Consistency in naming is critical for codebase navigability. Follow these patter
 
 ---
 
-## 🎮 3. Game Architecture Standards (Dual-Stack)
+## 🎮 3. Game Architecture Standards (Triple-Stack)
 
-To maintain scalability across grades and themes, all game-related development must follow the **Dual-Stack Architectural Model**:
+To maintain scalability across grades and themes, all game-related development must follow the **Triple-Stack Architectural Model**:
 
 ### 🏁 Stack Separation
 - **Curriculum Stack (`src/Components/Game/Curriculum/`)**: Dedicated to lesson-based, structured content driven by static JSON files.
     - **Orchestration**: All curriculum lessons must use the generic `CurriculumOrchestrator.jsx`.
     - **Engines**: Engines must be pure UI implementations that accept a standardized `data` prop.
-- **Generative Stack (`src/Components/Game/Generative/`)**: Reserved for infinite practice modes driven by math logic (Generators).
+- **Generative Stack (`src/Components/Game/Generative/`)**: Reserved for infinite practice modes driven by math logic (Generators). Orchestrated by `GenerativeOrchestrator.jsx`.
+- **Exam Stack (`src/Components/Game/Exam/`)**: Fixed-question exam sessions with navigation and result tracking. **Code exists but this stack is not yet in active use — feature decision pending.**
 - **Global Stack (`src/Components/Game/Global/`)**: Houses cross-mode UI "Atoms" (e.g., `AssetDisplay.jsx`, `GameFeedback.jsx`). No business logic should exist here.
-    - **EngineBase**: All curriculum engines should ideally utilize the `EngineBase` components for consistent tonal-layering, shadow-free UI, and standardized padding/margins.
 
 ### 🎨 Visual Identity & Theming
 - **Mandatory Registry**: **Never** hardcode background colors, loading text, or grade-specific fonts inside a component. 

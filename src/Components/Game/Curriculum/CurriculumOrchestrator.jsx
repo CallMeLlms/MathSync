@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { Asset } from 'expo-asset';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
@@ -44,9 +45,11 @@ import MoneyEngine from './Engines/MoneyEngine';
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
 
 import { submitGameSession } from '@/services/gameSubmissionService';
+import { getPreloadableAssets } from '@/constants/assetMap';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
+import PreGameLoader from '@/Components/Game/Global/PreGameLoader';
 
 /**
  * CurriculumOrchestrator
@@ -63,6 +66,7 @@ export default function CurriculumOrchestrator({
   const router = useRouter();
   const theme = getGameTheme(gradeKey);
   const [lessonContent, setLessonContent] = useState(null);
+  const [isPreloading, setIsPreloading] = useState(true);
 
   const {
     startGameSession,
@@ -81,17 +85,19 @@ export default function CurriculumOrchestrator({
   const [showResultModal, setShowResultModal] = useState(false);
   const [lastResultData, setLastResultData] = useState({ isCorrect: false, userAnswerItems: [], currentQuestion: null });
 
-  // Load Content Data
+  // Load lesson content and preload all image assets in parallel before starting.
   useEffect(() => {
     answersRef.current = [];
     submittedRef.current = false;
     const content = getBundledLesson(gradeKey, lessonId);
-    if (content) {
-      setLessonContent(content);
-      startGameSession(lessonId);
-    } else {
-      speechManager.speakInstruction(theme.loadingText);
-    }
+
+    Asset.loadAsync(getPreloadableAssets()).finally(() => {
+      if (content) {
+        setLessonContent(content);
+        startGameSession(lessonId);
+      }
+      setIsPreloading(false);
+    });
 
     return () => {
       endGameSession();
@@ -111,15 +117,8 @@ export default function CurriculumOrchestrator({
     }
   }, [lessonContent, currentQuestionIndex]);
 
-  if (!lessonContent) {
-    return (
-      <View style={[styles.loadingContainer, { backgroundColor: theme.backgroundColor }]}>
-        <ActivityIndicator size="large" color={theme.primaryColor} />
-        <Text style={[styles.loadingText, { color: Colors.onSurfaceVariant, fontFamily: theme.fontFamily.body }]}>
-          {theme.loadingText}
-        </Text>
-      </View>
-    );
+  if (isPreloading || !lessonContent) {
+    return <PreGameLoader theme={theme} />;
   }
 
   const currentQuestion = lessonContent.questions[currentQuestionIndex];
@@ -326,15 +325,6 @@ export default function CurriculumOrchestrator({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
   },
   hud: {
     flexDirection: 'row',

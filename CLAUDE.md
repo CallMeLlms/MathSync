@@ -23,12 +23,13 @@ MathSync is an Expo / React Native math learning app (JavaScript only — no Typ
 - [.agents/document/dual_engine_architecture.md](.agents/document/dual_engine_architecture.md) — complete architectural reference for the dual-stack game system
 - Other topic guides live in [.agents/guidelines/](.agents/guidelines/) (generative engine, curriculum games, reanimated 3.x, MATATAG G1 games)
 
-## Architecture — Dual-Stack Game System
+## Architecture — Triple-Stack Game System
 
-The single most important thing to understand. Two independent game pipelines exist side by side, selected by grade:
+The single most important thing to understand. Three independent game pipelines exist side by side, selected by grade:
 
 - **Curriculum Stack** ([src/Components/Game/Curriculum/](src/Components/Game/Curriculum/)) — used by **G1**. JSON question banks in [content/game-data/](content/game-data/) are merged by [lessonResolver.js](src/Components/Game/Curriculum/lessonResolver.js) into a "SuperLesson" playlist, driven by `CurriculumOrchestrator.jsx`, which routes to per-question UI engines (NumpadEngine, ComposeEngine, MatcherEngine) based on each question's `type` field.
-- **Generative Stack** ([src/Components/Game/Generative/](src/Components/Game/Generative/)) — used by **G2–G6**. No JSON; procedural generators under [src/utils/generators/grades/](src/utils/generators/grades/) produce fresh problems at runtime via a `PracticeOrchestrator`. Uses a central `registry.js` to map topics → generators.
+- **Generative Stack** ([src/Components/Game/Generative/](src/Components/Game/Generative/)) — used by **G2–G6**. No JSON; procedural generators under [src/utils/generators/grades/](src/utils/generators/grades/) produce fresh problems at runtime via `GenerativeOrchestrator.jsx`. Uses a central `registry.js` to map topics → generators.
+- **Exam Stack** ([src/Components/Game/Exam/](src/Components/Game/Exam/)) — Fixed-question exam sessions with navigation and result tracking. **Code exists but not yet in active use — feature decision pending.**
 - **Global** ([src/Components/Game/Global/](src/Components/Game/Global/)) — cross-mode UI atoms (AssetDisplay, HUD, modals). Includes `EngineBase` for standardized game UI. **No business logic here.**
 - **Flow** ([src/Components/Game/Flow/](src/Components/Game/Flow/)) — JourneyMap and navigation UI.
 - **Support**: `services/` (tracking), `context/` (global setup), `classroom/` (teacher tools).
