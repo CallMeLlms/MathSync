@@ -24,10 +24,10 @@ const PileDisplay = ({ count, tensAsset, onesAsset, defaultAssetId }) => {
       return (
         <>
           {Array.from({ length: tens }).map((_, i) => (
-            <AssetDisplay key={`ten-${i}`} assetId={tensAsset} style={styles.pileAssetTen} />
+            <AssetDisplay key={`ten-${i}`} assetId={tensAsset} style={styles.pileAssetTen} emojiSize={26} />
           ))}
           {Array.from({ length: ones }).map((_, i) => (
-            <AssetDisplay key={`one-${i}`} assetId={onesAsset} style={styles.pileAsset} />
+            <AssetDisplay key={`one-${i}`} assetId={onesAsset} style={styles.pileAsset} emojiSize={22} />
           ))}
         </>
       );
@@ -36,7 +36,7 @@ const PileDisplay = ({ count, tensAsset, onesAsset, defaultAssetId }) => {
     // Otherwise, legacy behavior (repeat defaultAssetId up to 10)
     const items = Array.from({ length: Math.min(count, 10) });
     return items.map((_, i) => (
-      <AssetDisplay key={i} assetId={defaultAssetId} style={styles.pileAsset} />
+      <AssetDisplay key={i} assetId={defaultAssetId} style={styles.pileAsset} emojiSize={22} />
     ));
   };
 
@@ -173,18 +173,23 @@ const ComparePickerEngine = ({ data, onResult }) => {
   const pileA = metadata.pile_a ?? 0;
   const pileB = metadata.pile_b ?? 0;
   
-  // Support distinct assets for each pile, fallback to generic assetId or emoji
-  const resolveAsset = (id, metaKey) => {
-    const rawValue = metadata[metaKey] ?? metadata.emoji ?? metadata.assetId ?? data.assetId ?? 'icon_star';
-    // If it's a raw emoji string not in standard format, wrap it
-    if (typeof rawValue === 'string' && rawValue.length <= 2 && !rawValue.startsWith('emoji:')) {
-      return `emoji:${rawValue}`;
+  const resolveAsset = (assetKey, emojiKey) => {
+    const raw =
+      metadata[assetKey] ??
+      metadata[emojiKey] ??
+      metadata.assetId ??
+      metadata.emoji ??
+      data.assetId ??
+      'icon_star';
+
+    if (typeof raw === 'string' && !raw.startsWith('emoji:') && !raw.startsWith('icon_')) {
+      return `emoji:${raw}`;
     }
-    return rawValue;
+    return raw;
   };
 
-  const assetIdA = resolveAsset(null, 'emoji_a');
-  const assetIdB = resolveAsset(null, 'emoji_b');
+  const assetIdA = resolveAsset('assetId_a', 'emoji_a');
+  const assetIdB = resolveAsset('assetId_b', 'emoji_b');
 
   // Resolve Composite Assets
   const tensAssetA = metadata.tensAsset_a ?? metadata.tensAsset;
@@ -323,6 +328,7 @@ const styles = StyleSheet.create({
   },
   checkButtonContainer: {
     width: '100%',
+    marginTop: 16,
   },
   checkButton: {
     width: '100%',

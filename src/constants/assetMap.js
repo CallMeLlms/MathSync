@@ -124,6 +124,8 @@ export const AssetMap = {
   // ─── Emoji Registry: Objects & School ────────────────────────────
   'icon_pencil':        'emoji:✏️',
   'icon_pen':           'emoji:🖊️',
+  'icon_crayon':        'emoji:🖍️',
+  'icon_marker':        'emoji:🖍️',
   'icon_book':          'emoji:📚',
   'icon_ruler':         'emoji:📏',
   'icon_paper':         'emoji:📄',

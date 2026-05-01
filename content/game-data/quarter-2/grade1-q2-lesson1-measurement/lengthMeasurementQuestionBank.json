@@ -27,8 +27,8 @@
             "metadata": {
                 "pile_a": 5,
                 "pile_b": 3,
-                "emoji_a": "✏️",
-                "emoji_b": "🖍️"
+                "assetId_a": "icon_pencil",
+                "assetId_b": "icon_crayon"
             }
         },
         {
@@ -45,8 +45,8 @@
             "metadata": {
                 "pile_a": 4,
                 "pile_b": 7,
-                "emoji_a": "🖊️",
-                "emoji_b": "🖍️"
+                "assetId_a": "icon_pen",
+                "assetId_b": "icon_marker"
             }
         },
         {
@@ -63,8 +63,8 @@
             "metadata": {
                 "pile_a": 12,
                 "pile_b": 7,
-                "emoji_a": "📏",
-                "emoji_b": "✏️"
+                "assetId_a": "icon_ruler",
+                "assetId_b": "icon_pencil"
             }
         }
     ]
