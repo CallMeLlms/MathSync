@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 const SHAPE_SIZE = 180;
 const SHADE_COLOR = '#F48FB1';
@@ -264,6 +265,7 @@ const FractionShapeEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
+      <QuestionHeader text={questionText} />
       <Animated.View entering={FadeIn.duration(400)} style={styles.shapeContainer}>
         <ShapeDiagram />
         <Text style={styles.fractionLabel}>{fraction}</Text>

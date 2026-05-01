@@ -31,6 +31,7 @@ import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -286,6 +287,7 @@ const VisualNumpadEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
+      <QuestionHeader text={data.question} />
       {/* Visual Context Card */}
       <Animated.View entering={FadeIn.delay(100)} style={styles.visualCard}>
         {visualGroups.mode === 'sequence' ? (

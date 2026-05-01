@@ -78,4 +78,4 @@ Key mobile files that call the API:
 
 ## Timeline / Logging Convention
 
-Significant architectural changes are logged as markdown files under [.agents/logs/](.agents/logs/) and planning docs under [.agents/document/](.agents/document/), named `YYYY-MM-DD_HH-MM-SS_TOPIC.md`. Update these when the change is architecturally meaningful (not for routine edits).
+Significant architectural changes are logged as markdown files in the Obsidian vault at `D:\LAWLL\VISUALSHIT\GITREPO\Projects\Obsidian-Notes\My-Obsidian-Git-Repository\Capstone\Capstone-Agent-Logs\`, named `YYYY-MM-DD_HH-MM-SS_TOPIC.md`. Update these when the change is architecturally meaningful (not for routine edits). Planning docs remain under [.agents/document/](.agents/document/).

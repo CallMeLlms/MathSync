@@ -14,6 +14,7 @@ import Animated, {
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 // ─── PlacedEmoji ─────────────────────────────────────────────────────────────
 
@@ -200,7 +201,7 @@ const FruitStandEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
-
+      <QuestionHeader text={questionText} />
       {/* Stand sign */}
       <Animated.View entering={FadeIn.duration(350)} style={styles.standSign}>
         <Text style={styles.standSignText}>🏪 Fruit Stand</Text>

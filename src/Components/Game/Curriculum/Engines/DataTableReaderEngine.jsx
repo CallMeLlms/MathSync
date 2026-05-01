@@ -14,6 +14,7 @@ import Animated, {
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 // ─── NumKey ──────────────────────────────────────────────────────────────────
 
@@ -229,7 +230,7 @@ const DataTableReaderEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
-
+      <QuestionHeader text={questionText} />
       {/* Mini Pictograph */}
       <Animated.View entering={FadeIn.delay(100).duration(350)} style={styles.pictoCard}>
         <View style={styles.pictoHeader}>

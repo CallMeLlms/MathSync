@@ -11,6 +11,7 @@ import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 // ─── PileDisplay — renders emoji repeated N times in a wrap grid ───
 const PileDisplay = ({ count, tensAsset, onesAsset, defaultAssetId }) => {
@@ -230,6 +231,7 @@ const ComparePickerEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
+      <QuestionHeader text={questionText} />
       {/* Two comparison tiles — full-width vertical stack */}
       <View style={styles.tilesColumn}>
           <TileCard

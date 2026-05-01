@@ -46,7 +46,6 @@ const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geob
 
 import { submitGameSession } from '@/services/gameSubmissionService';
 import { getPreloadableAssets } from '@/constants/assetMap';
-import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
 import PreGameLoader from '@/Components/Game/Global/PreGameLoader';
@@ -123,8 +122,6 @@ export default function CurriculumOrchestrator({
 
   const currentQuestion = lessonContent.questions[currentQuestionIndex];
   const isFinished = currentQuestionIndex >= lessonContent.questions.length;
-  const questionText = currentQuestion?.question || currentQuestion?.instruction || currentQuestion?.text || currentQuestion?.prompt || null;
-
   const handleResult = (isCorrect, userAnswerItems = []) => {
     recordAnswer(isCorrect);
 
@@ -259,31 +256,6 @@ export default function CurriculumOrchestrator({
         </TouchableOpacity>
       </View>
 
-      {/* Question Header */}
-      {questionText && engineType !== 'visual_picker' && engineType !== 'money_engine' ? (
-        <View style={styles.questionHeader}>
-          <Text style={styles.questionHeaderText}>{questionText}</Text>
-        </View>
-      ) : null}
-
-      {/* Question Asset — shown when the question references an illustration or manipulative.
-          Engines that own their own visual layout (VISUAL_NUMPAD, WORD_PROBLEM) render their
-          asset internally; skip the shared top-asset slot to avoid duplication. */}
-      {currentQuestion?.assetId
-        && currentQuestion?.assetType !== 'text'
-        && engineType !== 'visual_numpad'
-        && engineType !== 'word_problem'
-        && engineType !== 'visual_picker'
-        && engineType !== 'money_engine' ? (
-        <View style={styles.questionAssetContainer}>
-          <AssetDisplay
-            assetId={currentQuestion.assetId}
-            style={styles.questionAsset}
-            resizeMode="contain"
-          />
-        </View>
-      ) : null}
-
       {/* Gameplay Area — gesture engines use a plain View to preserve touch
           responders; all other engines use a ScrollView so content is never
           clipped on smaller devices. */}
@@ -342,25 +314,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.outlineVariant,
   },
-  questionHeader: {
-    marginHorizontal: 20,
-    marginTop: 8,
-    marginBottom: 8,
-    backgroundColor: Colors.surfaceContainerLow,
-    borderWidth: 1.5,
-    borderColor: Colors.outlineVariant,
-    borderRadius: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    alignItems: 'center',
-  },
-  questionHeaderText: {
-    fontFamily: 'Lexend-Bold',
-    fontSize: 24,
-    color: Colors.onSurface,
-    textAlign: 'center',
-    lineHeight: 32,
-  },
   engineWrapper: {
     flex: 1,
     paddingTop: 24,
@@ -384,15 +337,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 48,
     fontSize: 18,
-  },
-  questionAssetContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 24,
-    paddingBottom: 8,
-  },
-  questionAsset: {
-    width: 200,
-    height: 160,
   },
 });

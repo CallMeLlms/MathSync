@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 const COMPASS_SIZE = 220;
 
@@ -269,6 +270,7 @@ const TurnCompassEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
+      <QuestionHeader text={questionText} />
       {/* Turn descriptor pill */}
       <Animated.View entering={FadeIn.delay(200)} style={styles.turnPill}>
         <Text style={styles.turnPillText}>{turnLabel}</Text>

@@ -72,6 +72,9 @@ To maintain scalability across grades and themes, all game-related development m
 
 ## Timeline 
 
-- Inside the directory .agents/logs, there are md files that logs the timeline of the project. 
-- Every time you make a significant change to the codebase, update the timeline log file. 
-- The timeline log file is updated in a format of `YYYY-MM-DD_HH-MM-SS_TOPIC.md`.
+- Architectural change logs live in the Obsidian vault at `D:\LAWLL\VISUALSHIT\GITREPO\Projects\Obsidian-Notes\My-Obsidian-Git-Repository\Capstone\Capstone-Agent-Logs\`.
+- Every time you make a significant change to the codebase, write a new log file there.
+- The timeline log file is named in the format `YYYY-MM-DD_HH-MM-SS_TOPIC.md`.
+
+> [!NOTE]
+> **This path is local to the project owner's machine (Justine).** This project is shared — other contributors will not have this Obsidian vault. If you are a collaborator, you can skip writing timeline logs or redirect them to a path of your choosing. The log format and naming convention above still applies.

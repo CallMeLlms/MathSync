@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 const CONFETTI = ['🎉', '📅', '⭐', '✨', '🌟', '🎊'];
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -219,6 +220,7 @@ const CalendarGridEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
+      <QuestionHeader text={questionText} />
       {/* Month + year header (stylized as a calendar masthead) */}
       <Animated.View entering={FadeIn.delay(80)} style={styles.headerCard}>
         <View style={styles.headerStrip} />

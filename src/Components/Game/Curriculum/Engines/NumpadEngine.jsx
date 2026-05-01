@@ -17,6 +17,7 @@ import { Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 // ─── NumpadKey: A single bulky tactile button ───
 const NumpadKey = ({ value, onPress, disabled, index }) => {
@@ -336,6 +337,7 @@ const NumpadEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
+      <QuestionHeader text={data.question} />
       {/* Equation Display */}
       <Animated.View entering={FadeInDown.springify().delay(100)} style={styles.equationCard}>
         {renderEquation()}

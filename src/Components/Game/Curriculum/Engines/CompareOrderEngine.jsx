@@ -14,6 +14,7 @@ import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 // ─── Sub-mode detection ───────────────────────────────────────────────────────
 // pile_compare  → metadata has pile_a / pile_b
@@ -370,6 +371,7 @@ export default function CompareOrderEngine({ data, onResult }) {
 
     return (
       <View style={styles.container}>
+        <QuestionHeader text={data.question || data.instruction || data.text || data.prompt} />
         <Animated.View entering={FadeInDown.springify().delay(50)} style={styles.seqHint}>
           <Text style={[styles.seqHintText, { color: hintColor }]}>{hintText}</Text>
         </Animated.View>
@@ -424,6 +426,7 @@ export default function CompareOrderEngine({ data, onResult }) {
 
   return (
     <View style={styles.container}>
+      <QuestionHeader text={data.question || data.instruction || data.text || data.prompt} />
       <View style={styles.cardsRow}>
         {cards.map((card, i) => (
           <CompareCard
