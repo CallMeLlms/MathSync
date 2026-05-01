@@ -54,6 +54,28 @@ The single most important thing to understand. Three independent game pipelines 
 - **Assets**: all dynamic game media must be registered in [src/constants/assetMap.js](src/constants/assetMap.js) and rendered via the global `AssetDisplay` component.
 - **Hooks**: `use`-prefixed, camelCase, `.js`.
 
+## Backend Reference
+
+The paired Express.js API lives at `D:\LAWLL\VISUALSHIT\GITREPO\Capstone\BackEnd`. Its `CLAUDE.md` is the authoritative reference for:
+
+- **Base URLs**: `https://backend-clkn.onrender.com/api/v1` (prod) / `http://localhost:5500/api/v1` (dev)
+- **Auth flow**: JWT access + refresh tokens; mobile auto-injects Bearer header via Axios interceptor in `src/services/apiManager.js`
+- **Full API endpoint registry**: auth, users, classrooms, lessons, game submissions, quizzes, submissions
+- **Data models**: User, Classroom, Section, Assignment, Submission, Progress
+- **Mobile–Backend bridge**: how `classroomLessonMap.js` resolves MongoDB `_id` → game lesson number
+- **SCAFFOLD endpoints** (called from mobile but not yet implemented on backend): `/exams`, `/exam-submissions`
+
+Key mobile files that call the API:
+
+| Purpose | Path |
+|---------|------|
+| HTTP client + interceptors | `src/services/apiManager.js` |
+| Auth API calls | `src/services/authService.js` |
+| Classroom/lesson API calls | `src/services/classroomService.js` |
+| Lesson fetch + SQLite cache | `src/services/lessonService.js` |
+| Game session submission | `src/services/gameSubmissionService.js` |
+| Lesson ID → game number map | `src/constants/classroomLessonMap.js` |
+
 ## Timeline / Logging Convention
 
 Significant architectural changes are logged as markdown files under [.agents/logs/](.agents/logs/) and planning docs under [.agents/document/](.agents/document/), named `YYYY-MM-DD_HH-MM-SS_TOPIC.md`. Update these when the change is architecturally meaningful (not for routine edits).
