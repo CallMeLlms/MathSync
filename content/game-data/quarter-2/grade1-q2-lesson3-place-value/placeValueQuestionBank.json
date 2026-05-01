@@ -27,7 +27,9 @@
             "assetType": "manipulatives",
             "metadata": {
                 "options": ["3", "4", "34"],
-                "customLabel": "In 34, 3 is tens and 4 is ones."
+                "customLabel": "In 34, 3 is tens and 4 is ones.",
+                "placeValues": { "tens": 3, "ones": 4 },
+                "highlightPlace": "tens"
             }
         },
         {
@@ -44,7 +46,9 @@
             "assetType": "illustration",
             "metadata": {
                 "options": ["7", "2", "70"],
-                "customLabel": "In 72, 7 is tens and 2 is ones."
+                "customLabel": "In 72, 7 is tens and 2 is ones.",
+                "placeValues": { "tens": 7, "ones": 2 },
+                "highlightPlace": "tens"
             }
         },
         {
@@ -61,7 +65,9 @@
             "assetType": "text",
             "metadata": {
                 "options": ["8", "80", "4"],
-                "customLabel": "In 84, 8 is tens and 4 is ones."
+                "customLabel": "In 84, 8 is tens and 4 is ones.",
+                "placeValues": { "tens": 8, "ones": 4 },
+                "highlightPlace": "tens"
             }
         }
     ]

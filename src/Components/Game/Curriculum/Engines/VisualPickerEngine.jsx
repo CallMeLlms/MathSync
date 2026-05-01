@@ -12,7 +12,18 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
+import PlaceValueVisual from '@/Components/Game/Global/Visualizers/PlaceValueVisual';
 import speechManager from '@/utils/speechManager';
+
+const PLACE_VALUE_THEME = {
+  primaryColor: Colors.primary,
+  secondaryColor: Colors.secondary,
+  fontFamily: {
+    title: 'Lexend-Black',
+    body: 'PlusJakartaSans-Medium',
+    accent: 'Lexend-Bold',
+  },
+};
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -132,6 +143,8 @@ const VisualPickerEngine = ({ data, onResult }) => {
   const options = metadata.options || [];
   const addends = metadata.addends;
   const operator = metadata.operator || '+';
+  const placeValues = metadata.placeValues || null;
+  const highlightPlace = metadata.highlightPlace || null;
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [evaluation, setEvaluation] = useState(null);
@@ -218,6 +231,18 @@ const VisualPickerEngine = ({ data, onResult }) => {
           </Animated.View>
         )}
 
+        {/* Place value block display */}
+        {placeValues && (
+          <Animated.View entering={FadeIn.delay(250)} style={styles.blockDisplay}>
+            <PlaceValueVisual
+              placeValues={placeValues}
+              highlightPlace={highlightPlace}
+              compact
+              theme={PLACE_VALUE_THEME}
+            />
+          </Animated.View>
+        )}
+
         {/* Options */}
         <View style={styles.optionsList}>
           {shuffledOptions.map((opt, idx) => (
@@ -252,7 +277,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 8,
     paddingBottom: 24,
-    justifyContent: 'space-between',
   },
   content: {
     gap: 16,
@@ -379,6 +403,11 @@ const styles = StyleSheet.create({
   },
   checkButtonContainer: {
     width: '100%',
+    marginTop: 24,
+  },
+  blockDisplay: {
+    borderRadius: 16,
+    overflow: 'hidden',
   },
   checkButton: {
     width: '100%',
