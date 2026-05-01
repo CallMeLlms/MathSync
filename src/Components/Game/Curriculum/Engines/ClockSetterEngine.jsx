@@ -3,7 +3,7 @@
 // Stage 2 (mode: 'half-hour'):    both hands; minute snaps to 0° or 180° (0 or 30 min).
 // Stage 3 (mode: 'quarter-hour'): both hands; minute snaps to 0°, 90°, 180°, 270° (0/15/30/45 min).
 
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Animated, {
   useSharedValue,
@@ -19,6 +19,8 @@ import Animated, {
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
+import StaticClockFace from '@/Components/Game/Global/StaticClockFace';
 
 // ── Layout constants ──────────────────────────────────────────────
 const CLOCK_SIZE         = 280;
@@ -149,25 +151,16 @@ export default function ClockSetterEngine({ data, onResult }) {
     const hourOk   = snapHour === tH;
     const minuteOk = isMinuteActive ? snapMinute === targetTime.minute : true;
     const correct  = hourOk && minuteOk;
+    const timeStr  = `${snapHour}:${String(snapMinute).padStart(2, '0')}`;
     console.log('[ClockSetter] CHECK — hour:', snapHour, '/', tH, '| min:', snapMinute, '/', targetTime.minute, '| correct:', correct);
     setAnswered(true);
     setIsCorrect(correct);
     if (correct) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setTimeout(() => onResult(true, [{ hour: snapHour, minute: snapMinute }]), 700);
+      setTimeout(() => onResult(true, [timeStr]), 700);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      onResult(false, [{ hour: snapHour, minute: snapMinute }]);
-      setTimeout(() => {
-        const h = initialTime?.hour ?? 12;
-        const m = initialTime?.minute ?? 0;
-        setAnswered(false);
-        setIsCorrect(false);
-        setSnapHour(h);
-        setSnapMinute(m);
-        hourAngle.value   = withSpring(computeHourAngle(h),   { damping: 18, stiffness: 200 });
-        minuteAngle.value = withSpring(computeMinuteAngle(m), { damping: 18, stiffness: 200 });
-      }, 1400);
+      onResult(false, [timeStr]);
     }
   };
 
@@ -248,6 +241,23 @@ export default function ClockSetterEngine({ data, onResult }) {
     borderBottomWidth: btnBorderBottom.value,
   }));
 
+  const referenceTime = data.targetTime;
+  const level         = data.level ?? 'concrete';
+
+  const renderHint = () => {
+    if (level === 'abstract' || !referenceTime) return null;
+    return (
+      <View style={styles.hintClockWrap}>
+        <Text style={styles.hintLabel}>Like this:</Text>
+        <StaticClockFace
+          hour={referenceTime.hour}
+          minute={referenceTime.minute ?? 0}
+          size={84}
+        />
+      </View>
+    );
+  };
+
   // ── Instruction text ───────────────────────────────────────────
   const getInstruction = () => {
     if (answered && isCorrect)  return "That's right! Great job!";
@@ -300,14 +310,23 @@ export default function ClockSetterEngine({ data, onResult }) {
 
   // ── Render ─────────────────────────────────────────────────────
   return (
-    <View style={styles.container}>
-      {/* Instruction */}
-      <Animated.Text
-        entering={FadeIn.delay(150)}
-        style={[styles.instructionText, { color: instructionColor }]}
-      >
-        {getInstruction()}
-      </Animated.Text>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+    >
+      <QuestionHeader text={data.question} />
+
+      {/* Instruction + hint clock stacked vertically */}
+      <View style={styles.hintRow}>
+        <Animated.Text
+          entering={FadeIn.delay(150)}
+          style={[styles.instructionText, { color: instructionColor }]}
+        >
+          {getInstruction()}
+        </Animated.Text>
+        {renderHint()}
+      </View>
 
       {/* Clock */}
       <Animated.View entering={ZoomIn.springify().delay(100)} style={styles.clockWrapper}>
@@ -375,25 +394,33 @@ export default function ClockSetterEngine({ data, onResult }) {
           </Animated.View>
         </GestureDetector>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 // ── Styles ────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingTop: 12,
-    paddingBottom: 8,
-    gap: 8,
+    paddingBottom: 24,
+    gap: 12,
   },
-  promptText: {
-    fontFamily: 'Lexend-SemiBold',
-    fontSize: 20,
-    color: Colors.onSurface,
-    textAlign: 'center',
+  hintRow: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 4,
+  },
+  hintClockWrap: {
+    alignItems: 'center',
+    gap: 2,
+  },
+hintLabel: {
+    fontFamily: 'PlusJakartaSans-Medium',
+    fontSize: 11,
+    color: Colors.onSurfaceVariant,
   },
   instructionText: {
     fontFamily: 'PlusJakartaSans-Medium',
@@ -401,7 +428,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   clockWrapper: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

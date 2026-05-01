@@ -23,9 +23,26 @@ export default function AssetDisplay({
   fallbackContent = null,
   emojiSize,
 }) {
+  // Bare emoji: strings passed directly as assetId (e.g. from ComparePickerEngine)
+  // skip the registry lookup entirely to avoid false-negative warnings.
+  if (typeof assetId === 'string' && assetId.startsWith('emoji:')) {
+    const emoji = assetId.slice(6);
+    return (
+      <View style={[styles.emojiContainer, style]}>
+        <Text
+          style={[styles.emojiText, emojiSize ? { fontSize: emojiSize } : null]}
+          adjustsFontSizeToFit
+          numberOfLines={1}
+        >
+          {emoji}
+        </Text>
+      </View>
+    );
+  }
+
   const assetSource = getAsset(assetId);
 
-  // --- Emoji path ---
+  // --- Emoji path (registry returns emoji: string) ---
   if (typeof assetSource === 'string' && assetSource.startsWith('emoji:')) {
     const emoji = assetSource.slice(6); // strip 'emoji:' prefix
     return (
