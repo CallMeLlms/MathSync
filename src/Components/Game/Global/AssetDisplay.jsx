@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
 import { getAsset } from '@/constants/assetMap';
+import { getIcon } from '@/constants/iconRegistry';
 import Colors from '@/constants/colors';
 
 /**
@@ -23,6 +24,13 @@ export default function AssetDisplay({
   fallbackContent = null,
   emojiSize,
 }) {
+  // --- SVG icon component path ---
+  const IconComponent = typeof assetId === 'string' ? getIcon(assetId) : null;
+  if (IconComponent) {
+    const flat = StyleSheet.flatten(style) ?? {};
+    return <IconComponent width={flat.width ?? 48} height={flat.height ?? 48} />;
+  }
+
   // Bare emoji: strings passed directly as assetId (e.g. from ComparePickerEngine)
   // skip the registry lookup entirely to avoid false-negative warnings.
   if (typeof assetId === 'string' && assetId.startsWith('emoji:')) {

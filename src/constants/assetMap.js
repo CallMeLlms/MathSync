@@ -5,6 +5,7 @@
  *   1. Image assets: `require('@assets/...')` — rendered as <Image> by AssetDisplay.
  *   2. Emoji assets: `'emoji:🦆'` strings — rendered as <Text> by AssetDisplay.
  *
+ * SVG icon components are in src/constants/iconRegistry.js (checked first by AssetDisplay).
  * When real production assets are ready to replace an emoji, change the value here.
  * No changes needed in JSON banks or in any Engine component.
  */
