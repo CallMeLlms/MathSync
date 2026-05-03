@@ -30,7 +30,7 @@ const getApiBaseUrl = () => {
     return 'http://localhost:5500/api/v1';
 };
 
-export const API_BASE_URL = 'http://192.168.1.101:5500/api/v1';
+export const API_BASE_URL = 'http://192.168.87.19:5500/api/v1';
 //export const API_BASE_URL = getApiBaseUrl();
 
 const apiClient = axios.create({
