@@ -92,6 +92,32 @@ class LessonCacheService {
             return null;
         }
     }
+    /**
+     * Get all lessons from the SQLite cache
+     * @returns {Array} 
+     */
+    async getAllCachedLessons() {
+        try {
+            const database = await getDb();
+            const results = await database.getAllAsync('SELECT * FROM lessons_cache ORDER BY lastUpdated DESC');
+            
+            return results.map(result => ({
+                _id: result.id,
+                title: result.title,
+                description: result.description,
+                gradeLevel: result.gradeLevel,
+                learningObjectives: JSON.parse(result.learningObjectives),
+                lessonContent: JSON.parse(result.lessonContent),
+                learningCompetencies: JSON.parse(result.learningCompetencies),
+                videoUrl: result.videoUrl,
+                duration: result.duration,
+                lastUpdated: result.lastUpdated
+            }));
+        } catch (error) {
+            console.error('Error reading all lessons from SQLite:', error);
+            return [];
+        }
+    }
 }
 
 export default new LessonCacheService();
