@@ -11,6 +11,7 @@ import * as Haptics from 'expo-haptics';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import SequenceVisualizer from '@/Components/Game/Global/Visualizers/SequenceVisualizer';
+import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
 
 const { width, height } = Dimensions.get('window');
@@ -72,8 +73,28 @@ export default function ResultModal({
 
   const metadata = problem?.metadata || {};
 
+  const isAssetId = (val) => typeof val === 'string' && (val.includes('_') || val.startsWith('icon_') || val.startsWith('emoji:'));
+
   // Decide which visualizer to use based on topic
   const renderVisualizer = (items, label, isCorrectValue) => {
+    // Check if any items are asset IDs
+    const hasAssets = items.some(isAssetId);
+
+    if (hasAssets) {
+      return (
+        <View style={styles.reviewBlock}>
+          <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
+          <View style={styles.assetRow}>
+            {items.map((item, idx) => (
+              <View key={idx} style={styles.assetWrapper}>
+                <AssetDisplay assetId={item.trim()} style={styles.feedbackAsset} />
+              </View>
+            ))}
+          </View>
+        </View>
+      );
+    }
+
     if (metadata.type === 'ordering-numbers' || metadata.type === 'ordering-decimals') {
       return (
         <View style={styles.reviewBlock}>
@@ -210,6 +231,28 @@ const styles = StyleSheet.create({
   reviewText: {
     fontSize: 20,
     color: Colors.onSurface,
+  },
+  assetRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 12,
+    marginTop: 4,
+  },
+  assetWrapper: {
+    width: 72,
+    height: 72,
+    backgroundColor: Colors.surface,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.outlineVariant,
+    padding: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  feedbackAsset: {
+    width: '100%',
+    height: '100%',
   },
   buttonWrapper: {
     width: '100%',
