@@ -43,6 +43,7 @@ import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
+import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -232,6 +233,8 @@ const ShapeHuntEngine = ({ data, onResult }) => {
 
   return (
     <View style={styles.container}>
+      <QuestionHeader text={instructionText} />
+
       {/* Instruction Hint */}
       <Animated.View entering={FadeIn.delay(100)} style={styles.hintContainer}>
         <Ionicons name="hand-left" size={16} color={Colors.onSurfaceVariant} />
