@@ -59,6 +59,14 @@ const OptionButton = ({ label, index, isSelected, evaluation, disabled, onPress 
     wrong: { border: Colors.error, bg: '#ffebee', text: Colors.error },
   }[state];
 
+  // Heuristic: Strings with underscores or known prefixes are likely asset IDs.
+  // Bare strings like 'triangle' will be treated as text unless registered.
+  const isAsset = typeof label === 'string' && (
+    label.includes('_') || 
+    label.startsWith('icon_') ||
+    label.startsWith('emoji:')
+  );
+
   return (
     <Animated.View
       entering={ZoomIn.springify().delay(index * 80)}
@@ -75,9 +83,17 @@ const OptionButton = ({ label, index, isSelected, evaluation, disabled, onPress 
             styles.optionButton,
             animatedStyle,
             { backgroundColor: colors.bg, borderColor: colors.border },
+            isAsset && styles.optionButtonWithAsset,
           ]}
         >
-          <Text style={[styles.optionText, { color: colors.text }]}>{String(label)}</Text>
+          {isAsset ? (
+            <View style={styles.optionAssetContainer}>
+              <AssetDisplay assetId={label} style={styles.optionAsset} />
+            </View>
+          ) : (
+            <Text style={[styles.optionText, { color: colors.text }]}>{String(label)}</Text>
+          )}
+
           {state === 'correct' && (
             <Ionicons name="checkmark-circle" size={24} color={Colors.success} style={styles.badge} />
           )}
@@ -391,6 +407,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
+    minHeight: 64,
+  },
+  optionButtonWithAsset: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  optionAssetContainer: {
+    width: 54,
+    height: 54,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  optionAsset: {
+    width: '100%',
+    height: '100%',
   },
   optionText: {
     fontFamily: 'Lexend-Medium',

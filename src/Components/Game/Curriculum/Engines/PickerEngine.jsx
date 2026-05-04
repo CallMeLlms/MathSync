@@ -15,6 +15,7 @@ import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
 import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
+import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 
 // ─── OptionButton (Tactile "Bulky" Style) ───
 const OptionButton = ({ 
@@ -72,6 +73,12 @@ const OptionButton = ({
     },
   }[state];
 
+  const isAsset = typeof label === 'string' && (
+    label.includes('_') || 
+    label.startsWith('icon_') ||
+    label.startsWith('emoji:')
+  );
+
   return (
     <Animated.View
       entering={ZoomIn.springify().delay(index * 100)}
@@ -92,11 +99,18 @@ const OptionButton = ({
               backgroundColor: colors.bg,
               borderColor: colors.border,
             },
+            isAsset && styles.optionButtonWithAsset,
           ]}
         >
-          <Text style={[styles.optionText, { color: colors.text }]}>
-            {String(label)}
-          </Text>
+          {isAsset ? (
+            <View style={styles.optionAssetContainer}>
+              <AssetDisplay assetId={label} style={styles.optionAsset} />
+            </View>
+          ) : (
+            <Text style={[styles.optionText, { color: colors.text }]}>
+              {String(label)}
+            </Text>
+          )}
           
           {state === 'correct' && (
             <Ionicons name="checkmark-circle" size={24} color={Colors.success} style={styles.badge} />
@@ -159,7 +173,7 @@ const CheckButton = ({ onPress, disabled, label = 'CHECK' }) => {
 
 // ─── PickerEngine ───
 const PickerEngine = ({ data, onResult }) => {
-  const { question: questionText, answer, metadata = {} } = data;
+  const { question: questionText, answer, assetId, metadata = {} } = data;
   const options = metadata.options || [];
 
   const [selectedOption, setSelectedOption] = useState(null);
@@ -210,6 +224,15 @@ const PickerEngine = ({ data, onResult }) => {
   return (
     <View style={styles.container}>
       <QuestionHeader text={questionText} />
+
+      {assetId && (
+        <Animated.View entering={FadeIn.delay(200)} style={styles.assetContainer}>
+          <View style={styles.assetCard}>
+            <AssetDisplay assetId={assetId} style={styles.assetImage} />
+          </View>
+        </Animated.View>
+      )}
+
       <View style={styles.optionsList}>
         {shuffledOptions.map((opt, idx) => (
           <OptionButton
@@ -252,6 +275,26 @@ const styles = StyleSheet.create({
     color: Colors.onSurface,
     textAlign: 'center',
   },
+  assetContainer: {
+    alignItems: 'center',
+    marginVertical: 16,
+  },
+  assetCard: {
+    width: 140,
+    height: 140,
+    backgroundColor: Colors.surfaceContainerLowest,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderBottomWidth: 6,
+    borderColor: Colors.outlineVariant,
+    padding: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  assetImage: {
+    width: '100%',
+    height: '100%',
+  },
   optionsList: {
     gap: 16,
   },
@@ -267,6 +310,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
+    minHeight: 64,
+  },
+  optionButtonWithAsset: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  optionAssetContainer: {
+    width: 54,
+    height: 54,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  optionAsset: {
+    width: '100%',
+    height: '100%',
   },
   optionText: {
     fontFamily: 'Lexend-Medium',
