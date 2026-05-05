@@ -60,7 +60,7 @@ export default function ResultModal({
   });
 
   const emoji = isCorrect ? '🎉' : '💪';
-  const statusTitle = isCorrect ? 'Perfect! Great job!' : "Not quite! Let's try once more!";
+  const statusTitle = isCorrect ? 'Perfect! Great job!' : "Proceed to the next question!";
   const statusColor = isCorrect ? Colors.success : Colors.error;
 
   useEffect(() => {
@@ -77,19 +77,32 @@ export default function ResultModal({
 
   // Decide which visualizer to use based on topic
   const renderVisualizer = (items, label, isCorrectValue) => {
-    // Check if any items are asset IDs
-    const hasAssets = items.some(isAssetId);
+    // Normalize items to array of strings
+    const safeItems = (Array.isArray(items) ? items : [items]).filter(Boolean);
+    const hasAssets = safeItems.some(isAssetId);
 
     if (hasAssets) {
       return (
         <View style={styles.reviewBlock}>
           <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
           <View style={styles.assetRow}>
-            {items.map((item, idx) => (
-              <View key={idx} style={styles.assetWrapper}>
-                <AssetDisplay assetId={item.trim()} style={styles.feedbackAsset} />
-              </View>
-            ))}
+            {safeItems.map((item, idx) => {
+              const strItem = String(item).trim();
+              if (isAssetId(strItem)) {
+                return (
+                  <View key={idx} style={styles.assetWrapper}>
+                    <AssetDisplay assetId={strItem} style={styles.feedbackAsset} />
+                  </View>
+                );
+              }
+              return (
+                <View key={idx} style={styles.textWrapper}>
+                  <Text style={[styles.reviewText, { fontFamily: theme.fontFamily.accent, fontSize: 16 }]}>
+                    {strItem}
+                  </Text>
+                </View>
+              );
+            })}
           </View>
         </View>
       );
@@ -100,7 +113,7 @@ export default function ResultModal({
         <View style={styles.reviewBlock}>
           <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
           <SequenceVisualizer 
-            items={items} 
+            items={safeItems} 
             isCorrect={isCorrectValue} 
             theme={theme} 
           />
@@ -111,14 +124,50 @@ export default function ResultModal({
     return (
       <View style={styles.reviewBlock}>
         <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
-        <Text style={[styles.reviewText, { fontFamily: theme.fontFamily.accent }]}>{items.join(', ')}</Text>
+        <Text style={[styles.reviewText, { fontFamily: theme.fontFamily.accent }]}>{safeItems.join(', ')}</Text>
       </View>
     );
   };
 
+  const getUserAnswerArray = () => {
+    if (!userAnswer) return [];
+    if (Array.isArray(userAnswer)) return userAnswer;
+    if (typeof userAnswer === 'string') return userAnswer.split(', ');
+    return [String(userAnswer)];
+  };
+
   const getCorrectAnswerArray = () => {
+    // 1. ShapeHuntEngine
+    if (problem?.items && Array.isArray(problem.items)) {
+      const targets = problem.items.filter(i => i.isTarget).map(i => i.assetId);
+      if (targets.length > 0) return targets;
+    }
+    
+    // 2. ShapeTracerEngine
+    if (problem?.type === 'SHAPETRACER') {
+      return ['80% to 100% Traced'];
+    }
+    
+    // 3. GeoboardEngine
+    if (problem?.type === 'GEOBOARD') {
+      const shape = problem?.shape?.toLowerCase();
+      if (shape === 'triangle') return ['emoji:▲', 'Triangle'];
+      if (shape === 'square') return ['emoji:■', 'Square'];
+      if (shape === 'rectangle') return ['emoji:▬', 'Rectangle'];
+      return [problem?.shape || ''];
+    }
+
+    // 4. Default / Existing Logic
     if (metadata.correctOrder) return metadata.correctOrder;
-    if (problem?.answer !== undefined) return [problem.answer];
+    
+    if (problem?.answer !== undefined) {
+      if ((problem?.type === 'PICKER' || problem?.type === 'VISUAL_PICKER') && problem?.assetId) {
+        if (problem.answer === problem.assetId) return [problem.answer];
+        return [problem.assetId, problem.answer];
+      }
+      return [problem.answer];
+    }
+    
     if (problem?.target !== undefined) return [problem.target];
     if (problem?.pairs) return ['Match the pairs'];
     return ['']; // Safest fallback
@@ -142,7 +191,7 @@ export default function ResultModal({
               
               {/* User Answer Display (if wrong) */}
               {!isCorrect && userAnswer && (
-                renderVisualizer(userAnswer.split(', '), "Your Try", false)
+                renderVisualizer(getUserAnswerArray(), "Your Try", false)
               )}
             </View>
           </View>
@@ -249,6 +298,17 @@ const styles = StyleSheet.create({
     padding: 8,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  textWrapper: {
+    backgroundColor: Colors.surface,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.outlineVariant,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 72,
   },
   feedbackAsset: {
     width: '100%',
