@@ -297,6 +297,7 @@ const styles = StyleSheet.create({
   },
   optionsList: {
     gap: 16,
+    marginBottom: 20,
   },
   optionWrapper: {
     width: '100%',
@@ -337,6 +338,7 @@ const styles = StyleSheet.create({
   },
   checkButtonContainer: {
     width: '100%',
+    marginTop: 12,
   },
   checkButton: {
     width: '100%',
