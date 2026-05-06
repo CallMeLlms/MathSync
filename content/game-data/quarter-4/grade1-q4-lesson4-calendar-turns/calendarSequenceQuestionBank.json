@@ -36,7 +36,7 @@
             "level": "pictorial",
             "type": "CALENDAR_PAGE",
             "difficulty": "Medium",
-            "question": "Look at the calendar page. What day comes after Wednesday?",
+            "question": "What day comes after Wednesday?",
             "answer": "Thursday",
             "assetType": "illustration",
             "metadata": {
