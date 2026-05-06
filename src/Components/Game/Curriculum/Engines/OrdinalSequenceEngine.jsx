@@ -47,6 +47,11 @@ const ORDINAL_LABELS = [
   '6th', '7th', '8th', '9th', '10th',
 ];
 
+const formatOrdinalFruit = (fruit, index) => {
+  const label = ORDINAL_LABELS[index] || `${index + 1}`;
+  return `${label} ${fruit}`;
+};
+
 const hapticLight = () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
 /**
@@ -175,8 +180,20 @@ const OrdinalSequenceEngine = ({ data, onResult }) => {
 
     // userAnswerItems: fruits in the order the student tapped them
     const tappedFruits = tappedOrder.map(i => fruits[i]);
-    setTimeout(() => onResult(isCorrect, tappedFruits), 700);
-  }, [answered, allTapped, tappedOrder, fruits, onResult]);
+    const correctAnswerItems = fruits
+      .slice(0, count)
+      .map((fruit, index) => formatOrdinalFruit(fruit, index));
+    const userAnswerItems = tappedOrder.map((fruitIndex, index) => (
+      formatOrdinalFruit(fruits[fruitIndex], index)
+    ));
+    const resultMeta = {
+      displayMode: 'sequence',
+      correctAnswerItems,
+      userAnswerItems,
+    };
+
+    setTimeout(() => onResult(isCorrect, tappedFruits, resultMeta), 700);
+  }, [answered, allTapped, tappedOrder, fruits, count, onResult]);
 
   const handleReset = useCallback(() => {
     if (answered) return;

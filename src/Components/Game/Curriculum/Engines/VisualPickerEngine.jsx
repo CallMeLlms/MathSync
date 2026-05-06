@@ -190,19 +190,23 @@ const VisualPickerEngine = ({ data, onResult }) => {
     const normalizedSelected = String(selectedOption).toLowerCase().trim();
     const normalizedAnswer = String(answer).toLowerCase().trim();
     const isCorrect = normalizedSelected === normalizedAnswer;
+    const resultMeta = {
+      correctAnswerItems: [String(answer)],
+      userAnswerItems: [String(selectedOption)],
+    };
 
     if (isCorrect) {
       setEvaluation('correct');
       setResolved(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       speechManager.speakFeedback('Correct!', true);
-      setTimeout(() => onResult(true, [String(selectedOption)]), 800);
+      setTimeout(() => onResult(true, [String(selectedOption)], resultMeta), 800);
     } else {
       setEvaluation('wrong');
       setResolved(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       speechManager.speakFeedback('Try again!', false);
-      setTimeout(() => onResult(false, [String(selectedOption)]), 1000);
+      setTimeout(() => onResult(false, [String(selectedOption)], resultMeta), 1000);
     }
   };
 

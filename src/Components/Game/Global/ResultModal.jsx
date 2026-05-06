@@ -76,11 +76,96 @@ export default function ResultModal({
 
   const isAssetId = (val) => typeof val === 'string' && (val.includes('_') || val.startsWith('icon_') || val.startsWith('emoji:'));
 
+  const renderComparePileAssets = (item) => {
+    const count = Number(item?.count) || 0;
+
+    if (item?.tensAsset && item?.onesAsset) {
+      const tens = Math.floor(count / 10);
+      const ones = count % 10;
+      return (
+        <>
+          {Array.from({ length: tens }).map((_, index) => (
+            <AssetDisplay
+              key={`ten-${index}`}
+              assetId={item.tensAsset}
+              style={styles.comparePileAssetTen}
+              emojiSize={22}
+            />
+          ))}
+          {Array.from({ length: ones }).map((_, index) => (
+            <AssetDisplay
+              key={`one-${index}`}
+              assetId={item.onesAsset}
+              style={styles.comparePileAsset}
+              emojiSize={20}
+            />
+          ))}
+        </>
+      );
+    }
+
+    return Array.from({ length: Math.min(count, 10) }).map((_, index) => (
+      <AssetDisplay
+        key={`asset-${index}`}
+        assetId={item?.assetId}
+        style={styles.comparePileAsset}
+        emojiSize={20}
+      />
+    ));
+  };
+
+  const renderComparePickerFeedback = (items, label) => {
+    const safeItems = (Array.isArray(items) ? items : [items]).filter(Boolean);
+
+    return (
+      <View style={styles.reviewBlock}>
+        <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
+        <View style={styles.comparePileRow}>
+          {safeItems.map((item, index) => (
+            <View key={item?.key || index} style={styles.comparePileCard}>
+              <View style={styles.comparePileHeader}>
+                <Text style={[styles.comparePileLabel, { fontFamily: theme.fontFamily.body }]}>
+                  {item?.label || 'Pile'}
+                </Text>
+                <Text style={[styles.comparePileCount, { fontFamily: theme.fontFamily.accent }]}>
+                  {item?.count}
+                </Text>
+              </View>
+              <View style={styles.comparePileGrid}>
+                {renderComparePileAssets(item)}
+              </View>
+            </View>
+          ))}
+        </View>
+      </View>
+    );
+  };
+
   // Decide which visualizer to use based on topic
   const renderVisualizer = (items, label, isCorrectValue) => {
     // Normalize items to array of strings
     const safeItems = (Array.isArray(items) ? items : [items]).filter(Boolean);
     const hasAssets = safeItems.some(isAssetId);
+    const shouldRenderSequence = resultMeta?.displayMode === 'sequence'
+      || metadata.type === 'ordering-numbers'
+      || metadata.type === 'ordering-decimals';
+
+    if (resultMeta?.displayMode === 'compare-picker') {
+      return renderComparePickerFeedback(safeItems, label);
+    }
+
+    if (shouldRenderSequence) {
+      return (
+        <View style={styles.reviewBlock}>
+          <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
+          <SequenceVisualizer
+            items={safeItems}
+            isCorrect={isCorrectValue}
+            theme={theme}
+          />
+        </View>
+      );
+    }
 
     if (hasAssets) {
       return (
@@ -105,19 +190,6 @@ export default function ResultModal({
               );
             })}
           </View>
-        </View>
-      );
-    }
-
-    if (metadata.type === 'ordering-numbers' || metadata.type === 'ordering-decimals') {
-      return (
-        <View style={styles.reviewBlock}>
-          <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
-          <SequenceVisualizer 
-            items={safeItems} 
-            isCorrect={isCorrectValue} 
-            theme={theme} 
-          />
         </View>
       );
     }
@@ -193,7 +265,7 @@ export default function ResultModal({
           <View style={styles.contentContainer}>
             <View style={styles.reviewContainer}>
               {/* Correct Answer Display */}
-              {renderVisualizer(getCorrectAnswerArray(), isCorrect ? 'Answer' : 'Right Answer', true)}
+              {renderVisualizer(getCorrectAnswerArray(), isCorrect ? 'Answer' : 'Correct answer', true)}
               
               {/* User Answer Display (if wrong) */}
               {!isCorrect && getUserAnswerArray().length > 0 && (
@@ -321,6 +393,51 @@ const styles = StyleSheet.create({
   feedbackAsset: {
     width: '100%',
     height: '100%',
+  },
+  comparePileRow: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  comparePileCard: {
+    width: '100%',
+    backgroundColor: Colors.surface,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: Colors.outlineVariant,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    gap: 10,
+  },
+  comparePileHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  comparePileLabel: {
+    fontSize: 13,
+    color: Colors.onSurfaceVariant,
+  },
+  comparePileCount: {
+    fontSize: 22,
+    color: Colors.onSurface,
+  },
+  comparePileGrid: {
+    minHeight: 44,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 4,
+  },
+  comparePileAsset: {
+    width: 28,
+    height: 28,
+  },
+  comparePileAssetTen: {
+    width: 36,
+    height: 42,
   },
   buttonWrapper: {
     width: '100%',

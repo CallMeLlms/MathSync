@@ -197,6 +197,18 @@ const ComparePickerEngine = ({ data, onResult }) => {
   const tensAssetB = metadata.tensAsset_b ?? metadata.tensAsset;
   const onesAssetB = metadata.onesAsset_b ?? metadata.onesAsset;
 
+  const getPileFeedbackItem = (pileKey) => {
+    const isPileA = pileKey === 'pile_a';
+    return {
+      key: pileKey,
+      label: isPileA ? (metadata.label_a || 'Pile A') : (metadata.label_b || 'Pile B'),
+      count: isPileA ? pileA : pileB,
+      assetId: isPileA ? assetIdA : assetIdB,
+      tensAsset: isPileA ? tensAssetA : tensAssetB,
+      onesAsset: isPileA ? onesAssetA : onesAssetB,
+    };
+  };
+
   const [selectedTile, setSelectedTile] = useState(null);
   const [evaluation, setEvaluation] = useState(null);
   const [resolved, setResolved] = useState(false);
@@ -218,19 +230,24 @@ const ComparePickerEngine = ({ data, onResult }) => {
     if (!selectedTile || resolved) return;
 
     const isCorrect = selectedTile === answer;
+    const resultMeta = {
+      displayMode: 'compare-picker',
+      correctAnswerItems: [getPileFeedbackItem(answer)],
+      userAnswerItems: [getPileFeedbackItem(selectedTile)],
+    };
 
     if (isCorrect) {
       setEvaluation('correct');
       setResolved(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       speechManager.speakFeedback('Correct!', true);
-      setTimeout(() => onResult(true, [selectedTile]), 800);
+      setTimeout(() => onResult(true, [selectedTile], resultMeta), 800);
     } else {
       setEvaluation('wrong');
       setResolved(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       speechManager.speakFeedback('Try again!', false);
-      setTimeout(() => onResult(false, [selectedTile]), 1000);
+      setTimeout(() => onResult(false, [selectedTile], resultMeta), 1000);
     }
   };
 

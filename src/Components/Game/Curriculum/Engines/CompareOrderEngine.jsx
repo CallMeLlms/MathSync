@@ -27,6 +27,13 @@ const resolveMode = (metadata) => {
   return 'pile_compare';
 };
 
+const formatCompareKeyLabel = (key) => {
+  if (!key || typeof key !== 'string') return 'Pile';
+  const [kind, suffix] = key.split('_');
+  const prefix = kind === 'plate' ? 'Plate' : 'Pile';
+  return `${prefix} ${String(suffix || '').toUpperCase()}`.trim();
+};
+
 // ─── AssetGrid ────────────────────────────────────────────────────────────────
 const AssetGrid = ({ assetId, count, compact }) => (
   <View style={styles.assetGrid}>
@@ -277,6 +284,31 @@ export default function CompareOrderEngine({ data, onResult }) {
   const resolvedAssetId = resolveAsset();
   const isCompact = mode === 'multi_compare';
 
+  const getCompareCards = () => mode === 'multi_compare'
+    ? ['plate_a', 'plate_b', 'plate_c']
+        .filter(k => metadata[k] !== undefined)
+        .map(k => ({
+          key: k,
+          count: metadata[k],
+          label: metadata[`label_${k.split('_')[1]}`] || formatCompareKeyLabel(k),
+        }))
+    : [
+        { key: 'pile_a', count: metadata.pile_a ?? 0, label: metadata.label_a || 'Pile A' },
+        { key: 'pile_b', count: metadata.pile_b ?? 0, label: metadata.label_b || 'Pile B' },
+      ];
+
+  const getCompareFeedbackItem = (key) => {
+    const card = getCompareCards().find(item => item.key === key);
+    return {
+      key,
+      label: card?.label || formatCompareKeyLabel(key),
+      count: card?.count ?? 0,
+      assetId: resolvedAssetId,
+      tensAsset: metadata.tensAsset,
+      onesAsset: metadata.onesAsset,
+    };
+  };
+
   // Compare state (pile_compare & multi_compare)
   const [selectedKey, setSelectedKey] = useState(null);
   const [evaluation,  setEvaluation]  = useState(null);
@@ -305,16 +337,21 @@ export default function CompareOrderEngine({ data, onResult }) {
   const handleCheck = () => {
     if (!selectedKey || resolved) return;
     const isCorrect = selectedKey === answer;
+    const resultMeta = {
+      displayMode: 'compare-picker',
+      correctAnswerItems: [getCompareFeedbackItem(answer)],
+      userAnswerItems: [getCompareFeedbackItem(selectedKey)],
+    };
     setEvaluation(isCorrect ? 'correct' : 'wrong');
     setResolved(true);
     if (isCorrect) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       speechManager.speakFeedback('Great job!', true);
-      setTimeout(() => onResult(true, [selectedKey]), 700);
+      setTimeout(() => onResult(true, [selectedKey], resultMeta), 700);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       speechManager.speakFeedback('Try again!', false);
-      setTimeout(() => onResult(false, [selectedKey]), 1000);
+      setTimeout(() => onResult(false, [selectedKey], resultMeta), 1000);
     }
   };
 
@@ -342,16 +379,21 @@ export default function CompareOrderEngine({ data, onResult }) {
     if (tappedOrder.length !== metadata.items.length || seqEvaluation !== 'idle') return;
     const sorted    = [...metadata.items].sort((a, b) => a - b);
     const isCorrect = tappedOrder.every((n, i) => n === sorted[i]);
+    const resultMeta = {
+      displayMode: 'sequence',
+      correctAnswerItems: sorted.map(String),
+      userAnswerItems: tappedOrder.map(String),
+    };
     setSeqEvaluation(isCorrect ? 'correct' : 'wrong');
     setResolved(true);
     if (isCorrect) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       speechManager.speakFeedback('Great job!', true);
-      setTimeout(() => onResult(true, [tappedOrder.join(', ')]), 800);
+      setTimeout(() => onResult(true, [tappedOrder.join(', ')], resultMeta), 800);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       speechManager.speakFeedback('Try again!', false);
-      setTimeout(() => onResult(false, [tappedOrder.join(', ')]), 1000);
+      setTimeout(() => onResult(false, [tappedOrder.join(', ')], resultMeta), 1000);
     }
   };
 
@@ -411,18 +453,7 @@ export default function CompareOrderEngine({ data, onResult }) {
   }
 
   // ── Compare render (pile_compare & multi_compare) ─────────────────────────
-  const cards = mode === 'multi_compare'
-    ? ['plate_a', 'plate_b', 'plate_c']
-        .filter(k => metadata[k] !== undefined)
-        .map(k => ({ 
-          key: k, 
-          count: metadata[k], 
-          label: metadata[`label_${k.split('_')[1]}`] 
-        }))
-    : [
-        { key: 'pile_a', count: metadata.pile_a ?? 0, label: metadata.label_a },
-        { key: 'pile_b', count: metadata.pile_b ?? 0, label: metadata.label_b },
-      ];
+  const cards = getCompareCards();
 
   return (
     <View style={styles.container}>
