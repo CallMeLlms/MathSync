@@ -9,7 +9,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "N/A": "Placeholder for DragDrop or Picker engine"
+            "PICKER": "Multiple-choice ordering sequence selection"
         }
     },
     "questions": [
@@ -19,13 +19,13 @@
             "competency": "NA.2.4",
             "topic": "Ordering to 100",
             "level": "concrete",
-            "type": "SORT",
+            "type": "PICKER",
             "difficulty": "Easy",
-            "question": "Arrange these number blocks from smallest to largest: 45, 12, 34.",
+            "question": "Which list shows the number blocks from smallest to largest?",
             "answer": "12, 34, 45",
             "assetType": "manipulatives",
             "metadata": {
-                "items": [45, 12, 34]
+                "options": ["12, 34, 45", "34, 12, 45", "45, 34, 12"]
             }
         },
         {
@@ -34,15 +34,14 @@
             "competency": "NA.2.4",
             "topic": "Ordering to 100",
             "level": "pictorial",
-            "type": "SORT",
+            "type": "PICKER",
             "difficulty": "Medium",
-            "question": "Look at the price tags. Arrange the items from cheapest to most expensive: ₱45, ₱20, ₱65.",
+            "question": "Which list shows the price tags from cheapest to most expensive?",
             "answer": "₱20, ₱45, ₱65",
             "assetType": "illustration",
             "metadata": {
-                "items": [45, 20, 65]
-            },
-            "assetId": "money_coin_20"
+                "options": ["₱20, ₱45, ₱65", "₱45, ₱20, ₱65", "₱65, ₱45, ₱20"]
+            }
         },
         {
             "id": "na_2_order_007",

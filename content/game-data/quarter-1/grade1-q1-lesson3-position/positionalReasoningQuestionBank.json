@@ -9,7 +9,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "N/A": "Placeholder for Picker engine"
+            "PICKER": "Multiple-choice positional reasoning"
         }
     },
     "questions": [
@@ -21,11 +21,11 @@
             "level": "concrete",
             "type": "PICKER",
             "difficulty": "Easy",
-            "question": "If you are the 1st person in line, who is right behind you?",
-            "answer": "2nd person",
-            "assetType": "manipulatives",
+            "question": "What ordinal comes right after 1st?",
+            "answer": "🥈 2nd",
+            "assetType": "text",
             "metadata": {
-                "options": ["2nd person", "3rd person", "last person"]
+                "options": ["🥈 2nd", "🥉 3rd", "🏅 4th"]
             }
         },
         {
@@ -36,11 +36,11 @@
             "level": "pictorial",
             "type": "PICKER",
             "difficulty": "Easy",
-            "question": "Look at the animals in line. Who is standing before the 3rd animal?",
-            "answer": "2nd animal",
-            "assetType": "illustration",
+            "question": "What ordinal comes right before 3rd?",
+            "answer": "🥈 2nd",
+            "assetType": "text",
             "metadata": {
-                "options": ["1st animal", "2nd animal", "4th animal"]
+                "options": ["🥇 1st", "🥈 2nd", "🏅 4th"]
             }
         },
         {
@@ -52,10 +52,10 @@
             "type": "PICKER",
             "difficulty": "Medium",
             "question": "What ordinal number comes directly after 2nd?",
-            "answer": "3rd",
+            "answer": "🥉 3rd",
             "assetType": "text",
             "metadata": {
-                "options": ["1st", "3rd", "4th"]
+                "options": ["🥇 1st", "🥉 3rd", "🏅 4th"]
             }
         }
     ]

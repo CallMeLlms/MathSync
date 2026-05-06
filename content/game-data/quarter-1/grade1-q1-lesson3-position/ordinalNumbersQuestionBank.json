@@ -9,7 +9,7 @@
         "totalQuestions": 3,
         "cpaSplit": "1 concrete, 1 pictorial, 1 abstract",
         "engines": {
-            "N/A": "Placeholder for future Picker or DragDrop engine"
+            "PICKER": "Multiple-choice ordinal selection"
         }
     },
     "questions": [
@@ -19,15 +19,13 @@
             "competency": "NA.1.9",
             "topic": "Ordinal Numbers",
             "level": "concrete",
-            "type": "N/A",
+            "type": "PICKER",
             "difficulty": "Easy",
-            "question": "Look at the seashells in a line. Tap the 1st seashell.",
-            "answer": "1st_seashell",
-            "assetType": "interactive_objects",
-            "assetId": "icon_seashells",
+            "question": "Which ordinal means first place?",
+            "answer": "🥇 1st",
+            "assetType": "text",
             "metadata": {
-                "items": 5,
-                "targetPosition": 1
+                "options": ["🥇 1st", "🥈 2nd", "🥉 3rd"]
             }
         },
         {
@@ -38,12 +36,11 @@
             "level": "pictorial",
             "type": "PICKER",
             "difficulty": "Medium",
-            "question": "Look at the students in line for the canteen. Who is 2nd in line?",
-            "answer": "maria",
-            "assetType": "illustration",
+            "question": "Which ordinal means second place?",
+            "answer": "🥈 2nd",
+            "assetType": "text",
             "metadata": {
-                "scenario": "canteen_line",
-                "options": ["juan", "maria", "pedro"]
+                "options": ["🥇 1st", "🥈 2nd", "🥉 3rd"]
             }
         },
         {
@@ -55,10 +52,10 @@
             "type": "PICKER",
             "difficulty": "Hard",
             "question": "Match the word 'first' to its number.",
-            "answer": "1st",
+            "answer": "🥇 1st",
             "assetType": "text",
             "metadata": {
-                "options": ["1st", "2nd", "3rd"]
+                "options": ["🥇 1st", "🥈 2nd", "🥉 3rd"]
             }
         }
     ]
