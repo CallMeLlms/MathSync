@@ -12,6 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import SequenceVisualizer from '@/Components/Game/Global/Visualizers/SequenceVisualizer';
 import FractionShapeVisual from '@/Components/Game/Global/Visualizers/FractionShapeVisual';
+import StaticClockFace from '@/Components/Game/Global/StaticClockFace';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
 
@@ -80,6 +81,44 @@ export default function ResultModal({
     && item.shape
     && item.fraction
   );
+  const isClockSetterItem = (item) => (
+    item
+    && typeof item === 'object'
+    && item.hour !== undefined
+    && item.minute !== undefined
+    && item.timeText
+  );
+
+  const renderClockSetterFeedback = (items, label) => {
+    const safeItems = (Array.isArray(items) ? items : [items]).filter(isClockSetterItem);
+
+    return (
+      <View style={styles.reviewBlock}>
+        <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
+        <View style={styles.clockSetterList}>
+          {safeItems.map((item, index) => (
+            <View key={`${item.timeText}-${index}`} style={styles.clockSetterCard}>
+              <StaticClockFace
+                hour={item.hour}
+                minute={item.minute}
+                size={112}
+              />
+              <View style={styles.clockSetterTextGroup}>
+                <Text style={[styles.clockSetterTime, { fontFamily: theme.fontFamily.accent }]}>
+                  {item.timeText}
+                </Text>
+                {!!item.helperText && (
+                  <Text style={[styles.clockSetterHelper, { fontFamily: theme.fontFamily.body }]}>
+                    {item.helperText}
+                  </Text>
+                )}
+              </View>
+            </View>
+          ))}
+        </View>
+      </View>
+    );
+  };
 
   const renderFractionShapeFeedback = (items, label) => {
     const safeItems = (Array.isArray(items) ? items : [items]).filter(isFractionShapeItem);
@@ -186,6 +225,10 @@ export default function ResultModal({
     const shouldRenderSequence = resultMeta?.displayMode === 'sequence'
       || metadata.type === 'ordering-numbers'
       || metadata.type === 'ordering-decimals';
+
+    if (resultMeta?.displayMode === 'clock-setter' && safeItems.some(isClockSetterItem)) {
+      return renderClockSetterFeedback(safeItems, label);
+    }
 
     if (resultMeta?.displayMode === 'fraction-shape' && safeItems.some(isFractionShapeItem)) {
       return renderFractionShapeFeedback(safeItems, label);
@@ -434,6 +477,37 @@ const styles = StyleSheet.create({
   feedbackAsset: {
     width: '100%',
     height: '100%',
+  },
+  clockSetterList: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  clockSetterCard: {
+    width: '100%',
+    backgroundColor: Colors.surface,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: Colors.outlineVariant,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    alignItems: 'center',
+    gap: 10,
+  },
+  clockSetterTextGroup: {
+    alignItems: 'center',
+    gap: 2,
+  },
+  clockSetterTime: {
+    fontSize: 24,
+    color: Colors.onSurface,
+    lineHeight: 30,
+  },
+  clockSetterHelper: {
+    fontSize: 14,
+    color: Colors.onSurfaceVariant,
+    lineHeight: 20,
+    textAlign: 'center',
   },
   fractionShapeList: {
     width: '100%',

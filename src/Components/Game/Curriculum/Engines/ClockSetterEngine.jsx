@@ -39,6 +39,47 @@ const computeHourAngle = (hour, minute = 0) =>
 
 const computeMinuteAngle = (m) => ((m * 6) + 360) % 360;
 
+const normalizeHour = (hour = 12) => Number(hour) % 12 || 12;
+
+const normalizeMinute = (minute = 0) => Number(minute ?? 0);
+
+const formatTimeText = (hour, minute = 0) => (
+  `${normalizeHour(hour)}:${String(normalizeMinute(minute)).padStart(2, '0')}`
+);
+
+const getMinuteHandNumber = (minute = 0) => {
+  const clockNumber = Math.round(normalizeMinute(minute) / 5) % 12;
+  return clockNumber || 12;
+};
+
+const buildCorrectTimeHelperText = (hour, minute) => (
+  `Hour hand at ${normalizeHour(hour)}, minute hand at ${getMinuteHandNumber(minute)}`
+);
+
+const buildClockSetterResultMeta = ({ targetTime, snapHour, snapMinute }) => {
+  const targetHour = normalizeHour(targetTime?.hour);
+  const targetMinute = normalizeMinute(targetTime?.minute);
+  const userHour = normalizeHour(snapHour);
+  const userMinute = normalizeMinute(snapMinute);
+  const userTimeText = formatTimeText(userHour, userMinute);
+
+  return {
+    displayMode: 'clock-setter',
+    correctAnswerItems: [{
+      hour: targetHour,
+      minute: targetMinute,
+      timeText: formatTimeText(targetHour, targetMinute),
+      helperText: buildCorrectTimeHelperText(targetHour, targetMinute),
+    }],
+    userAnswerItems: [{
+      hour: userHour,
+      minute: userMinute,
+      timeText: userTimeText,
+      helperText: `You made ${userTimeText}`,
+    }],
+  };
+};
+
 // Worklet-safe snap to nearest multiple of step
 const snapToStep = (angle, step) => {
   'worklet';
@@ -121,7 +162,17 @@ export default function ClockSetterEngine({ data, onResult }) {
     btnBorderBottom.value = 6;
     hourHandScale.value   = 1;
     minuteHandScale.value = 1;
-  }, [data]);
+  }, [
+    data,
+    initialTime?.hour,
+    initialTime?.minute,
+    hourAngle,
+    minuteAngle,
+    btnTranslateY,
+    btnBorderBottom,
+    hourHandScale,
+    minuteHandScale,
+  ]);
 
   // ── Clock center measurement ───────────────────────────────────
   const handleClockLayout = () => {
@@ -151,16 +202,17 @@ export default function ClockSetterEngine({ data, onResult }) {
     const hourOk   = snapHour === tH;
     const minuteOk = isMinuteActive ? snapMinute === targetTime.minute : true;
     const correct  = hourOk && minuteOk;
-    const timeStr  = `${snapHour}:${String(snapMinute).padStart(2, '0')}`;
+    const timeStr  = formatTimeText(snapHour, snapMinute);
+    const resultMeta = buildClockSetterResultMeta({ targetTime, snapHour, snapMinute });
     console.log('[ClockSetter] CHECK — hour:', snapHour, '/', tH, '| min:', snapMinute, '/', targetTime.minute, '| correct:', correct);
     setAnswered(true);
     setIsCorrect(correct);
     if (correct) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setTimeout(() => onResult(true, [timeStr]), 700);
+      globalThis.setTimeout(() => onResult(true, [timeStr], resultMeta), 700);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      onResult(false, [timeStr]);
+      onResult(false, [timeStr], resultMeta);
     }
   };
 
