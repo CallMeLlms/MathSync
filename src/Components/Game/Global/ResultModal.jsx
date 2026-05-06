@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Animated, { 
   useAnimatedStyle, 
   withSpring, 
@@ -11,10 +11,9 @@ import * as Haptics from 'expo-haptics';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/constants/colors';
 import SequenceVisualizer from '@/Components/Game/Global/Visualizers/SequenceVisualizer';
+import FractionShapeVisual from '@/Components/Game/Global/Visualizers/FractionShapeVisual';
 import AssetDisplay from '@/Components/Game/Global/AssetDisplay';
 import speechManager from '@/utils/speechManager';
-
-const { width, height } = Dimensions.get('window');
 
 /**
  * ResultModal
@@ -42,7 +41,7 @@ export default function ResultModal({
       scale.value = 0.85;
       opacity.value = 0;
     }
-  }, [isVisible]);
+  }, [isVisible, opacity, scale]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -75,6 +74,44 @@ export default function ResultModal({
   const metadata = problem?.metadata || {};
 
   const isAssetId = (val) => typeof val === 'string' && (val.includes('_') || val.startsWith('icon_') || val.startsWith('emoji:'));
+  const isFractionShapeItem = (item) => (
+    item
+    && typeof item === 'object'
+    && item.shape
+    && item.fraction
+  );
+
+  const renderFractionShapeFeedback = (items, label) => {
+    const safeItems = (Array.isArray(items) ? items : [items]).filter(isFractionShapeItem);
+
+    return (
+      <View style={styles.reviewBlock}>
+        <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
+        <View style={styles.fractionShapeList}>
+          {safeItems.map((item, index) => (
+            <View key={`${item.shape}-${item.fraction}-${index}`} style={styles.fractionShapeCard}>
+              <FractionShapeVisual
+                shape={item.shape}
+                fraction={item.fraction}
+                size={104}
+                style={styles.fractionShapeVisual}
+              />
+              <View style={styles.fractionShapeTextGroup}>
+                <Text style={[styles.fractionShapeFraction, { fontFamily: theme.fontFamily.accent }]}>
+                  {item.fraction}
+                </Text>
+                {!!item.answer && (
+                  <Text style={[styles.fractionShapeAnswer, { fontFamily: theme.fontFamily.body }]}>
+                    {item.answer}
+                  </Text>
+                )}
+              </View>
+            </View>
+          ))}
+        </View>
+      </View>
+    );
+  };
 
   const renderComparePileAssets = (item) => {
     const count = Number(item?.count) || 0;
@@ -149,6 +186,10 @@ export default function ResultModal({
     const shouldRenderSequence = resultMeta?.displayMode === 'sequence'
       || metadata.type === 'ordering-numbers'
       || metadata.type === 'ordering-decimals';
+
+    if (resultMeta?.displayMode === 'fraction-shape' && safeItems.some(isFractionShapeItem)) {
+      return renderFractionShapeFeedback(safeItems, label);
+    }
 
     if (resultMeta?.displayMode === 'compare-picker') {
       return renderComparePickerFeedback(safeItems, label);
@@ -393,6 +434,40 @@ const styles = StyleSheet.create({
   feedbackAsset: {
     width: '100%',
     height: '100%',
+  },
+  fractionShapeList: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  fractionShapeCard: {
+    width: '100%',
+    backgroundColor: Colors.surface,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: Colors.outlineVariant,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    alignItems: 'center',
+    gap: 10,
+  },
+  fractionShapeVisual: {
+    marginBottom: 2,
+  },
+  fractionShapeTextGroup: {
+    alignItems: 'center',
+    gap: 2,
+  },
+  fractionShapeFraction: {
+    fontSize: 22,
+    color: Colors.onSurface,
+    lineHeight: 28,
+  },
+  fractionShapeAnswer: {
+    fontSize: 14,
+    color: Colors.onSurfaceVariant,
+    lineHeight: 20,
+    textAlign: 'center',
   },
   comparePileRow: {
     width: '100%',

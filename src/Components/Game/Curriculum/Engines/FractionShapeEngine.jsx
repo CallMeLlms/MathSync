@@ -7,129 +7,24 @@ import Animated, {
   ZoomIn,
   FadeIn,
 } from 'react-native-reanimated';
-import Svg, { Circle, Path, Rect, Line, ClipPath, Defs, G } from 'react-native-svg';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import speechManager from '@/utils/speechManager';
 import QuestionHeader from '@/Components/Game/Global/QuestionHeader';
+import FractionShapeVisual from '@/Components/Game/Global/Visualizers/FractionShapeVisual';
 
 const SHAPE_SIZE = 180;
-const SHADE_COLOR = '#F48FB1';
-const STROKE_COLOR = '#AD1457';
-const STROKE_WIDTH = 3;
 
-// ─── SVG Fraction Diagrams ───────────────────────────────────────────────────
-
-const CircleHalf = () => {
-  const r = SHAPE_SIZE / 2;
-  const cx = r;
-  const cy = r;
-  return (
-    <Svg width={SHAPE_SIZE} height={SHAPE_SIZE}>
-      <Defs>
-        <ClipPath id="circle-clip-half">
-          <Circle cx={cx} cy={cy} r={r - STROKE_WIDTH / 2} />
-        </ClipPath>
-      </Defs>
-      <Circle cx={cx} cy={cy} r={r - STROKE_WIDTH / 2} fill="transparent" stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-      {/* Top half shaded */}
-      <Rect
-        x={0} y={0} width={SHAPE_SIZE} height={r}
-        fill={SHADE_COLOR}
-        clipPath="url(#circle-clip-half)"
-      />
-      {/* Diameter line */}
-      <Line x1={0} y1={cy} x2={SHAPE_SIZE} y2={cy} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-    </Svg>
-  );
-};
-
-const CircleQuarter = () => {
-  const r = SHAPE_SIZE / 2;
-  const cx = r;
-  const cy = r;
-  return (
-    <Svg width={SHAPE_SIZE} height={SHAPE_SIZE}>
-      <Defs>
-        <ClipPath id="circle-clip-quarter">
-          <Circle cx={cx} cy={cy} r={r - STROKE_WIDTH / 2} />
-        </ClipPath>
-      </Defs>
-      <Circle cx={cx} cy={cy} r={r - STROKE_WIDTH / 2} fill="transparent" stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-      {/* Top-right quarter shaded */}
-      <Rect
-        x={cx} y={0} width={r} height={r}
-        fill={SHADE_COLOR}
-        clipPath="url(#circle-clip-quarter)"
-      />
-      {/* Cross lines */}
-      <Line x1={cx} y1={0} x2={cx} y2={SHAPE_SIZE} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-      <Line x1={0} y1={cy} x2={SHAPE_SIZE} y2={cy} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-    </Svg>
-  );
-};
-
-const SquareHalf = () => (
-  <Svg width={SHAPE_SIZE} height={SHAPE_SIZE}>
-    <Rect x={STROKE_WIDTH / 2} y={STROKE_WIDTH / 2} width={SHAPE_SIZE - STROKE_WIDTH} height={SHAPE_SIZE - STROKE_WIDTH} fill="transparent" stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-    {/* Left half shaded */}
-    <Rect x={STROKE_WIDTH / 2} y={STROKE_WIDTH / 2} width={(SHAPE_SIZE - STROKE_WIDTH) / 2} height={SHAPE_SIZE - STROKE_WIDTH} fill={SHADE_COLOR} />
-    {/* Midline */}
-    <Line x1={SHAPE_SIZE / 2} y1={0} x2={SHAPE_SIZE / 2} y2={SHAPE_SIZE} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-  </Svg>
-);
-
-const SquareQuarter = () => (
-  <Svg width={SHAPE_SIZE} height={SHAPE_SIZE}>
-    <Rect x={STROKE_WIDTH / 2} y={STROKE_WIDTH / 2} width={SHAPE_SIZE - STROKE_WIDTH} height={SHAPE_SIZE - STROKE_WIDTH} fill="transparent" stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-    {/* Top-left quarter shaded */}
-    <Rect x={STROKE_WIDTH / 2} y={STROKE_WIDTH / 2} width={(SHAPE_SIZE - STROKE_WIDTH) / 2} height={(SHAPE_SIZE - STROKE_WIDTH) / 2} fill={SHADE_COLOR} />
-    {/* Cross lines */}
-    <Line x1={SHAPE_SIZE / 2} y1={0} x2={SHAPE_SIZE / 2} y2={SHAPE_SIZE} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-    <Line x1={0} y1={SHAPE_SIZE / 2} x2={SHAPE_SIZE} y2={SHAPE_SIZE / 2} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-  </Svg>
-);
-
-const RectHalf = () => {
-  const W = SHAPE_SIZE;
-  const H = SHAPE_SIZE * 0.55;
-  return (
-    <Svg width={W} height={H}>
-      <Rect x={STROKE_WIDTH / 2} y={STROKE_WIDTH / 2} width={W - STROKE_WIDTH} height={H - STROKE_WIDTH} fill="transparent" stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-      {/* Left half shaded */}
-      <Rect x={STROKE_WIDTH / 2} y={STROKE_WIDTH / 2} width={(W - STROKE_WIDTH) / 2} height={H - STROKE_WIDTH} fill={SHADE_COLOR} />
-      {/* Midline */}
-      <Line x1={W / 2} y1={0} x2={W / 2} y2={H} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-    </Svg>
-  );
-};
-
-const RectQuarter = () => {
-  const W = SHAPE_SIZE;
-  const H = SHAPE_SIZE * 0.55;
-  const segW = (W - STROKE_WIDTH) / 4;
-  return (
-    <Svg width={W} height={H}>
-      <Rect x={STROKE_WIDTH / 2} y={STROKE_WIDTH / 2} width={W - STROKE_WIDTH} height={H - STROKE_WIDTH} fill="transparent" stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-      {/* First quarter shaded */}
-      <Rect x={STROKE_WIDTH / 2} y={STROKE_WIDTH / 2} width={segW} height={H - STROKE_WIDTH} fill={SHADE_COLOR} />
-      {/* Division lines */}
-      <Line x1={STROKE_WIDTH / 2 + segW} y1={0} x2={STROKE_WIDTH / 2 + segW} y2={H} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-      <Line x1={STROKE_WIDTH / 2 + segW * 2} y1={0} x2={STROKE_WIDTH / 2 + segW * 2} y2={H} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-      <Line x1={STROKE_WIDTH / 2 + segW * 3} y1={0} x2={STROKE_WIDTH / 2 + segW * 3} y2={H} stroke={STROKE_COLOR} strokeWidth={STROKE_WIDTH} />
-    </Svg>
-  );
-};
-
-const SHAPE_MAP = {
-  'circle-1/2': CircleHalf,
-  'circle-1/4': CircleQuarter,
-  'square-1/2': SquareHalf,
-  'square-1/4': SquareQuarter,
-  'rectangle-1/2': RectHalf,
-  'rectangle-1/4': RectQuarter,
-};
+const buildFractionShapeResultMeta = ({ shape, fraction, answer, selectedOption }) => ({
+  displayMode: 'fraction-shape',
+  correctAnswerItems: [{
+    shape,
+    fraction,
+    answer: String(answer ?? ''),
+  }],
+  userAnswerItems: [String(selectedOption)],
+});
 
 // ─── OptionButton ────────────────────────────────────────────────────────────
 
@@ -226,9 +121,7 @@ const FractionShapeEngine = ({ data, onResult }) => {
   const [evaluation, setEvaluation] = useState(null);
   const [resolved, setResolved] = useState(false);
 
-  const shuffledOptions = useMemo(() => [...options].sort(() => Math.random() - 0.5), [data]);
-
-  const ShapeDiagram = SHAPE_MAP[`${shape}-${fraction}`] || CircleHalf;
+  const shuffledOptions = useMemo(() => [...options].sort(() => Math.random() - 0.5), [options]);
 
   useEffect(() => {
     setSelectedOption(null);
@@ -238,8 +131,8 @@ const FractionShapeEngine = ({ data, onResult }) => {
 
   useEffect(() => {
     if (questionText) {
-      const timer = setTimeout(() => speechManager.speakInstruction(questionText), 400);
-      return () => { clearTimeout(timer); speechManager.stop(); };
+      const timer = globalThis.setTimeout(() => speechManager.speakInstruction(questionText), 400);
+      return () => { globalThis.clearTimeout(timer); speechManager.stop(); };
     }
   }, [questionText]);
 
@@ -247,19 +140,20 @@ const FractionShapeEngine = ({ data, onResult }) => {
     if (!selectedOption || resolved) return;
 
     const isCorrect = String(selectedOption).toLowerCase().trim() === String(answer).toLowerCase().trim();
+    const resultMeta = buildFractionShapeResultMeta({ shape, fraction, answer, selectedOption });
 
     if (isCorrect) {
       setEvaluation('correct');
       setResolved(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       speechManager.speakFeedback('Correct!', true);
-      setTimeout(() => onResult(true, [String(selectedOption)]), 800);
+      globalThis.setTimeout(() => onResult(true, [String(selectedOption)], resultMeta), 800);
     } else {
       setEvaluation('wrong');
       setResolved(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       speechManager.speakFeedback('Try again!', false);
-      setTimeout(() => onResult(false, [String(selectedOption)]), 1000);
+      globalThis.setTimeout(() => onResult(false, [String(selectedOption)], resultMeta), 1000);
     }
   };
 
@@ -267,7 +161,7 @@ const FractionShapeEngine = ({ data, onResult }) => {
     <View style={styles.container}>
       <QuestionHeader text={questionText} />
       <Animated.View entering={FadeIn.duration(400)} style={styles.shapeContainer}>
-        <ShapeDiagram />
+        <FractionShapeVisual shape={shape} fraction={fraction} size={SHAPE_SIZE} />
         <Text style={styles.fractionLabel}>{fraction}</Text>
       </Animated.View>
 
