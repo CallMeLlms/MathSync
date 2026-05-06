@@ -280,7 +280,9 @@ const ComposerEngine = ({ data, onResult }) => {
   const handleCheckAnswer = useCallback(() => {
     if (slotA === null || slotB === null || answered) return;
 
-    const isCorrect = slotA + slotB === target;
+    const userSum = slotA + slotB;
+    const userEquation = `${slotA} + ${slotB} = ${userSum}`;
+    const isCorrect = userSum === target;
 
     if (isCorrect) {
       setAnswered(true);
@@ -289,11 +291,16 @@ const ComposerEngine = ({ data, onResult }) => {
         withSpring(1.15, { damping: 8, stiffness: 200 }),
         withSpring(1.0, { damping: 12, stiffness: 200 })
       );
-      setTimeout(() => onResult(true, [slotA.toString(), slotB.toString()]), 600);
+      setTimeout(() => onResult(true, [slotA.toString(), slotB.toString()], {
+        correctAnswerItems: [`You made ${target}`, userEquation],
+      }), 600);
     } else {
       setIsWrong(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      onResult(false, [slotA.toString(), slotB.toString()]);
+      onResult(false, [slotA.toString(), slotB.toString()], {
+        correctAnswerItems: [`Make ${target}`],
+        userAnswerItems: [userEquation],
+      });
 
       setTimeout(() => {
         setSlotA(null);

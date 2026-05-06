@@ -303,17 +303,25 @@ const ShapeTracerEngine = ({ data, onResult }) => {
   const handleCheckAnswer = useCallback(() => {
     if (answered || !canCheck) return;
     setAnswered(true);
+    const tracedResult = `You traced ${coveragePct}%`;
+    const successBand = 'Trace 80% or more';
+    const belowThresholdLabel = 'Trace a little more';
 
     if (coverage >= COVERAGE_THRESHOLD) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      speechManager.speakFeedback('Great tracing!', true);
-      setTimeout(() => onResult(true, [shape]), 700);
+      speechManager.speakFeedback('Great job!', true);
+      setTimeout(() => onResult(true, [shape], {
+        correctAnswerItems: [tracedResult],
+      }), 700);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      speechManager.speakFeedback('Try tracing more carefully.', false);
-      setTimeout(() => onResult(false, [shape]), 700);
+      speechManager.speakFeedback('Trace a little more.', false);
+      setTimeout(() => onResult(false, [shape], {
+        correctAnswerItems: [successBand],
+        userAnswerItems: [belowThresholdLabel, tracedResult],
+      }), 700);
     }
-  }, [answered, canCheck, coverage, onResult, shape]);
+  }, [answered, canCheck, coverage, coveragePct, onResult, shape]);
 
   // Clear all tracing
   const handleReset = useCallback(() => {
@@ -328,8 +336,8 @@ const ShapeTracerEngine = ({ data, onResult }) => {
 
   const getInstruction = () => {
     if (answered) return 'Great job!';
-    if (canCheck) return 'Looking good! Check your answer.';
-    return `Trace the ${shapeLabel} — ${coveragePct}% done`;
+    if (canCheck) return 'Press check when you are done.';
+    return `Trace the ${shapeLabel}. ${coveragePct}% done`;
   };
 
   return (
@@ -525,7 +533,7 @@ const styles = StyleSheet.create({
   progressText: {
     fontFamily: 'PlusJakartaSans-Bold',
     fontSize: SCREEN_HEIGHT * 0.015,
-    color: Colors.onSurfaceVariant,
+    color: Colors.onPrimaryContainer,
   },
   footer: {
     width: '100%',

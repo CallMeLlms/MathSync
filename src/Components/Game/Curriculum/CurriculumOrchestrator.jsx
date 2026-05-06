@@ -82,7 +82,12 @@ export default function CurriculumOrchestrator({
 
   const [showExitModal, setShowExitModal] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
-  const [lastResultData, setLastResultData] = useState({ isCorrect: false, userAnswerItems: [], currentQuestion: null });
+  const [lastResultData, setLastResultData] = useState({
+    isCorrect: false,
+    userAnswerItems: [],
+    currentQuestion: null,
+    resultMeta: null,
+  });
 
   // Load lesson content and preload all image assets in parallel before starting.
   useEffect(() => {
@@ -122,7 +127,7 @@ export default function CurriculumOrchestrator({
 
   const currentQuestion = lessonContent.questions[currentQuestionIndex];
   const isFinished = currentQuestionIndex >= lessonContent.questions.length;
-  const handleResult = (isCorrect, userAnswerItems = []) => {
+  const handleResult = (isCorrect, userAnswerItems = [], resultMeta = null) => {
     recordAnswer(isCorrect);
 
     const outcomeId = currentQuestion?.learningOutcomeId ?? null;
@@ -140,7 +145,8 @@ export default function CurriculumOrchestrator({
     setLastResultData({
       isCorrect,
       userAnswerItems,
-      currentQuestion
+      currentQuestion,
+      resultMeta,
     });
     setShowResultModal(true);
   };
@@ -240,7 +246,7 @@ export default function CurriculumOrchestrator({
         <MatcherEngine
           key={currentQuestionIndex}
           question={currentQuestion}
-          onAnswer={(isCorrect) => handleResult(isCorrect, [])}
+          onAnswer={(isCorrect, userAnswerItems, resultMeta) => handleResult(isCorrect, userAnswerItems, resultMeta)}
         />
       );
       default: return <Text style={styles.errorText}>Engine "{engineType}" not found.</Text>;
@@ -287,6 +293,7 @@ export default function CurriculumOrchestrator({
         isCorrect={lastResultData.isCorrect}
         problem={lastResultData.currentQuestion}
         userAnswer={lastResultData.userAnswerItems ? lastResultData.userAnswerItems.join(', ') : ''}
+        resultMeta={lastResultData.resultMeta}
         onContinue={handleContinue}
         theme={theme}
       />

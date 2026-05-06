@@ -243,6 +243,20 @@ const MatcherEngine = ({ question, onAnswer }) => {
     setSelectedLeft(null);
   }, [answered, showErrors]);
 
+  const getCorrectPairsText = () => {
+    const pairLines = pairs.map(pair => `${pair.left} = ${pair.right}`);
+    return `Right pairs:\n${pairLines.join('\n')}`;
+  };
+
+  const getUserPairsText = () => {
+    const pairLines = pairs.map((pair, index) => {
+      const matchedPairIndex = userMatches[index];
+      const matchedRight = pairs[matchedPairIndex]?.right ?? 'not matched';
+      return `${pair.left} = ${matchedRight}`;
+    });
+    return `Your pairs:\n${pairLines.join('\n')}`;
+  };
+
   const handleCheckAnswer = () => {
     if (answered) return;
     if (Object.keys(userMatches).length !== pairs.length) return;
@@ -255,11 +269,17 @@ const MatcherEngine = ({ question, onAnswer }) => {
       setAnswered(true);
       setShowErrors(false);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setTimeout(() => onAnswer(true), 800);
+      const matchedLines = pairs.map(pair => `${pair.left} = ${pair.right}`);
+      setTimeout(() => onAnswer(true, [], {
+        correctAnswerItems: [`You matched:\n${matchedLines.join('\n')}`],
+      }), 800);
     } else {
       setShowErrors(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      onAnswer(false);
+      onAnswer(false, [], {
+        correctAnswerItems: [getCorrectPairsText()],
+        userAnswerItems: [getUserPairsText()],
+      });
       // Auto-reset wrong matches after showing error state
       setTimeout(() => {
         setUserMatches({});

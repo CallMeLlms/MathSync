@@ -26,6 +26,7 @@ export default function ResultModal({
   isCorrect,
   problem,
   userAnswer,
+  resultMeta,
   onContinue,
   theme
 }) {
@@ -60,7 +61,7 @@ export default function ResultModal({
   });
 
   const emoji = isCorrect ? '🎉' : '💪';
-  const statusTitle = isCorrect ? 'Perfect! Great job!' : "Proceed to the next question!";
+  const statusTitle = isCorrect ? 'Great job!' : 'Let us proceed to the next question';
   const statusColor = isCorrect ? Colors.success : Colors.error;
 
   useEffect(() => {
@@ -124,12 +125,15 @@ export default function ResultModal({
     return (
       <View style={styles.reviewBlock}>
         <Text style={[styles.reviewLabel, { fontFamily: theme.fontFamily.body }]}>{label}:</Text>
-        <Text style={[styles.reviewText, { fontFamily: theme.fontFamily.accent }]}>{safeItems.join(', ')}</Text>
+        <Text style={[styles.reviewText, { fontFamily: theme.fontFamily.accent }]}>
+          {safeItems.join('\n')}
+        </Text>
       </View>
     );
   };
 
   const getUserAnswerArray = () => {
+    if (Array.isArray(resultMeta?.userAnswerItems)) return resultMeta.userAnswerItems;
     if (!userAnswer) return [];
     if (Array.isArray(userAnswer)) return userAnswer;
     if (typeof userAnswer === 'string') return userAnswer.split(', ');
@@ -137,6 +141,8 @@ export default function ResultModal({
   };
 
   const getCorrectAnswerArray = () => {
+    if (Array.isArray(resultMeta?.correctAnswerItems)) return resultMeta.correctAnswerItems;
+
     // 1. ShapeHuntEngine
     if (problem?.items && Array.isArray(problem.items)) {
       const targets = problem.items.filter(i => i.isTarget).map(i => i.assetId);
@@ -151,9 +157,9 @@ export default function ResultModal({
     // 3. GeoboardEngine
     if (problem?.type === 'GEOBOARD') {
       const shape = problem?.shape?.toLowerCase();
-      if (shape === 'triangle') return ['emoji:▲', 'Triangle'];
-      if (shape === 'square') return ['emoji:■', 'Square'];
-      if (shape === 'rectangle') return ['emoji:▬', 'Rectangle'];
+      if (shape === 'triangle') return ['shape_triangle', 'Triangle'];
+      if (shape === 'square') return ['shape_square', 'Square'];
+      if (shape === 'rectangle') return ['shape_rectangle', 'Rectangle'];
       return [problem?.shape || ''];
     }
 
@@ -187,11 +193,11 @@ export default function ResultModal({
           <View style={styles.contentContainer}>
             <View style={styles.reviewContainer}>
               {/* Correct Answer Display */}
-              {renderVisualizer(getCorrectAnswerArray(), isCorrect ? "Result" : "Correct Answer", true)}
+              {renderVisualizer(getCorrectAnswerArray(), isCorrect ? 'Answer' : 'Right Answer', true)}
               
               {/* User Answer Display (if wrong) */}
-              {!isCorrect && userAnswer && (
-                renderVisualizer(getUserAnswerArray(), "Your Try", false)
+              {!isCorrect && getUserAnswerArray().length > 0 && (
+                renderVisualizer(getUserAnswerArray(), 'Your Answer', false)
               )}
             </View>
           </View>
@@ -279,7 +285,9 @@ const styles = StyleSheet.create({
   },
   reviewText: {
     fontSize: 20,
-    color: Colors.onSurface,
+    color: Colors.onSurfaceVariant,
+    lineHeight: 28,
+    textAlign: 'center',
   },
   assetRow: {
     flexDirection: 'row',

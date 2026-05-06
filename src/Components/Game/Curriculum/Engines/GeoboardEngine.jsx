@@ -53,6 +53,12 @@ const SHAPE_CONFIG = {
   rectangle: { requiredDots: 4, label: 'Rectangle', emoji: '▬', accentColor: Colors.tertiary,   accentBorder: '#00531e' },
 };
 
+const SHAPE_RESULT_ITEMS = {
+  triangle: { assetId: 'shape_triangle', label: 'triangle' },
+  square: { assetId: 'shape_square', label: 'square' },
+  rectangle: { assetId: 'shape_rectangle', label: 'rectangle' },
+};
+
 // Guided-mode hint — a pre-defined valid example for each shape (col, row)
 const HINT_VERTICES = {
   triangle:  [{ col: 1, row: 0 }, { col: 2, row: 2 }, { col: 0, row: 2 }],
@@ -115,6 +121,49 @@ const validateShape = (rawDots, targetShape) => {
 
     default: return false;
   }
+};
+
+const describeDrawnShape = (rawDots) => {
+  const dots = simplifyPath(rawDots);
+
+  if (dots.length === 3 && validateShape(dots, 'triangle')) {
+    return SHAPE_RESULT_ITEMS.triangle;
+  }
+
+  if (dots.length === 4) {
+    if (validateShape(dots, 'square')) {
+      return SHAPE_RESULT_ITEMS.square;
+    }
+    if (validateShape(dots, 'rectangle')) {
+      return SHAPE_RESULT_ITEMS.rectangle;
+    }
+  }
+
+  return null;
+};
+
+const buildGeoboardResultMeta = ({ isCorrect, targetShape, selectedDots }) => {
+  const targetResult = SHAPE_RESULT_ITEMS[targetShape] ?? SHAPE_RESULT_ITEMS.triangle;
+  const drawnShape = describeDrawnShape(selectedDots);
+
+  if (isCorrect) {
+    return {
+      correctAnswerItems: [
+        targetResult.assetId,
+        `You made a ${targetResult.label}`,
+      ],
+    };
+  }
+
+  return {
+    correctAnswerItems: [
+      targetResult.assetId,
+      `Draw a ${targetResult.label}`,
+    ],
+    userAnswerItems: [
+      drawnShape ? `You made a ${drawnShape.label}` : 'Your shape is not ready yet',
+    ],
+  };
 };
 
 // ─── TactileFooterButton ──────────────────────────────────────────────────────
@@ -345,17 +394,22 @@ const GeoboardEngine = ({ data, onResult }) => {
   const handleCheck = () => {
     if (!isClosed || answered) return;
     const isCorrect = validateShape(selectedDots, shape);
+    const resultMeta = buildGeoboardResultMeta({
+      isCorrect,
+      targetShape: shape,
+      selectedDots,
+    });
     setAnswered(true);
     setIsCorrectResult(isCorrect);
 
     if (isCorrect) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       speechManager.speakFeedback('Great job!', true);
-      setTimeout(() => onResult(true, [shape]), 800);
+      setTimeout(() => onResult(true, [shape], resultMeta), 800);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       speechManager.speakFeedback('Not quite — try again!', false);
-      onResult(false, [shape]);
+      onResult(false, [shape], resultMeta);
       setTimeout(() => {
         setSelectedDots([]);
         setIsClosed(false);
