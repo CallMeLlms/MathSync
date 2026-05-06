@@ -40,7 +40,7 @@
             "level": "pictorial",
             "type": "NUMPAD",
             "difficulty": "Easy",
-            "question": "Look at the picture. There are 9 birds on the tree. 4 birds fly away. How many birds are still on the tree?",
+            "question": "If there are 9 birds on the tree. 4 birds fly away. How many birds are still on the tree?",
             "equation": {
                 "left": "9 - 4",
                 "operator": "=",

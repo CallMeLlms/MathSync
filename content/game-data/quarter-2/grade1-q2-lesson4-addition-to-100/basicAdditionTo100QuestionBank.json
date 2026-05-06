@@ -21,7 +21,7 @@
             "level": "concrete",
             "type": "NUMPAD",
             "difficulty": "Easy",
-            "question": "Use the bundles and sticks: 32 + 5. What is the sum?",
+            "question": "Use the bundles: 32 + 5. What is the sum?",
             "answer": 37,
             "equation": { "left": "32 + 5", "operator": "=", "blank": "right" },
             "assetType": "manipulatives",

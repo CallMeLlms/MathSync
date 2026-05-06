@@ -37,7 +37,7 @@
             "level": "pictorial",
             "type": "VISUAL_PICKER",
             "difficulty": "Medium",
-            "question": "Look at the picture. The blue ribbon is 5 blocks long. The red ribbon is 2 blocks longer. How long is the red ribbon?",
+            "question": "If the blue ribbon is 5 blocks long. The red ribbon is 2 blocks longer. How long is the red ribbon?",
             "answer": 7,
             "assetId": "icon_girl",
             "metadata": {

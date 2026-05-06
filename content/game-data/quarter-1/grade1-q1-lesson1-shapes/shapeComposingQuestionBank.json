@@ -43,8 +43,7 @@
             "metadata": {
                 "options": [
                     "squares",
-                    "triangles",
-                    "circles"
+                    "triangles"
                 ]
             }
         },

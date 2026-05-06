@@ -22,7 +22,7 @@
             "level": "concrete",
             "type": "NUMPAD",
             "difficulty": "Easy",
-            "question": "Use the bundles and sticks: 45 - 3. What is the difference?",
+            "question": "Use the bundles: 45 - 3. What is the difference?",
             "answer": 42,
             "equation": { "left": "45 - 3", "operator": "=", "blank": "right" },
             "assetType": "manipulatives",
