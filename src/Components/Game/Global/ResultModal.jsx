@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import Animated, { 
   useAnimatedStyle, 
   withSpring, 
@@ -348,13 +348,20 @@ export default function ResultModal({
           {/* Main Visual Review Section */}
           <View style={styles.contentContainer}>
             <View style={styles.reviewContainer}>
-              {/* Correct Answer Display */}
-              {renderVisualizer(getCorrectAnswerArray(), isCorrect ? 'Answer' : 'Correct answer', true)}
-              
-              {/* User Answer Display (if wrong) */}
-              {!isCorrect && getUserAnswerArray().length > 0 && (
-                renderVisualizer(getUserAnswerArray(), 'Your Answer', false)
-              )}
+              <ScrollView
+                style={styles.reviewScroll}
+                contentContainerStyle={styles.reviewScrollContent}
+                showsVerticalScrollIndicator
+                keyboardShouldPersistTaps="handled"
+              >
+                {/* Correct Answer Display */}
+                {renderVisualizer(getCorrectAnswerArray(), isCorrect ? 'Answer' : 'Correct answer', true)}
+                
+                {/* User Answer Display (if wrong) */}
+                {!isCorrect && getUserAnswerArray().length > 0 && (
+                  renderVisualizer(getUserAnswerArray(), 'Your Answer', false)
+                )}
+              </ScrollView>
             </View>
           </View>
 
@@ -397,6 +404,7 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     maxWidth: 400,
+    maxHeight: '88%',
     backgroundColor: Colors.surface,
     borderRadius: 32,
     borderWidth: 2,
@@ -417,6 +425,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     width: '100%',
+    flexShrink: 1,
+    minHeight: 0,
     marginBottom: 32,
   },
   reviewContainer: {
@@ -426,6 +436,14 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,0.05)',
     padding: 20,
     width: '100%',
+    flexShrink: 1,
+    minHeight: 0,
+  },
+  reviewScroll: {
+    width: '100%',
+    flexShrink: 1,
+  },
+  reviewScrollContent: {
     gap: 20,
   },
   reviewBlock: {
