@@ -42,13 +42,14 @@ import CompareOrderEngine from './Engines/CompareOrderEngine';
 import MoneyEngine from './Engines/MoneyEngine';
 // Gesture-heavy engines must render inside a plain View — a ScrollView would
 // intercept their touch responder and break drag/draw interactions.
-const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
-
 import { submitGameSession } from '@/services/gameSubmissionService';
 import { getPreloadableAssets } from '@/constants/assetMap';
+import { PASSING_ACCURACY_PERCENT } from '@/constants/gameProgress';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
 import PreGameLoader from '@/Components/Game/Global/PreGameLoader';
+
+const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
 
 /**
  * CurriculumOrchestrator
@@ -72,9 +73,7 @@ export default function CurriculumOrchestrator({
     endGameSession,
     recordAnswer,
     nextQuestion,
-    currentQuestionIndex,
-    totalScore,
-    correctCount
+    currentQuestionIndex
   } = useGameEngine();
 
   const answersRef = React.useRef([]);
@@ -153,7 +152,7 @@ export default function CurriculumOrchestrator({
 
   const handleContinue = () => {
     setShowResultModal(false);
-    setTimeout(() => {
+    globalThis.setTimeout(() => {
       handleComplete();
     }, 300);
   };
@@ -163,14 +162,24 @@ export default function CurriculumOrchestrator({
       nextQuestion();
     } else {
       const questionLength = lessonContent.questions.length;
+      const gameState = useGameEngine.getState();
+      const finalScore = gameState.totalScore;
+      const finalCorrectCount = gameState.correctCount;
+      const finalAccuracy = questionLength > 0
+        ? Math.round((finalCorrectCount / questionLength) * 100)
+        : 0;
+      const didPass = finalAccuracy >= PASSING_ACCURACY_PERCENT;
+      const existingRecord = useUserStore.getState()
+        .completedLessons[gradeKey]?.[String(lessonId)];
+      const isFirstPass = didPass && existingRecord?.completed !== true;
 
       useUserStore.getState().recordSessionResult(gradeKey, lessonId, {
-        correctCount,
+        correctCount: finalCorrectCount,
         totalQuestions: questionLength,
-        score: totalScore,
+        score: finalScore,
       });
 
-      endGameSession();
+      endGameSession({ shouldLogRewards: isFirstPass, shouldCheckBadges: didPass });
 
       const sid  = typeof sectionId     === 'string' ? sectionId.trim()     : '';
       const cid  = typeof classroomId   === 'string' ? classroomId.trim()   : '';
@@ -182,7 +191,7 @@ export default function CurriculumOrchestrator({
           sectionId:   sid,
           classroomId: cid,
           lessonId:    mlid,
-          totalScore,
+          totalScore:  finalScore,
           totalItems:  questionLength,
           answers:     answersRef.current,
         }).catch((err) => {
@@ -190,9 +199,23 @@ export default function CurriculumOrchestrator({
         });
       }
 
+      const resultParams = {
+        lessonId,
+        gradeKey,
+        score: String(finalScore),
+        accuracy: String(finalAccuracy),
+        correctCount: String(finalCorrectCount),
+        totalQuestions: String(questionLength),
+        didPass: didPass ? 'true' : 'false',
+      };
+
+      if (sid) resultParams.sectionId = sid;
+      if (cid) resultParams.classroomId = cid;
+      if (mlid) resultParams.mongoLessonId = mlid;
+
       router.replace({
         pathname: '/game/result',
-        params: { lessonId, gradeKey },
+        params: resultParams,
       });
     }
   };

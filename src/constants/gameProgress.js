@@ -1,0 +1,1 @@
+export const PASSING_ACCURACY_PERCENT = 80;

@@ -10,10 +10,20 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import Colors from '@/constants/colors';
 import { getGameTheme } from '@/theme/gameThemes';
+import { PASSING_ACCURACY_PERCENT } from '@/constants/gameProgress';
 
 import useUserStore from '@/stores/user-stores/useUserStore';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+function getParamValue(value) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function getNumberParam(value, fallback = 0) {
+  const parsed = Number(getParamValue(value));
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
 
 /**
  * GameResultScreen
@@ -72,43 +82,70 @@ export default function GameResultScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
   
-  const lessonId = params.lessonId;
-  const gradeKey = params.gradeKey ?? 'G1';
+  const lessonId = getParamValue(params.lessonId);
+  const gradeKey = getParamValue(params.gradeKey) ?? 'G1';
 
   // Fetch performance data directly from the store
   const lessonData = useUserStore(state => 
     state.completedLessons[gradeKey]?.[lessonId]
   );
   
-  const score = lessonData?.score ?? 0;
-  const accuracy = lessonData?.accuracy ?? 0;
+  const score = getNumberParam(params.score, lessonData?.lastScore ?? lessonData?.score ?? 0);
+  const accuracy = getNumberParam(params.accuracy, lessonData?.lastAccuracy ?? lessonData?.accuracy ?? 0);
+  const didPass = accuracy >= PASSING_ACCURACY_PERCENT;
   
   const theme = getGameTheme(gradeKey);
 
   const getVictoryEmoji = () => {
     if (accuracy >= 90) return '🏆';
-    if (accuracy >= 70) return '⭐';
+    if (didPass) return '⭐';
     if (accuracy >= 50) return '🎉';
     return '💪';
   };
 
   const getVictoryTitle = () => {
     if (accuracy >= 90) return 'Outstanding!';
-    if (accuracy >= 70) return 'Great Job!';
-    if (accuracy >= 50) return 'Well Done!';
-    return 'Keep Going!';
+    if (didPass) return 'Great Job!';
+    return 'Try Again';
   };
 
   const getVictoryMessage = () => {
     if (accuracy >= 90) return 'You are a MathSync Champion!';
-    if (accuracy >= 70) return 'You are getting stronger every lesson!';
-    if (accuracy >= 50) return 'Practice makes perfect. You got this!';
-    return 'Every attempt makes you smarter. Try again!';
+    if (didPass) return 'You are getting stronger every lesson!';
+    return `Reach ${PASSING_ACCURACY_PERCENT}% accuracy to unlock this lesson.`;
   };
 
-  const gradientColors = accuracy >= 70 
+  const gradientColors = didPass 
     ? [Colors.surfaceContainerLowest, Colors.surfaceContainerLow]
     : [Colors.surfaceContainerLow, Colors.surfaceContainer];
+
+  const handleBackToJourney = () => {
+    router.replace(`/journey/${gradeKey}`);
+  };
+
+  const handleTryAgain = () => {
+    if (!lessonId) {
+      handleBackToJourney();
+      return;
+    }
+
+    const retryParams = {
+      lessonId,
+      grade: gradeKey,
+    };
+    const sectionId = getParamValue(params.sectionId);
+    const classroomId = getParamValue(params.classroomId);
+    const mongoLessonId = getParamValue(params.mongoLessonId);
+
+    if (sectionId) retryParams.sectionId = sectionId;
+    if (classroomId) retryParams.classroomId = classroomId;
+    if (mongoLessonId) retryParams.mongoLessonId = mongoLessonId;
+
+    router.replace({
+      pathname: '/game/[lessonId]',
+      params: retryParams,
+    });
+  };
 
   return (
     <LinearGradient 
@@ -144,15 +181,6 @@ export default function GameResultScreen() {
               <Text style={[styles.statValue, { color: theme.primaryColor }]}>{accuracy}%</Text>
               <Text style={styles.statLabel}>🎯 accuracy</Text>
             </View>
-
-            <View style={styles.statDivider} />
-
-            <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: theme.primaryColor }]}>
-                {lessonData ? 'BEST' : '--'}
-              </Text>
-              <Text style={styles.statLabel}>🏆 status</Text>
-            </View>
           </View>
         </View>
 
@@ -165,9 +193,9 @@ export default function GameResultScreen() {
                 styles.accuracyBarFill,
                 {
                   width: `${Math.min(accuracy, 100)}%`,
-                  backgroundColor: accuracy >= 70 ? Colors.bloomProgress : Colors.error,
+                  backgroundColor: didPass ? Colors.bloomProgress : Colors.error,
                   borderBottomWidth: 4,
-                  borderBottomColor: accuracy >= 70 ? '#004d1d' : '#8a1111',
+                  borderBottomColor: didPass ? Colors.success : Colors.error,
                 },
               ]}
             />
@@ -178,15 +206,15 @@ export default function GameResultScreen() {
         <View style={styles.actions}>
           <BulkyButton 
             title="🗺️   BACK TO JOURNEY" 
-            onPress={() => router.back()} 
+            onPress={handleBackToJourney} 
             theme={theme}
           />
           
-          {accuracy < 70 && (
+          {!didPass && (
             <BulkyButton 
               title="🔄  TRY AGAIN" 
               type="secondary"
-              onPress={() => router.back()}
+              onPress={handleTryAgain}
               theme={theme}
             />
           )}

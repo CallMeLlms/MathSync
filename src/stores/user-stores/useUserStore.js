@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PASSING_ACCURACY_PERCENT } from '@/constants/gameProgress';
 
 const XP_LOG_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -36,7 +37,7 @@ export const useUserStore = create(
         streak: 0 
       },
       
-      // Curriculum progress: { gradeKey: { lessonId: { completed, score, accuracy, timestamp } } }
+      // Curriculum progress: { gradeKey: { lessonId: { completed, score, accuracy, lastScore, lastAccuracy, timestamp } } }
       completedLessons: {},
 
       earnedBadges: [], // string[] of unlocked badge IDs
@@ -129,37 +130,46 @@ export const useUserStore = create(
 
       /**
        * Records the result of a lesson session.
-       * Handles anti-farming (points once) and best-record retention (highest score).
+       * Keeps both best-ever and latest-attempt fields, with permanent rewards only on first pass.
        */
       recordSessionResult: (gradeKey, lessonId, results) => set((state) => {
         const { correctCount, totalQuestions, score } = results;
         const id = String(lessonId);
+        const safeCorrectCount = Math.max(0, Number(correctCount) || 0);
+        const safeTotalQuestions = Math.max(0, Number(totalQuestions) || 0);
+        const safeScore = Math.max(0, Number(score) || 0);
         
         // 1. Calculate accuracy safely
-        const sessionAccuracy = totalQuestions > 0 
-          ? Math.round((correctCount / totalQuestions) * 100) 
+        const sessionAccuracy = safeTotalQuestions > 0 
+          ? Math.round((safeCorrectCount / safeTotalQuestions) * 100) 
           : 0;
+        const didPass = sessionAccuracy >= PASSING_ACCURACY_PERCENT;
 
         // 2. Anti-Farming & New Progress
         const gradeLessons = state.completedLessons[gradeKey] || {};
         const existingRecord = gradeLessons[id];
-        const isFirstTime = !existingRecord;
+        const wasCompleted = existingRecord?.completed === true;
+        const isFirstPass = didPass && !wasCompleted;
 
-        // Points and Solve count only for first-time completion
-        const pointsToAdd = isFirstTime ? score : 0;
-        const solvedToAdd = isFirstTime ? totalQuestions : 0;
+        // Permanent rewards only unlock once, on the first passing attempt.
+        const pointsToAdd = isFirstPass ? safeScore : 0;
+        const solvedToAdd = isFirstPass ? safeTotalQuestions : 0;
 
-        // 3. Update Individual Lesson Record (Keep highest score/accuracy)
+        // 3. Update Individual Lesson Record (Keep highest score/accuracy and latest attempt)
         const newRecord = {
-          completed: true,
-          score: existingRecord ? Math.max(existingRecord.score, score) : score,
-          accuracy: existingRecord ? Math.max(existingRecord.accuracy, sessionAccuracy) : sessionAccuracy,
+          completed: wasCompleted || didPass,
+          score: existingRecord ? Math.max(existingRecord.score || 0, safeScore) : safeScore,
+          accuracy: existingRecord ? Math.max(existingRecord.accuracy || 0, sessionAccuracy) : sessionAccuracy,
+          lastScore: safeScore,
+          lastAccuracy: sessionAccuracy,
+          lastCorrectCount: safeCorrectCount,
+          lastTotalQuestions: safeTotalQuestions,
           timestamp: new Date().toISOString()
         };
 
         // 4. Update Global Stats
-        const newTotalCorrect = (state.stats.totalCorrect || 0) + correctCount;
-        const newTotalAttempted = (state.stats.totalAttempted || 0) + totalQuestions;
+        const newTotalCorrect = (state.stats.totalCorrect || 0) + safeCorrectCount;
+        const newTotalAttempted = (state.stats.totalAttempted || 0) + safeTotalQuestions;
         const globalAccuracy = newTotalAttempted > 0 
           ? `${Math.round((newTotalCorrect / newTotalAttempted) * 100)}%` 
           : '0%';
@@ -209,7 +219,16 @@ export const useUserStore = create(
             ...state.completedLessons,
             [gradeKey]: {
               ...gradeProgress,
-              [id]: { completed: true, score: 0, accuracy: 0, timestamp: new Date().toISOString() }
+              [id]: {
+                completed: true,
+                score: 0,
+                accuracy: 0,
+                lastScore: 0,
+                lastAccuracy: 0,
+                lastCorrectCount: 0,
+                lastTotalQuestions: 0,
+                timestamp: new Date().toISOString()
+              }
             }
           }
         };
@@ -220,7 +239,7 @@ export const useUserStore = create(
        */
       isLessonComplete: (gradeKey, lessonId) => {
         const gradeProgress = get().completedLessons[gradeKey] || {};
-        return !!gradeProgress[String(lessonId)];
+        return gradeProgress[String(lessonId)]?.completed === true;
       },
 
       resetStore: () => set({ 

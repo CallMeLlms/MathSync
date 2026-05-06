@@ -45,30 +45,34 @@ const useGameEngine = create((set, get) => ({
     currentQuestionIndex: state.currentQuestionIndex + 1,
   })),
 
-  // End the game session (logs XP once per sessionId — see useUserStore xpSessionLog note)
-  endGameSession: () => {
+  // End the game session. XP/activity logging is opt-in to prevent exit/failure farming.
+  endGameSession: ({ shouldLogRewards = false, shouldCheckBadges = shouldLogRewards } = {}) => {
     const state = get();
     if (state.sessionId) {
-      useUserStore.getState().logXpSession({
-        sessionId: state.sessionId,
-        xp: state.totalScore,
-        timestampUtc: new Date().toISOString(),
-        lessonId: state.activeLessonId,
-      });
+      if (shouldLogRewards) {
+        useUserStore.getState().logXpSession({
+          sessionId: state.sessionId,
+          xp: state.totalScore,
+          timestampUtc: new Date().toISOString(),
+          lessonId: state.activeLessonId,
+        });
 
-      useUserStore.getState().addRecentActivity({
-        iconType: 'material',
-        iconValue: 'task-alt',
-        description: state.activeLessonId
-          ? `Played session: ${String(state.activeLessonId)}`
-          : 'Played a lesson session',
-      });
+        useUserStore.getState().addRecentActivity({
+          iconType: 'material',
+          iconValue: 'task-alt',
+          description: state.activeLessonId
+            ? `Played session: ${String(state.activeLessonId)}`
+            : 'Played a lesson session',
+        });
+      }
 
       // Badge evaluation — fire-and-forget; swap { useBackend: true } when backend is ready
-      const userState = useUserStore.getState();
-      checkAndUnlockBadges(userState, badgeBank).then((newBadges) => {
-        newBadges.forEach((id) => useUserStore.getState().unlockBadge(id));
-      });
+      if (shouldCheckBadges) {
+        const userState = useUserStore.getState();
+        checkAndUnlockBadges(userState, badgeBank).then((newBadges) => {
+          newBadges.forEach((id) => useUserStore.getState().unlockBadge(id));
+        });
+      }
     }
     set({
       isSessionActive: false,

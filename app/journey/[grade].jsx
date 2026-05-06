@@ -100,7 +100,7 @@ export default function GradeJourney() {
     if (!isGradeAuthorized(grade, profile)) {
       // Since useMemo runs during render, we use a setTimeout or a separate effect to redirect
       // safely without causing React state warnings.
-      setTimeout(() => router.replace('/Grades'), 0);
+      globalThis.setTimeout(() => router.replace('/Grades'), 0);
       return [];
     }
 
@@ -114,11 +114,11 @@ export default function GradeJourney() {
 
       // For curriculum grades (G1), use gated progression logic
       const id = String(level.id);
-      const isCompleted = !!completedLessons[id];
+      const isCompleted = completedLessons[id]?.completed === true;
 
       const allPreviousCompleted = curriculum.levels
         .slice(0, index)
-        .every((prev) => !!completedLessons[String(prev.id)]);
+        .every((prev) => completedLessons[String(prev.id)]?.completed === true);
 
       let status;
       if (isCompleted) {
@@ -126,8 +126,7 @@ export default function GradeJourney() {
       } else if (allPreviousCompleted) {
         status = 'active';
       } else {
-        // ======+ MAKE THIS ACTIVE FOR QUICK TESTING AND MAKE IT LOCKED AFTER TESTING +======
-        status = 'active';
+        status = 'locked';
       }
 
       return { ...level, status };
