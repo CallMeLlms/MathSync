@@ -61,7 +61,7 @@ export default function ResultModal({
   });
 
   const emoji = isCorrect ? '🎉' : '💪';
-  const statusTitle = isCorrect ? 'Great job!' : 'Let us proceed to the next question';
+  const statusTitle = isCorrect ? 'Great job!' : 'Nice try, proceed to the next question';
   const statusColor = isCorrect ? Colors.success : Colors.error;
 
   useEffect(() => {
