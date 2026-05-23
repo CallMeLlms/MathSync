@@ -173,12 +173,12 @@ export default function GameResultScreen() {
             borderRadius={24}
           />
           <View style={styles.statRow}>
-            <View style={styles.statItem}>
+            {/* <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: theme.primaryColor }]}>{score}</Text>
               <Text style={styles.statLabel}>points</Text>
-            </View>
+            </View> */}
 
-            <View style={styles.statDivider} />
+            {/* <View style={styles.statDivider} /> */}
 
             {/* <View style={styles.statItem}>
               <Text style={[styles.statValue, styles.correctValue, { color: theme.primaryColor }]}>
