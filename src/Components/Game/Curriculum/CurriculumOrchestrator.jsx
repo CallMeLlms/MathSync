@@ -48,6 +48,7 @@ import { PASSING_ACCURACY_PERCENT } from '@/constants/gameProgress';
 import ExitModal from '@/Components/Game/Global/ExitModal';
 import ResultModal from '@/Components/Game/Global/ResultModal';
 import PreGameLoader from '@/Components/Game/Global/PreGameLoader';
+import QuestionProgressBar from '@/Components/Game/Global/QuestionProgressBar';
 
 const GESTURE_ENGINES = new Set(['dragdrop', 'connectdots', 'shapetracer', 'geoboard', 'clocksetter']);
 
@@ -124,8 +125,9 @@ export default function CurriculumOrchestrator({
     return <PreGameLoader theme={theme} />;
   }
 
+  const totalQuestions = lessonContent.questions.length;
   const currentQuestion = lessonContent.questions[currentQuestionIndex];
-  const isFinished = currentQuestionIndex >= lessonContent.questions.length;
+  const isFinished = currentQuestionIndex >= totalQuestions;
   const handleResult = (isCorrect, userAnswerItems = [], resultMeta = null) => {
     recordAnswer(isCorrect);
 
@@ -283,6 +285,11 @@ export default function CurriculumOrchestrator({
         <TouchableOpacity style={styles.exitButton} onPress={() => setShowExitModal(true)}>
           <Ionicons name="close" size={24} color={Colors.onSurfaceVariant} />
         </TouchableOpacity>
+          <QuestionProgressBar
+            currentIndex={currentQuestionIndex}
+            totalQuestions={totalQuestions}
+            theme={theme}
+          />
       </View>
 
       {/* Gameplay Area — gesture engines use a plain View to preserve touch
@@ -331,6 +338,7 @@ const styles = StyleSheet.create({
   hud: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 14,
     paddingHorizontal: 20,
     paddingVertical: 12,
   },
