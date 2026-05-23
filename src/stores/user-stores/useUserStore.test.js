@@ -8,7 +8,11 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 const GRADE_KEY = 'G1';
 const LESSON_ID = 'lesson-1';
 
-function recordSession({ correctCount, totalQuestions = 10, score = correctCount }) {
+function recordSession({
+  correctCount,
+  totalQuestions = 10,
+  score = Math.round((correctCount / totalQuestions) * 100),
+}) {
   useUserStore.getState().recordSessionResult(GRADE_KEY, LESSON_ID, {
     correctCount,
     totalQuestions,
@@ -32,14 +36,35 @@ describe('useUserStore recordSessionResult', () => {
     const lesson = getLessonRecord();
 
     expect(lesson.completed).toBe(false);
-    expect(lesson.score).toBe(6);
+    expect(lesson.score).toBe(60);
     expect(lesson.accuracy).toBe(60);
-    expect(lesson.lastScore).toBe(6);
+    expect(lesson.lastScore).toBe(60);
     expect(lesson.lastAccuracy).toBe(60);
     expect(lesson.lastCorrectCount).toBe(6);
     expect(lesson.lastTotalQuestions).toBe(10);
     expect(state.stats.sunPoints).toBe(0);
     expect(state.stats.problemsSolved).toBe(0);
+  });
+
+  it('stores rounded capped points separately from raw correct count', () => {
+    recordSession({ correctCount: 3, totalQuestions: 14 });
+
+    const lesson = getLessonRecord();
+
+    expect(lesson.completed).toBe(false);
+    expect(lesson.score).toBe(21);
+    expect(lesson.accuracy).toBe(21);
+    expect(lesson.lastCorrectCount).toBe(3);
+    expect(lesson.lastTotalQuestions).toBe(14);
+  });
+
+  it('caps stored scores at 100', () => {
+    recordSession({ correctCount: 10, totalQuestions: 10, score: 140 });
+
+    const lesson = getLessonRecord();
+
+    expect(lesson.score).toBe(100);
+    expect(lesson.lastScore).toBe(100);
   });
 
   it('awards sun points once on the first passing attempt', () => {
@@ -50,11 +75,11 @@ describe('useUserStore recordSessionResult', () => {
     const lesson = getLessonRecord();
 
     expect(lesson.completed).toBe(true);
-    expect(lesson.score).toBe(8);
+    expect(lesson.score).toBe(80);
     expect(lesson.accuracy).toBe(80);
-    expect(lesson.lastScore).toBe(8);
+    expect(lesson.lastScore).toBe(80);
     expect(lesson.lastAccuracy).toBe(80);
-    expect(state.stats.sunPoints).toBe(8);
+    expect(state.stats.sunPoints).toBe(80);
     expect(state.stats.problemsSolved).toBe(10);
   });
 
@@ -66,11 +91,11 @@ describe('useUserStore recordSessionResult', () => {
     const lesson = getLessonRecord();
 
     expect(lesson.completed).toBe(true);
-    expect(lesson.score).toBe(8);
+    expect(lesson.score).toBe(80);
     expect(lesson.accuracy).toBe(80);
-    expect(lesson.lastScore).toBe(5);
+    expect(lesson.lastScore).toBe(50);
     expect(lesson.lastAccuracy).toBe(50);
-    expect(state.stats.sunPoints).toBe(8);
+    expect(state.stats.sunPoints).toBe(80);
   });
 
   it('updates best accuracy on a perfect replay without adding more sun points', () => {
@@ -81,10 +106,10 @@ describe('useUserStore recordSessionResult', () => {
     const lesson = getLessonRecord();
 
     expect(lesson.completed).toBe(true);
-    expect(lesson.score).toBe(10);
+    expect(lesson.score).toBe(100);
     expect(lesson.accuracy).toBe(100);
-    expect(lesson.lastScore).toBe(10);
+    expect(lesson.lastScore).toBe(100);
     expect(lesson.lastAccuracy).toBe(100);
-    expect(state.stats.sunPoints).toBe(8);
+    expect(state.stats.sunPoints).toBe(80);
   });
 });

@@ -38,6 +38,7 @@ export const useUserStore = create(
       },
       
       // Curriculum progress: { gradeKey: { lessonId: { completed, score, accuracy, lastScore, lastAccuracy, timestamp } } }
+      // `score` is the capped 0-100 local reward score; correctness is tracked separately.
       completedLessons: {},
 
       earnedBadges: [], // string[] of unlocked badge IDs
@@ -137,7 +138,7 @@ export const useUserStore = create(
         const id = String(lessonId);
         const safeCorrectCount = Math.max(0, Number(correctCount) || 0);
         const safeTotalQuestions = Math.max(0, Number(totalQuestions) || 0);
-        const safeScore = Math.max(0, Number(score) || 0);
+        const safeScore = Math.max(0, Math.min(100, Number(score) || 0));
         
         // 1. Calculate accuracy safely
         const sessionAccuracy = safeTotalQuestions > 0 

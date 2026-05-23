@@ -46,13 +46,17 @@ const useGameEngine = create((set, get) => ({
   })),
 
   // End the game session. XP/activity logging is opt-in to prevent exit/failure farming.
-  endGameSession: ({ shouldLogRewards = false, shouldCheckBadges = shouldLogRewards } = {}) => {
+  endGameSession: ({ shouldLogRewards = false, shouldCheckBadges = shouldLogRewards, rewardXp = null } = {}) => {
     const state = get();
     if (state.sessionId) {
       if (shouldLogRewards) {
+        const xpToLog = rewardXp == null
+          ? state.totalScore
+          : Math.max(0, Math.min(100, Number(rewardXp) || 0));
+
         useUserStore.getState().logXpSession({
           sessionId: state.sessionId,
-          xp: state.totalScore,
+          xp: xpToLog,
           timestampUtc: new Date().toISOString(),
           lessonId: state.activeLessonId,
         });

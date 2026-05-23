@@ -163,13 +163,13 @@ export default function CurriculumOrchestrator({
     if (currentQuestionIndex + 1 < lessonContent.questions.length) {
       nextQuestion();
     } else {
-      const questionLength = lessonContent.questions.length;
+      const questionLength = totalQuestions;
       const gameState = useGameEngine.getState();
-      const finalScore = gameState.totalScore;
       const finalCorrectCount = gameState.correctCount;
       const finalAccuracy = questionLength > 0
-        ? Math.round((finalCorrectCount / questionLength) * 100)
+        ? Math.min(Math.round((finalCorrectCount / questionLength) * 100), 100)
         : 0;
+      const finalPoints = finalAccuracy;
       const didPass = finalAccuracy >= PASSING_ACCURACY_PERCENT;
       const existingRecord = useUserStore.getState()
         .completedLessons[gradeKey]?.[String(lessonId)];
@@ -178,10 +178,14 @@ export default function CurriculumOrchestrator({
       useUserStore.getState().recordSessionResult(gradeKey, lessonId, {
         correctCount: finalCorrectCount,
         totalQuestions: questionLength,
-        score: finalScore,
+        score: finalPoints,
       });
 
-      endGameSession({ shouldLogRewards: isFirstPass, shouldCheckBadges: didPass });
+      endGameSession({
+        shouldLogRewards: isFirstPass,
+        shouldCheckBadges: didPass,
+        rewardXp: finalPoints,
+      });
 
       const sid  = typeof sectionId     === 'string' ? sectionId.trim()     : '';
       const cid  = typeof classroomId   === 'string' ? classroomId.trim()   : '';
@@ -193,7 +197,7 @@ export default function CurriculumOrchestrator({
           sectionId:   sid,
           classroomId: cid,
           lessonId:    mlid,
-          totalScore:  finalScore,
+          totalScore:  finalCorrectCount,
           totalItems:  questionLength,
           answers:     answersRef.current,
         }).catch((err) => {
@@ -204,7 +208,7 @@ export default function CurriculumOrchestrator({
       const resultParams = {
         lessonId,
         gradeKey,
-        score: String(finalScore),
+        score: String(finalPoints),
         accuracy: String(finalAccuracy),
         correctCount: String(finalCorrectCount),
         totalQuestions: String(questionLength),

@@ -90,8 +90,11 @@ export default function GameResultScreen() {
     state.completedLessons[gradeKey]?.[lessonId]
   );
   
-  const score = getNumberParam(params.score, lessonData?.lastScore ?? lessonData?.score ?? 0);
-  const accuracy = getNumberParam(params.accuracy, lessonData?.lastAccuracy ?? lessonData?.accuracy ?? 0);
+  const score = Math.max(0, Math.min(100, getNumberParam(params.score, lessonData?.lastScore ?? lessonData?.score ?? 0)));
+  const accuracy = Math.max(0, Math.min(100, getNumberParam(params.accuracy, lessonData?.lastAccuracy ?? lessonData?.accuracy ?? 0)));
+  const correctCount = getNumberParam(params.correctCount, lessonData?.lastCorrectCount ?? 0);
+  const totalQuestions = getNumberParam(params.totalQuestions, lessonData?.lastTotalQuestions ?? 0);
+  const correctDisplay = totalQuestions > 0 ? `${correctCount}/${totalQuestions}` : String(correctCount);
   const didPass = accuracy >= PASSING_ACCURACY_PERCENT;
   
   const theme = getGameTheme(gradeKey);
@@ -172,14 +175,23 @@ export default function GameResultScreen() {
           <View style={styles.statRow}>
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: theme.primaryColor }]}>{score}</Text>
-              <Text style={styles.statLabel}>☀️ points</Text>
+              <Text style={styles.statLabel}>points</Text>
             </View>
+
+            <View style={styles.statDivider} />
+
+            {/* <View style={styles.statItem}>
+              <Text style={[styles.statValue, styles.correctValue, { color: theme.primaryColor }]}>
+                {correctDisplay}
+              </Text>
+              <Text style={styles.statLabel}>correct</Text>
+            </View> */}
 
             <View style={styles.statDivider} />
 
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: theme.primaryColor }]}>{accuracy}%</Text>
-              <Text style={styles.statLabel}>🎯 accuracy</Text>
+              <Text style={styles.statLabel}>accuracy</Text>
             </View>
           </View>
         </View>
@@ -261,7 +273,8 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     borderWidth: 2,
     borderBottomWidth: 8,
-    padding: 24,
+    paddingHorizontal: 18,
+    paddingVertical: 24,
     position: 'relative',
     overflow: 'hidden',
   },
@@ -277,6 +290,10 @@ const styles = StyleSheet.create({
   statValue: {
     fontFamily: 'Lexend-Black',
     fontSize: 32,
+    textAlign: 'center',
+  },
+  correctValue: {
+    fontSize: 26,
   },
   statLabel: {
     fontFamily: 'PlusJakartaSans-Bold',
