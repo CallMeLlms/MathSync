@@ -172,7 +172,7 @@ export default function SignIn() {
                   </View>
 
                   {/* Guest Button */}
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={[styles.guestButton, { height: SCREEN_HEIGHT * 0.07 }]}
                     onPress={() => {
                       // Guest has no email/registeredGrade, keeping them unlocked
@@ -182,7 +182,7 @@ export default function SignIn() {
                     }}
                   >
                     <Text style={styles.guestButtonText}>Guest</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </View>
             </View>
