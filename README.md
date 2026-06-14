@@ -18,9 +18,7 @@
 
 ## 📖 Overview
 
-**MathSync** is a mobile-first Math Learning Management System (LMS) designed to support primary school students and teachers. Built with **React Native** and **Expo**, MathSync delivers gamified math activities, offline learning support, and a teacher-facing analytics dashboard — all aligned with the **DepEd MATATAG Curriculum**.
-
-The app bridges the digital learning gap by providing an accessible, engaging, and data-driven math learning experience — right from a mobile device.
+**MathSync** (LMS), our 4th year capstone project. Developed using react-native for mobile, react for web and mongoDB for the database. Deployed using a Render and Vercel. Currently, unmaintained as we have left this for open development.
 
 ---
 
