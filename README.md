@@ -1,5 +1,1 @@
-REFERENCE THE DESIGN SYSTEM IN THE .agents FOLDER FOR DESIGN CHOICES AND CONSTRAINTS.
-
-ALWAYS USE THE DESIGN-GUIDELIENS WHEN CREATING A UI FOR THE SCREEN PAGES/VIEWS .agents/design-guidelines.md
-
-ALWAYS REFERENCE THE CODEBASE-GUIDELINES.md inside the .agents/codebase-guidelines.md for coding standards and best practices.
+TODO
