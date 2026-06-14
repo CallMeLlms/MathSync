@@ -175,32 +175,9 @@ eas build --platform ios
 
 ---
 
-## 📚 Curriculum Alignment
-
-MathSync is designed in alignment with the **DepEd MATATAG Curriculum**, supporting the learning competencies for primary mathematics education in the Philippines. Content is structured to meet grade-level standards while encouraging mastery through repetition, engagement, and real-time feedback.
-
----
-
 ## 🤝 Contributing
 
 This is a capstone project. Contributions are currently closed to the core development team. If you have suggestions or find bugs, feel free to open an [Issue](https://github.com/CallMeLlms/MathSync/issues).
 
 ---
 
-## 👨‍💻 Authors
-
-- **CallMeLlms** — Lead Developer — [@CallMeLlms](https://github.com/CallMeLlms)
-
----
-
-## 📄 License
-
-This project is private and intended for academic and educational use. All rights reserved © 2024–2026.
-
----
-
-<div align="center">
-
-Made with ❤️ for Filipino learners
-
-</div>
