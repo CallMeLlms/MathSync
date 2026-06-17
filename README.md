@@ -9,7 +9,6 @@
 [![React Native](https://img.shields.io/badge/React%20Native-0.76.9-61DAFB?style=flat-square&logo=react)](https://reactnative.dev/)
 [![Expo](https://img.shields.io/badge/Expo-~52.0.49-000020?style=flat-square&logo=expo)](https://expo.dev/)
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-lightgrey?style=flat-square)](https://github.com/CallMeLlms/MathSync)
-[![License](https://img.shields.io/badge/License-Private-red?style=flat-square)](./package.json)
 [![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen?style=flat-square)](./app.json)
 
 </div>
@@ -170,12 +169,6 @@ eas build --platform ios
 ```
 
 > EAS Project ID: `52e8764d-0c6e-411b-90ca-ce4cdbb0d826`
-
----
-
-## 🤝 Contributing
-
-This is a capstone project. Contributions are currently closed to the core development team. If you have suggestions or find bugs, feel free to open an [Issue](https://github.com/CallMeLlms/MathSync/issues).
 
 ---
 
